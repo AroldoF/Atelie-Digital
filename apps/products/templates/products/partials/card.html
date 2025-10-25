@@ -1,0 +1,13 @@
+{% load static %}
+<div class="card" style="width: 16rem;">
+  <div id="areaImg">
+    <img src="{% static url %}" class="card-img-top img" alt="...">
+    <button id= "hard">
+      <img id="imgHard" src="{% static 'media/icons/favorite.svg'%}" alt="">
+    </button>
+  </div>
+  <div class="card-body">
+    <p id="description">{{description}}</p>
+    <p id="price">{{price}}</p>
+  </div>
+</div>
