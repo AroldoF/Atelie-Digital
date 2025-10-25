@@ -1,0 +1,115 @@
+/* ====== HEADER BASE ====== */
+.header-section {
+    background-color: #EADDCF;
+    padding: 20px 40px; /* menos padding → header mais compacto */
+    display: flex;
+    align-items: center;        /* centraliza verticalmente */
+    justify-content: space-between; /* espaço entre as 3 partes principais */
+    gap: 20px;
+}
+
+/* ====== TÍTULO / LOGO ====== */
+h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #A65C35;
+    text-decoration: none;
+    margin: 0;
+    line-height: 1; /* evita altura extra */
+    text-align: center;
+}
+
+/* ====== LINKS E ÍCONES ====== */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.menu-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+/* ====== CONJUNTO DE ÍCONES (DIREITA) ====== */
+.menu-conteiner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+
+/* ====== MENU MOBILE (ESQUERDA) ====== */
+.menu-mobile-conteiner {
+    display: none;
+}
+
+.menu-mobile-conteiner button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ====== RESPONSIVIDADE ====== */
+@media (max-width: 670px) {
+
+    .login-text {
+        display: none;
+    }
+
+    .header-section {
+        display: grid;
+        grid-template-areas:
+            "menu logo icons"
+            "search search search";
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 1rem 1rem;
+        padding: 16px 20px;
+    }
+
+    /* LOGO / TÍTULO */
+    .header-section > a:first-child {
+        grid-area: logo;
+        justify-self: center;
+    }
+
+    /* MENU MOBILE */
+    .menu-mobile-conteiner {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        grid-area: menu;
+    }
+
+    /* ÍCONES (DIREITA) */
+    .menu-conteiner {
+        grid-area: icons;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+
+    /* CAMPO DE BUSCA */
+    .search-bar-container {
+        grid-area: search;
+        justify-self: center;
+        width: 100%;
+        margin: 0;
+    }
+
+    .menu-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    h1 {
+        text-align: start;
+        font-size: 20px;
+    }
+}

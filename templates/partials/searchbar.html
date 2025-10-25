@@ -1,0 +1,34 @@
+<div class="search-container {{container_class}}">
+    <form action="">
+        <input class="form-control" type="text" name="" id="" placeholder="Busque por lojas e produtos">
+        <button class="search-button" type="sumit">
+            <svg class="icon-search" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.1209 19.1209L14.707 14.7069M17.0916 8.97382C17.0916 13.4571 13.4572 17.0915 8.97388 17.0915C4.49061 17.0915 0.856201 13.4571 0.856201 8.97382C0.856201 4.49055 4.49061 0.85614 8.97388 0.85614C13.4572 0.85614 17.0916 4.49055 17.0916 8.97382Z" stroke="#131214" stroke-width="1.71232" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </form>
+</div>
+
+<style>
+    .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.search-button {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    background: none;
+    transform: translateY(-50%);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.icon-search {
+    display: block;
+}
+
+</style>

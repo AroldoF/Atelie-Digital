@@ -1,0 +1,83 @@
+{% load static %}
+
+<aside id="sidebar-container" class="sidebar-hidden">
+    <div class="sidebar-header">
+        <a href="">
+            <img src="{% static 'img/user-placeholder.png' %}" alt="Foto de perfil" class="sidebar-avatar">
+            <span>{{ user.username }}</span>
+        </a>
+    </div>
+
+    <nav class="sidebar-menu">
+        <ul>
+            <li><a href="">Todas as categorias</a></li>
+            <li><a href="">Favoritos</a></li>
+            <li><a href="">Carrinho</a></li>
+            {% if user.is_artisan %}
+                <li><a href="">Loja</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</aside>
+    <style>
+        /* --- Sidebar base --- */
+#sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background-color: #EADDCF;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Oculta a sidebar (movendo-a para fora da tela) */
+.sidebar-hidden {
+    transform: translateX(-100%);
+}
+
+/* --- Header do usuário --- */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #A65C35;
+}
+
+/* --- Menu da sidebar --- */
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 20px;
+}
+
+.sidebar-menu a {
+    text-decoration: none;
+    color: #5C4033;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.sidebar-menu a:hover {
+    color: #A65C35;
+}
+
+    </style>
