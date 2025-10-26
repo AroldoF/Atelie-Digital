@@ -1,3 +1,33 @@
-<footer>
-    
+{% load static %}
+
+{% block style_footer %}
+    <link rel="stylesheet" href="{% static 'css/partials/footer.css' %}">
+{% endblock style_footer %}
+
+<footer class="footer_section">
+    <div id="align_footer">
+        <h3>Seja Parte do Artesanato Brasileiro</h3>
+        {% include "partials/button.html"%} {#Passar parametros do botão#}
+        <div class="row_footer">
+            <div>
+                <h4>Dúvidas</h4>
+                <ul class="footer_links">
+                    <li><a href="{#{% url 'article_buy' %}#}" class="link-nav">Como comprar?</a></li>
+                    <li><a href="{#{% url 'article_store' %}#}" class="link-nav">Como visualizar lojas?</a></li>
+                    <li><a href="{#{% url 'article_products' %}#}" class="link-nav">Como personalizar um produto?</a>
+                    </li>
+                    <li><a href="{#{% url 'article_artisian' %}#}" class="link-nav">Como ser um vendedor?</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Sobre a página</h4>
+                <ul class="footer_links">
+                    <li><a href="{#{% url 'politics' %}#}" class="link-nav ativo">Política do Ateliê Digital</a></li>
+                    <li><a href="{#{% url 'terms' %}#}" class="link-nav">Termos de uso</a></li>
+                    <li><a href="{#{% url 'call_center' %}#}" class="link-nav">Central de Atendimento</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p  id="line_copyright">Copyright @2025 IFRN Campus Pau dos Ferros</p>
 </footer>
