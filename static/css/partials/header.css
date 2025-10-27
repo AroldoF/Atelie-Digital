@@ -1,15 +1,19 @@
 /* ====== HEADER BASE ====== */
-.header-section {
+#header {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header__container {
     background-color: #EADDCF;
-    padding: 20px 40px; /* menos padding → header mais compacto */
+    padding: 20px 40px; 
     display: flex;
-    align-items: center;        /* centraliza verticalmente */
-    justify-content: space-between; /* espaço entre as 3 partes principais */
+    align-items: center;        
+    justify-content: space-between;
     gap: 20px;
 }
 
 /* ====== TÍTULO / LOGO ====== */
-h1 {
+#header__logo-link h1 {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 24px;
@@ -26,27 +30,32 @@ a {
     color: inherit;
 }
 
-.menu-icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
 
 /* ====== CONJUNTO DE ÍCONES (DIREITA) ====== */
-.menu-conteiner {
+.header__menu-user {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 30px;
 }
 
+#header__menu-user-login a {
+    color: var(--color-primary) !important;
+}
+
+.header__menu-user svg {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
 
 /* ====== MENU MOBILE (ESQUERDA) ====== */
-.menu-mobile-conteiner {
+.header__mobile-toggle {
     display: none;
 }
 
-.menu-mobile-conteiner button {
+.header__mobile-toggle button {
     background: none;
     border: none;
     cursor: pointer;
@@ -56,6 +65,10 @@ a {
     justify-content: center;
 }
 
+.header__navbar {
+    background-color: #88460C;
+}
+
 /* ====== RESPONSIVIDADE ====== */
 @media (max-width: 670px) {
 
@@ -63,7 +76,7 @@ a {
         display: none;
     }
 
-    .header-section {
+    .header__container{
         display: grid;
         grid-template-areas:
             "menu logo icons"
@@ -75,13 +88,13 @@ a {
     }
 
     /* LOGO / TÍTULO */
-    .header-section > a:first-child {
+    .header__container> a:first-child {
         grid-area: logo;
         justify-self: center;
     }
 
     /* MENU MOBILE */
-    .menu-mobile-conteiner {
+    .header__mobile-toggle {
         display: inline-flex;
         align-items: center;
         justify-content: flex-start;
@@ -89,7 +102,7 @@ a {
     }
 
     /* ÍCONES (DIREITA) */
-    .menu-conteiner {
+    .header__menu-user {
         grid-area: icons;
         justify-content: flex-end;
         gap: 20px;
@@ -103,13 +116,13 @@ a {
         margin: 0;
     }
 
-    .menu-icon {
+    .header__menu-user svg {
         width: 25px;
         height: 25px;
     }
 
-    h1 {
+    /* h1 {
         text-align: start;
         font-size: 20px;
-    }
+    } */
 }

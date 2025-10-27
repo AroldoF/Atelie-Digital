@@ -1,0 +1,92 @@
+:root {
+  /* ====== CORES BASE DA SUA IDENTIDADE ====== */
+  --color-primary: #A65C35;
+  --color-primary-dark: #A64735;
+  --color-accent: #396787;
+
+  --color-rose: #FFE9F5;
+  --color-pink: #CF3774;
+  --color-gold: #CDAA36;
+  --color-green: #909010;
+
+  --color-background: #FFFFFF;
+  --color-surface: #EADDCF;
+  --color-gray: #454343;
+  --color-text: #000000;
+
+  --color-hover: #8B4513;
+}
+
+/* Botão primário — cor de destaque (verde institucional) */
+.btn-primary {
+  background-color: var(--color-green);
+  border-color: var(--color-green);
+  color: #fff;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: color-mix(in srgb, var(--color-green) 85%, black);
+  border-color: color-mix(in srgb, var(--color-green) 80%, black);
+  color: #fff;
+}
+
+.btn-primary:focus:active {
+    background-color: color-mix(in srgb, var(--color-green) 85%, black);
+    border-color: color-mix(in srgb, var(--color-green) 80%, black);
+    transform: scale(1.02);
+}
+
+/* Botão secundário — tom mais frio (accent) */
+.btn-secondary {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background-color: color-mix(in srgb, var(--color-accent) 85%, black);
+  border-color: color-mix(in srgb, var(--color-accent) 80%, black);
+  color: #fff;
+}
+.btn-secondary:focus:active {
+    background-color: color-mix(in srgb, var(--color-accent) 85%, black);
+    border-color: color-mix(in srgb, var(--color-accent) 80%, black);
+    transform: scale(1.02);
+}
+
+/* Estado de foco visível */
+.btn:focus-visible {
+  box-shadow: var(--shadow-focus);
+  outline: none;
+}
+
+/* =========================================================
+   FORMULÁRIOS
+   ========================================================= */
+.form-control,
+.form-select {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+  box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--color-primary) 25%, transparent);
+  outline: 0;
+}
+
+/* Placeholder mais suave */
+.form-control::placeholder {
+  color: color-mix(in srgb, var(--color-gray) 70%, white);
+  opacity: 0.8;
+} 

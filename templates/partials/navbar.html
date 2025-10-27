@@ -1,7 +1,7 @@
 {% load static %}
 
+<Link rel="stylesheet" href="{% static 'css/partials/navbar.css' %}">
 {% block extra_css %}
-    <Link rel="stylesheet" href="{% static 'css/partials/navbar.css' %}">
 {% endblock extra_css %}
 
 <div id='navbar-container'>
@@ -22,17 +22,5 @@
         <a href="">
             <li>Casamento</li>
         </a>
-        <a href="">
-            
-        </a>
-    </ul>
-</div>
-<div>
-    <ul>
-        {% for categoria in categorias %}
-            <a href="">
-                <li>{{categoria.name}}</li>
-            </a>
-        {% endfor %}
     </ul>
 </div>
