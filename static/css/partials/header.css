@@ -1,0 +1,128 @@
+/* ====== HEADER BASE ====== */
+#header {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header__container {
+    background-color: #EADDCF;
+    padding: 20px 40px; 
+    display: flex;
+    align-items: center;        
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* ====== TÍTULO / LOGO ====== */
+#header__logo-link h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #A65C35;
+    text-decoration: none;
+    margin: 0;
+    line-height: 1; /* evita altura extra */
+    text-align: center;
+}
+
+/* ====== LINKS E ÍCONES ====== */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* ====== CONJUNTO DE ÍCONES (DIREITA) ====== */
+.header__menu-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+#header__menu-user-login a {
+    color: var(--color-primary) !important;
+}
+
+.header__menu-user svg {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+/* ====== MENU MOBILE (ESQUERDA) ====== */
+.header__mobile-toggle {
+    display: none;
+}
+
+.header__mobile-toggle button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__navbar {
+    background-color: #88460C;
+}
+
+/* ====== RESPONSIVIDADE ====== */
+@media (max-width: 670px) {
+
+    .login-text {
+        display: none;
+    }
+
+    .header__container{
+        display: grid;
+        grid-template-areas:
+            "menu logo icons"
+            "search search search";
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 1rem 1rem;
+        padding: 16px 20px;
+    }
+
+    /* LOGO / TÍTULO */
+    .header__container> a:first-child {
+        grid-area: logo;
+        justify-self: center;
+    }
+
+    /* MENU MOBILE */
+    .header__mobile-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        grid-area: menu;
+    }
+
+    /* ÍCONES (DIREITA) */
+    .header__menu-user {
+        grid-area: icons;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+
+    /* CAMPO DE BUSCA */
+    .search-bar-container {
+        grid-area: search;
+        justify-self: center;
+        width: 100%;
+        margin: 0;
+    }
+
+    .header__menu-user svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    /* h1 {
+        text-align: start;
+        font-size: 20px;
+    } */
+}

@@ -1,0 +1,76 @@
+/* --- Sidebar base --- */
+#sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background-color: #EADDCF;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%); /* ← começa escondida */
+}
+
+/* Mostra a sidebar quando visível */
+#sidebar-container:not(.sidebar--hidden) {
+    display: flex;
+    transform: translateX(0); /* ← aparece ao remover a classe */
+}
+
+
+/* Oculta a sidebar (movendo-a para fora da tela) */
+.sidebar--hidden {
+    display: none;
+    transform: translateX(-100%);
+}
+
+/* --- Header do usuário --- */
+.sidebar__header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar__header a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    align-self: center;
+}
+
+.sidebar__header h3 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.sidebar__avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* --- Menu da sidebar --- */
+.sidebar__menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar__menu li {
+    padding: 10px 0;
+    border-top: 1px solid #000;
+}
+
+.sidebar__menu a {
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
