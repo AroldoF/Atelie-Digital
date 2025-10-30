@@ -1,0 +1,19 @@
+{% extends "products/shared/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/register.css' %}">
+<link rel="stylesheet" href="{% static 'products/css/partials/card.css' %}">
+{% endblock style %}
+
+{% block main %}
+<h1>teste</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form_products|crispy }}
+    {{ form_variant|crispy }}
+    <button class="btn btn-primary" type="submit">Cadastrar Produto</button>
+</form>
+
+{% endblock main %}

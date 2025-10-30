@@ -41,9 +41,15 @@ INSTALLED_APPS = [
     "apps.stores",
     "apps.utils",
     # terceiros
+    "crispy_forms",
+    "crispy_bootstrap5",
     "cloudinary",
     "cloudinary_storage",
 ]
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = ("bootstrap5",)
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -128,7 +134,11 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",                   
+<<<<<<< HEAD
     #BASE_DIR / "apps" / "products" / "static",  
+=======
+    # BASE_DIR / "apps" / "products" / "static",  
+>>>>>>> bd63657 (feat: criação do cadastro do produto)
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"

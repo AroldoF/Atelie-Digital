@@ -1,6 +1,8 @@
-  {% extends "shared/base.html" %}
-  {% block title %}Home{% endblock %}
-  {% load static %}
+{% extends "shared/base.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/partials/card.css' %}">
+{% endblock style %}
 
   {% block style %}
   <link rel="stylesheet" href="{% static 'css/index.css'%}">
