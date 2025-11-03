@@ -1,6 +1,11 @@
 #chat-icon {
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
+    position: fixed;
+    bottom: 1.5rem;   
+    right: 1.5rem;  
+    width: 60px;
+    height: 60px;
 }
 
 #chat-icon:hover {
