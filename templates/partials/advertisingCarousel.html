@@ -1,0 +1,29 @@
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/partials/advertisingCarousel.css' %}">
+{% endblock extra_css %}
+
+<div class="container">
+   <button class="arrow-left control" aria-label="Previous image" >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+  </button>
+  <button class="arrow-right control" aria-label="Next Image" >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  </button>
+  <div class="gallery-wrapper">
+    <div class="gallery">
+  
+      <img src="{% static 'media/banners/imgM.png' %}" alt="" class="item current-item">
+      <img src="{% static 'media/banners/imgM.png' %}" alt="" class="item ">
+      <img src="{% static 'media/banners/imgM.png' %}" alt="" class="item ">
+    </div>
+
+  </div>
+</div>
+
+
+{% block scripts %}
+  <script src="{% static 'js/partials/advertisingCarousel.js' %}"></script>
+{% endblock scripts %}

@@ -1,4 +1,6 @@
 {% extends "shared/base.html" %}
+{% block title %}Home{% endblock %}
+
 {% load static %}
 {% block style %}
   <link rel="stylesheet" href="{% static 'css/card.css' %}">
@@ -8,6 +10,7 @@
 
 
 {% include "chats/partials/chat-icon.html" %}
+{% include "partials/advertisingCarousel.html" %}
 
 
 {% endblock main %}
