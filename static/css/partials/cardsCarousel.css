@@ -1,0 +1,21 @@
+.cardsCarousel{
+  width: 100%;
+}
+.gallery-cards{
+  overflow-x: auto;
+}
+.cards{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1.5rem;
+}
+
+.card {
+  flex-shrink: 0; /* Impede que o item encolha */
+}
+
+
+
+
+
+

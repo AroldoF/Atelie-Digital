@@ -2,9 +2,13 @@
 #achadinhos{
   display: flex;
   flex-direction: column;
+  padding-inline: 1rem;
 }
 
-
+.area-items{
+  display: flex;
+  gap: 1rem;
+}
 @media screen and (max-width: 670px){
   
 }

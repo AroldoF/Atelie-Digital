@@ -1,0 +1,46 @@
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/partials/cardsCarousel.css'%}">
+{% endblock style %}
+
+
+<div class="cardsCarousel">
+    <button class="button-left control" aria-label="Previous item" >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+    </button>
+    <button class="button-right control" aria-label="next item" >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+    <div class="gallery-cards">
+        <div class="cards">
+
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 44,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' price='R$ 21,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' price='R$ 21,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
+            </div>
+       
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+    <script src="{% static 'js/partials/cardsCarousel.js' %}"></script>
+{% endblock scripts %}
