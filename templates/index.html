@@ -2,15 +2,24 @@
 {% block title %}Home{% endblock %}
 
 {% load static %}
-{% block style %}
-  <link rel="stylesheet" href="{% static 'css/card.css' %}">
-{% endblock style %}
 
 {% block main %}
 
 
 {% include "chats/partials/chat-icon.html" %}
 {% include "partials/advertisingCarousel.html" %}
+
+
+
+<section id="achadinhos">
+  <h2>Achadinhos</h2>
+  <div class="area-items">
+    {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
+    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 00,00' %}
+    {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 00,00' %}
+    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' price='R$ 00,00' %}
+  </div>
+</section>
 
 
 {% endblock main %}
