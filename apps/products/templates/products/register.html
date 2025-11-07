@@ -8,12 +8,97 @@
 {% endblock style %}
 
 {% block main %}
-<h1>teste</h1>
+<h1>Cadastro do Produto</h1>
+<p>Crie e personalize seu produto</p>
 <form method="post">
     {% csrf_token %}
-    {{ form_products|crispy }}
-    {{ form_variant|crispy }}
+    <section>
+      <h3>Informações do Produto</h3>
+        {{ form_products.name|as_crispy_field }}
+        {{ form_products.description|as_crispy_field }}
+        <div class="upload-container">
+            <label for="{{ form_products.image.id_for_label }}" class="upload-box">
+            <div class="upload-content">
+                <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" viewBox="0 0 48 48">
+                <path d="M8 40q-1.2 0-2.1-.9Q5 38.2 5 37V11q0-1.2.9-2.1Q6.8 8 8 8h32q1.2 0 2.1.9.9.9.9 2.1v26q0 1.2-.9 2.1-.9.9-2.1.9Zm0-3h32V11H8v26Zm3-4h26l-8.65-11.55-6.75 8.45-4.9-6.5Z"/>
+                </svg>
+                <p>Clique para fazer upload da imagem</p>
+            </div>
+            {{ form_products.image }}
+            </label>
+        </div>
+    </section>
+    <section>
+      <h2>Variantes do Produto</h2>
+        {{ form_variant|crispy }}
+    </section>
     <button class="btn btn-primary" type="submit">Cadastrar Produto</button>
 </form>
+<style>
+    body {
+      background-color: #FAF8F5 !important;
+    }
+    section {
+        width: 80%; 
+        padding: 20px;  
+        border-radius: 8px;
+        margin: auto;
+        margin-bottom: 20px;
+        background-color: #fff;
+    }
+    .upload-container {
+        margin: 20px 0;
+  width: 100%;
+}
 
+.upload-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #d47a00;
+  background-color: #fff9f5;
+  border-radius: 10px;
+  padding: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+  background-color: #fff3ea;
+  border-color: #b65f00;
+}
+
+.upload-content {
+  text-align: center;
+  color: #a14d00;
+}
+
+.upload-content svg {
+  fill: #a14d00;
+  margin-bottom: 8px;
+}
+
+.upload-content p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.upload-box input[type="file"] {
+  display: none;
+}
+
+</style>
+<script>
+document.getElementById("{{ form_products.image.id_for_label }}").addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            document.querySelector('.upload-content').innerHTML = 
+                `<img src="${event.target.result}" alt="Prévia" style="max-height:150px; border-radius:8px;">`;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+</script>
 {% endblock main %}
