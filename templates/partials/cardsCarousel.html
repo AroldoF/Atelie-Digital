@@ -5,17 +5,17 @@
 
 
 <div class="cardsCarousel">
-    <button class="button-left control" aria-label="Previous item" >
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-
+    <button class="button-left cont" aria-label="Previous item" >
+        <img src="{% static 'media/icons/chevron-left.svg'%}"  class="img-prev" alt="">
     </button>
-    <button class="button-right control" aria-label="next item" >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+    <button class="button-right cont" aria-label="next item" >
+       <img src="{% static 'media/icons/chevron-right.svg'%}" class="img-next" alt="">
     </button>
     <div class="gallery-cards">
         <div class="cards">
 
-            <div class="card">
+            <div class="card current-card">
                 {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
             </div>
             <div class="card">

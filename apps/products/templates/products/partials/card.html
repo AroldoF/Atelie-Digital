@@ -4,15 +4,17 @@
   <link rel="stylesheet" href="{% static 'css/partials/card.css' %}">
 {% endblock style %}
 
-<div class="card" >
-  <div id="areaImg">
-    <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
-    <button id="hard">
-      <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
-    </button>
+<a href="#">
+  <div class="card" >
+    <div id="areaImg">
+      <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
+      <button id="hard">
+        <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
+      </button>
+    </div>
+    <div class="card-body">
+      <p id="description">{{ description }}</p>
+      <p id="price">{{ price }}</p>
+    </div>
   </div>
-  <div class="card-body">
-    <p id="description">{{ description }}</p>
-    <p id="price">{{ price }}</p>
-  </div>
-</div>
+</a>
