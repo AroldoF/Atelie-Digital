@@ -1,32 +1,33 @@
-{% extends "shared/base.html" %}
-{% block title %}Home{% endblock %}
-{% load static %}
-{% block style %}
-<link rel="stylesheet" href="{% static 'css/index.css'%}">
-{% endblock style %}
+  {% extends "shared/base.html" %}
+  {% block title %}Home{% endblock %}
+  {% load static %}
+
+  {% block style %}
+  <link rel="stylesheet" href="{% static 'css/index.css'%}">
+  {% endblock style %}
+
+
+  {% block main %}
+
+      {% include "chats/partials/chat-icon.html" %}
+      {% include "partials/advertisingCarousel.html" %}
+
+
+      <section id="achadinhos" class="sec">
+        <h2>achadinhos</h2>
+        {% include 'partials/cardsCarousel.html'%}
+      </section>
+
+      <section id="produtoMaisComprados" class="sec">
+        <h2>Produtos mais comprados</h2>
+        {% include 'partials/cardsCarousel.html'%}
+      </section>
+
+       <section id="EmAlta" class="sec">
+        <h2>Em alta</h2>
+        {% include 'partials/cardsCarousel.html'%}
+      </section>
 
 
 
-
-{% block main %}
-
-
-{% include "chats/partials/chat-icon.html" %}
-{% include "partials/advertisingCarousel.html" %}
-
-
-<section id="achadinhos">
-  <h2>Achadinhos</h2>
-  <!-- <div class="area-items">
-    {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
-    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 44,00' %}
-    {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' %}
-    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' price='R$ 21,00' %}
-    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' price='R$ 21,00' %}
-    {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
-  </div> -->
-  {% include 'partials/cardsCarousel.html'%}
-</section>
-
-
-{% endblock main %}
+  {% endblock main %}

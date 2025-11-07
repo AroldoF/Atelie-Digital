@@ -1,41 +1,29 @@
-const conts = document.querySelectorAll(".cont")
+document.addEventListener("DOMContentLoaded", () => {
+  const carousels = document.querySelectorAll('.cardsCarousel');
 
-let currentCard = 0;
-const item = document.querySelectorAll('.card');
-const maxItems = item.length;
+  carousels.forEach(carousel => {
+      const conts = carousel.querySelectorAll(".cont");
+      const items = carousel.querySelectorAll('.card');
+      const maxItem = items.length;
+      let currentCard = 0;
 
+      items.forEach(item => item.classList.remove('current-card')); 
+      items[currentCard].scrollIntoView({ inline: "start", block: "nearest", behavior: "auto" });
+      items[currentCard].classList.add('current-card'); 
 
-conts.forEach(control => {
-  control.addEventListener('click',(e)=>{
-    e.preventDefault();
-    const isLeft = control.classList.contains('button-left');
-    
- 
-    if(isLeft){
-      currentCard -=1;
-    }else{
-      currentCard +=1;
-    }
-    
+      conts.forEach(control => {
+          control.addEventListener('click', (e) => {
+              e.preventDefault();
+              const isLeft = control.classList.contains('button-left');
+              currentCard = isLeft ? currentCard - 1 : currentCard + 1;
 
-    if (currentCard >=maxItems){
-      currentCard = 0;
-    }
-    if (currentCard < 0){
-      currentCard = maxItems - 1;
-    }
+              if (currentCard >= maxItem) currentCard = 0;
+              if (currentCard < 0) currentCard = maxItem - 1;
 
-    
-    item.forEach(item => item.classList.remove('current-card')); 
-    
-   
-    item[currentCard].scrollIntoView({
-      inline: "center",
-      block: "nearest",  
-      behavior: "smooth"
-    });
-    
-   
-    item[currentCard].classList.add('current-card'); 
+              items.forEach(item => item.classList.remove('current-card')); 
+              items[currentCard].scrollIntoView({ inline: "start", block: "nearest", behavior: "smooth" });
+              items[currentCard].classList.add('current-card'); 
+          });
+      });
   });
 });

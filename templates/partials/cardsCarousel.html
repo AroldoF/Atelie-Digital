@@ -4,6 +4,7 @@
 {% endblock style %}
 
 
+
 <div class="cardsCarousel">
     <button class="button-left cont" aria-label="Previous item" >
         <img src="{% static 'media/icons/chevron-left.svg'%}"  class="img-prev" alt="">
@@ -42,5 +43,5 @@
 </div>
 
 {% block scripts %}
-    <script src="{% static 'js/partials/cardsCarousel.js' %}"></script>
+    <script src="{% static 'js/partials/cardsCarousel.js' %}" defer></script>
 {% endblock scripts %}
