@@ -99,6 +99,10 @@
   .item{
     width: 20em;
   }
+  .arrow-left,
+  .arrow-right {
+    display: none;
+  }
 
 }
 

@@ -70,3 +70,20 @@
   line-height: 14.3px;
   margin-top: 0.3rem;
 }
+
+
+@media screen and (max-width: 425px){
+  .card {
+    width: 12rem;
+  }
+
+  .img {
+    height: 10rem;
+  }
+
+  #imgHard {
+    width: 25px;
+    height: 25px;
+  }
+
+}
