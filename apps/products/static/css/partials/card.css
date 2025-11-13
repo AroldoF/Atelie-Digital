@@ -6,7 +6,7 @@
 
 
 .card-body {
-  padding: 0.5rem 1rem 1rem 0.5rem;
+  padding: 0.5rem;
 }
 
 
@@ -58,7 +58,7 @@
   font-size: 1em;
   letter-spacing: 0.5px;
   line-height: 16px;
-  margin-top: 0.5rem;
+  margin: 0;
 }
 
 #price {
@@ -71,6 +71,56 @@
   margin-top: 0.3rem;
 }
 
+
+#areaH{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+#off {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+ 
+  background-color: var(--color-primary-dark);
+  border-radius: 5px;
+  padding: 0.25rem 0.5rem; 
+  line-height: 1; 
+}
+#imgRaio{
+  width: 10px;
+
+}
+
+.car{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+  border-radius: 5px;
+  width: 130px;
+}
+
+.imgCar{
+  width: 25px;
+}
+.textTag{
+  color: var(--color-background);
+  margin: 0;
+}
+
+#envioRapido{
+  background-color: var(--color-accent);
+}
+
+#FreteGratis{
+  background-color: var(--color-green);
+}
 
 @media screen and (max-width: 425px){
   .card {
@@ -85,5 +135,21 @@
     width: 25px;
     height: 25px;
   }
+
+  #areaH{
+    margin-block: 1rem;
+    justify-content: flex-start;
+  }
+
+  
+  #textOff{
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-size: 0.875em;
+    white-space: nowrap; 
+    
+  }
+ 
 
 }

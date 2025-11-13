@@ -13,8 +13,31 @@
       </button>
     </div>
     <div class="card-body">
-      <p id="description">{{ description }}</p>
+      <div id="areaH">
+        <p id="description">{{ description }}</p>
+        {% if off %}
+          <div id="off">
+            <img id="imgRaio" src="{% static 'media/icons/raio.svg'%}" alt="">
+            <p class="textTag" id="textOff">{{text}}% Off</p>
+          </div>
+        {%endif%}
+      </div>
       <p id="price">{{ price }}</p>
+
+      {% if envioRapido %}
+        <div id="envioRapido" class="car">
+            <img class="imgCar" src="{% static 'media/icons/carro2.svg'%}" alt="">
+            <p class="textTag">Envio rápido</p>
+        </div>
+      {%endif%}
+
+      {% if FreteGratis %}
+        <div id="FreteGratis" class="car">
+            <img class="imgCar" src="{% static 'media/icons/carro.svg'%}" alt="">
+            <p class="textTag">Frete grátis </p>
+        </div>
+      {%endif%}
+
     </div>
   </div>
 </a>
