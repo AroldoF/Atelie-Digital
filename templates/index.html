@@ -8,6 +8,7 @@
 
 
   {% block main %}
+  <main id="mainIndex">
 
       {% include "chats/partials/chat-icon.html" %}
       {% include "partials/advertisingCarousel.html" %}
@@ -23,10 +24,11 @@
         {% include 'partials/cardsCarousel.html'%}
       </section>
 
-       <section id="EmAlta" class="sec">
+      <section id="EmAlta" class="sec">
         <h2>Em alta</h2>
         {% include 'partials/cardsCarousel.html'%}
       </section>
+  </main>
 
 
 

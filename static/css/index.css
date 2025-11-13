@@ -8,9 +8,11 @@ h2{
   color: var(--color-primary);
 }
 
-@media screen and (max-width: 670px){
-  
+
+#mainIndex{
+  margin-bottom: 4rem;
 }
+
 @media screen and (max-width: 425px){
   h2{
 
