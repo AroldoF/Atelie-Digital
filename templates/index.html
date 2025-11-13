@@ -1,11 +1,35 @@
-{% extends "shared/base.html" %}
-{% load static %}
-{% block style %}
-  <link rel="stylesheet" href="{% static 'css/card.css' %}">
-{% endblock style %}
+  {% extends "shared/base.html" %}
+  {% block title %}Home{% endblock %}
+  {% load static %}
 
-{% block main %}
+  {% block style %}
+  <link rel="stylesheet" href="{% static 'css/index.css'%}">
+  {% endblock style %}
+
+
+  {% block main %}
+  <main id="mainIndex">
+
+      {% include "chats/partials/chat-icon.html" %}
+      {% include "partials/advertisingCarousel.html" %}
+
+
+      <section id="achadinhos" class="sec">
+        <h2>Achadinhos</h2>
+        {% include 'partials/cardsCarousel.html'%}
+      </section>
+
+      <section id="produtoMaisComprados" class="sec">
+        <h2>Produtos mais comprados</h2>
+        {% include 'partials/cardsCarousel.html'%}
+      </section>
+
+      <section id="EmAlta" class="sec">
+        <h2>Em alta</h2>
+        {% include 'partials/cardsCarousel.html'%}
+      </section>
+  </main>
 
 
 
-{% endblock main %}
+  {% endblock main %}

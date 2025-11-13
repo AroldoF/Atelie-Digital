@@ -1,0 +1,81 @@
+.cardsCarousel{
+  width: 100%;
+  position: relative;
+}
+.gallery-cards{
+  overflow-x: auto;
+}
+.cards{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1.5rem;
+}
+
+.card {
+  flex-shrink: 0; 
+}
+.button-left,
+.button-right {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: none; 
+  padding: 0; 
+  cursor: pointer;
+  outline: none; 
+}
+
+.button-left:focus,
+.button-right:focus,
+.button-left:active,
+.button-right:active {
+  border: none;
+  outline: none;
+  background: none; 
+}
+
+.button-left,
+.button-right {
+    position: absolute; 
+    top: 0;           
+    bottom: 0;        
+    padding: 0; 
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    z-index: 10;
+}
+
+
+.button-left {
+    left: 0; 
+}
+
+
+.button-right {
+    right: 0; 
+    left: auto;
+}
+
+.img-prev,.img-next{
+  width:48px;
+  height:48px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 4px 6px 20px 0px black;
+
+}
+.gallery-cards::-webkit-scrollbar {
+  display: none; 
+}
+
+.gallery-cards {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
+}
+
+@media screen and (max-width: 425px){
+  .img-prev,.img-next{
+    display: none;
+  }
+}

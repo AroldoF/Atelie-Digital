@@ -1,0 +1,47 @@
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/partials/cardsCarousel.css'%}">
+{% endblock style %}
+
+
+
+<div class="cardsCarousel">
+    <button class="button-left cont" aria-label="Previous item" >
+        <img src="{% static 'media/icons/chevron-left.svg'%}"  class="img-prev" alt="">
+    </button>
+
+    <button class="button-right cont" aria-label="next item" >
+       <img src="{% static 'media/icons/chevron-right.svg'%}" class="img-next" alt="">
+    </button>
+    <div class="gallery-cards">
+        <div class="cards">
+
+            <div class="card current-card">
+                {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' off=True text='20' price='R$ 22,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas'  price='R$ 44,00' envioRapido=True %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' FreteGratis=True  %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' off=True text=30 price='R$ 21,00' envioRapido=True %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' off=True text=10 price='R$ 21,00' FreteGratis=True%}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' off=True text=30 price='R$ 22,00' envioRapido=True %}
+            </div>
+       
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+    <script src="{% static 'js/partials/cardsCarousel.js' %}" defer></script>
+{% endblock scripts %}
