@@ -26,16 +26,16 @@
                 {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' FreteGratis=True  %}
             </div>
             <div class="card">
-                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' price='R$ 21,00' %}
+                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' off=True text=30 price='R$ 21,00' envioRapido=True %}
             </div>
             <div class="card">
-                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' price='R$ 21,00' %}
-            </div>
-            <div class="card">
-                {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
+                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' off=True text=10 price='R$ 21,00' FreteGratis=True%}
             </div>
             <div class="card">
                 {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' price='R$ 22,00' %}
+            </div>
+            <div class="card">
+                {% include 'products/partials/card.html' with url='media/caixaDeJoias.png' description='Caixa de Joias' off=True text=30 price='R$ 22,00' envioRapido=True %}
             </div>
        
         </div>
