@@ -1,0 +1,6 @@
+{% extends "accounts/shared/base_acess.html" %}
+{% load static %}
+
+{% block content_form %}
+{% include "accounts/partials/forms.html" with title="Acessar conta" info_text="Digite seu e-mail e senha para fazer login" btn_text="Acessar" text_link="Você não tem uma conta?" link_text="Cadastre-se" link_url="signup" form=form %}
+{% endblock content_form %}

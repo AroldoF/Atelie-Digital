@@ -1,0 +1,6 @@
+{% extends "accounts/shared/base_acess.html" %}
+{% load static %}
+
+{% block content_form %}
+{% include "accounts/partials/forms.html" with title="Cadastre-se" info_text="Insira os dados para criar sua conta!" btn_text="Registrar" form=form %}
+{% endblock content_form %}
