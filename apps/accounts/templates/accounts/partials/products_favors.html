@@ -1,0 +1,12 @@
+{% load static %}
+
+{% block style_products_favors %}
+  <link rel="stylesheet" href="{% static 'accounts/css/partials/products_favors.css' %}">
+{% endblock style_products_favors %}
+
+<a href="#">
+    <div class="card_product_favorite">
+        <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
+        <p id="description">{{ description }}</p>
+    </div>
+</a>

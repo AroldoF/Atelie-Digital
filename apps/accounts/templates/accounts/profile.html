@@ -1,0 +1,43 @@
+{% extends "shared/base.html" %} <!--Como verificar se esta puxando do base global-->
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/partials/profile.css' %}">
+{% endblock style %}
+
+{% block main %}
+<h1>Meu Perfil</h1>
+
+<!--Card de usuário (foto, e-mail e nome)-->
+
+<!--Card de endereço
+    if != endereço -> pop up de adicionar endereço/adicionar campos de endereço no formulario
+-->
+
+
+<!--Produtos favoritos-->
+<div>
+    <div>
+        <h2 class="title_section">Produtos Favoritos</h2>
+        <p><a href="">Ver todos</a></p>
+    </div>
+    <div>
+        {% include 'partials/products_favors.html' %}
+    </div>
+        <!--card de produtos favoritos-->
+</div>
+
+
+<!--Meus pedidos-->
+<div>
+    <div>
+        <h2 class="title_section">Meus Pedidos</h2>
+        <p><a href="">Ver todos</a></p>
+    </div>
+    <div>
+        {% include 'partials/my_orders.html' %}
+    </div>
+</div>
+    
+
+{% endblock main %}
