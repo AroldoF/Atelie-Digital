@@ -1,0 +1,93 @@
+/* ----- FORMS BASE ----- */
+
+h2{
+    margin-bottom: 5px; 
+    text-align: center; 
+}
+
+p{
+    margin-bottom: 20px; 
+}
+
+a{
+    text-decoration: none;
+    color: #396787;
+}
+
+.form_container{
+    padding: 30px 40px; /* Espaçamento interno */
+    /* Estilo da borda e sombra */
+    border: 1px solid #A65C35; 
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+/* Estilos para os campos de formulário (inputs) */
+.form_group {
+    margin-bottom: 15px;
+}
+
+/* Aplica a todos os inputs dentro de .form-group */
+.form_group input { 
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box; /* Garante que padding e border não aumentem a largura total */
+}
+
+/* Estilo para o botão principal */
+.btn_acess {
+    width: 100%; /* Ocupa a largura total do contêiner */
+    background-color: #A65C35;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.btn_google{
+    width: 100%; 
+    background-color: #fff;
+    color: black;
+    padding: 12px 0;
+    border: 1px solid #EFF0F6;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.logo_google{
+    max-width: 20px;
+}
+
+/* Se estiver usando o divisor "Ou" */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #999;
+    margin: 20px 0;
+}
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+.divider:not(:empty)::before {
+    margin-right: .5em;
+}
+.divider:not(:empty)::after {
+    margin-left: .5em;
+}
+
+
+/* MEDIA QUERY: Ajustes para telas pequenas */
+@media (max-width: 425px) {
+    
+
+}

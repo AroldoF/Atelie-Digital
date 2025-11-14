@@ -1,0 +1,51 @@
+{% load static %}
+
+{% block style_form %}
+  <link rel="stylesheet" href="{% static 'accounts/css/partials/forms.css' %}">
+{% endblock style_form %}
+
+<div class="form_container">
+    <h2>{{ title }}</h2>
+    <p>{{ info_text }}</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+    
+        {% for field in form %}
+            <div class="form_group">
+                <label for="{{ field.id_for_label }}" class="form_label">{{ field.label }}</label> 
+                {{ field.errors }}
+                {{ field }} 
+            </div>
+            
+            <!--Retorna somente na tela de login-->
+            {% if field.name == 'password' and title == 'Acessar conta'%}
+                <p>
+                    <a href="{#{% url 'password_reset' %}#}" class="link_recuperar">Recuperar senha</a> 
+                </p>
+            {% endif %}
+        {% endfor %}
+    
+        <!--Incluir componente de botão-->
+        <button type="submit" class="btn btn_acess">{{ btn_text }}</button>
+    </form>
+    
+    <!--Retorna somente na tela de login-->
+    {% if title == 'Acessar conta' %}
+        <div class="divider my-4">
+            <span>Ou</span>
+        </div>
+
+        <a href="{#{% url 'social:begin' 'google-oauth2' %}#}" class="btn btn_google">
+            <img src="{% static 'accounts/media/logo_google.png' %}" alt="Logo Google" class="logo_google">
+            Continue com Google
+        </a>
+    {% endif %}
+
+
+    {% if text_link and link_url %}
+        <p class="form_footer">
+            {{ text_link }} <a href="{% url 'register' %}" class="link_secondary">{{ link_text }}</a>
+        </p>
+    {% endif %}
+</div>
