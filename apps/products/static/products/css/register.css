@@ -1,6 +1,19 @@
 body {
       background-color: #FAF8F5 !important;
     }
+/* .main-container {
+  display: grid;
+  grid-template-columns: minmax(200px , auto) minmax(200px, 1fr);
+} */
+.product-section {
+  width: 80%;
+  margin: 20px auto;
+}
+.button-cadastro {
+  width: 100%;
+  padding: 15px;
+  margin: 20px auto;
+}
 .product-info-section {
         width: 80%; 
         padding: 20px;  
@@ -15,8 +28,8 @@ body {
   width: 100%;
 }
 
-h1 {
-    color: #000  !important;
+.product-section h1 {
+    color: var(--color-hover)  !important;
 }
 
 .upload-box {

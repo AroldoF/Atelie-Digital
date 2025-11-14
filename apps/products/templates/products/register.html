@@ -7,8 +7,10 @@
 {% endblock style %}
 
 {% block main %}
-<h1>Cadastro do Produto</h1>
-<p>Crie e personalize seu produto</p>
+<section class="product-section">
+  <h1>Cadastro do Produto</h1>
+  <p>Crie e personalize seu produto</p>
+</section>
 <section class="product-info-section">
       <form method="post">
       {% csrf_token %}
@@ -51,8 +53,10 @@
       <!-- Um input hidden que envia tudo junto depois -->
       <input type="hidden" name="attributes_json" id="attributesData">
 </section>
-    
-<button class="btn btn-primary"  type="submit">Cadastrar Produto</button>
+
+<section class="product-section">
+  <button class="btn btn-lg btn-primary button-cadastro" disable  type="submit">Cadastrar Produto</button>
+</section>
 
 {% endblock main %}
 
