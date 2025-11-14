@@ -9,7 +9,6 @@ class Chats(models.Model):
     created_at = models.DateTimeField(blank=True, null=True,)
 
     class Meta:
-        managed = False
         db_table = 'chats'
         unique_together = (('user', 'store'),)
 
@@ -22,5 +21,4 @@ class Messages(models.Model):
     is_read = models.BooleanField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'messages'

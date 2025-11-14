@@ -14,7 +14,6 @@ class Users(models.Model):
     is_superuser = models.BooleanField(default=False)
 
     class Meta:
-        managed = False
         db_table = 'users'
 
 class Profiles(models.Model):
@@ -23,7 +22,6 @@ class Profiles(models.Model):
     profile_image = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'profiles'
 
 class Addresses(models.Model):
@@ -39,5 +37,4 @@ class Addresses(models.Model):
     is_main = models.BooleanField(default=False)
 
     class Meta:
-        managed = False
         db_table = 'addresses'

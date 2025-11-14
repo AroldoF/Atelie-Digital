@@ -12,8 +12,15 @@ class Stores(models.Model):
     email = models.CharField(unique=True, max_length=255)
 
     class Meta:
-        managed = False
         db_table = 'stores'
+
+class StoreImages(models.Model):
+    store_image_id = models.AutoField(primary_key=True)
+    store = models.ForeignKey('Stores', models.CASCADE)
+    image = models.TextField()
+
+    class Meta:
+        db_table = 'store_images'
 
 class StoreCategories(models.Model):
     store_categories_id = models.AutoField(primary_key=True)
@@ -21,7 +28,6 @@ class StoreCategories(models.Model):
     store = models.ForeignKey(Stores, related_name='store_categories', on_delete=models.CASCADE)
 
     class Meta:
-        managed = False
         db_table = 'store_categories'
         unique_together = (('category', 'store'),)
 
