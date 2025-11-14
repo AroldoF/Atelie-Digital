@@ -130,13 +130,16 @@
   background-color: var(--color-green);
 }
 
+
+
 @media screen and (max-width: 425px){
-
-}
-
-@media screen and (max-width: 320px){
   .card {
     width:7rem;
+  }
+
+  .card-body {
+  
+    gap: .5rem;
   }
 
   .img {
@@ -177,10 +180,12 @@
   }
 
   .car{
-
     padding-block: 0.1rem;
     width: 60px;
  
+  }
+  .car,#off{
+    border-radius: 2.25px;
   }
 
   .imgCar{
