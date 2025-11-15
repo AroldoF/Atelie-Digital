@@ -1,8 +1,10 @@
 #mainDetalheProduto{
+  padding: 4rem;
   display: grid;
  
-
 }
+
+/* carousel de produtos */
 
 .carouselProduto {
     width: 100%;
@@ -68,5 +70,41 @@
     cursor: pointer;
 }
 
+/* Para cada area  */
+
+.areaA{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.areaC{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#imgHard{
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+#imgHard:hover{
+  transform: scale(1.2);
+  transition: all 0.3s ease-in-out;
+  content: url("/static/media/icons/favoriteHover.svg");
+}
+.textAcessorio{
+  color: var(--color-primary-dark);
+}
 
 
+
+
+
+
+
+
+@media screen and (max-width: 425px){
+  #mainDetalheProduto{
+    padding: 1rem;
+ }
+}
