@@ -14,3 +14,37 @@ h1, h2, .color{
 .title_section{
     margin-bottom: 30px;
 }
+
+/* ----- GRID DE PRODUTOS E PEDIDOS ----- */
+
+.products-grid,
+.orders-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center; 
+}
+
+/* Cada item ocupa apenas o necessário */
+.products-grid .card_product,
+.orders-grid .card_order_wrapper {
+    flex: 0 1 auto;
+}
+
+
+/* Responsividade */
+@media (max-width: 425px) {
+
+    .products-grid,
+    .orders-grid {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card_order {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+    }
+}

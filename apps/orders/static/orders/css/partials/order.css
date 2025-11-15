@@ -8,6 +8,8 @@
     background-color: var(--color-background);
     border-radius: 10px;
     padding: 5px 10px;
+    white-space: nowrap;
+    font-size: 0.9rem;
 }
 
 #tag_progress{

@@ -1,24 +1,19 @@
 {% load static %}
 
-{% block style %}
-  <link rel="stylesheet" href="{% static 'accounts/css/partials/products_favors.css' %}">
-{% endblock style %}
-
-<div class="row">
-  <div class="col card_product">
-    {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' favor=False%}
+<div class="products-grid">
+  <div class="card_product">
+    {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' favor=False %}
   </div>
 
-  <div class="col card_product">
-    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False%}
+  <div class="card_product">
+    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False %}
   </div>
 
-  <div class="col card_product">
-    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' favor=False%}
+  <div class="card_product">
+    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' favor=False %}
   </div>
 
-  <div class="col card_product">
-    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False%}
+  <div class="card_product">
+    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False %}
   </div>
 </div>
-

@@ -1,20 +1,21 @@
 {% load static %}
 
-{% block style %}
-  <link rel="stylesheet" href="{% static 'accounts/css/partials/my_orders.css' %}">
-{% endblock style %}
+<div class="orders-grid">
 
-<div class="row">
-  <div class="col">
-    {% include 'orders/partials/order.html' with order_id='AT001234' order_date='15 de Janeiro, 2025' status='progress'%}
+  <div class="card_order_wrapper">
+    {% include 'orders/partials/order.html' with order_id='AT001234' order_date='15 de Janeiro, 2025' status='progress' %}
   </div>
-  <div class="col">
-    {% include 'orders/partials/order.html' with order_id='AT001235' order_date='15 de Janeiro, 2025' status='delivered'%}
+
+  <div class="card_order_wrapper">
+    {% include 'orders/partials/order.html' with order_id='AT001235' order_date='15 de Janeiro, 2025' status='delivered' %}
   </div>
-  <div class="col">
-    {% include 'orders/partials/order.html' with order_id='AT001236' order_date='15 de Janeiro, 2025' status='delivered'%}
+
+  <div class="card_order_wrapper">
+    {% include 'orders/partials/order.html' with order_id='AT001236' order_date='15 de Janeiro, 2025' status='delivered' %}
   </div>
-  <div class="col">
-    {% include 'orders/partials/order.html' with order_id='AT001237' order_date='15 de Janeiro, 2025' status='cancelled'%}
+
+  <div class="card_order_wrapper">
+    {% include 'orders/partials/order.html' with order_id='AT001237' order_date='15 de Janeiro, 2025' status='cancelled' %}
   </div>
+
 </div>
