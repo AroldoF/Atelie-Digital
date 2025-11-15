@@ -134,11 +134,7 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",                   
-<<<<<<< HEAD
-    #BASE_DIR / "apps" / "products" / "static",  
-=======
     # BASE_DIR / "apps" / "products" / "static",  
->>>>>>> bd63657 (feat: criação do cadastro do produto)
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
