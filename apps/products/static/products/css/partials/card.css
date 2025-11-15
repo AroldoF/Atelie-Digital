@@ -1,10 +1,15 @@
 .card {
   border: none;
+  width: 14rem;
+  
 }
 
-
 .card-body {
-  padding: 0.5rem 1rem 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin-top: .5rem;
+  gap: .8rem;
 }
 
 
@@ -15,17 +20,17 @@
 
 .img {
   width: 100%;
-  height: 16rem;
+  height: 14rem;
   object-fit: cover;
-  border-radius: 1rem;
+  border-radius: 8px;
   display: block;
 }
 
 
 #hard {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 5px;
+  right: 5px;
   cursor: pointer;
 
   display: flex;
@@ -53,18 +58,140 @@
 #description {
   text-align: left;
   color: #454343;
-  font-size: 1em;
-  letter-spacing: 0.5px;
-  line-height: 16px;
-  margin-top: 0.5rem;
+  letter-spacing: var(--letter-spacing);
+  line-height: var(--line-height);
+  margin: 0;
 }
 
 #price {
   text-align: left;
   color: #000;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: bold;
   letter-spacing: 0.45px;
   line-height: 14.3px;
-  margin-top: 0.3rem;
+  
 }
+
+
+#areaH{
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
+  gap: .5rem;
+  
+  
+ 
+}
+
+#off {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.10375rem;
+ 
+  background-color: var(--color-primary-dark);
+  border-radius: 5px;
+  width: 90px;
+  padding: 0.2rem;
+  
+  line-height: 1; 
+}
+
+#imgRaio{
+  width: 10px;
+
+}
+
+.car{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  border-radius: 5px;
+  width: 130px;
+  padding: 0.1rem;
+}
+
+.imgCar{
+  width: 25px;
+}
+
+.textTagCar,#textOff {
+  color: var(--color-background);
+  margin: 0;
+}
+
+#envioRapido{
+  background-color: var(--color-accent);
+}
+
+#FreteGratis{
+  background-color: var(--color-green);
+}
+
+
+
+@media screen and (max-width: 425px){
+  .card {
+    width:7rem;
+  }
+
+  .card-body {
+  
+    gap: .5rem;
+  }
+
+  .img {
+    height: 7rem;
+  }
+
+  #hard {
+
+    width: 25px;
+    height: 25px;
+  }
+
+  #imgHard {
+    width: 15px;
+   
+  }
+
+  #description{
+    font-size: var(--font-size-p--Xsmall);
+  }
+  #price{
+    font-size: var(--font-size-p-small);
+  }
+  .textTagCar{
+    font-size:var(--font-size-p-XXsmall);
+  }
+  #off{
+    width: 29.71px;
+    padding-inline: 0.1875rem; 
+    padding-block: 0.0625rem; 
+  }
+  #textOff{
+    font-size: var(--font-size-p-XXXsmall);
+  }
+  #imgRaio{
+    width: 4.05px;
+
+  }
+
+  .car{
+    padding-block: 0.1rem;
+    width: 60px;
+ 
+  }
+  .car,#off{
+    border-radius: 2.25px;
+  }
+
+  .imgCar{
+    width: 9.98px;
+  }
+
+
+}
+
