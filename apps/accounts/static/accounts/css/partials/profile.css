@@ -1,0 +1,11 @@
+/* ----- PROFILE ----- */
+
+h1, h2, p{
+    color: var(--color-primary);
+    font-family: Arial, Helvetica, sans-serif; /* Define a fonte principal e uma alternativa */
+}
+
+h2{
+    font-size: 18px;
+    font-weight: bold;
+}

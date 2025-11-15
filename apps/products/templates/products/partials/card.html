@@ -8,9 +8,11 @@
   <div class="card" >
     <div id="areaImg">
       <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
-      <button id="hard">
-        <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
-      </button>
+      {% if favor %}
+        <button id="hard">
+          <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
+        </button>
+      {%endif%}
     </div>
     <div class="card-body">
       <div id="areaH">
