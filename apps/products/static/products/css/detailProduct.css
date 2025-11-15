@@ -1,0 +1,72 @@
+#mainDetalheProduto{
+  display: grid;
+ 
+
+}
+
+.carouselProduto {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#searchProduct{
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(-10%);
+}
+
+
+.carouselInner {
+    position: relative;
+    overflow: hidden;
+}
+
+.carouselItem {
+    width: 100%;
+    display: none;
+}
+
+.carouselItem.active {
+    display: block;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.carousel-btn.prev {
+    left: -40px;
+}
+
+.carousel-btn.next {
+    right: -40px;
+}
+
+.arrow {
+    width: 28px;
+    height: 28px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.carousel-dots img {
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+}
+
+
+
