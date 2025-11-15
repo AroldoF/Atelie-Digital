@@ -1,11 +1,109 @@
 {% extends "shared/base.html" %}
+{% load static %}
 
 {% block title %}Product Detail{% endblock %}
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/partials/card.css' %}">
+<link rel="stylesheet" href="{% static 'products/css/detailProduct.css' %}">
+{% endblock style %}
+
 {% block main %}
 
-{% include "products/partials/review.html" %}
+<main id="mainDetalheProduto">
+  <h2>Laço Pérola com Pontas</h2>
 
+  <div class="areaA">
+      <div id="FreteGratis" class="car">
+              <img class="imgCar" src="{% static 'products/media/icons/carro.svg'%}" alt="">
+              <p class="textTagCar">Frete grátis </p>
+      </div>
+      {% include "products/partials/review.html" %}
+  </div>
+
+
+  <div class="carouselProduto areaB">
+
+    <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
+
+
+    <div class="carouselInner">
+          <img src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" class="carouselItem active">
+          <img src="{% static 'products/media/imgVariantionsProducts/v2.png' %}" class="carouselItem">
+          <img src="{% static 'products/media/imgVariantionsProducts/v3.png' %}" class="carouselItem">
+      </div>
+
+      <button class="carousel-btn prev">
+          <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
+      </button>
+
+      <button class="carousel-btn next">
+          <img src="{% static 'products/media/icons/next.svg' %}" class="arrow arrow-next">
+      </button>
+
+      <div class="carousel-dots"></div>
+
+  </div>
+
+  <div class="areaC"> 
+    <h3>Acessorio</h3>
+    <img src="{% static 'products/media/icons/favorite.svg' %}" alt="">
+  </div>
+
+
+  <div class="areaD">
+    <div>
+      <div>
+        <p>R$ 55,00</p>
+         <div id="off">
+            <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
+            <p  id="textOff">30% Off</p>
+          </div>
+      </div>
+    </div>
+
+    <button id="comprar-btn">
+      <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
+      <p>Comprar</p>
+    </button>
+
+    <button id="adicionar-btn">
+      <img src="products/media/icons/shoppingCart.svg" alt="">
+      <p>Adicionar ao Carrinho</p>
+    </button>
+
+  </div>
+
+  <div class="areaF">
+    <div>
+      <img src="products/media/logoLoja.jpg" alt="">
+      <div>
+        <h2>Val Laços</h2>
+        <p>Princesa Estilosa</p>
+      </div>
+    </div>
+
+  <div id="areaTipoLoja">
+    <div class="tipoLoja">
+      <p>Acessórios</p>
+    </div>
+
+    <div class="modaInfantil">
+      <p>Moda Infantil</p>
+    </div>
+  </div>
+   
+   
+  </div>
+
+
+
+</main>
 
 
 {% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'products/js/detailProduct.js' %}"></script>
+{% endblock scripts %}
