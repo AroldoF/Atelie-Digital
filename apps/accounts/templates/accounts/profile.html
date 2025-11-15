@@ -2,43 +2,46 @@
 {% load static %}
 
 {% block style %}
-  <link rel="stylesheet" href="{% static 'accounts/css/partials/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'accounts/css/shared/profile.css' %}">
 {% endblock style %}
 
 {% block main %}
-<h1>Meu Perfil</h1>
+<div class="container">
+    <h1 id="title">Meu Perfil</h1>
 
-<!--Card de usuário (foto, e-mail e nome)-->
+    <!--Card de usuário-->
+    {% include 'accounts/partials/card_profile.html' with url='accounts/media/hermione.png' description='imagem do usuário' name='Hermione Granger' email='hermione.leviosa@gmail.com' tag_user='Cliente'%}
 
-<!--Card de endereço
-    if != endereço -> pop up de adicionar endereço/adicionar campos de endereço no formulario
--->
+    <!--Card de endereço
+        if != endereço -> pop up de adicionar endereço/adicionar campos de endereço no formulario
+    -->
 
-<!--Produtos favoritos-->
-<div class="container margin">
-    <div class="row">
-        <div class="col">
-            <h2 class="title_section">Produtos Favoritos</h2>
+    <!--Produtos favoritos-->
+    <div class="container margin">
+        <div class="row">
+            <div class="col">
+                <h2 class="title_section">Produtos Favoritos</h2>
+            </div>
+            <div class="col text-end">
+                <p class="color"><a href="">Ver todos</a></p>
+            </div>
         </div>
-        <div class="col text-end">
-            <p class="color"><a href="">Ver todos</a></p>
-        </div>
+        {% include 'accounts/partials/products_favors.html' %}
     </div>
-    {% include 'accounts/partials/products_favors.html' %}
+
+    <!--Meus pedidos-->
+    <div class="container margin">
+        <div class="row">
+            <div class="col">
+                <h2 class="title_section">Meus Pedidos</h2>
+            </div>
+            <div class="col text-end">
+                <p class="color"><a href="">Ver todos</a></p>
+            </div>
+        </div>
+        {% include 'accounts/partials/my_orders.html' %}
+    </div>
 </div>
 
-<!--Meus pedidos-->
-<div class="container margin">
-    <div class="row">
-        <div class="col">
-            <h2 class="title_section">Meus Pedidos</h2>
-        </div>
-        <div class="col text-end">
-            <p class="color"><a href="">Ver todos</a></p>
-        </div>
-    </div>
-    {% include 'accounts/partials/my_orders.html' %}
-</div>
-    
 
 {% endblock main %}

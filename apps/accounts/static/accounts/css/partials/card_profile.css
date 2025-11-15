@@ -1,0 +1,37 @@
+.card_profile{
+    background-color: var(--color-surface);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile_img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+p{
+    font-family: inter;
+}
+
+#name{
+    color: #1f2937;
+}
+
+#email{
+    color: #6b7280;
+}
+
+#tag_user{
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-radius: 10px;
+}
+
+#btn_profile{
+    background-color: var(--color-green);
+    color: var(--color-background);
+    border-radius: 10px;
+    padding: 10px 20px;
+}

@@ -1,0 +1,21 @@
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'accounts/css/partials/card_profile.css' %}">
+{% endblock style %}
+
+<div class="container card_profile margin">
+  <div class="row">
+    <div class="col">
+      <img src="{% static url %}" class="profile_img" alt="{{ description }}">
+    </div>
+    <div class="col">
+      <h3 id="name">{{ name }}</h3>
+      <p id="email">{{ email }}</p>
+      <p id="tag_user">{{ tag_user }}</p> <!--Customer/Artisian-->
+    </div>
+    <div class="col">
+      <a href="{#{% url %}#}" id="btn_profile">Editar Perfil</a>
+    </div>
+  </div>
+</div>
