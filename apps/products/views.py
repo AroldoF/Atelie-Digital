@@ -4,6 +4,9 @@ from django.views import View
 from .forms import Product_Form, Product_Variant_Form, Attributes_Form
 
 
+def detailProduct(request):
+    return render(request, 'products/detailProduct.html')
+
 def searchProduct(request):
     return render(request, 'products/searchProduct.html')
 
