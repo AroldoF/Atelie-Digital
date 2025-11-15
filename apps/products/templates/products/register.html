@@ -1,0 +1,66 @@
+{% extends "shared/base_clean.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/register.css' %}">
+{% endblock style %}
+
+{% block main %}
+<section class="product-section">
+  <h1>Cadastro do Produto</h1>
+  <p>Crie e personalize seu produto</p>
+</section>
+<section class="product-info-section">
+      <form method="post">
+      {% csrf_token %}
+      <h3>Informações do Produto</h3>
+        {{ form_products.name|as_crispy_field }}
+        {{ form_products.description|as_crispy_field }}
+        <div class="upload-container">
+            <label for="id_image" class="upload-box">
+            <div class="upload-content">
+                <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" viewBox="0 0 48 48">
+                <path d="M8 40q-1.2 0-2.1-.9Q5 38.2 5 37V11q0-1.2.9-2.1Q6.8 8 8 8h32q1.2 0 2.1.9.9.9.9 2.1v26q0 1.2-.9 2.1-.9.9-2.1.9Zm0-3h32V11H8v26Zm3-4h26l-8.65-11.55-6.75 8.45-4.9-6.5Z"/>
+                </svg>
+                <p>Clique para fazer upload da imagem</p>
+            </div>
+            {{ form_products.image }}
+            </label>
+        </div>
+      </form> 
+  </section>
+
+<section class="product-info-section">
+    <form action="">
+    {% csrf_token %}
+        <h2>Variantes do Produto</h2>
+        {{ form_variant|crispy }}
+    </form>
+
+    <form class='attribute-form' action="">
+    {% csrf_token %}
+        <h4>Atributos da Variantes</h4>
+        <div class="inputs-row">
+          {{ form_attribute|crispy}}
+        </div>
+        <button type='button' id="addButton" class='btn btn-secondary'>Adicionar mais atributos</button>
+      </form>
+      
+      <!-- Aqui os resultados aparecerão -->
+      <div id="attributeList"></div>
+
+      <!-- Um input hidden que envia tudo junto depois -->
+      <input type="hidden" name="attributes_json" id="attributesData">
+</section>
+
+<section class="product-section">
+  <button class="btn btn-lg btn-primary button-cadastro" disable  type="submit">Cadastrar Produto</button>
+</section>
+
+{% endblock main %}
+
+{% block scripts %}
+<script src="{% static 'products/js/register.js' %}">
+</script>
+{% endblock scripts %}

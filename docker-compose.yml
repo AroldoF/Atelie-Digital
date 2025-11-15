@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  db:
+    image: bitnami/postgresql:latest
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - polls_pg_data:/bitnami/postgresql
+    
+volumes:
+  polls_pg_data:
