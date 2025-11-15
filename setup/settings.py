@@ -41,9 +41,15 @@ INSTALLED_APPS = [
     "apps.stores",
     "apps.utils",
     # terceiros
+    "crispy_forms",
+    "crispy_bootstrap5",
     "cloudinary",
     "cloudinary_storage",
 ]
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = ("bootstrap5",)
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

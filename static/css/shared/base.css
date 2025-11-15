@@ -203,3 +203,9 @@ h6 {
   color: color-mix(in srgb, var(--color-gray) 70%, white);
   opacity: 0.8;
 } 
+
+
+
+p{
+  margin: 0;
+}

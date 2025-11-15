@@ -10,7 +10,6 @@ class Orders(models.Model):
     created_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'orders'
 
 class Buys(models.Model):
@@ -21,6 +20,5 @@ class Buys(models.Model):
     price_total = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
-        managed = False
         db_table = 'buys'
 
