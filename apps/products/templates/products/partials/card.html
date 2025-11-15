@@ -4,40 +4,43 @@
   <link rel="stylesheet" href="{% static 'css/partials/card.css' %}">
 {% endblock style %}
 
-<a href="#">
+
   <div class="card" >
-    <div id="areaImg">
-      <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
-      <button id="hard">
-        <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
-      </button>
-    </div>
+    <a href="#">
+      <div id="areaImg">
+        <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
+        <button id="hard">
+          <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
+        </button>
+      </div>
+    </a>
     <div class="card-body">
+      <p id="description">{{ description }}</p>
       <div id="areaH">
-        <p id="description">{{ description }}</p>
+        <p id="price">{{ price }}</p>
         {% if off %}
           <div id="off">
             <img id="imgRaio" src="{% static 'media/icons/raio.svg'%}" alt="">
-            <p class="textTag" id="textOff">{{text}}% Off</p>
+            <p  id="textOff">{{text}}% Off</p>
           </div>
         {%endif%}
       </div>
-      <p id="price">{{ price }}</p>
+      
 
       {% if envioRapido %}
         <div id="envioRapido" class="car">
             <img class="imgCar" src="{% static 'media/icons/carro2.svg'%}" alt="">
-            <p class="textTag">Envio rápido</p>
+            <p class="textTagCar">Envio rápido</p>
         </div>
       {%endif%}
 
       {% if FreteGratis %}
         <div id="FreteGratis" class="car">
             <img class="imgCar" src="{% static 'media/icons/carro.svg'%}" alt="">
-            <p class="textTag">Frete grátis </p>
+            <p class="textTagCar">Frete grátis </p>
         </div>
       {%endif%}
 
     </div>
   </div>
-</a>
+

@@ -3,8 +3,8 @@
     transition: transform 0.3s ease-in-out;
     position: fixed;
     z-index: 1000;
-    bottom: 1.5rem;   
-    right: 1.5rem;  
+    bottom: 1.2rem;   
+    right: 0.5rem;  
     width: 60px;
     height: 60px;
 }
@@ -41,5 +41,13 @@
   #chat-icon{
     width: 50px;
     height: 50px;
+  }
+}
+
+
+@media screen and (max-width: 320px){
+  #chat-icon{
+    width: 40px;
+    height: 40px;
   }
 }

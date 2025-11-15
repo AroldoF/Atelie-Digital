@@ -51,8 +51,8 @@
 }
 
 .arrow-left .carousel-control-prev-icon, .arrow-right .carousel-control-next-icon{
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
