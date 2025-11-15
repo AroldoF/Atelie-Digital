@@ -12,18 +12,18 @@
         </div>
         <div class="col text-end">
             {% if status == 'progress' %}
-                <p class="tag" id="tag_progress">Em andamento</p>
+                <span class="tag" id="tag_progress">Em andamento</span>
             {% endif %}
 
             {% if status == 'delivered' %}
                 <div id="delivered">
-                    <p class="tag" id="tag_delivered">Entregue</p>
+                    <span class="tag" id="tag_delivered">Entregue</span>
                 </div>
             {% endif %}
 
             {% if status == 'cancelled' %}
                 <div id="cancelled">
-                    <p class="tag" id="tag_cancelled">Cancelado</p>
+                    <span class="tag" id="tag_cancelled">Cancelado</span>
                 </div>
             {% endif %}
         </div>

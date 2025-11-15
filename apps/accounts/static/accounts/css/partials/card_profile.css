@@ -1,14 +1,16 @@
 .card_profile{
     background-color: var(--color-surface);
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px 28px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
 }
 
 .profile_img{
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    overflow: hidden;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 p{
@@ -17,21 +19,58 @@ p{
 
 #name{
     color: #1f2937;
+    margin-bottom: 4px;
 }
 
 #email{
     color: #6b7280;
+    margin-bottom: 8px;
 }
 
 #tag_user{
     background-color: var(--color-primary);
     color: var(--color-background);
+    padding: 4px 12px;
     border-radius: 10px;
 }
 
 #btn_profile{
+    display: inline-block;
     background-color: var(--color-green);
     color: var(--color-background);
-    border-radius: 10px;
-    padding: 10px 20px;
+    border-radius: 12px;
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: 0.2s ease-in-out;
+}
+
+@media (max-width: 430px) {
+
+    /* Forçar a row a virar coluna */
+    .card_profile .row {
+        flex-direction: column !important;
+        text-align: center;
+    }
+
+    /* Tirar o ms-auto e centralizar tudo */
+    .card_profile .col-auto,
+    .card_profile .col {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Espaçamento entre os elementos */
+    .profile_img {
+        margin-bottom: 12px;
+    }
+
+    #tag_user {
+        display: inline-block;
+        margin-top: 8px;
+    }
+
+    #btn_profile {
+        margin-top: 16px;
+        display: inline-block;
+    }
 }
