@@ -3,6 +3,11 @@ from django.http import HttpResponse
 from django.views import View
 from .forms import Product_Form, Product_Variant_Form, Attributes_Form
 
+
+def searchProduct(request):
+    return render(request, 'products/searchProduct.html')
+
+
 class Product_Register_View(View):
     def get(self, request):
         context = {
@@ -11,3 +16,4 @@ class Product_Register_View(View):
             'form_attribute': Attributes_Form()
         }
         return render(request, 'products/register.html', context)
+

@@ -1,0 +1,55 @@
+{%extends "shared/base.html"%}
+{% load static %}
+{% block title %}Search Products{% endblock %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/searchProduct.css' %}">
+{% endblock style %}
+
+
+{% block main %}
+
+<main id="mainSearchProduct">
+<div id="areaFilter">
+
+  <div id="filter">
+    <img id="imgFilter" src="{% static 'products/media/icons/search.svg' %}" alt="Ícone de busca">
+  </div>
+
+  <div class="areaNameFilter">
+    <p class="textFilter">Cerâmica</p>
+  </div>
+
+  <div class="areaNameFilter">
+    <p class="textFilter">Tecidos</p>
+  </div>
+
+  <div class="areaNameFilter">
+    <p class="textFilter">Madeira</p>
+  </div>
+
+</div>
+
+<p class="textResult">Resultados para "caixa de joias"</p>
+
+<div id="areaResultsCards">
+
+   {% include 'products/partials/card.html' with url='products/media/caixaDeJoias.jpeg' description='Caixa de Joias' off=True text=30 price='R$ 22,00' envioRapido=True %}
+
+   {% include 'products/partials/card.html' with url='products/media/caixaDeJoias.jpeg' description='Caixa de Joias' off=True text=30 price='R$ 10,00' FreteGratis=True %}
+
+  {% include 'products/partials/card.html' with url='products/media/caixaDeJoias.jpeg' description='Caixa de Joias' off=True text=30 price='R$ 10,00' envioRapido=True %}
+
+  {% include 'products/partials/card.html' with url='products/media/caixaDeJoias.jpeg' description='Caixa de Joias' off=True text=30 price='R$ 10,00' FreteGratis=True %}
+
+  {% include 'products/partials/card.html' with url='products/media/caixaDeJoias.jpeg' description='Caixa de Joias' off=True text=30 price='R$ 10,00' FreteGratis=True %}
+
+</div>
+
+</main>
+
+
+
+
+{% endblock main %}
