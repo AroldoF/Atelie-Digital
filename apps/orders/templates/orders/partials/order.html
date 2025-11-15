@@ -1,0 +1,31 @@
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'orders/css/partials/order.css' %}">
+{% endblock style %}
+
+<div class="container card_order">
+    <div class="row align-items-center">
+        <div class="col justify-content-center ">
+            <p id="text_id" class="color">#{{ order_id }}</p>
+            <p id="text_date">{{ order_date }}</p>
+        </div>
+        <div class="col text-end">
+            {% if status == 'progress' %}
+                <p class="tag" id="tag_progress">Em andamento</p>
+            {% endif %}
+
+            {% if status == 'delivered' %}
+                <div id="delivered">
+                    <p class="tag" id="tag_delivered">Entregue</p>
+                </div>
+            {% endif %}
+
+            {% if status == 'cancelled' %}
+                <div id="cancelled">
+                    <p class="tag" id="tag_cancelled">Cancelado</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,29 +1,20 @@
 {% load static %}
 
-{% block style_products_favors %}
+{% block style %}
   <link rel="stylesheet" href="{% static 'accounts/css/partials/my_orders.css' %}">
-{% endblock style_products_favors %}
+{% endblock style %}
 
-<div class="card_orders">
-    <div>
-        <p id="text_id">#{{ order_id }}</p>
-        <p id="text_date">{{ order_date }}</p>
-    </div>
-    {% if progress %}
-        <div id="progress">
-            <p class="text_tag" id="tag_progress">Em andamento</p>
-        </div>
-    {% endif %}
-
-    {% if delivered %}
-        <div id="delivered">
-            <p class="text_tag" id="tag_delivered">Entregue</p>
-        </div>
-    {% endif %}
-
-    {% if cancelled %}
-        <div id="cancelled">
-            <p class="text_tag" id="tag_cancelled">Cancelado</p>
-        </div>
-    {% endif %}
+<div class="row">
+  <div class="col">
+    {% include 'orders/partials/order.html' with order_id='AT001234' order_date='15 de Janeiro, 2025' status='progress'%}
+  </div>
+  <div class="col">
+    {% include 'orders/partials/order.html' with order_id='AT001235' order_date='15 de Janeiro, 2025' status='delivered'%}
+  </div>
+  <div class="col">
+    {% include 'orders/partials/order.html' with order_id='AT001236' order_date='15 de Janeiro, 2025' status='delivered'%}
+  </div>
+  <div class="col">
+    {% include 'orders/partials/order.html' with order_id='AT001237' order_date='15 de Janeiro, 2025' status='cancelled'%}
+  </div>
 </div>

@@ -1,0 +1,22 @@
+.card_order{
+    background-color: var(--color-order);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tag{
+    background-color: var(--color-background);
+    border-radius: 10px;
+}
+
+#tag_progress{
+    color: var(--color-accent);
+}
+
+#tag_delivered{
+    color: var(--color-green);
+}
+
+#tag_cancelled{
+    color: var(--color-red);
+}
