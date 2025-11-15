@@ -6,14 +6,14 @@
 
 
   <div class="card" >
-    <a href="#">
-      <div id="areaImg">
-        <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
+    <div id="areaImg">
+      <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
+      {% if favor %}
         <button id="hard">
-          <img id="imgHard" src="{% static 'products/media/icons/favorite.svg' %}" alt="">
+          <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
         </button>
-      </div>
-    </a>
+      {%endif%}
+    </div>
     <div class="card-body">
       <p id="description">{{ description }}</p>
       <div id="areaH">

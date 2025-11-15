@@ -1,13 +1,15 @@
 :root {
-  /* ====== CORES BASE DA SUA IDENTIDADE ====== */
+ /* ====== CORES BASE ====== */
   --color-primary: #A65C35;
   --color-primary-dark: #A64735;
   --color-accent: #396787;
 
   --color-rose: #FFE9F5;
+  --color-order: #FFF6F1;
   --color-pink: #CF3774;
   --color-gold: #CDAA36;
   --color-green: #909010;
+  --color-red: #991B1B;
 
   --color-background: #FFFFFF;
   --color-surface: #EADDCF;
@@ -16,18 +18,116 @@
 
   --color-hover: #8B4513;
 
-  --font-size-h2-small:1.25em;
-  
-  --font-size-p--Xsmall: 0.625em;
-  --font-size-p-small: 0.75em;
-  --font-size-p-XXXsmall:0.301875em;
-  --font-size-p-XXsmall:0.363125em;
+  /* ====== FONTES BASE ====== */
 
- 
+  --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --font-family-heading: var(--font-family-base);
+  --font-family-mono: "Roboto Mono", monospace;
 
-  --line-height: 1em;
-  --letter-spacing:0.03125em;
 
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+
+  --font-size-xxs: 10px;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
+  --font-size-5xl: 40px;
+
+
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.6;
+}
+
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-relaxed);
+}
+
+
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+
+h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+
+h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+
+h4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+}
+
+/*-------  Tipografia dos produtos  ---------*/
+.product-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.product-price {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.product-price-old {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.product-description {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.button {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.input-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Botão primário — cor de destaque (verde institucional) */

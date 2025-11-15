@@ -1,0 +1,43 @@
+{% extends "shared/base.html" %} <!--Como verificar se esta puxando do base global-->
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'accounts/css/shared/profile.css' %}">
+{% endblock style %}
+
+{% block main %}
+<div class="container">
+    <h1 id="title">Meu Perfil</h1>
+
+    <!--Card de usuário-->
+    {% include 'accounts/partials/card_profile.html' with url='accounts/media/hermione.png' description='imagem do usuário' name='Hermione Granger' email='hermione.leviosa@gmail.com' tag_user='Cliente'%}
+
+    <!--Produtos favoritos-->
+    <div class="margin">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="title_section">Produtos Favoritos</h2>
+            </div>
+            <div class="col text-end">
+                <p class="color"><a href="">Ver todos</a></p>
+            </div>
+        </div>
+        {% include 'accounts/partials/products_favors.html' %}
+    </div>
+
+    <!--Meus pedidos-->
+    <div class="margin">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="title_section">Meus Pedidos</h2>
+            </div>
+            <div class="col text-end">
+                <p class="color"><a href="">Ver todos</a></p>
+            </div>
+        </div>
+        {% include 'accounts/partials/my_orders.html' %}
+    </div>
+</div>
+
+
+{% endblock main %}
