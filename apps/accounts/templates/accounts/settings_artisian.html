@@ -1,11 +1,17 @@
 {% extends 'accounts/settings.html' %}
+{% load static %}
 
 {% block content %}
 <!--criar conteúdo de texto-->
+<div class="border">
+    <p class="fonts_artisian">Você também cria produtos artesanais?</p>
 
-<p>Você também cria produtos artesanais?
+    <p class="fonts_artisian">Mude sua conta para o tipo Vendedor!</p>
 
-Mude sua conta para o tipo Vendedor!
+    <p class="fonts_artisian">A conta de vendedor permite comprar e vender no Ateliê Digital.</p>
 
-A conta de vendedor permite comprar e vender no Ateliê Digital.</p>
+    <a href="{#{% url %}#}" id="btn_profile">Ser um vendedor</a>
+</div>
+
+
 {% endblock %}
