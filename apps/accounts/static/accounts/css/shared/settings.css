@@ -1,0 +1,38 @@
+.margin{
+    margin: 30px 0 30px 0;
+}
+
+h1{
+    color: var(--color-primary)
+}
+
+/* Tira as bolinhas da lista */
+.tabs {
+    list-style: none;
+    gap: 20px;
+    padding: 0;
+    margin: 30px 0;
+}
+
+/* Links dentro da aba */
+.tabs li a {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #f5f2ee; 
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    color: #333;
+    transition: 0.2s ease;
+}
+
+/* Hover */
+.tabs li a:hover {
+    background: #ecdcc8;
+}
+
+/* Aba ativa */
+.tabs li a.active {
+    background: #f6d9a8;
+    color: #000;
+}

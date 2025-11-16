@@ -1,0 +1,42 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'accounts/css/shared/settings.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1 class="margin">Configurações do Perfil</h1>
+
+    <ul class="row tabs">
+        <li class="col-auto">
+            <a href="{% url 'settings_user' %}"
+            class="{% if request.resolver_match.url_name == 'settings_user' %}active{% endif %}">
+                Dados Pessoais
+            </a>
+        </li>
+
+        <li class="col-auto">
+            <a href="{% url 'settings_address' %}"
+            class="{% if request.resolver_match.url_name == 'settings_address' %}active{% endif %}">
+                Endereço
+            </a>
+        </li>
+
+        <li class="col-auto">
+            <a href="{% url 'settings_artisian' %}"
+            class="{% if request.resolver_match.url_name == 'settings_artisian' %}active{% endif %}">
+                Mudar para vendedor
+            </a>
+        </li>
+    </ul>
+    
+    <div class="col">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+
+</div>
+{% endblock %}
