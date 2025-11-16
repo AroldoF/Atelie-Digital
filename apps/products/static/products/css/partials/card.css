@@ -78,26 +78,25 @@
   display: flex;
   align-items: center;
   justify-content:flex-start;
-  gap: .5rem;
+  flex-wrap: nowrap;
+  gap: .8rem;
   
   
  
 }
-
 #off {
-  display: inline-flex;       
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  white-space: nowrap;         
-  min-width: max-content;    
- 
+  gap: 0.10375rem;
   background-color: var(--color-primary-dark);
   border-radius: 5px;
-  width: 90px;
-  padding: 0.2rem;
-  
-  line-height: 1; 
+  padding-inline: 0.25rem;
+
+  white-space: nowrap;
+  min-width: max-content;
 }
+
 
 #imgRaio{
   width: 10px;
@@ -108,6 +107,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
+  min-width: max-content;
+  flex-shrink: 1;
+
   gap: 0.2rem;
   border-radius: 5px;
   width: 130px;
@@ -134,7 +137,7 @@
 @media screen and (max-width: 425px){
 
   .card {
-    width: 9rem;
+    width: 10rem;
   }
 
   .card-body {
@@ -142,7 +145,7 @@
   }
 
   .img {
-    height: 9rem;
+    height: 10rem;
   }
 
   /* botão de favoritar */
@@ -177,7 +180,7 @@
 
   /* Tags de envio */
   .car{
-    width: 90px;
+    max-width: 90px;
     padding-block: 0.15rem;
     gap: .15rem;
     border-radius: 4px;
@@ -200,7 +203,7 @@
 
   .card-body {
   
-    gap: .5rem;
+    gap: .3rem;
   }
 
   .img {
@@ -228,9 +231,10 @@
     font-size:var(--font-size-p-XXsmall);
   }
   #off{
-    width: 29.71px;
-    padding-inline: 0.2rem; 
-    padding-block: 0.08rem; 
+    padding-inline: 0.1875rem;
+    padding-block: 0.0625rem;
+    border-radius: 2.25px;
+    min-width: max-content;
   }
   #textOff{
     font-size: var(--font-size-p-XXXsmall);
@@ -241,8 +245,9 @@
   }
 
   .car{
+    max-width: 60px;
     padding-block: 0.1rem;
-    width: 60px;
+    border-radius: 2.25px;
  
   }
   .car,#off{
