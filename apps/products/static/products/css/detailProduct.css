@@ -141,6 +141,8 @@
 }
 .areaPriceOff{
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
 }
 .textPriceRick{
@@ -154,11 +156,14 @@
 }
 
 #comprarButton{
-  background-color: #81BB29;
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  padding-block: 1.5rem;
+  justify-content: center;
+
+  background-color: #81BB29;
+
+  padding-block: 1.2rem;
   padding-inline: 1.8rem;
   border: none;
   border-radius: 10px;
@@ -183,10 +188,11 @@
 #adicionarButton{
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: center;
+  flex-wrap: nowrap;
   gap: 0.2rem;
   padding-inline: 1.3rem;
-  padding-block: 0.5rem;
+  padding-block: 0.4rem;
 
   background-color: var(--color-primary);
   border: none;
@@ -198,6 +204,9 @@
     width: 190px; /* escolha o valor */
 }
 
+#adicionarButton p {
+    white-space: nowrap;
+}
 #imgShopping{
   width: 14px;
   height: 14px;
@@ -381,7 +390,16 @@
   h2 {
       font-size: 1.25rem;
   }
+  .areaPriceOff p,.textPriceRick{
+        font-size: 0.633125rem;  
+        line-height: 1.2;
+        white-space: nowrap;
+    }
 
+  .textPrice {
+      font-size: 1.1rem;
+  }
+  
   /* area F */
 
   .areaF {
@@ -453,8 +471,13 @@
 }
 
 
+@media screen and (max-width: 375px){
+  .tipoLoja p {
+        font-size: 0.5rem;
+    }
+}
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1200px) {
 
     #areaDivisao {
         padding: 4rem;
