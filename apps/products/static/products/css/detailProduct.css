@@ -82,6 +82,13 @@
 
 /* Para cada area  */
 
+
+.area0{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 /* Area A */
 .areaA{
   display: flex;
@@ -284,12 +291,14 @@
     #areaDivisao {
         padding: 4rem;
         display: grid;
-        grid-template-columns: 1fr 1fr; 
+        grid-template-columns: 1fr 1fr;
         grid-template-areas:
-            "areaB areaC"
-            "areaB areaD"
-            "areaA areaA";
-        gap: 2rem; 
+            "areaB areaO"
+            "areaB rightColumnBottom";
+        gap: 2rem;
+    }
+    .area0 {
+      grid-area: areaO;
     }
 
     .areaA { 
@@ -298,17 +307,26 @@
     .areaB { 
       grid-area: areaB; 
     }
+
+    .rightColumnBottom {
+        grid-area: rightColumnBottom;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end; /* topo e base */
+        height: 100%;
+    }
     .areaC { 
-      grid-area: areaC; 
+      align-items: normal;
     }
     .areaD { 
-      grid-area: areaD; 
+     
     }
     .areaF { 
-      grid-area: areaF; 
+     
     }
     .areaG { 
-      grid-area: areaG; }
+      
+    }
 
     
     
