@@ -1,0 +1,21 @@
+{% load static%}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/partials/drop.css' %}">
+{% endblock style %}
+
+<div class="drop">
+  <button class="dropHeader">
+    <span class="dropTitle">{{ title }}</span>
+    <img class="dropIcon" src="{% static 'products/media/icons/chevron-down.svg' %}">
+  </button>
+
+  <div class="dropContent">
+    <p>{{ content }}</p>
+  </div>
+</div>
+
+
+{% block scripts %}
+<script src="{% static 'products/js/partials/drop.js' %}"></script>
+{% endblock scripts %}

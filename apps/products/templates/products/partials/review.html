@@ -1,0 +1,35 @@
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/partials/review.css' %}">
+{% endblock style %}
+
+
+<div class="rating-component">
+
+    <ul id="review">
+        <li class="liStar">
+            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação" class="imgStar">
+        </li>
+        <li class="liStar">
+            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação"
+            class="imgStar">
+        </li>
+        <li class="liStar">
+            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação 3"class="imgStar">
+        </li>
+        <li class="liStar">
+            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação 4" class="imgStar">
+        </li>
+        <li class="liStar">
+            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação 5" class="imgStar">
+        </li>
+    </ul>
+
+    <p class="review-count">(120)</p>
+</div>
+
+
+{% block scripts %}
+<script src="{% static 'products/js/partials/review.js' %}"></script>
+{% endblock scripts %}

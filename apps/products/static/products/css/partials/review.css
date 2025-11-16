@@ -1,0 +1,57 @@
+
+.rating-component {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; 
+    border: 0.51px solid hsla(0, 1%, 27%, 0.23); 
+    display: inline-flex; 
+    border-radius: 9px;
+    padding-inline: 2.55px;
+    padding-block: 1px;
+}
+
+
+#review {
+    display: flex;
+    gap: 0.2rem; 
+    padding: 2px;
+   
+    margin: 0;
+ 
+}
+
+
+.liStar {
+    list-style: none; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.imgStar {
+  
+    width: 1.2em; 
+    height: 1.2em;
+    filter: drop-shadow(0 0 1px rgba(0,0,0,0.2));
+}
+
+
+.review-count {
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+@media (max-width: 480px) {
+    .rating-component {
+        font-size: 0.8rem; 
+    }
+    #review {
+        gap: 0.1rem; 
+    }
+}
