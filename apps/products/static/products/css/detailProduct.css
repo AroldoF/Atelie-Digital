@@ -1,7 +1,8 @@
 #mainDetalheProduto{
-  padding: 4rem;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+  padding: 3rem;
  
 }
 
@@ -237,6 +238,7 @@
 .areaG{
   display: flex;
   flex-direction: column;
+  
   gap: 1rem;
 }
 .areaG p{
@@ -274,4 +276,40 @@
   #mainDetalheProduto{
     padding: 1rem;
  }
+}
+
+
+@media screen and (min-width: 1200px) {
+
+    #areaDivisao {
+        padding: 4rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        grid-template-areas:
+            "areaB areaC"
+            "areaB areaD"
+            "areaA areaA";
+        gap: 2rem; 
+    }
+
+    .areaA { 
+      grid-area: areaA; 
+    }
+    .areaB { 
+      grid-area: areaB; 
+    }
+    .areaC { 
+      grid-area: areaC; 
+    }
+    .areaD { 
+      grid-area: areaD; 
+    }
+    .areaF { 
+      grid-area: areaF; 
+    }
+    .areaG { 
+      grid-area: areaG; }
+
+    
+    
 }
