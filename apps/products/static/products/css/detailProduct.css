@@ -283,7 +283,13 @@
 }
 
 
-@media screen and (max-width: 400px) {
+
+
+
+
+
+
+@media screen and (max-width: 425px) {
 
   #mainDetalheProduto {
       padding: 0.5rem;
@@ -316,12 +322,12 @@
   }
 
   h2 {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       text-align: center;
   }
 
   .textAcessorio {
-      font-size: 1rem;
+      font-size: 1.3rem;
   }
 
   
@@ -346,13 +352,122 @@
       padding-inline: 0.8rem;
   }
 
+  /* area F */
+  .areaF {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  #areaLogoLoja {
+    gap: 0.5rem;
+  }
+  #areaNomeLoja h4 {
+      font-size: 0.95rem;  
+      line-height: 1.1;
+  }
+
+  #areaNomeLoja p {
+      font-size: 0.75rem;   
+      line-height: 1;
+  }
+
+  #imgLogoLoja {
+    width: 45px;
+    height: 45px;
+  }
+
+  #areaNomeLoja {
+    font-size: 0.9rem;
+  }
+
+  #areaTipoLoja {
+    gap: 0.5rem;
+  }
+
+  .tipoLoja {
+    padding: 0.2rem 0.4rem;
+  }
+
+  .tipoLoja p {
+    font-size: 0.7rem;
+  }
+
   
 }
 
+@media screen and (max-width: 320px) {
+   h2 {
+      font-size: 1.3rem;
+   }
+  /* area F */
+  .areaF {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  #areaLogoLoja {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  #imgLogoLoja {
+    width: 38px;
+    height: 38px;
+  }
+
+  #areaNomeLoja {
+    font-size: 0.8rem;
+  }
+
+  #areaTipoLoja {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+  }
+
+  .tipoLoja {
+    padding: 0.15rem 0.3rem;
+    border-radius: 4px;
+  }
+
+  .tipoLoja p {
+    font-size: 0.65rem;
+  }
 
 
+  /* area G */
+  .areaG {
+    gap: 0.7rem;
+  }
 
-@media screen and (min-width: 1200px) {
+  .areaG p {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  #chatButton {
+    gap: 0.3rem;
+    padding-inline: 0.7rem;
+    padding-block: 0.15rem;
+  }
+
+  #chatButton img {
+    width: 12px;
+    height: 12px;
+  }
+
+  #chatButton p {
+    font-size: 0.75rem;
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
 
     #areaDivisao {
         padding: 4rem;
