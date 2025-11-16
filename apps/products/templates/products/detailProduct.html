@@ -52,25 +52,31 @@
 
 
   <div class="areaD">
-    <div>
-      <div>
-        <p>R$ 55,00</p>
-         <div id="off">
-            <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
-            <p  id="textOff">30% Off</p>
-          </div>
+    <div class="areaPriceButton">
+      <div class="areaPrice">
+        <div class="areaPriceOff">
+          <p>R$ <span class="textPriceRick">55,00</span> </p>
+           <div id="off">
+              <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
+              <p  id="textOff">30% Off</p>
+            </div>
+        </div>
+        <p class="textPrice">R$ 40,70</p>
       </div>
+
+      <button id="comprarButton">
+        <img  class="iconComprarButton" src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
+        <p class="textComprarButton">Comprar</p>
+      </button>
     </div>
 
-    <button id="comprar-btn">
-      <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
-      <p>Comprar</p>
+   
+  <div class="areaAdicionar">
+    <button id="adicionarButton">
+      <img id="imgShopping" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
+      <p class="addCart">Adicionar ao Carrinho</p>
     </button>
-
-    <button id="adicionar-btn">
-      <img src="products/media/icons/shoppingCart.svg" alt="">
-      <p>Adicionar ao Carrinho</p>
-    </button>
+  </div>
 
   </div>
 
