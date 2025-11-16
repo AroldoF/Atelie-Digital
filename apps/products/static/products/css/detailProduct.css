@@ -193,6 +193,10 @@
   border-radius: 5px;
 }
 
+#comprarButton,
+#adicionarButton {
+    width: 190px; /* escolha o valor */
+}
 
 #imgShopping{
   width: 14px;
@@ -288,25 +292,21 @@
 
 
 
-
 @media screen and (max-width: 425px) {
 
   #mainDetalheProduto {
       padding: 0.5rem;
   }
 
-
   .carouselProduto {
       max-width: 200px;
   }
 
-  
   #searchProduct {
       right: -35px;
       width: 26px;
       height: 26px;
   }
-
 
   .carousel-btn.prev {
       left: -40px;
@@ -331,9 +331,12 @@
   }
 
   
+  #comprarButton,
+  #adicionarButton {
+      width: 160px;   
+  }
+
   #comprarButton {
-      padding-block: 1rem;
-      padding-inline: 1.2rem;
       border-radius: 8px;
   }
 
@@ -342,62 +345,39 @@
       height: 26px;
   }
 
-
   .textPrice {
       font-size: 1.3rem;
   }
 
- 
   #adicionarButton {
       padding-inline: 0.8rem;
+      justify-content: center; 
   }
 
   /* area F */
   .areaF {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
   }
 
   #areaLogoLoja {
-    gap: 0.5rem;
+      gap: 0.5rem;
   }
+
+  
+  #imgLogoLoja {
+      width: 60px;   
+      height: 60px;
+  }
+
   #areaNomeLoja h4 {
       font-size: 0.95rem;  
       line-height: 1.1;
   }
-
-  #areaNomeLoja p {
-      font-size: 0.75rem;   
-      line-height: 1;
-  }
-
-  #imgLogoLoja {
-    width: 45px;
-    height: 45px;
-  }
-
-  #areaNomeLoja {
-    font-size: 0.9rem;
-  }
-
-  #areaTipoLoja {
-    gap: 0.5rem;
-  }
-
-  .tipoLoja {
-    padding: 0.2rem 0.4rem;
-  }
-
-  .tipoLoja p {
-    font-size: 0.7rem;
-  }
-
-  
 }
-
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 375px) {
    h2 {
       font-size: 1.3rem;
    }
@@ -440,6 +420,7 @@
   }
 
 
+
   /* area G */
   .areaG {
     gap: 0.7rem;
@@ -467,7 +448,7 @@
 
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1000px) {
 
     #areaDivisao {
         padding: 4rem;
