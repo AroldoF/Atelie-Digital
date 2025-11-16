@@ -81,10 +81,10 @@
   </div>
 
   <div class="areaF">
-    <div>
-      <img src="products/media/logoLoja.jpg" alt="">
-      <div>
-        <h2>Val Laços</h2>
+    <div id="areaLogoLoja">
+      <img id="imgLogoLoja" src="{% static 'products/media/logoLoja.jpg' %}" alt="">
+      <div id="areaNomeLoja">
+        <h4>Val Laços</h4>
         <p>Princesa Estilosa</p>
       </div>
     </div>
@@ -94,14 +94,22 @@
       <p>Acessórios</p>
     </div>
 
-    <div class="modaInfantil">
+    <div class="tipoLoja">
       <p>Moda Infantil</p>
     </div>
+
   </div>
    
    
   </div>
 
+  <div class="areaG">
+    <p>Você pode entrar em contato com o artesão e solicitar produtos personalizados especialmente para você.</p>
+    <button id="chatButton">
+      <p>Chat para personalização</p>
+      <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
+    </button>
+  </div>
 
 
 </main>
