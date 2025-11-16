@@ -186,6 +186,83 @@
   
 }
 
+/* area F */
+
+.areaF{
+  display: flex;
+  justify-content: space-between;
+}
+
+#areaLogoLoja{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#areaNomeLoja{
+  color: var(--color-primary);
+}
+
+
+#areaTipoLoja{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  
+}
+
+#imgLogoLoja{
+  width: 70px;
+  height: 70px;
+ 
+  
+}
+.tipoLoja{
+  border: 1px solid var(--color-green);
+  padding: 0.3rem;
+  border-radius: 5px;
+}
+.tipoLoja p{
+  color: var(--color-primary);
+  font-size: var(--font-size-p-small);
+  font-weight: bold;
+}
+
+/* area G */
+.areaG{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.areaG p{
+  text-align: center;
+}
+
+
+#chatButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  margin: auto;
+  padding-inline: 1rem;
+  padding-block: 0.2rem;
+
+  background-color: var(--color-background);
+  border: 1px solid var(--color-gold);
+  border-radius: 5px;
+  width: fit-content;
+}
+
+#chatButton p{
+  color: var(--color-gold);
+}
+
+#chatButton img{
+  width: 15px;
+  height: 15px;
+}
+
 
 @media screen and (max-width: 425px){
   #mainDetalheProduto{
