@@ -1,0 +1,34 @@
+.drop {
+  border-bottom: 1px solid #d9d9d9;
+  padding-block: .5rem;
+}
+
+.dropHeader {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: .5rem 0;
+  cursor: pointer;
+}
+.dropTitle{
+  color: var(--color-primary);
+}
+
+.dropIcon {
+  width: 18px;
+  height: 18px;
+  transition: transform .3s ease;
+}
+
+.dropContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease;
+}
+.drop.open .dropContent {
+  max-height: 300px;
+}
