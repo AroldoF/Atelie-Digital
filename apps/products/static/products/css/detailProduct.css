@@ -12,17 +12,9 @@
     max-width: 300px;
     margin: 0 auto;
     position: relative;
+
+    
 }
-
-#searchProduct{
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  
-
-  
-}
-
 
 .carouselInner {
     position: relative;
@@ -38,6 +30,17 @@
     display: block;
 }
 
+#searchProduct{
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  position: absolute;
+  top: 10%;
+  transform: translateY(-50%);
+  right: -49px;
+}
+
+
 .carousel-btn {
     position: absolute;
     top: 50%;
@@ -48,16 +51,19 @@
 }
 
 .carousel-btn.prev {
-    left: -40px;
+
+    left: -60px;
 }
 
 .carousel-btn.next {
-    right: -40px;
+    right: -60px;
 }
 
+
+
 .arrow {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
 }
 
 .carousel-dots {
