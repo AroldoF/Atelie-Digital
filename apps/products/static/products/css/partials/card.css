@@ -78,25 +78,25 @@
   display: flex;
   align-items: center;
   justify-content:flex-start;
-  gap: .5rem;
+  flex-wrap: nowrap;
+  gap: .8rem;
   
   
  
 }
-
 #off {
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.10375rem;
- 
   background-color: var(--color-primary-dark);
   border-radius: 5px;
-  width: 90px;
-  padding: 0.2rem;
-  
-  line-height: 1; 
+  padding-inline: 0.25rem;
+
+  white-space: nowrap;
+  min-width: max-content;
 }
+
 
 #imgRaio{
   width: 10px;
@@ -107,6 +107,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
+  min-width: max-content;
+  flex-shrink: 1;
+
   gap: 0.2rem;
   border-radius: 5px;
   width: 130px;
@@ -130,16 +134,76 @@
   background-color: var(--color-green);
 }
 
-
-
 @media screen and (max-width: 425px){
+
+  .card {
+    width: 10rem;
+  }
+
+  .card-body {
+    gap: .6rem;
+  }
+
+  .img {
+    height: 10rem;
+  }
+
+  /* botão de favoritar */
+  #hard {
+    width: 38px;
+    height: 38px;
+    top: 4px;
+    right: 4px;
+  }
+
+  #imgHard {
+    width: 20px;
+    height: 20px;
+  }
+
+  #description{
+    font-size: var(--font-size-p-small);
+  }
+
+  #price{
+    font-size: 1.2em;
+  }
+
+
+  #textOff{
+    font-size: var(--font-size-p--Xsmall);
+  }
+
+  #imgRaio{
+    width: 7px;
+  }
+
+  /* Tags de envio */
+  .car{
+    max-width: 90px;
+    padding-block: 0.15rem;
+    gap: .15rem;
+    border-radius: 4px;
+  }
+
+  .imgCar{
+    width: 18px;
+  }
+
+  .textTagCar{
+    font-size: var(--font-size-p--Xsmall);
+  }
+}
+
+
+@media screen and (max-width: 375px){
   .card {
     width:7rem;
   }
 
   .card-body {
   
-    gap: .5rem;
+    gap: .3rem;
   }
 
   .img {
@@ -167,9 +231,10 @@
     font-size:var(--font-size-p-XXsmall);
   }
   #off{
-    width: 29.71px;
-    padding-inline: 0.1875rem; 
-    padding-block: 0.0625rem; 
+    padding-inline: 0.1875rem;
+    padding-block: 0.0625rem;
+    border-radius: 2.25px;
+    min-width: max-content;
   }
   #textOff{
     font-size: var(--font-size-p-XXXsmall);
@@ -180,8 +245,9 @@
   }
 
   .car{
+    max-width: 60px;
     padding-block: 0.1rem;
-    width: 60px;
+    border-radius: 2.25px;
  
   }
   .car,#off{
