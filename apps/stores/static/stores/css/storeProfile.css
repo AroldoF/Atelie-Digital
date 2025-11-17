@@ -9,7 +9,7 @@
   height: 150px;
   border-radius: 12px;
   background-image: url('../media/banner.png');
-  
+
   background-size: cover;
   background-position:  center;   
   background-repeat: no-repeat;
@@ -28,4 +28,43 @@
   object-fit: cover;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;     
+}
+
+
+.storeInfo{
+    margin-block: 1rem;
+    padding-inline: 1rem;
+}
+.storeInfo h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+
+}
+
+.storeInfo .store-tagline {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.storeInfo h1, .store-tagline,.category-btn{
+    color: var(--color-primary);
+}
+
+
+.storeCategories {
+  display: flex;
+  gap:1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.category-btn {
+  padding: 0.4rem 0.4rem;
+  background-color: #fff;
+  border: 1px solid var(--color-green);
+  border-radius: 9px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
