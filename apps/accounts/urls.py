@@ -8,5 +8,6 @@ urlpatterns = [
     path("settings/", views.settings, name="settings"),
     path("settings/user", views.settings_user, name="settings_user"),
     path("settings/address", views.settings_address, name="settings_address"),
-    path("settings/artisian", views.settings_artisian, name="settings_artisian")
+    path("settings/artisian", views.settings_artisian, name="settings_artisian"),
+    path('addresses/register', views.AddressesRegister.as_view(), name='addresses')
 ]

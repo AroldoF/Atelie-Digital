@@ -1,0 +1,58 @@
+{% extends "shared/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Endereços{% endblock %}
+
+{% block style %}
+
+{% endblock style %}
+{% block main %}
+    <div class='container d-flex justify-content-center align-items-center my-5'>
+
+    <div class='glass-card p-4 border rounded-3 shadow-sm bg-white'>
+        <h2 class='mb-4 fw-semibold'>Cadastrar Endereço</h2>
+
+        <section>
+            <form class='m-space-2' action="">
+                {% csrf_token %}
+                {{ form.street|as_crispy_field }}
+                <div class="row">
+                    <div class="col-md-8">
+                        {{ form.neighborhood|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.number|as_crispy_field }}
+                    </div>
+                </div>
+                {{ form.complement|as_crispy_field }}
+                {{ form.cep|as_crispy_field }}
+                <div class='row'>
+                    <div class='col-md-8'>
+                        {{ form.city|as_crispy_field }}
+                    </div>
+                    <div class='col-md-4'>
+                        {{ form.state|as_crispy_field }}
+                    </div>
+                </div>
+                <div class='mt-3 d-flex w-100 justify-content-between gap-2'>
+                    <a class='btn btn-danger' href="{% url 'orders:confirm-address' %}">
+                       Cancelar
+                    </a>
+                    <a href="{% url 'orders:confirm-address' %}">
+                        <button type="submit" class="btn btn-primary">Cadastrar Endereço</button>
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+    </div>
+<style>
+.glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+</style>
+{% endblock main %}

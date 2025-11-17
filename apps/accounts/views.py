@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .forms import FormLogin, FormRegisterUser, FormEditUser, FormAdressUser
+from .forms import FormLogin, FormRegisterUser, FormEditUser, FormAdressUser,  AddressesForm
+from django.views import View
 # Create your views here.
 
 
@@ -38,3 +39,9 @@ def settings_address(request):
 def settings_artisian(request):
     return render(request, 'accounts/settings_artisian.html')
 
+class AddressesRegister(View):
+    def get(self, request):
+        context = {
+            'form': AddressesForm
+        }
+        return render(request, 'accounts/addresses.html', context)

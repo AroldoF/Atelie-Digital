@@ -1,0 +1,98 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Confirmar Endereço{% endblock %}
+
+{% block main %}
+<div class='p-0 m-0 row d-flex justify-content-center align-self-center gap-3 w-100'>
+
+<div class='col-12 col-lg-5 d-flex justify-content-evenly align-items-center row gap-4 p-lg-5 p-3'>
+    <h2 class='mb-3 fs-1 text-center'>Opções de Entrega</h2>
+
+    <section>
+        <div class='mb-4'>
+            <h3 class='text-center'>Selecione o Endereço</h3>
+            <div class='mb-4 bg-white border shadow p-4 rounded d-flex gap-4'>
+                        <div class="col-1 d-flex align-items-center">
+                            <input type="radio">
+                        </div>
+                        <div class='w-100'>
+                            <div class='d-flex justify-content-between mb-4'>
+                                <a class='address-home rounded'>Casa</a>
+                                <a class='address-edit'>Editar</a>
+                            </div>
+                            <p>Rua de Testes</p>
+                            <p>Bairro Centro</p>
+                            <p>Pau dos Ferros, RN - 59900-000</p>
+                        </div>
+                    </div>
+            {% comment %} {% if addresses %}
+                {% for adrress in addresses %} 
+                    <div class='mb-4 bg-white border shadow p-4 rounded d-flex gap-4'>
+                        <div class="col-1 d-flex align-items-center">
+                            <input type="radio">
+                        </div>
+                        <div class='w-100'>
+                            <div class='d-flex justify-content-between mb-4'>
+                                <a class='address-home rounded'>Casa</a>
+                                <a class='address-edit'>Editar</a>
+                            </div>
+                            <p>Rua de Testes</p>
+                            <p>Bairro Centro</p>
+                            <p>Pau dos Ferros, RN - 59900-000</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class='lw-3 my-4 text-center'>Não tem endereços cadastrados</p>
+            {% endif %} {% endcomment %}
+
+            <!-- MOBILE = 100% / DESKTOP = 50% -->
+            <a href="{% url 'addresses' %}" class="btn btn-secondary d-block mx-auto w-100 w-lg-50">
+                Adicionar endereço
+            </a>
+        </div>
+    </section>
+
+    <section class="col-12 m-0 align-self-start">
+        <h3 class='text-center mb-3'>Selecione o frete</h3>
+
+        <!-- MOBILE = 100% / DESKTOP = 50% -->
+        <div class="choises mb-4 p-4 rounded d-flex gap-4 shadow w-100 w-lg-50 mx-auto">
+            
+            <div class="col-1 d-flex align-items-center">
+                <input type="radio">
+            </div>
+
+            <div class="w-100">
+                <div class="row">
+                    <p class="col fw-bold">Expresso</p>
+                    <p class="col fw-semibold text-nowrap lg-text-end">R$ 15,99</p>
+                </div>
+                <p>Receba em até 3 dias úteis</p>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+{% include "orders/partials/orders-menu.html" %}
+</div>
+
+<style>
+    .address-home {
+        background-color: #EED2A5;
+        padding: 4px 12px;
+        color: #D26B21;
+    }
+    .address-edit {
+        color: #D26B21;
+        align-self: center;
+        cursor: pointer;
+    }
+    .choises {
+        background-color: #EED2A5;
+        color: #D26B21;
+    }
+</style>
+
+{% endblock main %}
