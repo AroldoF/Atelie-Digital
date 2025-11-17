@@ -139,3 +139,87 @@ ul{
     margin-top: 2rem;
 }
 
+@media (min-width: 768px) {
+  .storeProfile {
+    padding: 2rem;
+  }
+
+  .storeBanner {
+    height: 200px;
+  }
+
+  
+  .store-logo {
+    bottom: -50px; 
+    width: 100px;
+    height: 100px;
+  }
+
+  .storeInfo h1 {
+    font-size: 2rem;
+  }
+
+  .storeInfo .store-tagline {
+    font-size: 1rem;
+  }
+
+  .category-btn {
+    font-size: 1rem;
+  }
+
+  .storeDescription li {
+    font-size: 1rem;
+  }
+
+  .tab-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .storeProfile {
+    margin: 0 auto;
+    padding: 4rem;
+  }
+
+  .storeBanner {
+    height: 250px;
+    border-radius: 16px;
+  }
+
+  
+  .store-logo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .storeInfo h1 {
+    font-size: 2.5rem;
+  }
+
+  .storeInfo .store-tagline {
+    font-size: 1.2rem;
+  }
+
+  
+
+  .productsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .storeTabs {
+    overflow-x: visible;
+    white-space: normal;
+    justify-content: flex-start;
+  }
+
+  .tab-btn.active::after {
+    width: 70%;
+  }
+}
