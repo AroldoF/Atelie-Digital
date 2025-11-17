@@ -1,0 +1,19 @@
+{% load static %}
+
+<div class="cart-item-card">
+    
+    <img src="{% static image_path %}" alt="{{ product_name }}">
+    
+    <div class="cart-item-details">
+        <h4>{{ product_name }}</h4>
+        
+        <p>Vendido por: {{ store_name }}</p>
+    </div>
+    
+    <div class="cart-item-price">
+        <strong>R$ {{ product_price }}</strong>
+        <button>Remover</button>
+    </div>
+
+</div>
+

@@ -1,0 +1,22 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'orders/css/shared/shopping_cart.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <section id="section_main">
+    <div id="cart_itens">
+      <h3>Meu Carrinho</h3>
+      <p>3 itens</p>
+    </div>
+    
+        {% include 'orders\partials\cart_products.html' with product_name="Caixa de Joias (Manual)" image_path="media\caixaDeJoias.jpeg" store_name="Dona Valdivania Store" product_price="20,40" %}
+
+    <section id="info_order">
+
+
+    </section>
+  </section>
+{% endblock %}

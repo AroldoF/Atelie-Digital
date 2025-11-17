@@ -1,0 +1,24 @@
+#cart_itens{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+#section_main{
+}
+
+.cart-item-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 50px;
+    border-color: black;
+    border-style: solid;
+}
+
+.cart-item-card img{
+    width: 100px;
+    height: 100px;
+}
+
