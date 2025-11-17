@@ -100,7 +100,8 @@ class FormEditUser(forms.Form):
         max_length=11, 
         label="CPF",
         widget=forms.TextInput(attrs={
-            'placeholder': '00122099098'
+            'placeholder': '00122099098',
+            'disabled': 'disabled'
         }),
         help_text= "Insira somente a numeração"
     )
@@ -157,5 +158,5 @@ class FormAdressUser(forms.Form):
     state = forms.MultipleChoiceField(
         choices=BRAZILIAN_STATES,
         label="Estado",
-        widget=forms.SelectMultiple
+         widget=forms.Select(attrs={'class': 'form-select'})
     )
