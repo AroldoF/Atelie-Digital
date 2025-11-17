@@ -8,16 +8,31 @@
     <h2>{{ title }}</h2>
     <p>{{ info_text }}</p>
     
-    <form method="POST">
+    <form method="POST" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
         {% csrf_token %}
     
         {% for field in form %}
+            {% if field.name == 'profile_image' %}
+                <div class="form_group profile-upload-wrapper">
+                    <div class="image-preview-container">
+                        <img id="img-preview" src="{% static 'accounts/media/hermione.png' %}" alt="Foto de Perfil">
+                    </div>
+
+                    <div class="input-hidden-container">
+                        {{ field }} 
+                    </div>
+
+                    <label for="{{ field.id_for_label }}" class="btn-upload-custom">
+                        Alterar Foto
+                    </label>
+                </div>
+            {% else %}
             <div class="form_group">
                 <label for="{{ field.id_for_label }}" class="form_label">{{ field.label }}</label> 
                 {{ field.errors }}
                 {{ field }} 
             </div>
-            
+            {% endif %}
             <!--Retorna somente na tela de login-->
             {% if field.name == 'password' and title == 'Acessar conta'%}
                 <p>
@@ -49,3 +64,5 @@
         </p>
     {% endif %}
 </div>
+
+<script src="{% static 'accounts/js/partials/forms.js' %}"></script>

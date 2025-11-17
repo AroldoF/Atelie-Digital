@@ -96,6 +96,13 @@ class FormRegisterUser(forms.Form):
 
 
 class FormEditUser(forms.Form):
+    profile_image = forms.ImageField(
+        label="Foto de Perfil",
+        required=False, # False para não obrigar o usuário a trocar a foto toda vez
+        widget=forms.FileInput(attrs={
+            'accept': 'image/*' # Opcional: ajuda o navegador a filtrar apenas imagens
+        })
+    )
     cpf = forms.CharField(
         max_length=11, 
         label="CPF",

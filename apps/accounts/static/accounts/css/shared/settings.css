@@ -1,5 +1,5 @@
 .margin{
-    margin: 30px 0 50px 0;
+    margin: 40px 0 35px 0;
 }
 
 h1{
@@ -11,10 +11,14 @@ h1{
     list-style: none;
     gap: 20px;
     padding: 0;
-    margin: 30px 0;
+    margin: 30px 0 0 0;
 }
 
 /* Links dentro da aba */
+.tabs li{
+    padding: 0;
+}
+
 .tabs li a {
     display: inline-block;
     padding: 10px 20px;
