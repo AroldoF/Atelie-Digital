@@ -1,3 +1,6 @@
 from django.urls import path
+from . import views
 
-urlpatterns = []
+urlpatterns = [
+     path('store-profile/', views.storeProfile, name='storeProfile'),
+]
