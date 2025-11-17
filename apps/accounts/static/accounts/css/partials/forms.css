@@ -20,7 +20,7 @@ a{
     border: 1px solid #A65C35; 
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px;
+    margin: 20px 0 20px 0;
 }
 
 /* Estilos para os campos de formulário (inputs) */
@@ -86,8 +86,58 @@ a{
 }
 
 
+/* CSS DA IMAGEM */
+
+/* Container que alinha a foto e o botão lado a lado */
+.profile-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espaço entre a foto e o botão */
+    margin-bottom: 20px;
+}
+
+/* Estilo da imagem redonda */
+.image-preview-container img {
+    width: 150px; 
+    height: 150px;
+    border-radius: 50%; 
+    object-fit: cover; /* Garante que a imagem não fique esticada */
+    border: 1px solid #EFF0F6; 
+}
+
+/* Esconde o input file original do navegador */
+.input-hidden-container input[type="file"] {
+    display: none;
+}
+
+/* Estilo do Botão "Alterar Foto" */
+.btn-upload-custom {
+    background-color: var(--color-green); /* Cor marrom da sua imagem */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-sm);
+    transition: background 0.3s;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.btn-upload-custom:hover {
+    background-color: #858110; /* Marrom um pouco mais escuro no hover */
+}
+
 /* MEDIA QUERY: Ajustes para telas pequenas */
 @media (max-width: 425px) {
-    
+    .profile-upload-wrapper{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .image-preview-container{
+        margin-bottom: 20px;
+    }
 
 }

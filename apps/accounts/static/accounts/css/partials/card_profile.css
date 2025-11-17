@@ -41,7 +41,12 @@ p{
     border-radius: 12px;
     padding: 10px 22px;
     text-decoration: none;
-    transition: 0.2s ease-in-out;
+    cursor:pointer;
+    transition: background 0.3s;
+}
+
+#btn_profile:hover{
+    background-color: #858110;
 }
 
 @media (max-width: 430px) {

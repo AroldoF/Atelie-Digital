@@ -1,0 +1,10 @@
+{% extends 'accounts/settings.html' %}
+{% load static %}
+
+{% block content %}
+
+<div>
+    {% include "accounts/partials/forms.html" with btn_text="Salvar" form=form %}
+</div>
+
+{% endblock %}
