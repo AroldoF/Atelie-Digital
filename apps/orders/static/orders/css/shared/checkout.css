@@ -1,16 +1,8 @@
-/* Cores personalizadas conforme o design */
-.btn-orange {
-    background-color: #FF6B00;
-    border-color: #FF6B00;
-}
-.btn-orange:hover {
-    background-color: #e05d00;
-    border-color: #e05d00;
-}
 .bg-security {
-    background-color: #e8f9f0 !important;
+    background-color: var(--color-surface) !important;
     border: 1px solid #d4edda;
 }
+
 .field-option {
     border: 1px solid #ced4da;
     border-radius: 8px;
@@ -18,9 +10,11 @@
     margin-bottom: 10px;
     cursor: pointer;
 }
+
 .field-option.selected {
-    border-color: #0d6efd;
+    border-color: var(--color-green);
 }
+
 .field-option-circle {
     width: 18px;
     height: 18px;
@@ -28,33 +22,41 @@
     border: 2px solid #ced4da;
     display: inline-block;
 }
+
 .field-option.selected .field-option-circle {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+    background-color: var(--color-green);
+    border-color: var(--color-green);
 }
+
 .summary-item {
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
 }
-.total-amount {
-    font-weight: bold;
-    font-size: 1.25rem;
-    color: #FF6B00;
-}
+
 .cvv-select {
     width: 60px;
     padding: 6px;
     border: 1px solid #ced4da;
     border-radius: 4px;
 }
-.edit-link {
-    color: #0d6efd;
-    font-size: 0.875rem;
-}
-.edit-link:hover {
-    text-decoration: underline;
-}
+
 .card-header {
     border-bottom: 1px solid #e9ecef;
+    background-color: var(--color-background);
+}
+
+.card{
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    border-width: 0 !important;
+}
+
+@media (max-width: 768px) {
+    .total-price{
+        font-size: 1.35rem !important;
+    }
+
+    .margin{
+        margin-bottom: 30px;
+    }
 }

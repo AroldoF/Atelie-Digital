@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} 
 
 <div class="summary-card">
     <h3>Resumo do Pedido</h3>
@@ -27,11 +27,12 @@
     
     {% if cart_shopping %}
         <a href="{{ url_finalizar }}" class="btn btn-checkout">
-            Finalizar Compra
+            {{ btn_name }}
         </a>
-        
-        <a href="{{ url_continuar }}" class="btn btn-continue">
-            Continuar Comprando
-        </a>
+        {% if cart %}
+            <a href="{{ url_continuar }}" class="btn btn-continue">
+                {{ btn_two_name }}
+            </a>
+        {% endif %}
     {% endif %}
 </div>

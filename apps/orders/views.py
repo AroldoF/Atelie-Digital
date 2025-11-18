@@ -4,5 +4,5 @@ from django.shortcuts import render
 def shopping_cart(request):
     return render(request, 'orders/shopping_cart.html')
 
-def order_checkout(request):
-    return render(request, 'orders/order_checkout.html')
+def checkout(request):
+    return render(request, 'orders/checkout.html')
