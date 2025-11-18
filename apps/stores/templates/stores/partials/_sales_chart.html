@@ -1,0 +1,65 @@
+{% load static %}
+
+<div class="chart-card">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h5 class="chart-title">Gráfico de vendas mensais</h5>
+            <p class="chart-subtitle">Acompanhe o desempenho da sua loja</p>
+        </div>
+        
+        <select class="form-select form-select-sm chart-filter">
+            <option>Outubro 2024</option>
+            <option>Setembro 2024</option>
+            <option>Agosto 2024</option>
+        </select>
+    </div>
+
+    <div class="chart-area">
+        
+        <div class="chart-group">
+            <div class="bars-container">
+                <div class="chart-bar bar-views" style="height: 40%;"></div>
+                <div class="chart-bar bar-sales" style="height: 25%;"></div>
+            </div>
+            <span class="chart-label">Semana 1</span>
+        </div>
+
+        <div class="chart-group">
+            <div class="bars-container">
+                <div class="chart-bar bar-views" style="height: 60%;"></div>
+                <div class="chart-bar bar-sales" style="height: 45%;"></div>
+            </div>
+            <span class="chart-label">Semana 2</span>
+        </div>
+
+        <div class="chart-group">
+            <div class="bars-container">
+                <div class="chart-bar bar-views" style="height: 30%;"></div>
+                <div class="chart-bar bar-sales" style="height: 15%;"></div>
+            </div>
+            <span class="chart-label">Semana 3</span>
+        </div>
+
+        <div class="chart-group">
+            <div class="bars-container">
+                <div class="chart-bar bar-views" style="height: 85%;"></div>
+                <div class="chart-bar bar-sales" style="height: 70%;"></div>
+            </div>
+            <span class="chart-label">Semana 4</span>
+        </div>
+
+    </div>
+
+    <div class="chart-legend">
+        <div class="legend-item">
+            <span class="legend-dot dot-sales"></span>
+            <span>Vendas</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot dot-views"></span>
+            <span>Visualizações</span>
+        </div>
+    </div>
+
+</div>

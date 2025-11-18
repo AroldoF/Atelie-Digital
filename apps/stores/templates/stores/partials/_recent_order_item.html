@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="custom-order-row">
+    
+    <div class="col-info">
+        <span class="c-order-id">#{{ order_id }}</span>
+        <span class="c-order-client">{{ client_name }}</span>
+    </div>
+
+    <div class="col-product">
+        <span class="c-order-product">{{ product_details }}</span>
+    </div>
+
+    <div class="col-status">
+        <span class="c-status-badge c-status-{{ status }}">{{ status_text }}</span>
+    </div>
+
+</div>

@@ -1,0 +1,414 @@
+/*
+ * ARQUIVO: stores/static/stores/css/dashboard.css
+ * Padronizado com base.css
+ */
+
+/* =========================================
+ * Componente: Navegação Dashboard (Custom)
+ * =========================================
+ */
+
+.dashboard-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.nav-item {
+    text-decoration: none;
+    /* Cor do texto inativo */
+    color: var(--color-gray); 
+    /* Fundo inativo (Branco ou Surface muito claro) */
+    background-color: #fff; 
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: 1px solid #eee; /* Borda sutil para diferenciar do fundo */
+}
+
+.nav-item:hover {
+    /* Usa a cor de superfície para hover */
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-surface);
+}
+
+/* Estado ATIVO */
+.nav-item.active {
+    /* Fundo bege/terroso claro */
+    background-color: var(--color-surface); 
+    /* Texto na cor primária (Marrom) */
+    color: var(--color-primary-dark); 
+    /* Borda na cor primária */
+    border-color: var(--color-primary); 
+}
+
+/* Responsividade da Navegação */
+@media (max-width: 425px) {
+    .dashboard-nav {
+        /* MUDANÇA: Usamos Grid em vez de Flexbox no mobile */
+        display: grid;
+        /* Cria exatamente 2 colunas de tamanhos iguais (1 fração, 1 fração) */
+        grid-template-columns: 1fr 1fr; 
+        gap: 10px;
+        width: 100%;
+    }
+
+    .nav-item {
+        /* Garante que o texto fique centralizado */
+        text-align: center;
+        font-size: 0.85rem;
+        
+        /* Ajuste de padding para garantir que textos longos caibam */
+        padding: 12px 4px; 
+        
+        /* O item vai ocupar 100% da célula do grid */
+        width: 100%; 
+        
+        /* Garante que borda e padding não aumentem o tamanho total */
+        box-sizing: border-box; 
+    }
+}
+
+
+/* =========================================
+ * Componente: Cards de Estatística
+ * =========================================
+ */
+
+.stat-card {
+    background-color: var(--color-background);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--color-surface); /* Borda na cor da identidade */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    height: 100%;
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary); /* Realce sutil no hover */
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+/* --- Variantes de Cores (Adaptadas ao base.css) --- */
+
+.icon-accent {
+    /* Usando color-mix para criar um fundo 10% da cor accent + branco */
+    background-color: color-mix(in srgb, var(--color-accent) 10%, white);
+    color: var(--color-accent);
+}
+
+/* Variante: Primary (Terracota - Para Estoque/Avisos) */
+.icon-primary {
+    /* O fundo --color-order (bege claro) combina perfeitamente com o primary */
+    background-color: var(--color-order);
+    color: var(--color-primary);
+}
+
+/* Variante: Pink (Rosa Forte - Para Pedidos) */
+.icon-pink {
+    /* O fundo --color-rose (rosa claro) combina com o pink */
+    background-color: var(--color-rose);
+    color: var(--color-pink);
+}
+
+/* Variante: Green (Verde Oliva - Para Vendas) */
+.icon-green {
+    background-color: color-mix(in srgb, var(--color-green) 10%, white);
+    color: var(--color-green);
+}
+
+
+/* =========================================
+ * Componente: Gráfico de Vendas (CSS Mockup)
+ * =========================================
+ */
+
+.chart-card {
+    background-color: var(--color-background);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    border: 1px solid var(--color-surface);
+    height: 100%;
+    min-height: 380px;
+}
+
+.chart-title {
+    font-weight: 700;
+    margin-bottom: 0;
+    color: var(--color-text);
+    font-size: 1.1rem;
+}
+
+.chart-subtitle {
+    color: var(--color-gray);
+    font-size: 0.875em;
+    margin-bottom: 0;
+}
+
+.chart-filter {
+    border: 1px solid #eee;
+    background-color: #fff;
+    font-weight: 700;
+    color: var(--color-gray);
+    width: auto;
+    cursor: pointer;
+}
+
+/* Barras do Gráfico */
+.chart-area {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 220px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #e5e7eb;
+}
+
+.chart-group {
+    text-align: center;
+    padding: 0 8px;
+    flex-grow: 1;
+}
+
+.bars-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4px;
+    height: 200px;
+}
+
+.chart-label {
+    color: var(--color-gray);
+    font-size: 0.75rem;
+    margin-top: 8px;
+    display: block;
+}
+
+/* Estilo das Barras */
+.chart-bar {
+    width: 12px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    transition: height 0.5s ease;
+}
+
+.chart-bar:hover {
+    opacity: 0.85;
+}
+
+/* Visualizações (Métrica Secundária) - Usa a cor Surface ou Accent Claro */
+.bar-views {
+    background-color: var(--color-surface); 
+}
+
+/* Vendas (Métrica Principal) - Usa a cor Primária ou Accent */
+.bar-sales {
+    background-color: var(--color-accent); /* Azul do tema */
+}
+
+/* Legenda */
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.875em;
+    color: var(--color-gray);
+    font-weight: 700;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.dot-sales { background-color: var(--color-accent); }
+.dot-views { background-color: var(--color-surface); }
+
+
+/* =========================================
+ * Componente: Lista de Produtos Recentes
+ * =========================================
+ */
+
+.stock-quantity {
+    /* Usa a cor primária (terracota/marrom) para destaque, em vez de laranja puro */
+    color: var(--color-primary); 
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Links de "Ver todos" */
+[style*="color: #ea580c;"], /* Fallback se tiver estilo inline antigo */
+.link-action {
+    color: var(--color-hover) !important;
+}
+
+/* Ajuste do badge para usar cores do tema se possível,
+   mas badges do bootstrap (text-success) funcionam bem. 
+   Podemos sobrescrever se quiser algo muito específico. */
+
+   /*
+ Espaçamento Extra para evitar sobreposição com o footer
+ 
+.content-footer-clearance {
+ Garante uma grande margem de segurança na parte inferior
+    padding-bottom: 120px !important; 
+} */
+
+/* =========================================================
+   SEÇÃO DE PEDIDOS RECENTES (Layout Tabela - Imagem 1)
+   ========================================================= */
+.orders-title, .orders-link{
+    color: var(--color-hover);
+}
+/* Container Principal da Seção (Centralizado) */
+.orders-section-container {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    border: 1px solid #f0f0f0;
+    padding: 30px;
+    
+    /* Centralização na tela */
+    margin: 0 auto 100px auto; /* Top 0, Bottom 100px (para o footer) */
+    width: 100%;
+    max-width: 1100px; /* Define uma largura máxima para ficar bonito */
+}
+
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.custom-order-row {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente todos os itens */
+    justify-content: space-between;
+    padding: 20px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.custom-order-row:last-child {
+    border-bottom: none;
+}
+
+.custom-order-row:hover {
+    background-color: #fafafa;
+}
+
+/* --- COLUNA 1: ID e Cliente --- */
+.col-info {
+    display: flex;
+    flex-direction: column; /* Faz o ID ficar em cima do Nome */
+    gap: 4px; /* Espaço entre ID e Nome */
+    width: 25%; /* Largura fixa para manter alinhamento */
+}
+
+.c-order-id {
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+}
+
+.c-order-client {
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    /* Garante que nomes longos não quebrem o layout */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- COLUNA 2: Produto --- */
+.col-product {
+    flex: 1; /* Ocupa todo o espaço sobrando no meio */
+    text-align: center; /* Centraliza o texto horizontalmente */
+    padding: 0 15px;
+}
+
+.c-order-product {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* --- COLUNA 3: Status --- */
+.col-status {
+    width: 25%; /* Largura fixa para espelhar a coluna da esquerda */
+    display: flex;
+    justify-content: center; /* Empurra o badge para a direita */
+}
+
+.c-status-badge {
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Cores dos Badges (Mantenha as mesmas de antes) */
+.c-status-progress { background-color: var(--color-rose); color: var(--color-pink); }
+.c-status-delivered { background-color: color-mix(in srgb, var(--color-green) 10%, white); color: var(--color-green); }
+.c-status-cancelled { background-color: #fee2e2; color: var(--color-red); }
+.c-status-pending { background-color: #fffbeb; color: #b45309; }
+
+
+/* --- RESPONSIVIDADE (Mobile) --- */
+@media (max-width: 500px) {
+    .custom-order-row {
+        flex-direction: column; /* Empilha tudo em telas pequenas */
+        align-items: center; /* Alinha tudo à esquerda */
+        gap: 15px;
+    }
+
+    .col-info, .col-product, .col-status {
+        width: 100%; /* Cada bloco ocupa a largura total */
+        text-align: center; /* Remove a centralização do produto no mobile */
+        justify-content: center;
+    }
+    
+    .col-product {
+        padding: 0; /* Remove padding lateral no mobile */
+    }
+
+    .orders-list{
+        align-items: center;
+    }
+}
+
