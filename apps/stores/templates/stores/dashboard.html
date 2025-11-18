@@ -1,0 +1,18 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block style %} 
+    <link rel="stylesheet" href="{% static 'stores\css\dashboard.css' %}" />
+{% endblock style %}
+
+{% block main %}
+<div class="container-fluid my-4"> {% include 'stores/partials/_dashboard_nav.html' %}
+
+    <div class="row">
+        <div class="col-12">
+            <p>Conteúdo do Dashboard...</p>
+        </div>
+    </div>
+
+</div>
+{% endblock main %}

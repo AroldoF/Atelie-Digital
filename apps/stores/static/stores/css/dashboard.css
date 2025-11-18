@@ -1,0 +1,20 @@
+.dashboard-nav .nav-link {
+    /* Estilo do botão inativo */
+    background-color: #f8f9fa; /* Um cinza bem claro */
+    color: #495057; /* Texto escuro */
+    font-weight: 600;
+    margin: 0 8px;
+    border-radius: 8px;
+    padding: 10px 24px;
+}
+
+.dashboard-nav .nav-link:hover {
+    background-color: #e9ecef; /* Escurece um pouco no hover */
+}
+
+.dashboard-nav .nav-link.active {
+    /* Estilo do botão ATIVO (amarelo) */
+    background-color: #fcecb4; /* Tom de amarelo do design */
+    color: #333; /* Texto escuro */
+    border: 1px solid #fadf8f;
+}

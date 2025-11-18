@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def storeProfile(request):
     return render(request, 'stores/storeProfile.html')
+
+def dashboard(request):
+    return render(request, 'stores/dashboard.html')
