@@ -1,68 +1,101 @@
+/*
+ * ARQUIVO: stores/static/stores/css/dashboard.css
+ * Padronizado com base.css
+ */
+
+/* =========================================
+ * Componente: Navegação Dashboard (Custom)
+ * =========================================
+ */
+
 .dashboard-nav {
     display: flex;
-    justify-content: center; /* Centraliza os botões na tela */
+    justify-content: center;
     align-items: center;
-    gap: 50px; /* Espaço entre os botões */
-    margin-bottom: 40px; /* Espaço abaixo da navegação */
-    flex-wrap: wrap; /* Permite que os botões caiam para baixo se faltar espaço */
+    gap: 16px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
-
-
 .nav-item {
-    text-decoration: none; /* Remove o sublinhado padrão */
-    color: #555; /* Cor do texto inativo */
-    background-color: #f4f4f4; /* Fundo cinza claro */
-    padding: 12px 24px; /* Espaçamento interno (altura x largura) */
-    border-radius: 50px; /* Borda totalmente redonda (Pill shape) */
+    text-decoration: none;
+    /* Cor do texto inativo */
+    color: var(--color-gray); 
+    /* Fundo inativo (Branco ou Surface muito claro) */
+    background-color: #fff; 
+    padding: 12px 24px;
+    border-radius: 50px;
     font-weight: 600;
     font-size: 0.95rem;
-    transition: all 0.3s ease; /* Suaviza a mudança de cor */
-    border: 1px solid transparent; /* Borda invisível para evitar pulo no hover */
+    transition: all 0.3s ease;
+    border: 1px solid #eee; /* Borda sutil para diferenciar do fundo */
 }
 
 .nav-item:hover {
-    background-color: #e0e0e0;
-    color: #333;
+    /* Usa a cor de superfície para hover */
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-surface);
 }
 
+/* Estado ATIVO */
 .nav-item.active {
-    background-color: #fcecb4; /* Amarelo do design */
-    color: #4a3b2a; /* Marrom escuro para contraste */
-    border-color: #ebd585; /* Borda sutilmente mais escura */
+    /* Fundo bege/terroso claro */
+    background-color: var(--color-surface); 
+    /* Texto na cor primária (Marrom) */
+    color: var(--color-primary-dark); 
+    /* Borda na cor primária */
+    border-color: var(--color-primary); 
 }
 
-@media (max-width: 768px) {
+/* Responsividade da Navegação */
+@media (max-width: 425px) {
     .dashboard-nav {
-        gap: 10px; /* Diminui o espaço entre botões */
+        /* MUDANÇA: Usamos Grid em vez de Flexbox no mobile */
+        display: grid;
+        /* Cria exatamente 2 colunas de tamanhos iguais (1 fração, 1 fração) */
+        grid-template-columns: 1fr 1fr; 
+        gap: 10px;
+        width: 100%;
     }
 
     .nav-item {
-        flex-grow: 1; /* Faz os botões esticarem para ocupar a tela toda */
-        text-align: center; /* Centraliza o texto */
-        font-size: 0.85rem; /* Diminui um pouco a fonte */
-        padding: 10px 16px; /* Botões um pouco menores */
+        /* Garante que o texto fique centralizado */
+        text-align: center;
+        font-size: 0.85rem;
+        
+        /* Ajuste de padding para garantir que textos longos caibam */
+        padding: 12px 4px; 
+        
+        /* O item vai ocupar 100% da célula do grid */
+        width: 100%; 
+        
+        /* Garante que borda e padding não aumentem o tamanho total */
+        box-sizing: border-box; 
     }
 }
 
-/* * Card de Estatística 
+
+/* =========================================
+ * Componente: Cards de Estatística
+ * =========================================
  */
 
 .stat-card {
-    background-color: #ffffff;
-    border-radius: 12px;
+    background-color: var(--color-background);
+    border-radius: 16px;
     padding: 24px;
-    border: 1px solid #f0f0f0; /* Borda bem sutil */
+    border: 1px solid var(--color-surface); /* Borda na cor da identidade */
     box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-    height: 100%; /* Garante que todos tenham a mesma altura na linha */
+    height: 100%;
     transition: transform 0.2s ease;
 }
 
 .stat-card:hover {
-    transform: translateY(-2px); /* Efeito leve ao passar o mouse */
+    transform: translateY(-2px);
+    border-color: var(--color-primary); /* Realce sutil no hover */
 }
 
-/* Caixa do Ícone Base */
 .stat-icon {
     width: 40px;
     height: 40px;
@@ -73,39 +106,170 @@
     font-size: 1.25rem;
 }
 
-/* Variantes de Cores dos Ícones (Baseado na imagem) */
+/* --- Variantes de Cores (Adaptadas ao base.css) --- */
 
-/* Azul (Produtos Ativos) */
-.icon-blue {
-    background-color: #e0f2fe;
-    color: #0284c7;
+.icon-accent {
+    /* Usando color-mix para criar um fundo 10% da cor accent + branco */
+    background-color: color-mix(in srgb, var(--color-accent) 10%, white);
+    color: var(--color-accent);
 }
 
-/* Laranja (Pouco Estoque) */
-.icon-orange {
-    background-color: #ffedd5;
-    color: #ea580c;
+/* Variante: Primary (Terracota - Para Estoque/Avisos) */
+.icon-primary {
+    /* O fundo --color-order (bege claro) combina perfeitamente com o primary */
+    background-color: var(--color-order);
+    color: var(--color-primary);
 }
 
-/* Roxo (Pedidos em Andamento) */
-.icon-purple {
-    background-color: #f3e8ff;
-    color: #9333ea;
+/* Variante: Pink (Rosa Forte - Para Pedidos) */
+.icon-pink {
+    /* O fundo --color-rose (rosa claro) combina com o pink */
+    background-color: var(--color-rose);
+    color: var(--color-pink);
 }
 
-/* Verde (Total em Vendas) */
+/* Variante: Green (Verde Oliva - Para Vendas) */
 .icon-green {
-    background-color: #dcfce7;
-    color: #16a34a;
+    background-color: color-mix(in srgb, var(--color-green) 10%, white);
+    color: var(--color-green);
 }
 
-.product-item:last-child {
-    border-bottom: none !important;
+
+/* =========================================
+ * Componente: Gráfico de Vendas (CSS Mockup)
+ * =========================================
+ */
+
+.chart-card {
+    background-color: var(--color-background);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    border: 1px solid var(--color-surface);
+    height: 100%;
+    min-height: 380px;
 }
 
-/* Quantidade em Estoque (Dashboard) */
+.chart-title {
+    font-weight: 700;
+    margin-bottom: 0;
+    color: var(--color-text);
+    font-size: 1.1rem;
+}
+
+.chart-subtitle {
+    color: var(--color-gray);
+    font-size: 0.875em;
+    margin-bottom: 0;
+}
+
+.chart-filter {
+    border: 1px solid #eee;
+    background-color: #fff;
+    font-weight: 700;
+    color: var(--color-gray);
+    width: auto;
+    cursor: pointer;
+}
+
+/* Barras do Gráfico */
+.chart-area {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 220px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #e5e7eb;
+}
+
+.chart-group {
+    text-align: center;
+    padding: 0 8px;
+    flex-grow: 1;
+}
+
+.bars-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4px;
+    height: 200px;
+}
+
+.chart-label {
+    color: var(--color-gray);
+    font-size: 0.75rem;
+    margin-top: 8px;
+    display: block;
+}
+
+/* Estilo das Barras */
+.chart-bar {
+    width: 12px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    transition: height 0.5s ease;
+}
+
+.chart-bar:hover {
+    opacity: 0.85;
+}
+
+/* Visualizações (Métrica Secundária) - Usa a cor Surface ou Accent Claro */
+.bar-views {
+    background-color: var(--color-surface); 
+}
+
+/* Vendas (Métrica Principal) - Usa a cor Primária ou Accent */
+.bar-sales {
+    background-color: var(--color-accent); /* Azul do tema */
+}
+
+/* Legenda */
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.875em;
+    color: var(--color-gray);
+    font-weight: 700;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.dot-sales { background-color: var(--color-accent); }
+.dot-views { background-color: var(--color-surface); }
+
+
+/* =========================================
+ * Componente: Lista de Produtos Recentes
+ * =========================================
+ */
+
 .stock-quantity {
-    color: #333; /* Laranja queimado (Terracota) */
+    /* Usa a cor primária (terracota/marrom) para destaque, em vez de laranja puro */
+    color: var(--color-primary); 
     font-size: 0.8rem;
-    font-weight: 500; /* Equivalente ao fw-medium */
+    font-weight: 500;
 }
+
+/* Links de "Ver todos" */
+a[style*="color: #ea580c;"], /* Fallback se tiver estilo inline antigo */
+.link-action {
+    color: var(--color-hover) !important;
+}
+
+/* Ajuste do badge para usar cores do tema se possível,
+   mas badges do bootstrap (text-success) funcionam bem. 
+   Podemos sobrescrever se quiser algo muito específico. */
