@@ -265,7 +265,7 @@
 }
 
 /* Links de "Ver todos" */
-a[style*="color: #ea580c;"], /* Fallback se tiver estilo inline antigo */
+[style*="color: #ea580c;"], /* Fallback se tiver estilo inline antigo */
 .link-action {
     color: var(--color-hover) !important;
 }
@@ -273,3 +273,142 @@ a[style*="color: #ea580c;"], /* Fallback se tiver estilo inline antigo */
 /* Ajuste do badge para usar cores do tema se possível,
    mas badges do bootstrap (text-success) funcionam bem. 
    Podemos sobrescrever se quiser algo muito específico. */
+
+   /*
+ Espaçamento Extra para evitar sobreposição com o footer
+ 
+.content-footer-clearance {
+ Garante uma grande margem de segurança na parte inferior
+    padding-bottom: 120px !important; 
+} */
+
+/* =========================================================
+   SEÇÃO DE PEDIDOS RECENTES (Layout Tabela - Imagem 1)
+   ========================================================= */
+.orders-title, .orders-link{
+    color: var(--color-hover);
+}
+/* Container Principal da Seção (Centralizado) */
+.orders-section-container {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    border: 1px solid #f0f0f0;
+    padding: 30px;
+    
+    /* Centralização na tela */
+    margin: 0 auto 100px auto; /* Top 0, Bottom 100px (para o footer) */
+    width: 100%;
+    max-width: 1100px; /* Define uma largura máxima para ficar bonito */
+}
+
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.custom-order-row {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente todos os itens */
+    justify-content: space-between;
+    padding: 20px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.custom-order-row:last-child {
+    border-bottom: none;
+}
+
+.custom-order-row:hover {
+    background-color: #fafafa;
+}
+
+/* --- COLUNA 1: ID e Cliente --- */
+.col-info {
+    display: flex;
+    flex-direction: column; /* Faz o ID ficar em cima do Nome */
+    gap: 4px; /* Espaço entre ID e Nome */
+    width: 25%; /* Largura fixa para manter alinhamento */
+}
+
+.c-order-id {
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+}
+
+.c-order-client {
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    /* Garante que nomes longos não quebrem o layout */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- COLUNA 2: Produto --- */
+.col-product {
+    flex: 1; /* Ocupa todo o espaço sobrando no meio */
+    text-align: center; /* Centraliza o texto horizontalmente */
+    padding: 0 15px;
+}
+
+.c-order-product {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* --- COLUNA 3: Status --- */
+.col-status {
+    width: 25%; /* Largura fixa para espelhar a coluna da esquerda */
+    display: flex;
+    justify-content: center; /* Empurra o badge para a direita */
+}
+
+.c-status-badge {
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Cores dos Badges (Mantenha as mesmas de antes) */
+.c-status-progress { background-color: var(--color-rose); color: var(--color-pink); }
+.c-status-delivered { background-color: color-mix(in srgb, var(--color-green) 10%, white); color: var(--color-green); }
+.c-status-cancelled { background-color: #fee2e2; color: var(--color-red); }
+.c-status-pending { background-color: #fffbeb; color: #b45309; }
+
+
+/* --- RESPONSIVIDADE (Mobile) --- */
+@media (max-width: 500px) {
+    .custom-order-row {
+        flex-direction: column; /* Empilha tudo em telas pequenas */
+        align-items: center; /* Alinha tudo à esquerda */
+        gap: 15px;
+    }
+
+    .col-info, .col-product, .col-status {
+        width: 100%; /* Cada bloco ocupa a largura total */
+        text-align: center; /* Remove a centralização do produto no mobile */
+        justify-content: center;
+    }
+    
+    .col-product {
+        padding: 0; /* Remove padding lateral no mobile */
+    }
+
+    .orders-list{
+        align-items: center;
+    }
+}
+
