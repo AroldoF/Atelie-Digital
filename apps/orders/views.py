@@ -6,3 +6,6 @@ def shopping_cart(request):
 
 def checkout(request):
     return render(request, 'orders/checkout.html')
+
+def approved(request):
+    return render(request, 'orders/approved.html')

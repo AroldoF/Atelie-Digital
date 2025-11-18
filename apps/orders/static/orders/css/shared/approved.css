@@ -1,0 +1,70 @@
+.confirmation-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh; 
+}
+
+.confirmation-card {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+}
+
+/* --- Estilo do Ícone (Círculo Verde Oliva) --- */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.img_check {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--color-green); /* Verde Oliva da imagem */
+    padding: 20px; /* Espaço interno para o ícone SVG ficar menor que o círculo */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    object-fit: contain;
+}
+
+/* --- Tipografia --- */
+.confirmation-card h1 {
+    color: #1f2937; 
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.subtitle {
+    color: #6b7280; /* Cinza médio */
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+/* --- Badge do Número do Pedido (Caixa Azulada) --- */
+.order-badge {
+    background-color: var(--color-rose); /* Azul/Lilás bem claro */
+    color: #6b7280; /* Cor do texto "Número do Pedido" */
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: 12px; /* Bordas arredondadas */
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.tag_order {
+    color: #5b6bf8; /* Roxo/Azul vibrante do número */
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+    .confirmation-card h1 {
+        font-size: 1.75rem;
+    }
+}
