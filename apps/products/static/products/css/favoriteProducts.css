@@ -24,3 +24,29 @@
 .category-btn.active {
   background: var(--color-surface);
 }
+
+
+.clear-btn {
+  background: none;
+  border: none;
+  font-size: var(--font-size-xxs);
+  color: #888;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+
+.section-title {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  color: var(--color-hover);
+}
+
+.title-clear{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+}
