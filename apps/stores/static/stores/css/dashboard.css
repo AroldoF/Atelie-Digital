@@ -1,20 +1,111 @@
-.dashboard-nav .nav-link {
-    /* Estilo do botão inativo */
-    background-color: #f8f9fa; /* Um cinza bem claro */
-    color: #495057; /* Texto escuro */
+.dashboard-nav {
+    display: flex;
+    justify-content: center; /* Centraliza os botões na tela */
+    align-items: center;
+    gap: 50px; /* Espaço entre os botões */
+    margin-bottom: 40px; /* Espaço abaixo da navegação */
+    flex-wrap: wrap; /* Permite que os botões caiam para baixo se faltar espaço */
+}
+
+
+
+.nav-item {
+    text-decoration: none; /* Remove o sublinhado padrão */
+    color: #555; /* Cor do texto inativo */
+    background-color: #f4f4f4; /* Fundo cinza claro */
+    padding: 12px 24px; /* Espaçamento interno (altura x largura) */
+    border-radius: 50px; /* Borda totalmente redonda (Pill shape) */
     font-weight: 600;
-    margin: 0 8px;
-    border-radius: 8px;
-    padding: 10px 24px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease; /* Suaviza a mudança de cor */
+    border: 1px solid transparent; /* Borda invisível para evitar pulo no hover */
 }
 
-.dashboard-nav .nav-link:hover {
-    background-color: #e9ecef; /* Escurece um pouco no hover */
+.nav-item:hover {
+    background-color: #e0e0e0;
+    color: #333;
 }
 
-.dashboard-nav .nav-link.active {
-    /* Estilo do botão ATIVO (amarelo) */
-    background-color: #fcecb4; /* Tom de amarelo do design */
-    color: #333; /* Texto escuro */
-    border: 1px solid #fadf8f;
+.nav-item.active {
+    background-color: #fcecb4; /* Amarelo do design */
+    color: #4a3b2a; /* Marrom escuro para contraste */
+    border-color: #ebd585; /* Borda sutilmente mais escura */
+}
+
+@media (max-width: 768px) {
+    .dashboard-nav {
+        gap: 10px; /* Diminui o espaço entre botões */
+    }
+
+    .nav-item {
+        flex-grow: 1; /* Faz os botões esticarem para ocupar a tela toda */
+        text-align: center; /* Centraliza o texto */
+        font-size: 0.85rem; /* Diminui um pouco a fonte */
+        padding: 10px 16px; /* Botões um pouco menores */
+    }
+}
+
+/* * Card de Estatística 
+ */
+
+.stat-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #f0f0f0; /* Borda bem sutil */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    height: 100%; /* Garante que todos tenham a mesma altura na linha */
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px); /* Efeito leve ao passar o mouse */
+}
+
+/* Caixa do Ícone Base */
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+/* Variantes de Cores dos Ícones (Baseado na imagem) */
+
+/* Azul (Produtos Ativos) */
+.icon-blue {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+/* Laranja (Pouco Estoque) */
+.icon-orange {
+    background-color: #ffedd5;
+    color: #ea580c;
+}
+
+/* Roxo (Pedidos em Andamento) */
+.icon-purple {
+    background-color: #f3e8ff;
+    color: #9333ea;
+}
+
+/* Verde (Total em Vendas) */
+.icon-green {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.product-item:last-child {
+    border-bottom: none !important;
+}
+
+/* Quantidade em Estoque (Dashboard) */
+.stock-quantity {
+    color: #333; /* Laranja queimado (Terracota) */
+    font-size: 0.8rem;
+    font-weight: 500; /* Equivalente ao fw-medium */
 }

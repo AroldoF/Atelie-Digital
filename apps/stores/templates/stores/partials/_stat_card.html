@@ -1,0 +1,22 @@
+{% load static %}
+
+<div class="stat-card">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <h5 class="text-muted mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px; font-weight: 600;">
+            {{ title }}
+        </h5>
+
+        <div class="stat-icon icon-{{ icon_color }}">
+            <i class="bi {{ icon_class }}"></i>
+        </div>
+    </div>
+
+    <h2 class="mb-2 fw-bold text-dark">{{ value }}</h2>
+
+    <p class="mb-0 small text-muted">
+        <span class="fw-bold {% if trend_is_positive %}text-success{% else %}text-danger{% endif %}">
+            {{ trend_value }}
+        </span>
+        {{ trend_desc }}
+    </p>
+</div>
