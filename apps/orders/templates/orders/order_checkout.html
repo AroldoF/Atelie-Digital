@@ -1,0 +1,72 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'orders/css/shared/order_checkout.css' %}">
+{% endblock style %}
+
+{% block main %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Método de Pagamento -->
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5 class="mb-0">Método de Pagamento</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Opções de pagamento - include em payment -->
+                     {% include 'orders/partials/_forms_select.html' with selected=True data_method="credit" select=True form_pay="Cartão de Crédito" description_pay="Visa, Mastercard, Elo e mais" %}
+
+                     {% include 'orders/partials/_forms_select.html' with data_method="pix" selected=False form_pay="Pix" description_pay="Aprovação instantâneo" %}
+
+                     {% include 'orders/partials/_forms_select.html' with data_method="boleto" selected=False form_pay="Boleto Bancário" description_pay="Vencimento em 3 dias úteis" %}
+                    
+                    <!-- Formulário do Cartão de Crédito -->
+                    <div class="mt-4">
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Número do Cartão</label>
+                            <input type="text" class="form-control" id="cardNumber" value="1234 5678 9012 3456" placeholder="0000 0000 0000 0000">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="cardName" class="form-label">Nome no Cartão</label>
+                            <input type="text" class="form-control" id="cardName" value="MARIA SILVA SANTOS" placeholder="Como aparece no cartão">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="expiry" class="form-label">Validade</label>
+                                <input type="text" class="form-control" id="expiry" value="12/25" placeholder="MM/AA">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <select class="form-select cvv-select" id="cvv">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="alert bg-security d-flex align-items-center" role="alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-check me-2" viewBox="0 0 16 16">
+                                <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.897.533.12.057.218.095.302.11l.022.005.017.002.012.001H12a.5.5 0 0 0 .5-.5V6.461c0-.135-.024-.254-.08-.359a.6.6 0 0 0-.22-.238.56.56 0 0 0-.326-.084H8a.5.5 0 0 1 0-1h3.5A1.5 1.5 0 0 1 13 5.5V8a.5.5 0 0 1-.5.5H12a.5.5 0 0 0-.47.331c-.145.326-.38.539-.66.65a1.4 1.4 0 0 1-.555.13 1.37.37 0 0 1-.82-.12 3.2 3.2 0 0 1-1.055-.64.6.6 0 0 1-.167-.323c-.033-.11-.042-.22-.01-.328a.3.3 0 0 0-.014-.135L10.1 2.45a.4.4 0 0 0-.454-.38 1.1 1.1 0 0 1-.165-.04 1.1 1.1 0 0 1-.204-.06.6.6 0 0 0-.236-.051.5.5 0 0 0-.5.5v.87a1.4 1.4 0 0 1-1.53 1.38l-1.88-.643a.5.5 0 0 0-.45.035.3.3 0 0 0-.131.17l-.166.83a.5.5 0 0 1-.57.408L2.58 9.78a.3.3 0 0 0-.13.012.5.5 0 0 0-.25.189v.75a.5.5 0 0 0 .5.5h3.5a.5.5 0 0 1 .497.54l-.127 1.849a.5.5 0 0 1-.5.45h-1.87a.5.5 0 0 0-.492.408L.002 13.331a.5.5 0 0 0 .497.568h15.005a.5.5 0 0 0 .497-.568L13.502 2.33a.5.5 0 0 0-.497-.408h-1.87a.5.5 0 0 1-.5-.45l-.127-1.848a.5.5 0 0 0-.57-.408L8.924 1.569a.5.5 0 0 1-.164-.053.5.5 0 0 0-.338-.049.5.5 0 0 0-.23.123L6.24 3.3a.5.5 0 0 0-.09.406.6.6 0 0 1-.035.086m.522 2.707 1.065-.638a.5.5 0 0 1 .537.05l1.855 1.482a.5.5 0 0 1 .114.632l-.439.937a.5.5 0 0 1-.716.219L7.28 5.902a.5.5 0 0 1 .253.545l.535 2.139a.5.5 0 0 1-.575.603l-2.357-.471a.5.5 0 0 1-.191-.079l-1.02-.816a.5.5 0 0 1-.055-.777l.517-1.243a.5.5 0 0 1 .598-.281z"/>
+                            </svg>
+                            <span>Suas informações estão protegidas com criptografia SSL de 256 bits</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Coluna direita: Resumo do Pedido -->
+            <div class="col-md-4">
+                <!--fazer o include nesse campo -->
+            </div>
+{% endblock %}
+
+
+

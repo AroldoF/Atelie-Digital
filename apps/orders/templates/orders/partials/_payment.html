@@ -1,0 +1,27 @@
+{% load static %}
+
+{% comment %} <div class="container">
+    <h2>Forma de Pagamento</h2>
+
+    <div> <!--formas de pagamento-->
+        {% include 'orders/partials/form_payment.html' with url="icone de pix" description_img ="Forma de pagamento por PIX" form_pay="PIX" description_pay="Aprovação instantânea" %}
+    </div>
+
+    <div> <!--formas de pagamento-->
+        {% include 'orders/partials/form_payment.html' with url="icone de boleto" description_img ="Forma de pagamento por boleto" form_pay="Boleto" description_pay="Vencimento em 3 dias úteis" %}
+    </div>
+
+</div> {% endcomment %}
+
+
+<!-- Método de Pagamento -->
+
+<!-- Opções de pagamento - include em _form_payment 3 vezes-->
+
+{% include 'orders/partials/_form_payment.html' with form_pay="Pix" description_pay="Pagamento instantâneo" %}
+            
+            
+            
+
+            
+        

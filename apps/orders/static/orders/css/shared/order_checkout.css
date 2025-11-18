@@ -1,0 +1,60 @@
+/* Cores personalizadas conforme o design */
+.btn-orange {
+    background-color: #FF6B00;
+    border-color: #FF6B00;
+}
+.btn-orange:hover {
+    background-color: #e05d00;
+    border-color: #e05d00;
+}
+.bg-security {
+    background-color: #e8f9f0 !important;
+    border: 1px solid #d4edda;
+}
+.field-option {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.field-option.selected {
+    border-color: #0d6efd;
+}
+.field-option-circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #ced4da;
+    display: inline-block;
+}
+.field-option.selected .field-option-circle {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+.total-amount {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #FF6B00;
+}
+.cvv-select {
+    width: 60px;
+    padding: 6px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+.edit-link {
+    color: #0d6efd;
+    font-size: 0.875rem;
+}
+.edit-link:hover {
+    text-decoration: underline;
+}
+.card-header {
+    border-bottom: 1px solid #e9ecef;
+}
