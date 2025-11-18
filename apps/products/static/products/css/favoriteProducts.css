@@ -1,0 +1,137 @@
+.product-list{
+  padding: 1rem;
+}
+.categories {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.category-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  background-color: var(--color-background);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--color-hover);
+}
+
+.category-btn.active {
+  background: var(--color-surface);
+}
+
+
+.clear-btn {
+  background: none;
+  border: none;
+  font-size: var(--font-size-xxs);
+  color: #888;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+
+.section-title {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  color: var(--color-hover);
+}
+
+.title-clear{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+}
+
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-inline: 0.8rem;
+}
+
+@media (max-width: 320px){
+ 
+  .category-btn{
+    padding: 0.2rem 0.5rem;
+  }
+
+  .products-grid {
+    gap: 0.5rem;
+  }
+  #search{
+  width: 16px;
+  height: 16px;
+  }
+
+  .category-btn {
+    font-size: var(--font-size-xxs);
+    padding: 0.5rem 1rem;
+  }
+  .title-clear{
+   padding-inline-end:0;
+  }
+
+}
+
+@media (min-width: 768px) {
+  .product-list {
+    padding: 2rem;
+  }
+
+  .category-btn {
+    font-size: var(--font-size-dm);
+    padding: 0.75rem 1.25rem;
+  }
+  .clear-btn{
+    font-size: var(--font-size-xs);
+  }
+
+  .section-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .product-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem;
+  }
+
+
+  .category-btn {
+    font-size: 1.1rem;
+    padding: 0.85rem 1.5rem;
+  }
+
+  .clear-btn{
+    font-size: var(--font-size-sm);
+  }
+  .section-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .footer {
+    font-size: 0.9rem;
+  }
+}

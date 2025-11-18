@@ -1,0 +1,39 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block title %}Produtos Favoritos{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/favoriteProducts.css' %}">
+{% endblock  %}
+
+{% block main %}
+<section class="product-list">
+
+  <div class="categories">
+    <button class="category-btn category-search active">
+      <img id="search" src="{% static 'products/media/icons/search.svg' %}" alt="Buscar">
+    </button>
+    <button class="category-btn ">Cerâmica</button>
+    <button class="category-btn">Tecidos</button>
+    <button class="category-btn">Madeira</button>
+  </div>
+  
+  <div class="title-clear">
+    <h2 class="section-title">4 Produtos Favoritados</h2>
+    <button class="clear-btn">Limpar Todos</button>
+  </div>
+
+
+  <div class="products-grid">
+    {% include 'products/partials/card.html' with url='media/caixaDeJoias.jpeg' description='Caixa de joias de viagem' price='R$ 95,00' envioRapido='true' %}
+    {% include 'products/partials/card.html' with url='media/caixaDeJoias.jpeg' description='Caixa de Joias' off=True text='20' price='R$ 22,00' %}
+    {% include 'products/partials/card.html' with url='media/caixaDeJoias.jpeg' description='Caixa de joias de viagem' price='R$ 95,00'  %}
+    {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' FreteGratis=True  %}
+   
+  </div>
+
+  
+
+</section>
+{% endblock %}
