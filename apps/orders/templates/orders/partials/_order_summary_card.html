@@ -1,0 +1,37 @@
+{% load static %}
+
+<div class="summary-card">
+    <h3>Resumo do Pedido</h3>
+    
+    <div class="summary-line">
+        <span>Subtotal</span>
+        <span>R$ {{ subtotal | floatformat:2 }}</span>
+    </div>
+    
+    <div class="summary-line">
+        <span>Frete</span>
+        <span>R$ {{ frete | floatformat:2 }}</span>
+    </div>
+    
+    <div class="summary-line">
+        <span>Desconto</span>
+        <span>- R$ {{ desconto | floatformat:2 }}</span>
+    </div>
+    
+    <hr class="summary-divider">
+    
+    <div class="summary-line total">
+        <strong>Total</strong>
+        <strong class="total-price">R$ {{ total | floatformat:2 }}</strong>
+    </div>
+    
+    {% if cart_shopping %}
+        <a href="{{ url_finalizar }}" class="btn btn-checkout">
+            Finalizar Compra
+        </a>
+        
+        <a href="{{ url_continuar }}" class="btn btn-continue">
+            Continuar Comprando
+        </a>
+    {% endif %}
+</div>

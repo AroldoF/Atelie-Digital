@@ -6,17 +6,57 @@
 {% endblock %}
 
 {% block main %}
-  <section id="section_main">
-    <div id="cart_itens">
-      <h3>Meu Carrinho</h3>
-      <p>3 itens</p>
+  <div class="container my-5">
+    <div class="row g-4">
+      
+      <div id="my-cart-primary" class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 id="my-cart" class="h4 mb-0">Meu Carrinho</h2>
+        <span id="qtnd-itens" class="text-muted">3 itens</span>
+      </div>
+
+        {% include 'orders/partials/_cart_product_card.html' with product_name='Caixinha de Joias' store_name='Ateliê Cerâmica Arte' image_path='media/caixaDeJoias.jpeg' price='89.90' quantity=1 %}
+
+        {% include 'orders/partials/_cart_product_card.html' with product_name='Tiara Roxa' store_name='Tecidos & Arte' image_path='media/tiara_roxa.png' price='145.00' quantity=2 %}
+
+        {% include 'orders/partials/_cart_product_card.html' with product_name='Kit Vermelho' store_name='Madeira Nobre' image_path='media/kit_vermelho.png' price='220.00' quantity=1 %}
+      </div> <div class="col-lg-4">
+        {% include 'orders/partials/_order_summary_card.html' with subtotal=599.9 frete=25 desconto=50 total=574.9 url_finalizar='#' url_continuar='#' cart_shopping=True %}
+      </div>
     </div>
-    
-        {% include 'orders\partials\cart_products.html' with product_name="Caixa de Joias (Manual)" image_path="media\caixaDeJoias.jpeg" store_name="Dona Valdivania Store" product_price="20,40" %}
-
-    <section id="info_order">
-
-
-    </section>
-  </section>
+  </div>
 {% endblock %}
+
+{% block scripts %}
+<script>
+    // Espera o documento carregar
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // 1. Encontra TODOS os seletores de quantidade na página
+        const quantitySelectors = document.querySelectorAll(".quantity-selector");
+        
+        // 2. Itera sobre cada um deles
+        quantitySelectors.forEach(selector => {
+            
+            // 3. Encontra os botões e o valor DENTRO de cada seletor
+            const decreaseBtn = selector.querySelector("[data-action='decrease']");
+            const increaseBtn = selector.querySelector("[data-action='increase']");
+            const valueSpan = selector.querySelector(".quantity-value");
+            
+            // 4. Adiciona o clique no botão de DECREMENTAR
+            decreaseBtn.addEventListener("click", () => {
+                let currentValue = parseInt(valueSpan.textContent);
+                if (currentValue > 1) { // Não deixa ser menor que 1
+                    valueSpan.textContent = currentValue - 1;
+                }
+            });
+            
+            // 5. Adiciona o clique no botão de INCREMENTAR
+            increaseBtn.addEventListener("click", () => {
+                let currentValue = parseInt(valueSpan.textContent);
+                valueSpan.textContent = currentValue + 1;
+            });
+        });
+    });
+</script>
+{% endblock scripts %}

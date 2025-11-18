@@ -1,24 +1,247 @@
-#cart_itens{
+
+body {
+    background-color: #fcfaf8;
+}
+
+
+.cart-item-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    
+    /* Layout Desktop (Flexbox) */
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
+    align-items: center;
+    gap: 20px; /* Substitui as margens */
 }
 
-#section_main{
-}
-
-.cart-item-card{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    border-radius: 50px;
-    border-color: black;
-    border-style: solid;
-}
-
-.cart-item-card img{
+.cart-item-card img {
     width: 100px;
     height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0; /* Impede que a imagem encolha */
 }
 
+.cart-item-info {
+    flex-grow: 1; /* Ocupa o espaço disponível */
+}
+
+.cart-item-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.cart-item-info p {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 8px;
+}
+
+.cart-item-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    /* O preço agora está no fluxo normal (não mais à direita) */
+}
+
+.cart-item-actions {
+    display: flex;
+    flex-direction: column; /* Ações em coluna */
+    align-items: flex-end; /* Alinha à direita */
+    gap: 32px;
+    height: 100%;
+}
+
+.cart-item-actions .remove-link {
+    font-size: 0.9rem;
+    color: var(--color-red);
+    text-decoration: none;
+    font-weight: 500;
+    text-align: right;
+    
+
+}
+
+
+/* --- Botões de Quantidade (sem mudança) --- */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 4px 8px;
+}
+
+.quantity-selector .btn-qty {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 0 8px;
+    cursor: pointer;
+    color: #a56237; /* Marrom do design */
+}
+
+.quantity-selector .quantity-value {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0 12px;
+}
+/* --- Fim da Quantidade --- */
+
+
+.cart-item-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-left: auto; /* Joga o preço para a direita */
+
+}
+
+
+.summary-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    /* 'position: sticky' é o que trava o card na tela 
+       enquanto o usuário rola a lista de produtos.
+    */
+    position: sticky;
+    top: 20px; 
+}
+
+.summary-card h3 {
+    font-size: 1.25rem; /* "Resumo do Pedido" */
+    font-weight: 700;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.summary-line.total {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.summary-line .total-price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-hover); /* Laranja do design */
+}
+
+.summary-divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 16px 0;
+}
+
+.btn-checkout {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-hover); /* Laranja primário */
+    color: #ffffff;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.btn-continue {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: #fff4e6; /* Fundo bege claro */
+    color: var(--color-primary); /* Texto laranja */
+    cursor: pointer;
+}
+
+#my-cart{
+     margin-left: 4px;
+}
+
+#qtnd-itens{
+    margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+    
+    .cart-item-card {
+        /* * A MUDANÇA PRINCIPAL:
+         * Força o conteúdo a NUNCA quebrar a linha,
+         * mantendo tudo na horizontal.
+         */
+        flex-wrap: nowrap;
+        padding: 16px;
+        gap: 12px; /* Adiciona um espaço entre os blocos */
+    }
+
+    /* Diminui a imagem para caber */
+    .cart-item-card img {
+        width: 80px;
+        height: 80px;
+        margin-right: 0; /* Remove a margem (usamos 'gap') */
+    }
+
+    /* * A SEGUNDA MUDANÇA PRINCIPAL:
+     * Remove a largura mínima que estava causando a quebra.
+     */
+    .cart-item-details {
+        min-width: 0;
+        margin-left: 0; /* Remove a margem (usamos 'gap') */
+    }
+
+    /* --- Ajustes finos para tudo caber --- */
+
+    .cart-item-details h4 {
+        font-size: 1rem; /* Diminui o nome do produto */
+        margin-bottom: 2px;
+    }
+
+    .cart-item-details p {
+        font-size: 0.85rem; /* Diminui o "Vendido por" */
+    }
+
+    .cart-item-price {
+        font-size: 1.1rem; /* Diminui o preço */
+    }
+
+    .quantity-selector {
+        padding: 2px 4px; /* Diminui o seletor */
+        border-radius: 16px;
+    }
+
+    .quantity-selector .btn-qty {
+        font-size: 1rem;
+        padding: 0 6px;
+    }
+
+    .quantity-selector .quantity-value {
+        font-size: 0.9rem;
+        padding: 0 6px;
+    }
+}
