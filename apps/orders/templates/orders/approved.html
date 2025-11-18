@@ -1,0 +1,27 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'orders/css/shared/approved.css' %}">
+{% endblock style %}
+
+{% block main %}
+
+<div class="confirmation-wrapper">
+    <div class="confirmation-card">
+        
+        <div class="icon-container">
+            <img class="img_check" src="{% static 'orders/media/icons/check.svg' %}" alt="Pagamento confirmado">
+        </div>
+
+        <h1>Pagamento Aprovado!</h1>
+        <p class="subtitle">Seu pedido foi confirmado e já está sendo processado</p>
+        
+        <div class="order-badge">
+            Número do Pedido: <span class="tag_order">#AT001235</span>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

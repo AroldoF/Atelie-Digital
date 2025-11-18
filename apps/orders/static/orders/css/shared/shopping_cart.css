@@ -160,7 +160,7 @@ body {
     text-decoration: none;
     border: none;
     border-radius: 8px;
-    background-color: var(--color-hover); /* Laranja primário */
+    background-color: var(--color-green); /* Laranja primário */
     color: #ffffff;
     margin-bottom: 12px;
     cursor: pointer;
