@@ -1,0 +1,62 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block title %}Store Profile{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'stores/css/storeProfile.css' %}">
+{% endblock style %}
+
+{% block main %}
+<section id="loja" class="storeProfile">
+
+  <div class="storeBanner">
+
+      <img 
+        src="{% static 'stores/media/logoLoja.jpg' %}" 
+        alt="Logo da loja"
+        class="store-logo"
+      >
+   
+  </div>
+  <div class="storeInfo">
+    <h1>Val Laços</h1>
+    <p class="store-tagline">Princesa Estilosa</p>
+  </div>
+
+
+
+
+  <div class="storeCategories">
+    <button class="category-btn">Acessórios</button>
+    <button class="category-btn">Moda infantil</button>
+  </div>
+
+
+  <div class="storeDescription">
+    <ul>
+      <li>🎀 Acessórios artesanais para meninas e mulheres</li>
+      <li>✨ Feitos com amor, pensados com carinho</li>
+      <li>👧 Especial atenção ao universo infantil</li>
+      <li>🎁 Cada peça é um presente</li>
+    </ul>
+  </div>
+
+  
+  <div class="storeTabs">
+    <button class="tab-btn active">Produtos</button>
+    <button class="tab-btn">Fotos</button>
+    <button class="tab-btn">Vídeos</button>
+  </div>
+
+
+  <div class="productsGrid">
+    {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' FreteGratis=True favor=True %}
+    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' off=True text=30 price='R$ 21,00' envioRapido=True favor=True %}
+    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 44,00' envioRapido=True favor=True %}
+    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 44,00' envioRapido=True favor=True %}
+     {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' FreteGratis=True favor=True %}
+  </div>
+
+</section>
+{% endblock %}

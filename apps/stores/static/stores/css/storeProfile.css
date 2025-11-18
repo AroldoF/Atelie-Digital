@@ -1,0 +1,225 @@
+.storeProfile {
+  padding: 1.5rem;
+}
+
+
+.storeBanner {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-radius: 12px;
+  background-image: url('../media/banner.png');
+
+  background-size: cover;
+  background-position:  center;   
+  background-repeat: no-repeat;
+  margin-bottom: 3rem;
+
+}
+
+
+.store-logo {
+  position: absolute;
+  bottom: -40px;   
+  left: 20px;      
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;     
+}
+
+
+.storeInfo{
+    margin-block: 1rem;
+    padding-inline: 1rem;
+}
+.storeInfo h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+
+}
+
+.storeInfo .store-tagline {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.storeInfo h1, .store-tagline,.category-btn{
+    color: var(--color-primary);
+}
+
+
+.storeCategories {
+  display: flex;
+  gap:1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.category-btn {
+  padding: 0.4rem 0.4rem;
+  background-color: #fff;
+  border: 1px solid var(--color-green);
+  border-radius: 9px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+.storeDescription ul {
+  list-style: none;
+  margin-bottom: 2rem;
+ 
+}
+
+.storeDescription li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #555;
+}
+
+.storeTabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+}
+
+.tab-btn {
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  color: #888;
+  cursor: pointer;
+  position: relative;
+  min-width: max-content;
+  transition: color 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: #555;
+}
+
+.tab-btn.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+}
+
+
+.productsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .storeProfile {
+    padding: 2rem;
+  }
+
+  .storeBanner {
+    height: 200px;
+  }
+
+  
+  .store-logo {
+    bottom: -50px; 
+    width: 100px;
+    height: 100px;
+  }
+
+  .storeInfo h1 {
+    font-size: 2rem;
+  }
+
+  .storeInfo .store-tagline {
+    font-size: 1rem;
+  }
+
+  .category-btn {
+    font-size: 1rem;
+  }
+
+  .storeDescription li {
+    font-size: 1rem;
+  }
+
+  .tab-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .storeProfile {
+    margin: 0 auto;
+    padding: 4rem;
+  }
+
+  .storeBanner {
+    height: 250px;
+    border-radius: 16px;
+  }
+
+  
+  .store-logo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .storeInfo h1 {
+    font-size: 2.5rem;
+  }
+
+  .storeInfo .store-tagline {
+    font-size: 1.2rem;
+  }
+
+  
+
+  .productsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .storeTabs {
+    overflow-x: visible;
+    white-space: normal;
+    justify-content: flex-start;
+  }
+
+  .tab-btn.active::after {
+    width: 70%;
+  }
+}
