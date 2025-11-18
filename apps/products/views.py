@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.views import View
 from .forms import Product_Form, Product_Variant_Form, Attributes_Form
 
+def favoriteProduct(request):
+    return render(request, 'products/favoriteProducts.html')
 
 def detailProduct(request):
     return render(request, 'products/detailProduct.html')
