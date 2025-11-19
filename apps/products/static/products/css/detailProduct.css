@@ -1,40 +1,35 @@
-#mainDetalheProduto{
+#mainDetalheProduto {
   display: flex;
   flex-direction: column;
-
   gap: 1rem;
   padding-inline: 3rem;
   padding-top: 1rem;
   padding-bottom: 3rem;
- 
 }
 
 /* carousel de produtos */
-
 .carouselProduto {
-    width: 100%;
-    max-width: 250px; 
-    margin: 0 auto;
-    position: relative;
-
-    
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .carouselInner {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .carouselItem {
-    width: 100%;
-    display: none;
+  width: 100%;
+  display: none;
 }
 
 .carouselItem.active {
-    display: block;
+  display: block;
 }
 
-#searchProduct{
+#searchProduct {
   width: 32px;
   height: 32px;
   cursor: pointer;
@@ -44,154 +39,149 @@
   right: -49px;
 }
 
-
 .carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .carousel-btn.prev {
-
-    left: -60px;
+  left: -60px;
 }
 
 .carousel-btn.next {
-    right: -60px;
+  right: -60px;
 }
 
-
 .arrow {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .carousel-dots img {
-    width: 11px;
-    height: 11px;
-    cursor: pointer;
+  width: 11px;
+  height: 11px;
+  cursor: pointer;
 }
 
-
-
-/* Para cada area  */
-
-
-.area0{
+.area0 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-/* Area A */
-.areaA{
+.areaA {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Area C */
-
-.areaC{
+.areaC {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-#imgHard{
+
+#imgHard {
   width: 24px;
   height: 24px;
   cursor: pointer;
 }
-#imgHard:hover{
+
+#imgHard:hover {
   transform: scale(1.2);
   transition: all 0.3s ease-in-out;
   content: url("/static/media/icons/favoriteHover.svg");
 }
-.textAcessorio{
+
+.textAcessorio {
   color: var(--color-primary-dark);
+  font-size: var(--font-size-xl); 
 }
 
-
-/* Area D */
-.areaD{
+.areaD {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-.areaPriceButton{
+
+.areaPriceButton {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
 }
-.areaPrice{
+
+.areaPrice {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-.areaPriceOff{
+
+.areaPriceOff {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
 }
-.areaPriceOff p{
+
+.areaPriceOff p {
   display: flex;
   flex-wrap: nowrap;
   gap: 0.3rem;
 }
-.textPriceRick{
+
+.textPriceRick {
   text-decoration: line-through;
   color: var(--color-gray-dark);
-
+  font-size: var(--font-size-md); 
 }
-.textPrice{
+
+.textPrice {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: var(--font-size-3xl); 
 }
 
-#comprarButton{
+#comprarButton {
   display: flex;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
-
   background-color: var(--color-green);
-
   padding-block: 1.2rem;
   padding-inline: 1.8rem;
   border: none;
   border-radius: 10px;
 }
 
-.iconComprarButton{
+.iconComprarButton {
   width: 32px;
   height: 32px;
 }
 
-.textComprarButton{
+.textComprarButton {
   color: var(--color-background);
-  font-size: calc(1rem + .5vw);
+  font-size: var(--font-size-md); 
   font-weight: bold;
 }
 
-.areaAdicionar{
+.areaAdicionar {
   display: flex;
   justify-content: flex-end;
 }
 
-#adicionarButton{
+#adicionarButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,7 +189,6 @@
   gap: 0.2rem;
   padding-inline: 1.3rem;
   padding-block: 0.4rem;
-
   background-color: var(--color-primary);
   border: none;
   border-radius: 5px;
@@ -207,232 +196,231 @@
 
 #comprarButton,
 #adicionarButton {
-    width: 190px; /* escolha o valor */
+  width: 190px;
 }
 
 #adicionarButton p {
-    white-space: nowrap;
+  white-space: nowrap;
 }
-#imgShopping{
+
+#imgShopping {
   width: 14px;
   height: 14px;
 }
-.addCart{
+
+.addCart {
   color: var(--color-background);
-  font-size: var(--font-size-p-small);
-  
+  font-size: var(--font-size-p-small); 
 }
 
-/* area F */
-
-.areaF{
+.areaF {
   display: flex;
   justify-content: space-between;
 }
 
-#areaLogoLoja{
+#areaLogoLoja {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-#areaNomeLoja{
+
+#areaNomeLoja {
   color: var(--color-primary);
 }
 
-
-#areaTipoLoja{
+#areaTipoLoja {
   display: flex;
   gap: 1rem;
   align-items: center;
-  
 }
 
-#imgLogoLoja{
+#imgLogoLoja {
   width: 70px;
   height: 70px;
- 
-  
 }
-.tipoLoja{
+
+.tipoLoja {
   border: 1px solid var(--color-green);
   padding: 0.3rem;
   border-radius: 5px;
 }
-.tipoLoja p{
+
+.tipoLoja p {
   color: var(--color-primary);
-  font-size: var(--font-size-p-small);
+  font-size: var(--font-size-p-small); 
   font-weight: bold;
 }
 
-/* area G */
-.areaG{
+.areaG {
   display: flex;
   flex-direction: column;
-  
   gap: 1rem;
 }
-.areaG p{
+
+.areaG p {
   text-align: center;
+  font-size: var(--font-size-md); 
 }
 
-
-#chatButton{
+#chatButton {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-
   margin: auto;
   padding-inline: 1rem;
   padding-block: 0.2rem;
-
   background-color: var(--color-background);
   border: 1px solid var(--color-gold);
   border-radius: 5px;
   width: fit-content;
 }
 
-#chatButton p{
+#chatButton p {
   color: var(--color-gold);
+  font-size: var(--font-size-md); 
 }
 
-#chatButton img{
+#chatButton img {
   width: 15px;
   height: 15px;
 }
 
 
+.drop-title {
+  font-size: var(--font-size-xl); 
+  font-weight: 600;
+}
+
+.drop-content p {
+  font-size: var(--font-size-md); 
+}
 
 
 @media screen and (max-width: 425px) {
-
   #mainDetalheProduto {
-      padding: 0.5rem;
+    padding: 0.5rem;
   }
 
   .carouselProduto {
-      max-width: 200px;
+    max-width: 200px;
   }
 
   #searchProduct {
-      right: -35px;
-      width: 26px;
-      height: 26px;
+    right: -35px;
+    width: 26px;
+    height: 26px;
   }
 
   .carousel-btn.prev {
-      left: -40px;
+    left: -40px;
   }
 
   .carousel-btn.next {
-      right: -40px;
+    right: -40px;
   }
 
   .arrow {
-      width: 26px;
-      height: 26px;
+    width: 26px;
+    height: 26px;
   }
 
   h2 {
-      font-size: 1.5rem;
-      text-align: center;
+    font-size: var(--font-size-2xl); 
+    text-align: center;
   }
 
   .textAcessorio {
-      font-size: 1.3rem;
+    font-size: var(--font-size-lg); 
   }
 
-  
   #comprarButton,
   #adicionarButton {
-      width: 160px;   
+    width: 160px;
   }
 
   #comprarButton {
-      border-radius: 8px;
+    border-radius: 8px;
   }
 
   .iconComprarButton {
-      width: 26px;
-      height: 26px;
+    width: 26px;
+    height: 26px;
   }
 
   .textPrice {
-      font-size: 1.3rem;
+    font-size: var(--font-size-2xl); 
   }
 
   #adicionarButton {
-      padding-inline: 0.8rem;
-      justify-content: center; 
+    padding-inline: 0.8rem;
+    justify-content: center;
   }
-
-  /* area F */
-  .areaF {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-  }
-
-  #areaLogoLoja {
-      gap: 0.5rem;
-  }
-
-  
-  #imgLogoLoja {
-      width: 60px;   
-      height: 60px;
-  }
-
-  #areaNomeLoja h4 {
-      font-size: 0.95rem;  
-      line-height: 1.1;
-  }
-}
-
-@media screen and (max-width: 375px) {
-
-  h2 {
-      font-size: 1.25rem;
-  }
-  .areaPriceOff p,.textPriceRick{
-        font-size: 0.633125rem;  
-        line-height: 1.2;
-        white-space: nowrap;
-    }
-
-  .textPrice {
-      font-size: 1.1rem;
-  }
-  
-  /* area F */
 
   .areaF {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
+  }
+
+  #areaLogoLoja {
+    gap: 0.5rem;
+  }
+
+  #imgLogoLoja {
+    width: 60px;
+    height: 60px;
+  }
+
+  #areaNomeLoja h4 {
+    font-size: var(--font-size-lg); 
+    line-height: 1.1;
+  }
+
+ 
+  .drop-title {
+    font-size: var(--font-size-lg); 
+  }
+}
+
+
+@media screen and (max-width: 375px) {
+  h2 {
+    font-size: var(--font-size-xl); 
+  }
+
+  .areaPriceOff p,
+  .textPriceRick {
+    font-size: var(--font-size-xs); 
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .textPrice {
+    font-size: var(--font-size-xl); 
+  }
+
+  .areaF {
     gap: 0.4rem;
   }
 
   #areaLogoLoja {
-    display: flex;
-    align-items: center;
     gap: 0.2rem;
   }
 
-  
   #imgLogoLoja {
     width: 50px;
     height: 50px;
   }
 
   #areaNomeLoja h4 {
-    font-size: 0.82rem;
+    font-size: var(--font-size-md); 
     line-height: 1.1;
   }
 
   #areaNomeLoja p {
-    font-size: 0.72rem;
+    font-size: var(--font-size-sm); 
     line-height: 1;
   }
 
@@ -446,16 +434,15 @@
   }
 
   .tipoLoja p {
-    font-size: 0.65rem;
+    font-size: var(--font-size-xs); 
   }
 
-  /* area G */
   .areaG {
     gap: 0.6rem;
   }
 
   .areaG p {
-    font-size: 0.78rem;
+    font-size: var(--font-size-sm); 
     text-align: center;
   }
 
@@ -471,67 +458,64 @@
   }
 
   #chatButton p {
-    font-size: 0.72rem;
+    font-size: var(--font-size-xs); 
+  }
+
+ 
+  .drop-title {
+    font-size: var(--font-size-md); 
+  }
+
+  .drop-content p {
+    font-size: var(--font-size-sm); 
   }
 }
 
 
-@media screen and (max-width: 375px){
-  .tipoLoja p {
-        font-size: 0.5rem;
-    }
-}
-
-
 @media screen and (min-width: 1024px) {
- 
-
   #areaDivisao {
-        max-width: 1024px;
-        margin: auto;
-        padding: 4rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-            "areaB areaO"
-            "areaB rightColumnBottom";
-        column-gap: 10rem;
-    }
-    .areaPriceButton{
-      gap: 5rem;
-    }
-    .area0 {
-      grid-area: areaO;
-    }
+    max-width: 1024px;
+    margin: auto;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "areaB areaO"
+      "areaB rightColumnBottom";
+    column-gap: 10rem;
+  }
 
-    .areaA { 
-      grid-area: areaA; 
-    }
-    .areaB { 
-      grid-area: areaB; 
-    }
+  .areaPriceButton {
+    gap: 5rem;
+  }
 
-    
-    .rightColumnBottom {
-        grid-area: rightColumnBottom;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end; /* topo e base */
-        height: 100%;
-    }
-    .areaC { 
-      align-items: normal;
-    }
-    .areaD { 
-     
-    }
-    .areaF { 
-     
-    }
-    .areaG { 
-      
-    }
+  .area0 {
+    grid-area: areaO;
+  }
 
-    
-    
+  .areaA {
+    grid-area: areaA;
+  }
+
+  .areaB {
+    grid-area: areaB;
+  }
+
+  .rightColumnBottom {
+    grid-area: rightColumnBottom;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
+  .areaC {
+    align-items: normal;
+  }
+
+  .areaD {}
+
+  .areaF {}
+
+  .areaG {}
 }
