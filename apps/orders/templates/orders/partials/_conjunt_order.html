@@ -1,21 +1,17 @@
 {% load static %}
 
-<div class="orders-grid">
-
-  <div class="card_order_wrapper">
+<div class="col">
     {% include 'orders/partials/_order.html' with order_id='AT001234' order_date='15 de Janeiro, 2025' status='progress' %}
-  </div>
+</div>
 
-  <div class="card_order_wrapper">
+<div class="col">
     {% include 'orders/partials/_order.html' with order_id='AT001235' order_date='15 de Janeiro, 2025' status='delivered' %}
-  </div>
+</div>
 
-  <div class="card_order_wrapper">
+<div class="col">
     {% include 'orders/partials/_order.html' with order_id='AT001236' order_date='15 de Janeiro, 2025' status='delivered' %}
-  </div>
+</div>
 
-  <div class="card_order_wrapper">
+<div class="col">
     {% include 'orders/partials/_order.html' with order_id='AT001237' order_date='15 de Janeiro, 2025' status='cancelled' %}
-  </div>
-
 </div>

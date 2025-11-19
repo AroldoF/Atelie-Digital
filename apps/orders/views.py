@@ -8,8 +8,8 @@ def confirmAddress(request):
     return render(request, 'orders/confirm-address.html', context)
 
 # Create your views here.
-def my_orders(request):
-    return render(request, "orders/orders.html")
+def list(request):
+    return render(request, "orders/list.html")
 
 def shopping_cart(request):
     return render(request, 'orders/shopping_cart.html')
