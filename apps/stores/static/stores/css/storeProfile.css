@@ -210,7 +210,8 @@ ul{
   
 
   .productsGrid {
-    grid-template-columns: repeat(4, 1fr);
+    max-width: 1000px;
+     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
 
   .storeTabs {
