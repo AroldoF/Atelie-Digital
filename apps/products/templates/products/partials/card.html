@@ -6,14 +6,18 @@
 
 
   <div class="card" >
-    <div id="areaImg">
-      <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
-      {% if favor %}
-        <button id="hard">
-          <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
-        </button>
-      {%endif%}
-    </div>
+    <a href="{% url 'detailProducts' %}">
+      <div id="areaImg">
+        <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
+        {% if favor %}
+          <button id="hard">
+            <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
+          </button>
+        {%endif%}
+      </div>
+
+    </a>
+    
     <div class="card-body">
       <p id="description">{{ description }}</p>
       <div id="areaH">
