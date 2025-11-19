@@ -1,6 +1,7 @@
 #mainDetalheProduto{
   display: flex;
   flex-direction: column;
+
   gap: 1rem;
   padding-inline: 3rem;
   padding-top: 1rem;
@@ -145,6 +146,11 @@
   justify-content: center;
   gap: 0.5rem;
 }
+.areaPriceOff p{
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.3rem;
+}
 .textPriceRick{
   text-decoration: line-through;
   color: var(--color-gray-dark);
@@ -161,7 +167,7 @@
   align-items: center;
   justify-content: center;
 
-  background-color: #81BB29;
+  background-color: var(--color-green);
 
   padding-block: 1.2rem;
   padding-inline: 1.8rem;
@@ -294,7 +300,6 @@
   width: 15px;
   height: 15px;
 }
-
 
 
 
@@ -477,9 +482,13 @@
     }
 }
 
-@media screen and (min-width: 1200px) {
 
-    #areaDivisao {
+@media screen and (min-width: 1024px) {
+ 
+
+  #areaDivisao {
+        max-width: 1024px;
+        margin: auto;
         padding: 4rem;
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -487,6 +496,9 @@
             "areaB areaO"
             "areaB rightColumnBottom";
         column-gap: 10rem;
+    }
+    .areaPriceButton{
+      gap: 5rem;
     }
     .area0 {
       grid-area: areaO;
@@ -499,6 +511,7 @@
       grid-area: areaB; 
     }
 
+    
     .rightColumnBottom {
         grid-area: rightColumnBottom;
         display: flex;
