@@ -1,0 +1,184 @@
+/* =========================================
+   LAYOUT DA TABELA DE PEDIDOS (6 COLUNAS)
+   ========================================= */
+
+/* Container da Tabela */
+.orders-table-container {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    overflow: hidden;
+    width: 90%;
+    max-width: 1300px;
+    margin: 40px auto;
+}
+
+/* GRID TEMPLATE ATUALIZADO
+   Objetivo: Espaço mais igualitário e separação melhor a partir de Pagamento.
+   
+   Antigo: 1fr 2.5fr 1.2fr 1.2fr 1fr 60px
+   Novo:   1.2fr 2fr 1.5fr 1.5fr 1.2fr 80px
+   
+   Explicação:
+   - ID+Data (1.2fr): Um pouco mais de espaço para não ficar apertado.
+   - Cliente (2fr): Espaço generoso para nomes longos.
+   - Pagamento (1.5fr): Aumentado para afastar da coluna Cliente.
+   - Envio (1.5fr): Igual ao pagamento para simetria.
+   - Total (1.2fr): Espaço suficiente para valores.
+   - Ações (80px): Fixo e levemente maior para o botão de 40px.
+*/
+.order-grid-template {
+    display: grid;
+    grid-template-columns: 1.2fr 2fr 1.5fr 1.5fr 1.2fr 80px;
+    gap: 24px; /* Aumentado de 16px para 24px para dar mais "ar" entre colunas */
+    align-items: center;
+    padding: 16px 32px; /* Aumentado padding lateral */
+}
+
+/* Cabeçalho */
+.order-table-header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid #e5e7eb;
+    border-color: var(--color-surface);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Centraliza texto do cabeçalho nas colunas de status e total */
+.order-table-header > div:nth-child(3), /* Pagamento */
+.order-table-header > div:nth-child(4), /* Envio */
+.order-table-header > div:nth-child(5)  /* Total */
+{
+    text-align: center;
+}
+
+
+/* Linha de Dados */
+.order-table-row {
+    display: grid;
+    /* Mesma definição do header para garantir alinhamento */
+    grid-template-columns: 1.2fr 2fr 1.5fr 1.5fr 1.2fr 80px;
+    gap: 24px;
+    align-items: center;
+    padding: 16px 32px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+    font-size: 0.9rem;
+    color: var(--color-text);
+}
+
+.order-table-row:last-child { border-bottom: none; }
+.order-table-row:hover { background-color: #fafafa; }
+
+
+/* --- Estilização das Colunas --- */
+
+/* Coluna ID e Data */
+.col-id-date {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-id-date .id-text {
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 0.95rem;
+}
+
+.col-id-date .date-text {
+    color: var(--color-gray);
+    font-size: 0.8rem;
+    margin-top: 2px;
+}
+
+/* Cliente */
+.col-customer {
+    display: flex;
+    align-items: center;
+}
+
+.customer-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.customer-name {
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.customer-email {
+    font-size: 0.75rem;
+    color: var(--color-gray);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+/* Colunas de Status e Total (Centralizadas) */
+.col-payment,
+.col-fulfillment,
+.col-total {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente o conteúdo */
+}
+
+.col-total {
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+/* Badges */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-success { background-color: color-mix(in srgb, var(--color-green) 10%, white); color: var(--color-green); }
+.status-warning { background-color: #fef9c3; color: #854d0e; }
+.status-danger { background-color: #fee2e2; color: var(--color-red); }
+.status-primary { background-color: #e0f2fe; color: #075985; }
+.status-secondary { background-color: #f3f4f6; color: #1f2937; }
+
+/* Ações */
+.col-actions { display: flex; justify-content: flex-end; }
+
+/* Botão de Ação */
+.action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    background-color: #fff;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn img.icon-img { 
+    width: 20px;
+    height: 20px;
+    object-fit: contain; 
+    display: block; 
+}
+
+.action-btn:hover { 
+    background-color: var(--color-surface); 
+    border-color: var(--color-primary); 
+}

@@ -1,13 +1,9 @@
-/* =========================================
-   LAYOUT DA TABELA DE PRODUTOS (CSS GRID)
-   ========================================= */
 
-/* Container Geral da Tabela */
 .products-table-container {
     background-color: #fff;
     border-radius: 12px;
     border: 1px solid #f0f0f0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     overflow: hidden;
     width: 90%;
     max-width: 1200px;
@@ -34,12 +30,12 @@
 }
 
 .product-table-row {
-    display: grid; 
+    display: grid;
     grid-template-columns: 3fr 1.5fr 1fr 1fr 1fr 100px;
     gap: 16px;
     align-items: center;
     padding: 16px 24px;
-    
+
     border-bottom: 1px solid #f0f0f0;
     transition: background-color 0.2s ease;
     color: var(--color-text);
@@ -78,7 +74,9 @@
 }
 
 /* Colunas de Texto */
-.col-category, .col-price, .col-stock {
+.col-category,
+.col-price,
+.col-stock {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -156,5 +154,3 @@
     max-width: 1200px;
     margin: 0 auto 20px auto;
 }
-.search-wrapper { display: flex; gap: 10px; }
-.search-input { padding: 10px 15px; border: 1px solid #ddd; border-radius: 8px; width: 300px; }

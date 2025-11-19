@@ -5,11 +5,15 @@
         Dashboard
     </a>
 
-    <a href="#" class="nav-item">Sua Loja</a>
+    <a href="{% url 'storeProfile' %}" class="nav-item {% if active_page == 'storeProfile' %}active{% endif %}">
+        Sua Loja
+    </a>
 
     <a href="{% url 'artisan_products' %}" class="nav-item {% if active_page == 'products' %}active{% endif %}">
         Produtos
     </a>
 
-    <a href="#" class="nav-item">Pedidos</a>
+    <a href="{% url 'artisan_orders' %}" class="nav-item {% if active_page == 'orders' %}active{% endif %}">
+        Pedidos
+    </a>
 </nav>

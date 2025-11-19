@@ -1,0 +1,53 @@
+{% load static %}
+
+<!-- Container da Linha de Pedido -->
+<div class="order-table-row">
+    
+    <!-- 1. ID e Data (Agrupados) -->
+    <div class="col-id-date">
+        <span class="id-text">#{{ order_id }}</span>
+        <span class="date-text">{{ date }}</span>
+    </div>
+
+    <!-- 2. Cliente (Sem Avatar) -->
+    <div class="col-customer">
+        <div class="customer-info">
+            <span class="customer-name">{{ customer_name }}</span>
+            <span class="customer-email">{{ customer_email }}</span>
+        </div>
+    </div>
+
+    <!-- 3. Status Pagamento -->
+    <div class="col-payment">
+        <span class="status-badge 
+            {% if payment_status == 'Pago' %}status-success
+            {% elif payment_status == 'Pendente' %}status-warning
+            {% else %}status-danger{% endif %}">
+            {{ payment_status }}
+        </span>
+    </div>
+
+    <!-- 4. Status Envio -->
+    <div class="col-fulfillment">
+        <span class="status-badge 
+            {% if fulfillment_status == 'Entregue' %}status-success
+            {% elif fulfillment_status == 'Enviado' %}status-primary
+            {% else %}status-secondary{% endif %}">
+            {{ fulfillment_status }}
+        </span>
+    </div>
+
+    <!-- 5. Total -->
+    <div class="col-total">
+        R$ {{ total|floatformat:2 }}
+    </div>
+
+    <!-- 6. Ações -->
+    <div class="col-actions">
+        <a href="#" class="action-btn" title="Ver Detalhes">
+            <!-- Ícone Search (Lupa) -->
+            <img src="{% static 'media/icons/search.svg' %}" alt="Ver Detalhes" class="icon-img">
+        </a>
+    </div>
+
+</div>
