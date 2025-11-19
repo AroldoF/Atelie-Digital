@@ -19,8 +19,8 @@
 
 .nav-item {
     text-decoration: none;
-    color: var(--color-gray); 
-    background-color: #fff; 
+    color: var(--color-gray);
+    background-color: #fff;
     padding: 12px 24px;
     border-radius: 50px;
     font-weight: 600;
@@ -36,15 +36,15 @@
 }
 
 .nav-item.active {
-    background-color: var(--color-surface); 
-    color: var(--color-primary-dark); 
-    border-color: var(--color-primary); 
+    background-color: var(--color-surface);
+    color: var(--color-primary-dark);
+    border-color: var(--color-primary);
 }
 
 @media (max-width: 425px) {
     .dashboard-nav {
         display: grid;
-        grid-template-columns: 1fr 1fr; 
+        grid-template-columns: 1fr 1fr;
         gap: 10px;
         width: 100%;
     }
@@ -52,9 +52,9 @@
     .nav-item {
         text-align: center;
         font-size: 0.85rem;
-        padding: 12px 4px; 
-        width: 100%; 
-        box-sizing: border-box; 
+        padding: 12px 4px;
+        width: 100%;
+        box-sizing: border-box;
     }
 }
 
@@ -69,7 +69,7 @@
     border-radius: 16px;
     padding: 24px;
     border: 1px solid var(--color-surface);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     height: 100%;
     transition: transform 0.2s ease;
 }
@@ -119,17 +119,17 @@
     background-color: var(--color-background);
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
     border: 1px solid var(--color-surface);
     height: 100%;
     min-height: 380px;
 }
 
 .chart-title {
-    font-weight: 700;
+    font-weight: bold;
     margin-bottom: 0;
-    color: var(--color-text);
-    font-size: 1.1rem;
+    color: var(--color-hover);
+    font-size: var(--font-size-lg);
 }
 
 .chart-subtitle {
@@ -189,7 +189,7 @@
 }
 
 .bar-views {
-    background-color: var(--color-surface); 
+    background-color: var(--color-surface);
 }
 
 .bar-sales {
@@ -218,8 +218,13 @@
     margin-right: 8px;
 }
 
-.dot-sales { background-color: var(--color-accent); }
-.dot-views { background-color: var(--color-surface); }
+.dot-sales {
+    background-color: var(--color-accent);
+}
+
+.dot-views {
+    background-color: var(--color-surface);
+}
 
 
 /* =========================================
@@ -228,20 +233,27 @@
  */
 
 .stock-quantity {
-    color: var(--color-primary); 
+    color: var(--color-primary);
     font-size: 0.8rem;
     font-weight: 500;
 }
 
-[style*="color: #ea580c;"], 
+[style*="color: #ea580c;"],
 .link-action {
     color: var(--color-hover) !important;
 }
 
-.orders-title, .orders-link{
+.orders-title {
     color: var(--color-hover);
+    font-weight: 700;
+    font-size: var(--font-size-lg);
 }
 
+.orders-link {
+    color: var(--color-hover);
+    font-size: .875em;
+    font-weight: 700;
+}
 
 /* =========================================================
    SEÇÃO DE PEDIDOS RECENTES (Layout Tabela - Imagem 1)
@@ -250,10 +262,10 @@
 .orders-section-container {
     background-color: #fff;
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     border: 1px solid #f0f0f0;
     padding: 30px;
-    
+
     margin: 0 auto 100px auto;
     width: 100%;
     max-width: 1100px;
@@ -335,10 +347,29 @@
     white-space: nowrap;
 }
 
-.c-status-progress { background-color: var(--color-rose); color: var(--color-pink); }
-.c-status-delivered { background-color: color-mix(in srgb, var(--color-green) 10%, white); color: var(--color-green); }
-.c-status-cancelled { background-color: #fee2e2; color: var(--color-red); }
-.c-status-pending { background-color: #fef9c3; color: #854d0e; }
+.product-recent {
+    color: var(--color-hover)
+}
+
+.c-status-progress {
+    background-color: var(--color-rose);
+    color: var(--color-pink);
+}
+
+.c-status-delivered {
+    background-color: color-mix(in srgb, var(--color-green) 10%, white);
+    color: var(--color-green);
+}
+
+.c-status-cancelled {
+    background-color: #fee2e2;
+    color: var(--color-red);
+}
+
+.c-status-pending {
+    background-color: #fef9c3;
+    color: #854d0e;
+}
 
 @media (max-width: 500px) {
     .custom-order-row {
@@ -347,17 +378,19 @@
         gap: 15px;
     }
 
-    .col-info, .col-product, .col-status {
+    .col-info,
+    .col-product,
+    .col-status {
         width: 100%;
         text-align: center;
         justify-content: center;
     }
-    
+
     .col-product {
         padding: 0;
     }
 
-    .orders-list{
+    .orders-list {
         align-items: center;
     }
 }
