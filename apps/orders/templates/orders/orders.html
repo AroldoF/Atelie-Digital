@@ -1,0 +1,50 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block title %}Meus Pedidos{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'orders/css/shared/my_order.css' %}">
+<link rel="stylesheet" href="{% static 'products/css/favoriteProducts.css' %}">
+
+{% endblock  %}
+
+{% block main %}
+<section class="container margin">
+
+    <div class="categories">
+        <button class="category-btn category-search active">
+        <img id="search" src="{% static 'products/media/icons/search.svg' %}" alt="Buscar">
+        </button>
+        <button class="category-btn ">Em andamento</button>
+        <button class="category-btn">Entregue</button>
+        <button class="category-btn">Cancelado</button>
+    </div>
+    
+    <div class="title-clear">
+        <h2 class="section-title">4 Pedidos</h2>
+    </div>
+
+
+    <div class="orders-grid">
+        {% include 'accounts/partials/my_orders.html' %}
+
+        {% comment %} <div class="card_order_wrapper">
+        {% include 'orders/partials/order.html' with order_id='AT001234' order_date='15 de Janeiro, 2025' status='progress' %}
+        </div>
+
+        <div class="card_order_wrapper">
+        {% include 'orders/partials/order.html' with order_id='AT001235' order_date='15 de Janeiro, 2025' status='delivered' %}
+        </div>
+
+        <div class="card_order_wrapper">
+        {% include 'orders/partials/order.html' with order_id='AT001236' order_date='15 de Janeiro, 2025' status='delivered' %}
+        </div>
+
+        <div class="card_order_wrapper">
+        {% include 'orders/partials/order.html' with order_id='AT001237' order_date='15 de Janeiro, 2025' status='cancelled' %}
+        </div> {% endcomment %}
+    </div>
+
+</section>
+{% endblock %}
