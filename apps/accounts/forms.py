@@ -1,4 +1,5 @@
 from django import forms
+from .models import Addresses
 
 BRAZILIAN_STATES = [
     ('AC', 'Acre'),
@@ -167,3 +168,41 @@ class FormAdressUser(forms.Form):
         label="Estado",
          widget=forms.Select(attrs={'class': 'form-select'})
     )
+    
+class AddressesForm(forms.ModelForm):
+    class Meta: 
+        model = Addresses
+        fields = ['street', 'neighborhood', 'number','city', 'cep', 'state', 'complement']
+        labels = {
+            'street': 'Rua', 
+            'neighborhood': 'Bairro', 
+            'number': 'Número da Casa',
+            'city': 'Cidade', 
+            'cep': 'CEP', 
+            'state': 'Estado', 
+            'complement': 'Complemento'
+        }
+        widgets = {
+            'street': forms.TextInput(attrs={
+                'placeholder': 'Ex.: 15 de março'
+            }), 
+            'neighborhood': forms.TextInput(attrs={
+                'placeholder': 'Ex: Centro'
+            }), 
+            'number': forms.NumberInput(attrs={
+                'placeholder': 'Ex.: 254'
+            }),
+            'city': forms.TextInput(attrs={
+                'placeholder': 'Ex.: Pau dos Ferros'
+            }), 
+            'cep': forms.TextInput(attrs={
+                'placeholder': 'Ex.: 59940-000'
+            }), 
+            'state': forms.TextInput(attrs={
+                'placeholder': 'Ex.: RN'
+            }), 
+            'complement': forms.Textarea(attrs={
+                'placeholder': 'Digite um referêncial para sua casa',
+                'rows': 3
+            })
+        }

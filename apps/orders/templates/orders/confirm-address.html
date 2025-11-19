@@ -1,0 +1,301 @@
+{% extends "shared/base.html" %}
+{% load static %}
+{% block title %}Confirmar Endereço{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'orders/css/shared/shopping_cart.css' %}">
+<style>
+  /* Estilo para os blocos organizados */
+  .delivery-section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+  }
+  
+  .section-title {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+  
+  .address-card {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+    align-items: center;
+  }
+  
+  .address-icon {
+    width: 40px;
+    height: 40px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .address-content {
+    flex: 1;
+  }
+  
+  .address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .address-type {
+    background-color: #EED2A5;
+    padding: 4px 12px;
+    color: #D26B21;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  
+  .address-edit {
+    color: #D26B21;
+    cursor: pointer;
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+  
+  .address-edit:hover {
+    text-decoration: underline;
+  }
+  
+  .address-details p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    color: #495057;
+  }
+  
+  .shipping-option {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+    align-items: center;
+  }
+  
+  .shipping-content {
+    flex: 1;
+  }
+  
+  .shipping-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .shipping-name {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .shipping-price {
+    font-weight: 700;
+    color: #d47a00;
+    font-size: 1.1rem;
+  }
+  
+  .shipping-description {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .btn-add-address {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(212, 122, 0, 0.1);
+    color: #D26B21;
+    border: 1px solid #D26B21;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: 100%;
+    max-width: 300px;
+    margin: 15px auto 0;
+  }
+  
+  .btn-add-address:hover {
+    background: #D26B21;
+    color: white;
+  }
+  
+  /* Estilo para o grid responsivo */
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  @media (min-width: 992px) {
+    .grid-container {
+      grid-template-columns: 2fr 1fr;
+    }
+    
+    .delivery-section {
+      margin-bottom: 0;
+    }
+  }
+  
+  .order-summary-container {
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+  }
+  
+  @media (max-width: 991px) {
+    .order-summary-container {
+      position: static;
+      margin-top: 20px;
+    }
+  }
+</style>
+{% endblock style %}
+
+{% block main %}
+<div class="container py-4">
+  <div class="grid-container">
+    <!-- Coluna Esquerda: Opções de Entrega -->
+    <div class="delivery-sections">
+      <h3 class="mb-4 text-start">Opções de Entrega</h3>
+      
+      <!-- Seção de Endereços -->
+      <div class="delivery-section">
+        <h2 class="section-title">Selecione o Endereço</h2>
+        
+        <!-- Endereço 1 -->
+        <div class="address-card">
+          <div class="address-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D26B21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <div class="address-content">
+            <div class="address-header">
+              <span class="address-type">Casa</span>
+              <a href="#" class="address-edit">Editar</a>
+            </div>
+            <div class="address-details">
+              <p>Rua das Flores, 123</p>
+              <p>Bairro Centro</p>
+              <p>Pau dos Ferros, RN - 59900-000</p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <input type="radio" name="address" checked>
+          </div>
+        </div>
+        
+        <a href="{% url 'addresses' %}" class="btn btn-secondary">
+          Adicionar Novo Endereço
+        </a>
+      </div>
+      
+      <!-- Seção de Frete -->
+      <div class="delivery-section mt-4">
+        <h2 class="section-title">Selecione o Frete</h2>
+        
+        <!-- Opção 1 -->
+        <div class="shipping-option">
+          <div class="d-flex align-items-center">
+            <input type="radio" name="shipping" checked>
+          </div>
+          <div class="shipping-content">
+            <div class="shipping-header">
+              <span class="shipping-name">Entrega Expressa</span>
+              <span class="shipping-price">R$ 15,99</span>
+            </div>
+            <p class="shipping-description">Receba em até 3 dias úteis</p>
+          </div>
+        </div>
+        
+        <!-- Opção 2 -->
+        <div class="shipping-option">
+          <div class="d-flex align-items-center">
+            <input type="radio" name="shipping">
+          </div>
+          <div class="shipping-content">
+            <div class="shipping-header">
+              <span class="shipping-name">Entrega Padrão</span>
+              <span class="shipping-price">R$ 7,99</span>
+            </div>
+            <p class="shipping-description">Receba em 5-7 dias úteis</p>
+          </div>
+        </div>
+        
+        <!-- Opção 3 -->
+        <div class="shipping-option">
+          <div class="d-flex align-items-center">
+            <input type="radio" name="shipping">
+          </div>
+          <div class="shipping-content">
+            <div class="shipping-header">
+              <span class="shipping-name">Retirada na Loja</span>
+              <span class="shipping-price">Grátis</span>
+            </div>
+            <p class="shipping-description">Busque seu pedido em nossa loja física</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Coluna Direita: Resumo do Pedido -->
+    <div class="order-summary-container">
+      {% include 'orders/partials/_order_summary_card.html' with subtotal=599.9 frete=25 desconto=50 total=574.9 url_finalizar='#' url_continuar='#' btn_name="Finalizar Compra" btn_two_name="Continuar Comprando" cart_shopping=True cart=True %}
+    </div>
+  </div>
+</div>
+{% endblock main %}
+
+{% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Selecionar endereço ao clicar no card inteiro
+    document.querySelectorAll('.address-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        if (e.target !== this.querySelector('input[type="radio"]') && 
+            !e.target.classList.contains('address-edit')) {
+          this.querySelector('input[type="radio"]').checked = true;
+        }
+      });
+    });
+    
+    // Selecionar frete ao clicar no card inteiro
+    document.querySelectorAll('.shipping-option').forEach(option => {
+      option.addEventListener('click', function(e) {
+        if (e.target !== this.querySelector('input[type="radio"]')) {
+          this.querySelector('input[type="radio"]').checked = true;
+        }
+      });
+    });
+  });
+</script>
+{% endblock script %}
+
