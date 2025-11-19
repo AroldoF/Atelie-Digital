@@ -1,27 +1,35 @@
+
 .card {
   border: none;
-  width: 14rem;
-  
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 140px;
+  transition: transform 0.2s ease;
 }
 
-.card-body {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin-top: .5rem;
-  gap: .8rem;
+.card:hover {
+  transform: translateY(-2px);
+
 }
 
 
 #areaImg {
   position: relative;
+  width: 100%;
+  padding-top: 100%; 
+  overflow: hidden;
 }
 
-
 .img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 14rem;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   border-radius: 8px;
   display: block;
 }
@@ -29,235 +37,302 @@
 
 #hard {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
-
+  top: 4px;
+  right: 4px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 50px;
-  height: 50px;
-  background: #fff;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   z-index: 2;
 }
 
 #imgHard {
-  width: 30px;
-  height: 30px;
+  width: 18px;
+  height: 18px;
 }
+
 #hard:hover #imgHard {
   content: url("/static/media/icons/favoriteHover.svg");
 }
 
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.5rem 0;
+  gap: 0.4rem;
+}
+
 #description {
-  text-align: left;
-  color: #454343;
-  letter-spacing: var(--letter-spacing);
-  line-height: var(--line-height);
   margin: 0;
+  font-size: var(--font-size-xxs);
+  color: #454343;
+  line-height: 1.3;
+  text-align: left;
+}
+
+
+#areaH {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: nowrap;
 }
 
 #price {
-  text-align: left;
-  color: #000;
-  font-size: 1.5em;
+  margin: 0;
+  font-size: var(--font-size-sm); 
   font-weight: bold;
-  letter-spacing: 0.45px;
-  line-height: 14.3px;
+  color: #000;
+  text-align: left;
+  white-space: nowrap; 
   
 }
 
-
-#areaH{
-  display: flex;
-  align-items: center;
-  justify-content:flex-start;
-  flex-wrap: nowrap;
-  gap: .8rem;
-  
-  
- 
-}
 #off {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.10375rem;
+  gap: 0.2rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
   background-color: var(--color-primary-dark);
-  border-radius: 5px;
-  padding-inline: 0.25rem;
-
   white-space: nowrap;
   min-width: max-content;
 }
 
-
-#imgRaio{
-  width: 10px;
-
+#imgRaio {
+  width: 14px;
+  height: 14px;
 }
 
-.car{
+#textOff {
+  margin: 0;
+  font-size: var(--font-size-xxxs); 
+  color: var(--color-background);
+}
+
+
+.car {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  background-color: var(--color-accent);
   white-space: nowrap;
   min-width: max-content;
   flex-shrink: 1;
-
-  gap: 0.2rem;
-  border-radius: 5px;
-  width: 130px;
-  padding: 0.1rem;
+  max-width: 90px;
 }
 
-.imgCar{
-  width: 25px;
+.imgCar {
+  width: 16px;
+  height: 16px;
 }
 
-.textTagCar,#textOff {
-  color: var(--color-background);
+.textTagCar {
   margin: 0;
+  font-size: var(--font-size-xxs); 
+  color: var(--color-background);
 }
 
-#envioRapido{
+#envioRapido {
   background-color: var(--color-accent);
 }
 
-#FreteGratis{
+#FreteGratis {
   background-color: var(--color-green);
 }
 
-@media screen and (max-width: 425px){
-
+@media (max-width: 320px) {
   .card {
-    width: 10rem;
+    max-width: 120px;
   }
 
-  .card-body {
-    gap: .6rem;
+  #areaImg {
+    padding-top: 100%;
   }
 
-  .img {
-    height: 10rem;
-  }
-
-  /* botão de favoritar */
   #hard {
-    width: 38px;
-    height: 38px;
-    top: 4px;
-    right: 4px;
+    width: 28px;
+    height: 28px;
+    top: 3px;
+    right: 3px;
   }
 
   #imgHard {
+    width: 16px;
+    height: 16px;
+  }
+
+  #description {
+    font-size: var(--font-size-xxs); 
+  }
+
+  #price {
+    font-size: var(--font-size-xs); 
+  }
+
+
+  #off {
+    gap: 0.05rem;
+    padding: 0.15rem 0.19rem;
+    border-radius: 3px;
+    
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  #imgRaio {
+    width: 10px;
+    height: 10px;
+  }
+
+  
+
+
+  .car {
+    max-width: 70px;
+    padding: 0.08rem 0.2rem;
+    gap: 0.15rem;
+    border-radius: 3px;
+  }
+
+  .imgCar {
+    width: 14px;
+    height: 14px;
+  }
+
+  .textTagCar {
+    font-size: var(--font-size-xxs);
+  }
+}
+
+
+@media (min-width: 768px) {
+  .card {
+    max-width: 180px;
+  }
+
+  #areaImg {
+    padding-top: 100%;
+  }
+
+  #hard {
+    width: 40px;
+    height: 40px;
+    top: 6px;
+    right: 6px;
+  }
+
+  #imgHard {
+    width: 22px;
+    height: 22px;
+  }
+
+  #description {
+    font-size: var(--font-size-xs); 
+  }
+
+  #price {
+    font-size: var(--font-size-md); 
+  }
+
+  #off {
+    padding: 0.15rem 0.4rem;
+    border-radius: 5px;
+  }
+
+  #imgRaio {
+    width: 16px;
+    height: 16px;
+  }
+
+  #textOff {
+    font-size: var(--font-size-xs); 
+  }
+
+  .car {
+    max-width: 110px;
+    padding: 0.15rem 0.4rem;
+    gap: 0.25rem;
+    border-radius: 5px;
+  }
+
+  .imgCar {
     width: 20px;
     height: 20px;
   }
 
-  #description{
-    font-size: var(--font-size-p-small);
-  }
-
-  #price{
-    font-size: 1.2em;
-  }
-
-
-  #textOff{
-    font-size: var(--font-size-p--Xsmall);
-  }
-
-  #imgRaio{
-    width: 7px;
-  }
-
-  /* Tags de envio */
-  .car{
-    max-width: 90px;
-    padding-block: 0.15rem;
-    gap: .15rem;
-    border-radius: 4px;
-  }
-
-  .imgCar{
-    width: 18px;
-  }
-
-  .textTagCar{
-    font-size: var(--font-size-p--Xsmall);
+  .textTagCar {
+    font-size: var(--font-size-xs); 
   }
 }
 
-
-@media screen and (max-width: 375px){
+@media (min-width: 1024px) {
   .card {
-    width:7rem;
+    max-width: 200px;
   }
 
-  .card-body {
-  
-    gap: .3rem;
-  }
-
-  .img {
-    height: 7rem;
+  #areaImg {
+    padding-top: 100%;
   }
 
   #hard {
-
-    width: 25px;
-    height: 25px;
+    width: 48px;
+    height: 48px;
+    top: 8px;
+    right: 8px;
   }
 
   #imgHard {
-    width: 15px;
-   
+    width: 26px;
+    height: 26px;
   }
 
-  #description{
-    font-size: var(--font-size-p--Xsmall);
-  }
-  #price{
-    font-size: var(--font-size-p-small);
-  }
-  .textTagCar{
-    font-size:var(--font-size-p-XXsmall);
-  }
-  #off{
-    padding-inline: 0.1875rem;
-    padding-block: 0.0625rem;
-    border-radius: 2.25px;
-    min-width: max-content;
-  }
-  #textOff{
-    font-size: var(--font-size-p-XXXsmall);
-  }
-  #imgRaio{
-    width: 4.05px;
-
+  #description {
+    font-size: var(--font-size-sm); 
   }
 
-  .car{
-    max-width: 60px;
-    padding-block: 0.1rem;
-    border-radius: 2.25px;
- 
-  }
-  .car,#off{
-    border-radius: 2.25px;
+  #price {
+    font-size: var(--font-size-lg); 
   }
 
-  .imgCar{
-    width: 9.98px;
+  #off {
+    padding: 0.1rem 0.4rem;
+    border-radius: 6px;
   }
 
+  #imgRaio {
+    width: 18px;
+    height: 18px;
+  }
 
+  #textOff {
+    font-size: var(--font-size-xs); 
+  }
+
+  .car {
+    max-width: 130px;
+    padding: 0.1rem 0.7rem;
+    gap: 0.3rem;
+    border-radius: 6px;
+  }
+
+  .imgCar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .textTagCar {
+    font-size: var(--font-size-xs); 
+  }
 }
-
