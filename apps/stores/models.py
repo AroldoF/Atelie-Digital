@@ -9,7 +9,7 @@ class Stores(models.Model):
     description = models.TextField(blank=True, null=True)
     phone_number = models.CharField(unique=True, max_length=15)
     cnpj = models.CharField(unique=True, max_length=14, blank=True, null=True)
-    email = models.CharField(unique=True, max_length=255)
+    email = models.EmailField(unique=True, max_length=255)
 
     class Meta:
         db_table = 'stores'
@@ -24,7 +24,7 @@ class StoreImages(models.Model):
 
 class StoreCategories(models.Model):
     store_categories_id = models.AutoField(primary_key=True)
-    category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    category = models.ForeignKey(Categories, related_name='store_categories', on_delete=models.CASCADE)
     store = models.ForeignKey(Stores, related_name='store_categories', on_delete=models.CASCADE)
 
     class Meta:
