@@ -26,11 +26,11 @@
     </div>
     
     {% if cart_shopping %}
-        <a href="{{ url_finalizar }}" class="btn btn-checkout">
+        <a href="{% url url_finalizar %}" class="btn btn-checkout">
             {{ btn_name }}
         </a>
         {% if cart %}
-            <a href="{{ url_continuar }}" class="btn btn-continue">
+            <a href="{% url 'index' %}" class="btn btn-continue">
                 {{ btn_two_name }}
             </a>
         {% endif %}
