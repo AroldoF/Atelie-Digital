@@ -10,6 +10,8 @@ class Stores(models.Model):
     phone_number = models.CharField(unique=True, max_length=15)
     cnpj = models.CharField(unique=True, max_length=14, blank=True, null=True)
     email = models.EmailField(unique=True, max_length=255)
+    image = models.ImageField()
+    banner = models.ImageField()
 
     class Meta:
         db_table = 'stores'

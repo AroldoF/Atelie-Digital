@@ -4,13 +4,15 @@ from .models import Stores, StoreCategories
 class Store_Form(forms.ModelForm):
     class Meta:
         model = Stores
-        fields = ['name', 'description', 'email', 'phone_number', 'cnpj']
+        fields = ['name', 'description', 'email', 'phone_number', 'cnpj', 'image', 'banner']
         labels = {
             'name': 'Nome', 
             'description': 'Descrição', 
             'email': 'Email', 
             'phone_number': "Telefone da loja", 
-            'cnpj': 'CNPJ'
+            'cnpj': 'CNPJ',
+            'image': 'Imagem',
+            'banner': 'Banner da Loja'
         }
         widgets = {
             'name': forms.TextInput(attrs={
