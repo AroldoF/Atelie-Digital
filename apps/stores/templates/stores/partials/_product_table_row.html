@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="product-table-row">
+  <div class="col-name">
+    <div class="product-thumb">
+      <img src="{% static image %}" alt="{{ name }}" />
+    </div>
+    <span class="name-text">{{ name }}</span>
+  </div>
+
+  <div class="col-category">{{ category }}</div>
+
+  <div class="col-price">R$ {{ price|floatformat:2 }}</div>
+
+  <div class="col-stock">{{ stock }} unid.</div>
+
+  <div class="col-status">
+    <span class="status-badge {% if status == 'Ativo' %}
+        status-active
+      {% else %}
+        status-inactive
+      {% endif %}">
+      {{ status }}
+    </span>
+  </div>
+
+  <div class="col-actions">
+    <a href="#" class="action-btn btn-edit" title="Editar"><img src="{% static 'media/icons/pencil.svg' %}" alt="Editar" class="icon-img" /></a>
+
+    <button class="action-btn btn-delete" title="Excluir"><img src="{% static 'media/icons/trash.svg' %}" alt="Excluir" class="icon-img" /></button>
+  </div>
+</div>
