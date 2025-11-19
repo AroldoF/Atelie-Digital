@@ -33,7 +33,7 @@
         <div class="bg-white p-4 rounded-4 shadow-sm border" style="border-color: #f0f0f0 !important;">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="fw-bold mb-0 text-dark">Produtos Recentes</h5>
-            <a href="#" class="text-decoration-none small fw-bold" style="color: var(--color-hover);">Ver todos</a>
+            <a href=" {% url 'artisan_products'%}" class="text-decoration-none small fw-bold" style="color: var(--color-hover);">Ver todos</a>
           </div>
           {% include 'stores/partials/_recent_product_item.html' with name='Vaso de Cerâmica' price=89.9 stock_quantity=12 status='Ativo' status_color='success' image_path='media/caixaDeJoias.jpeg' %}
           {% include 'stores/partials/_recent_product_item.html' with name='Kit de Almofadas' price=120 stock_quantity=5 status='Pouco Est.' status_color='warning' image_path='media/caixaDeJoias.jpeg' %}
@@ -46,7 +46,7 @@
     <div class="orders-section-container">
       <div class="orders-header">
         <h5 class="orders-title">Pedidos Recentes</h5>
-        <a href="#" class="orders-link">Ver todos</a>
+        <a href="{% url 'artisan_orders'%}" class="orders-link">Ver todos</a>
       </div>
 
       <div class="orders-list">

@@ -338,7 +338,7 @@
 .c-status-progress { background-color: var(--color-rose); color: var(--color-pink); }
 .c-status-delivered { background-color: color-mix(in srgb, var(--color-green) 10%, white); color: var(--color-green); }
 .c-status-cancelled { background-color: #fee2e2; color: var(--color-red); }
-.c-status-pending { background-color: #fffbeb; color: #b45309; }
+.c-status-pending { background-color: #fef9c3; color: #854d0e; }
 
 @media (max-width: 500px) {
     .custom-order-row {
