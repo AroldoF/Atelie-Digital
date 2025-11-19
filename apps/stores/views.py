@@ -13,6 +13,9 @@ def dashboard(request):
 def artisan_products(request):
     return render(request, 'stores/artisan_products_table.html', {'active_page': 'products'})
 
+def artisan_orders(request):
+    return render(request, 'stores/artisan_orders_table.html', {'active_page': 'orders'})
+
 class Store_Register_View(View):
     def get(self, request):
         context = {
