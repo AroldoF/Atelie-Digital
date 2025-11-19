@@ -11,6 +11,11 @@ p{
 
 a{
     text-decoration: none;
+    color: white;
+}
+
+.link_recuperar{
+    text-decoration: none;
     color: #396787;
 }
 

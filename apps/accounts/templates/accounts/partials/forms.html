@@ -42,7 +42,7 @@
         {% endfor %}
     
         <!--Incluir componente de botão-->
-        <button type="submit" class="btn btn_acess">{{ btn_text }}</button>
+        <button type="submit" class="btn btn_acess"><a href="{% url 'profile' %}">{{ btn_text }}</a></button>
     </form>
     
     <!--Retorna somente na tela de login-->
