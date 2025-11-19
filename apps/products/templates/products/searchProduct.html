@@ -10,26 +10,16 @@
 
 {% block main %}
 
-<main id="mainSearchProduct">
-<div id="areaFilter">
+<section id="searchProduct">
 
-  <div id="filter">
-    <img id="imgFilter" src="{% static 'products/media/icons/search.svg' %}" alt="Ícone de busca">
+  <div class="categories">
+    <button class="category-btn category-search active">
+      <img id="search" src="{% static 'products/media/icons/search.svg' %}" alt="Buscar">
+    </button>
+    <button class="category-btn ">Cerâmica</button>
+    <button class="category-btn">Tecidos</button>
+    <button class="category-btn">Madeira</button>
   </div>
-
-  <div class="areaNameFilter">
-    <p class="textFilter">Cerâmica</p>
-  </div>
-
-  <div class="areaNameFilter">
-    <p class="textFilter">Tecidos</p>
-  </div>
-
-  <div class="areaNameFilter">
-    <p class="textFilter">Madeira</p>
-  </div>
-
-</div>
 
 <p class="textResult">Resultados para "caixa de joias"</p>
 
@@ -47,7 +37,7 @@
 
 </div>
 
-</main>
+</section>
 
 
 

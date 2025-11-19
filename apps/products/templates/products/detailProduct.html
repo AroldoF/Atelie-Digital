@@ -95,7 +95,9 @@
  
   <div class="areaF">
       <div id="areaLogoLoja">
-        <img id="imgLogoLoja" src="{% static 'products/media/logoLoja.jpg' %}" alt="">
+        <a href="{% url 'storeProfile' %}">
+          <img id="imgLogoLoja" src="{% static 'products/media/logoLoja.jpg' %}" alt="">
+        </a>
         <div id="areaNomeLoja">
           <h4>Val Laços</h4>
           <p>Princesa Estilosa</p>
