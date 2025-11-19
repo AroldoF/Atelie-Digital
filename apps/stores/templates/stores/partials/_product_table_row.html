@@ -1,0 +1,42 @@
+{% load static %}
+
+<div class="product-table-row">
+    
+    <!-- 1. Nome -->
+    <div class="col-name">
+        <div class="product-thumb">
+            <img src="{% static image %}" alt="{{ name }}">
+        </div>
+        <span class="name-text">{{ name }}</span>
+    </div>
+
+    <!-- 2. Categoria -->
+    <div class="col-category">{{ category }}</div>
+
+    <!-- 3. Preço -->
+    <div class="col-price">R$ {{ price|floatformat:2 }}</div>
+
+    <!-- 4. Estoque -->
+    <div class="col-stock">{{ stock }} unid.</div>
+
+    <!-- 5. Status -->
+    <div class="col-status">
+        <span class="status-badge {% if status == 'Ativo' %}status-active{% else %}status-inactive{% endif %}">
+            {{ status }}
+        </span>
+    </div>
+
+    <!-- 6. Ações -->
+    <div class="col-actions">
+        <!-- Botão Editar (Mantido como exemplo, pode trocar por img se tiver o ícone) -->
+        <a href="#" class="action-btn btn-edit" title="Editar">
+           <img src="{% static 'media/icons/pencil.svg' %}" alt="Editar" class="icon-img">
+        </a>
+        
+        <!-- Botão Excluir (Usando seu ícone via img) -->
+        <button class="action-btn btn-delete" title="Excluir">
+            <img src="{% static 'media/icons/trash.svg' %}" alt="Excluir" class="icon-img">
+        </button>
+    </div>
+
+</div>

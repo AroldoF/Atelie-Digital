@@ -1,0 +1,37 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'stores/css/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'stores/css/products.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div style="padding: 20px 40px; margin-bottom: 100px;">
+    
+    {% include 'stores/partials/_dashboard_nav.html' with active_page='products' %}
+
+    <div class="products-table-container">
+        
+        <div class="table-header table-grid-template">
+            <div>Nome do Produto</div>
+            <div>Categoria</div>
+            <div>Preço</div>
+            <div>Estoque</div>
+            <div>Status</div>
+            <div style="text-align: right;">Ações</div>
+        </div>
+        
+        {% include 'stores/partials/_product_table_row.html' with name="Vaso de Cerâmica Artesanal" category="Decoração" price=89.9 stock=12 status="Ativo" image="media/caixaDeJoias.jpeg" %}
+        
+        {% include 'stores/partials/_product_table_row.html' with name="Kit Almofadas Linho" category="Sala de Estar" price=120.0 stock=5 status="Ativo" image="media/caixaDeJoias.jpeg" %}
+        
+        {% include 'stores/partials/_product_table_row.html' with name="Luminária Rústica" category="Iluminação" price=250.0 stock=0 status="Inativo" image="media/caixaDeJoias.jpeg" %}
+        
+        {% include 'stores/partials/_product_table_row.html' with name="Cesta de Palha Grande" category="Organização" price=45.5 stock=28 status="Ativo" image="media/caixaDeJoias.jpeg" %}
+
+        {% include 'stores/partials/_product_table_row.html' with name="Prato Decorativo Pintado" category="Cozinha" price=60.0 stock=2 status="Ativo" image="media/caixaDeJoias.jpeg" %}
+
+    </div>
+</div>
+{% endblock %}

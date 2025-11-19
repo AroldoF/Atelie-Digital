@@ -8,7 +8,10 @@ def storeProfile(request):
     return render(request, 'stores/storeProfile.html')
 
 def dashboard(request):
-    return render(request, 'stores/dashboard.html')
+    return render(request, 'stores/dashboard.html', {'active_page': 'dashboard'})
+
+def artisan_products(request):
+    return render(request, 'stores/artisan_products_table.html', {'active_page': 'products'})
 
 class Store_Register_View(View):
     def get(self, request):
