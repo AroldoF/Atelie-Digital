@@ -15,7 +15,7 @@
 <div class="mobile-only">
 
   <div id="areaDivisao">
-    <div class="area0">
+    <div class="header">
       <h2>Laço Pérola com Pontas</h2>
       
       <div class="area-tag-review">
@@ -65,7 +65,7 @@
                 <p>R$ <span class="textPriceRick">55,00</span> </p>
                 <div id="off">
                     <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
-                    <p  id="textOff">30% Off</p>
+                    <p  id="textOff">26% Off</p>
                 </div>
               </div>
               
@@ -127,13 +127,15 @@
     </button>
   </div>
 
+  <div>
+      {% include 'products/partials/drop.html' with title='Descrição' content='Este é um lindo laço decorativo perfeito para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim, o laço possui um design elegante com pontas retas e bem definidas. No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado e festivo.' %}
 
-   {% include 'products/partials/drop.html' with title='Descrição' content='Este é um lindo laço decorativo perfeito para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim, o laço possui um design elegante com pontas retas e bem definidas. No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado e festivo.' %}
+      {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
 
-  {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
+      {% include 'products/partials/drop.html' with title='Dimensões' content='15cm' %}
 
-  {% include 'products/partials/drop.html' with title='Dimensões' content='15cm' %}
-
+  </div>
+ 
 </div>
 
 <div class="desktop-only">
@@ -141,10 +143,17 @@
   
    <div class="desktop-div-colunas">
       <aside class="desktop-gallery">
+            <div class="icons-gallery">
+              <img class="icon-favorite" src="{% static 'products/media/icons/favorite.svg' %}" alt="">
+              <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
+              
+            </div>
           <img id="mainImageDesktop" src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
               alt="Laço Pérola com Pontas — vista principal" class="main-image">
 
           <div class="thumbnail-list">
+            
+           
             <img src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
                 data-src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
                 class="thumbnail active" alt="Vista frontal">
@@ -160,15 +169,16 @@
        <article class="desktop-product-info">
 
         <h1 class="product-title">Laço Pérola com Pontas</h1>
-          <p class="description-product">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis eaque ducimus commodi minus, ipsam ex laborum incidunt! Dicta quis, facilis quo asperiores aperiam praesentium rerum et natus commodi a cumque?
+          <p class="description-product" id="descriptionPreview">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis eaque ducimus commodi minus, ipsam ex laborum incidunt! Dicta quis, facilis quo asperiores aperiam praesentium rerum et natus commodi a cumque?
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, rerum reprehenderit sunt maxime ipsum eos provident inventore blanditiis distinctio nulla! Quam ea non dolores? Magnam quidem similique consectetur in ad?
-          </p>
-
-         
+           
+            <button type="button" class="btn-see-more" onclick="expandDescription()">Ver mais</button>
+          </p>      
 
           {% include "products/partials/review.html" %}
 
-          <div id="FreteGratis" class="car">
+          <div id="FreteGratis" class="car desktop-car">
                   <img class="imgCar" src="{% static 'products/media/icons/carro.svg'%}" alt="">
                   <p class="textTagCar">Frete grátis </p>
           </div>
@@ -187,16 +197,21 @@
               <img src="{% static 'products/media/icons/raio.svg' %}" alt="" aria-hidden="true">
               <div id="off">
                     <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
-                    <p  id="textOff">30% Off</p>
+                    <p  id="textOff">26% Off</p>
                 </div>
             </div>
           </div>
           <div class="current-price">R$ 40,70</div>
 
-          <div class="quantity-selector">
-            <button type="button" class="qty-btn" onclick="changeQuantity(-1)">−</button>
-            <input type="number" id="quantity" value="1" min="1" max="10" class="qty-input">
-            <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
+          <div class="area-quantity">
+
+            <p>Quantidade</p>
+            <div class="quantity-selector">
+              
+              <button type="button" class="qty-btn" onclick="changeQuantity(-1)">−</button>
+              <input type="number" id="quantity" value="1" min="1" max="10" class="qty-input">
+              <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
+            </div>
           </div>
 
           <button type="button" class="btn-buy desktop-btn">
@@ -235,6 +250,15 @@
 
 
     </div>
+    <div class="more-datails">
+
+     {% include 'products/partials/drop.html' with title='Descrição' content='Este é um lindo laço decorativo perfeito para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim, o laço possui um design elegante com pontas retas e bem definidas. No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado e festivo.' %}
+
+    {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
+
+    {% include 'products/partials/drop.html' with title='Dimensões' content='15cm' %}
+
+    </div>
 
 
 </div>
@@ -246,5 +270,5 @@
 
 
 {% block scripts %}
-<script src="{% static 'products/js/detailProduct.js' %}"></script>
+<script src="{% static 'products/js/detailProduct.js' %}" ></script>
 {% endblock scripts %}
