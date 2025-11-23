@@ -4,17 +4,26 @@
 <link rel="stylesheet" href="{% static 'products/css/partials/drop.css' %}">
 {% endblock style %}
 
-<div class="drop">
-  <button class="dropHeader">
-    <span class="dropTitle">{{ title }}</span>
-    <img class="dropIcon" src="{% static 'products/media/icons/chevron-down.svg' %}">
+
+<div class="drop" role="region" aria-labelledby="drop-title-{{ forloop.counter|default:0 }}">
+  <button 
+    class="dropHeader" 
+    aria-expanded="false"
+    {% if title == 'Descrição' %}id="descricao"{% endif %}
+    aria-controls="drop-content-{{ forloop.counter|default:0 }}"
+  >
+    <span id="drop-title-{{ forloop.counter|default:0 }}" class="dropTitle">{{ title }}</span>
+    <img class="dropIcon" src="{% static 'products/media/icons/chevron-down.svg' %}" alt="">
   </button>
 
-  <div class="dropContent">
+  <div 
+    id="drop-content-{{ forloop.counter|default:0 }}" 
+    class="dropContent"
+    aria-hidden="true"
+  >
     <p>{{ content }}</p>
   </div>
 </div>
-
 
 {% block scripts %}
 <script src="{% static 'products/js/partials/drop.js' %}"></script>

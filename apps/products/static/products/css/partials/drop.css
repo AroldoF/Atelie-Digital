@@ -32,3 +32,9 @@
 .drop.open .dropContent {
   max-height: 300px;
 }
+
+@media screen and (max-width: 425px){
+  .drop,.dropTitle{
+    font-size: var(--font-size-sm);
+  }
+}

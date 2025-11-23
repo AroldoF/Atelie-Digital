@@ -11,12 +11,14 @@
 {% block main %}
 
 <main id="mainDetalheProduto">
-  
+
+<div class="mobile-only">
+
   <div id="areaDivisao">
-    <div class="area0">
+    <div class="header">
       <h2>Laço Pérola com Pontas</h2>
       
-      <div class="areaA">
+      <div class="area-tag-review">
           <div id="FreteGratis" class="car">
                   <img class="imgCar" src="{% static 'products/media/icons/carro.svg'%}" alt="">
                   <p class="textTagCar">Frete grátis </p>
@@ -27,7 +29,7 @@
     </div>
     
 
-    <div class="carouselProduto areaB">
+    <div class="carouselProduto">
 
       <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
 
@@ -51,24 +53,22 @@
     </div>
 
 
-    <div class="rightColumnBottom">
-
-   
-      <div class="areaC"> 
+      <div class="area-acessorio-e-favorito"> 
         <h3 class="textAcessorio">Acessorio</h3>
         <img id="imgHard" src="{% static 'products/media/icons/favorite.svg' %}" alt="">
       </div>
 
-       <div class="areaD">
+       <div class="area-preco-compra">
           <div class="areaPriceButton">
             <div class="areaPrice">
               <div class="areaPriceOff">
                 <p>R$ <span class="textPriceRick">55,00</span> </p>
                 <div id="off">
                     <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
-                    <p  id="textOff">30% Off</p>
-                  </div>
+                    <p  id="textOff">26% Off</p>
+                </div>
               </div>
+              
               <p class="textPrice">R$ 40,70</p>
             </div>
 
@@ -88,12 +88,12 @@
 
       </div>
 
-    </div>
+
       
   </div>
 
  
-  <div class="areaF">
+  <div class="info-loja">
       <div id="areaLogoLoja">
         <a href="{% url 'storeProfile' %}">
           <img id="imgLogoLoja" src="{% static 'products/media/logoLoja.jpg' %}" alt="">
@@ -119,7 +119,7 @@
   </div>
   
 
-  <div class="areaG">
+  <div class="contato-artesao">
     <p>Você pode entrar em contato com o artesão e solicitar produtos personalizados especialmente para você.</p>
     <button id="chatButton">
       <p>Chat para personalização</p>
@@ -127,15 +127,142 @@
     </button>
   </div>
 
+  <div>
+      {% include 'products/partials/drop.html' with title='Descrição' content='Este é um lindo laço decorativo perfeito para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim, o laço possui um design elegante com pontas retas e bem definidas. No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado e festivo.' %}
 
-   {% include 'products/partials/drop.html' with title='Descrição' content='Este é um lindo laço decorativo perfeito para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim, o laço possui um design elegante com pontas retas e bem definidas. No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado e festivo.' %}
+      {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
 
-  {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
+      {% include 'products/partials/drop.html' with title='Dimensões' content='15cm' %}
 
-  {% include 'products/partials/drop.html' with title='Dimensões' content='15cm' %}
+  </div>
+ 
+</div>
+
+<div class="desktop-only">
+
+  
+   <div class="desktop-div-colunas">
+      <aside class="desktop-gallery">
+            <div class="icons-gallery">
+              <img class="icon-favorite" src="{% static 'products/media/icons/favorite.svg' %}" alt="">
+              <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
+              
+            </div>
+          <img id="mainImageDesktop" src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
+              alt="Laço Pérola com Pontas — vista principal" class="main-image">
+
+          <div class="thumbnail-list">
+            
+           
+            <img src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
+                data-src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
+                class="thumbnail active" alt="Vista frontal">
+            <img src="{% static 'products/media/imgVariantionsProducts/v2.png' %}" 
+                data-src="{% static 'products/media/imgVariantionsProducts/v2.png' %}" 
+                class="thumbnail" alt="Detalhe das pérolas">
+            <img src="{% static 'products/media/imgVariantionsProducts/v3.png' %}" 
+                data-src="{% static 'products/media/imgVariantionsProducts/v3.png' %}" 
+                class="thumbnail" alt="Vista lateral">
+          </div>
+      </aside>
+
+       <article class="desktop-product-info">
+
+        <h1 class="product-title">Laço Pérola com Pontas</h1>
+          <p class="description-product" id="descriptionPreview">
+           Este lindo laço decorativo é a escolha perfeita para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim ou organza, o laço possui um design elegante com pontas retas e bem definidas, garantindo um visual impecável e profissional.No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado, festivo e romântico; ideal para ocasiões especiais.
+           
+          </p> 
+          <a href="#more-datails">
+            <button type="button" class="btn-see-more">Mais detalhes</button>
+          </a>    
+
+          {% include "products/partials/review.html" %}
+
+          <div id="FreteGratis" class="car desktop-car">
+                  <img class="imgCar" src="{% static 'products/media/icons/carro.svg'%}" alt="">
+                  <p class="textTagCar">Frete grátis </p>
+          </div>
+         
+          
+        
+
+      
+        </article>
+
+        <aside class="desktop-sidebar">
+        <div class="price-card">
+          <div class="price-row">
+            <div class="original-price">R$ <span class="textPriceRick">55,00</span></div>
+            <div class="discount-badge">
+            
+              <div id="off">
+                    <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
+                    <p  id="textOff">26% Off</p>
+                </div>
+            </div>
+          </div>
+          <div class="current-price">R$ 40,70</div>
+
+          <div class="area-quantity">
+
+            <p>Quantidade</p>
+            <div class="quantity-selector">
+              
+              <button type="button" class="qty-btn" onclick="changeQuantity(-1)">−</button>
+              <input type="number" id="quantity" value="1" min="1" max="10" class="qty-input">
+              <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
+            </div>
+          </div>
+
+          <button type="button" class="btn-buy desktop-btn">
+            <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
+            <span>Comprar</span>
+          </button>
+          <button type="button" class="btn-add-cart desktop-btn">
+            <img  class="img-btn-cart" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
+            <span>Adicionar ao Carrinho</span>
+          </button>
+        </div>
+
+        <div class="seller-card">
+          <div class="store-header">
+            <a href="{% url 'storeProfile' %}" class="store-logo-link">
+              <img src="{% static 'products/media/logoLoja.jpg' %}" alt="Logo da loja Val Laços" class="store-logo">
+            </a>
+            <div class="store-name">
+              <h3>Val Laços</h3>
+              <p>Princesa Estilosa</p>
+            </div>
+          </div>
+
+         
+
+          <div class="personalization">
+            <p>Deseja personalizar o seu produto?</p>
+            <button type="button" class="btn-chat">
+              <span>Chat para personalização</span>
+              <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
+            </button>
+          </div>
+        </div>
 
 
 
+
+    </div>
+    <div id="more-datails">
+
+        {% include 'products/partials/drop.html' with title='Descrição' content='Este lindo laço decorativo é a escolha perfeita para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim ou organza, o laço possui um design elegante com pontas retas e bem definidas, garantindo um visual impecável e profissional.No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado, festivo e romântico; ideal para ocasiões especiais.' %}
+    
+      {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
+
+      {% include 'products/partials/drop.html' with title='Dimensões' content='15cm' %}
+
+    </div>
+
+
+</div>
 
 </main>
 
@@ -144,5 +271,5 @@
 
 
 {% block scripts %}
-<script src="{% static 'products/js/detailProduct.js' %}"></script>
+<script src="{% static 'products/js/detailProduct.js' %}" ></script>
 {% endblock scripts %}
