@@ -85,6 +85,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-block: 1rem;
 }
 
 .area-acessorio-e-favorito {
@@ -296,7 +297,9 @@
   font-size: var(--font-size-md); 
 }
 
-
+h3,h4{
+  margin: 0;
+}
 
 .mobile-only { 
   display: block; 
@@ -353,9 +356,19 @@
   }
   .icons-gallery .icon-favorite{
     width: 20px;
+    
   }
+  .icon-favorite:hover {
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+    content: url("/static/media/icons/favoriteHover.svg");
+  }
+ 
   .icons-gallery .icon-search{
     width: 25px;
+  }
+  .icon-favorite, .icon-search{
+    cursor: pointer;
   }
 
   .thumbnail-list {
@@ -402,31 +415,22 @@
   font-size: var(--font-size-md);
   line-height: 1.5;
   color: var(--color-gray-dark);
-  margin-bottom: 1rem;
+  
   position: relative;
 }
 
 /* Truncamento em até 5 linhas */
   .description-product:not(.expanded) {
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis; 
   }
 
-/* Fade-out suave no final (opcional, mas lindo) */
-  .description-product:not(.expanded)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: linear-gradient(to top, rgba(255,255,255,1) 40%, rgba(255,255,255,0));
-    pointer-events: none;
-  }
 
   .btn-see-more {
+    display: block;
     background: none;
     border: none;
     color: var(--color-primary);
@@ -436,17 +440,12 @@
     margin-left: 0.3rem;
     text-decoration: underline;
     font-size: var(--font-size-sm);
+    margin-bottom: 1rem;
   }
   .btn-see-more:hover {
     color: var(--color-primary-dark);
   }
 
-
-  .description-product,.car{
-    margin-bottom: 1rem;
-  }
-
- 
 
   .car {
     display: flex;
@@ -456,6 +455,7 @@
     padding: 0.4rem 0.8rem;
     border-radius: 4px;
     font-size: var(--font-size-sm);
+     margin-bottom: 1rem;
   }
 
   .car img {
@@ -485,6 +485,7 @@
   .price-row{
     display: flex;
     justify-content: flex-start;
+    gap: 0.5rem
   }
 
   .price-header {
@@ -507,7 +508,8 @@
   .area-quantity{
     display: flex;
     align-items: center;
-  justify-content: space-evenly;
+    justify-content: space-evenly;
+    gap: 0.5rem;
     
     
   }
@@ -528,14 +530,17 @@
     width: 32px;
     height: 32px;
     border: 1px solid var(--color-gray-light);
-    background: var(--color-primary-dark);
-    color: #ffffff;
+    background: #F5F5F5;
+    color: var(--color-primary);
     font-size: 18px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    box-shadow:  0 0 0 0.25rem color-mix(in srgb, var(--color-primary) 25%, transparent);
+    transition: 0.2s ease;
+
   }
 
   .qty-input {
@@ -568,10 +573,12 @@
   }
 
   .btn-add-cart {
-    background-color: var(--color-primary-dark);
+    background-color: var(--color-primary);
     color: white;
   }
-
+  .img-btn-cart{
+    width: 15px;
+  }
   /* Card do Vendedor */
   .seller-card {
     background: #ffffff;
@@ -579,8 +586,19 @@
     border-radius: 8px;
      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.129);
   }
+  .store-name{
+    color: var(--color-primary);
+    
+  }
   .personalization{
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+   .store-header{
+    display: flex;
   }
 
   .seller-header {
@@ -590,9 +608,7 @@
     margin-bottom: 1rem;
   }
 
-  .store-header{
-    display: flex;
-  }
+ 
   .seller-avatar img {
     width: 40px;
     height: 40px;

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ============== 📱 MOBILE: Carrossel (isolado no container) ==============
+  // mobile carousel
   const mobileCarousel = document.querySelector(".mobile-only");
 
   if (mobileCarousel) {
@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Inicializa somente se TUDO estiver presente
     if (items.length > 0 && prevBtn && nextBtn && dotsContainer) {
-
       const DOT = "/static/products/media/icons/circle.svg";
       const DOT_ACTIVE = "/static/products/media/icons/circleCurrent.svg";
       let index = 0;
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
         items.forEach((item, i) => {
           item.classList.toggle("active", i === index);
         });
-
         dots.forEach((dot, i) => {
           dot.src = i === index ? DOT_ACTIVE : DOT;
         });
@@ -56,35 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       prevBtn.addEventListener("click", prev);
       nextBtn.addEventListener("click", next);
+      dots.forEach(dot => dot.addEventListener("click", () => goTo(+dot.dataset.index)));
     }
   }
 
-  // ============== 📄 DESKTOP: Expansão da descrição + scroll suave ==============
-  function expandDescription() {
-    const preview = document.getElementById("descriptionPreview");
-    if (!preview) return;
-
-    preview.classList.add("expanded");
-
-    const seeMoreBtn = preview.querySelector(".btn-see-more");
-    if (seeMoreBtn) seeMoreBtn.style.display = "none";
-
-    const descricaoSection = document.getElementById("descricao");
-    if (descricaoSection) {
-      if ("scrollBehavior" in document.documentElement.style) {
-        descricaoSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else {
-        window.scrollTo({
-          top: descricaoSection.offsetTop - 80,
-          behavior: "auto"
-        });
-      }
-    }
-  }
-
-  window.expandDescription = expandDescription;
-
-  // ============== 💻 DESKTOP: Miniaturas da galeria ==============
+  // desktop gallery
   const desktopThumbs = document.querySelectorAll(".thumbnail");
   const mainImageDesktop = document.getElementById("mainImageDesktop");
 
@@ -95,22 +69,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (src) {
           mainImageDesktop.src = src;
         }
-
         desktopThumbs.forEach((t) => t.classList.remove("active"));
         this.classList.add("active");
       });
     });
   }
 
-  // ============== 🔄 Função de quantidade (global) ==============
+  // função para quantidade
   window.changeQuantity = function (delta) {
     const input = document.getElementById("quantity");
     if (!input) return;
 
     let value = parseInt(input.value) || 1;
     value += delta;
-    value = Math.max(1, Math.min(20, value)); // limite 1–10
+    value = Math.max(1, Math.min(20, value)); // limite: 1–20
     input.value = value;
   };
-
 });

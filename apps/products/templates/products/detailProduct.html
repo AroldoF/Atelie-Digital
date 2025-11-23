@@ -170,11 +170,12 @@
 
         <h1 class="product-title">Laço Pérola com Pontas</h1>
           <p class="description-product" id="descriptionPreview">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis eaque ducimus commodi minus, ipsam ex laborum incidunt! Dicta quis, facilis quo asperiores aperiam praesentium rerum et natus commodi a cumque?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, rerum reprehenderit sunt maxime ipsum eos provident inventore blanditiis distinctio nulla! Quam ea non dolores? Magnam quidem similique consectetur in ad?
+           Este lindo laço decorativo é a escolha perfeita para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim ou organza, o laço possui um design elegante com pontas retas e bem definidas, garantindo um visual impecável e profissional.No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado, festivo e romântico; ideal para ocasiões especiais.
            
-            <button type="button" class="btn-see-more" onclick="expandDescription()">Ver mais</button>
-          </p>      
+          </p> 
+          <a href="#more-datails">
+            <button type="button" class="btn-see-more">Mais detalhes</button>
+          </a>    
 
           {% include "products/partials/review.html" %}
 
@@ -194,7 +195,7 @@
           <div class="price-row">
             <div class="original-price">R$ <span class="textPriceRick">55,00</span></div>
             <div class="discount-badge">
-              <img src="{% static 'products/media/icons/raio.svg' %}" alt="" aria-hidden="true">
+            
               <div id="off">
                     <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
                     <p  id="textOff">26% Off</p>
@@ -219,7 +220,7 @@
             <span>Comprar</span>
           </button>
           <button type="button" class="btn-add-cart desktop-btn">
-            <img src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
+            <img  class="img-btn-cart" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
             <span>Adicionar ao Carrinho</span>
           </button>
         </div>
@@ -250,9 +251,12 @@
 
 
     </div>
-    <div class="more-datails">
+    <div id="more-datails">
 
-     {% include 'products/partials/drop.html' with title='Descrição' content='Este é um lindo laço decorativo perfeito para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim, o laço possui um design elegante com pontas retas e bem definidas. No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado e festivo.' %}
+      
+
+        {% include 'products/partials/drop.html' with title='Descrição' content='Este lindo laço decorativo é a escolha perfeita para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim ou organza, o laço possui um design elegante com pontas retas e bem definidas, garantindo um visual impecável e profissional.No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado, festivo e romântico; ideal para ocasiões especiais.' %}
+     
 
     {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
 
