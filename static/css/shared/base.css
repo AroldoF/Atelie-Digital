@@ -1,147 +1,62 @@
 :root {
- /* ====== CORES BASE ====== */
-  --color-primary: #A65C35;
-  --color-primary-dark: #A64735;
-  --color-accent: #396787;
 
-  --color-rose: #FFE9F5;
-  --color-order: #FFF6F1;
-  --color-pink: #CF3774;
-  --color-gold: #CDAA36;
-  --color-green: #909010;
-  --color-red: #991B1B;
-
-  --color-background: #FFFFFF;
-  --color-surface: #EADDCF;
-  --color-gray: #454343;
-  --color-text: #000000;
-
-  --color-hover: #8B4513;
-
-  /* para cards */
-  --font-size-h2-small:1.25em;
-  --font-size-p--Xsmall: 0.625em;
-  --font-size-p-small: 0.75em;
-  --font-size-p-XXXsmall:0.301875em;
-  --font-size-p-XXsmall:0.363125em;
-
-  --line-height: 1em;
-  --letter-spacing:0.03125em;
-
-  /* ====== FONTES BASE ====== */
-
+ /* FONTE BASE */
   --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   --font-family-heading: var(--font-family-base);
   --font-family-mono: "Roboto Mono", monospace;
 
-
+  /* PESOS */
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
+  /* ESCALA TIPOGRÁFICA EM EM */
+  --font-size-xs: 0.75em;      /* 12px */
+  --font-size-sm: 0.875em;     /* 14px */
+  --font-size-md: 1em;         /* 16px */
+  --font-size-lg: 1.125em;     /* 18px */
+  --font-size-xl: 1.25em;      /* 20px */
+  --font-size-2xl: 1.5em;      /* 24px */
+  --font-size-3xl: 1.875em;    /* 30px */
+  --font-size-4xl: 2.25em;     /* 36px */
 
-  --font-size-xxxs: 8px;
-  --font-size-xxs: 10px;
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-md: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 20px;
-  --font-size-2xl: 24px;
-  --font-size-3xl: 28px;
-  --font-size-4xl: 32px;
-  --font-size-5xl: 40px;
-
-
-  --line-height-tight: 1.1;
+  /* ESPAÇAMENTO */
+  --line-height-tight: 1.15;
   --line-height-normal: 1.4;
   --line-height-relaxed: 1.6;
+
+ /* ===== PALETA ARTESANAL REFINADA ===== */
+  --color-primary: #C47A53;         /* Terracota suave */
+  --color-primary-dark: #A6603A;    /* Terracota escura */
+  --color-accent: #6A88A4;          /* Azul artesanal */
+
+  --color-rose: #E9B7C8;            /* Rosa artesanal */
+  --color-gold: #D8B878;            /* Dourado suave */
+  --color-green: #7DA068;           /* Verde natural orgânico */
+
+  --color-background: #FFFFFF;
+  --color-surface: #F7F1EB;         /* Fundo tipo papel artesanal */
+  --color-gray: #4A4A4A;
+  --color-text: #1E1E1E;
+
+  --color-hover: color-mix(in srgb, var(--color-primary) 80%, black);
+
+  /* Recomendo definir também as sombras */
+  --shadow-focus: 0 0 0 0.25rem color-mix(in srgb, var(--color-primary) 25%, transparent);
+  --transition-fast: 0.2s ease;
+
+
+
+ 
+
 }
 
 
-body {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-relaxed);
-}
 
-
-h1 {
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-}
-
-
-h2 {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-}
-
-
-h3 {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
-}
-
-
-h4 {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-normal);
-}
-
-
-h5 {
-  font-size: var(--font-size-lg);
-}
-
-h6 {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-normal);
-}
-
-/*-------  Tipografia dos produtos  ---------*/
-.product-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-}
-
-.product-price {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-}
-
-.product-price-old {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-regular);
-  text-decoration: line-through;
-  opacity: 0.6;
-}
-
-.product-description {
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-relaxed);
-}
-
-.button {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
-}
-
-.input-label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-}
-
-/* Botão primário — cor de destaque (verde institucional) */
+/* Botão primário — terracota ou verde?  
+   Você usava verde, mas aqui deixo o VERDE orgânico, pois ficou mais harmônico. */
 .btn-primary {
   background-color: var(--color-green);
   border-color: var(--color-green);
@@ -156,16 +71,13 @@ h6 {
 .btn-primary:active {
   background-color: color-mix(in srgb, var(--color-green) 85%, black);
   border-color: color-mix(in srgb, var(--color-green) 80%, black);
-  color: #fff;
 }
 
 .btn-primary:focus:active {
-    background-color: color-mix(in srgb, var(--color-green) 85%, black);
-    border-color: color-mix(in srgb, var(--color-green) 80%, black);
-    transform: scale(1.02);
+  transform: scale(1.02);
 }
 
-/* Botão secundário — tom mais frio (accent) */
+/* Botão secundário — Azul artesanal */
 .btn-secondary {
   background-color: var(--color-accent);
   border-color: var(--color-accent);
@@ -180,15 +92,13 @@ h6 {
 .btn-secondary:active {
   background-color: color-mix(in srgb, var(--color-accent) 85%, black);
   border-color: color-mix(in srgb, var(--color-accent) 80%, black);
-  color: #fff;
-}
-.btn-secondary:focus:active {
-    background-color: color-mix(in srgb, var(--color-accent) 85%, black);
-    border-color: color-mix(in srgb, var(--color-accent) 80%, black);
-    transform: scale(1.02);
 }
 
-/* Estado de foco visível */
+.btn-secondary:focus:active {
+  transform: scale(1.02);
+}
+
+/* Acessórios úteis */
 .btn:focus-visible {
   box-shadow: var(--shadow-focus);
   outline: none;
@@ -197,26 +107,124 @@ h6 {
 /* =========================================================
    FORMULÁRIOS
    ========================================================= */
+
 .form-control,
 .form-select {
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  background-color: #fff;
 }
 
 .form-control:focus,
 .form-select:focus {
-  border-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
   box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--color-primary) 25%, transparent);
   outline: 0;
 }
 
-/* Placeholder mais suave */
+/* Placeholder mais suave e artesanal */
 .form-control::placeholder {
-  color: color-mix(in srgb, var(--color-gray) 70%, white);
-  opacity: 0.8;
-} 
+  color: color-mix(in srgb, var(--color-gray) 60%, white);
+  opacity: 0.9;
+}
+
+/* =========================================================
+   BADGES E ESTADOS
+   ========================================================= */
+
+/* Sucesso (verde orgânico) */
+.badge-success {
+  background-color: var(--color-green);
+  color: white;
+}
+
+/* Aviso (dourado suave) */
+.badge-warning {
+  background-color: var(--color-gold);
+  color: #5c4b1f;
+}
+
+/* Erro (vermelho artesanal mais suave) */
+.badge-danger {
+  background-color: #C85A54;
+  color: white;
+}
+
+/* Info (azul artesanal) */
+.badge-info {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* =========================================================
+   ELEMENTOS SUPERFÍCIE E FUNDO
+   ========================================================= */
+
+.surface {
+  background-color: var(--color-surface);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
 
 
 
+/* BODY */
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-relaxed);
+}
+
+
+/* HEADINGS */
+h1 { font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); }
+h2 { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); }
+h3 { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); }
+h4 { font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); line-height: var(--line-height-normal); }
+h5 { font-size: var(--font-size-lg); }
+h6 { font-size: var(--font-size-md); font-weight: var(--font-weight-medium); line-height: var(--line-height-normal); }
+
+
+/* PRODUTOS */
+.product-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.product-price {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.product-price-old {
+  font-size: var(--font-size-sm);
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.product-description {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+/* BOTÕES */
+.button {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+/* LABELS */
+.input-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
 p{
   margin: 0;
 }
