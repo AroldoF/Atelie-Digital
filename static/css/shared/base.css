@@ -1,6 +1,6 @@
 :root {
 
- /* FONTE BASE */
+   /* FONTE BASE */
   --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   --font-family-heading: var(--font-family-base);
   --font-family-mono: "Roboto Mono", monospace;
@@ -13,6 +13,8 @@
   --font-weight-bold: 700;
 
   /* ESCALA TIPOGRÁFICA EM EM */
+  --font-size-xxxs: 0.5em;   /* 8px */
+  --font-size-xxs:  0.625em; /* 10px  */
   --font-size-xs: 0.75em;      /* 12px */
   --font-size-sm: 0.875em;     /* 14px */
   --font-size-md: 1em;         /* 16px */
@@ -27,7 +29,9 @@
   --line-height-normal: 1.4;
   --line-height-relaxed: 1.6;
 
- /* ===== PALETA ARTESANAL REFINADA ===== */
+
+
+  /* ===== PALETA ARTESANAL REFINADA ===== */
   --color-primary: #C47A53;         /* Terracota suave */
   --color-primary-dark: #A6603A;    /* Terracota escura */
   --color-accent: #6A88A4;          /* Azul artesanal */
@@ -49,11 +53,8 @@
 
 
 
- 
-
 }
-
-
+/* BOTÕES */
 
 /* Botão primário — terracota ou verde?  
    Você usava verde, mas aqui deixo o VERDE orgânico, pois ficou mais harmônico. */
@@ -225,6 +226,8 @@ h6 { font-size: var(--font-size-md); font-weight: var(--font-weight-medium); lin
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
 }
+
+
 p{
   margin: 0;
 }
