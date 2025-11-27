@@ -29,6 +29,8 @@
   --line-height-normal: 1.4;
   --line-height-relaxed: 1.6;
 
+  --padding-x-fluid: clamp(1.0rem, 0.8rem + 1vw, 2.0rem);
+
 
 
   /* ===== PALETA ARTESANAL REFINADA ===== */
@@ -180,8 +182,14 @@ body {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-relaxed);
+
 }
 
+main{
+
+  padding-inline: var(--padding-x-fluid);
+ 
+}
 
 /* HEADINGS */
 h1 { font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); }
