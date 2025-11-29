@@ -412,7 +412,7 @@ h3,h4{
     flex: 1;
     min-width: 300px;
     background: white;
-    padding: 1.5rem;
+    padding: 0 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   }
@@ -684,9 +684,6 @@ h3,h4{
 
 
 @media screen and (max-width: 425px) {
-  #mainDetalheProduto {
-    padding: 0.5rem;
-  }
 
 
   .arrow {

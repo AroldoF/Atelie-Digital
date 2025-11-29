@@ -1,7 +1,6 @@
 #mainIndex {
   margin-bottom: 2rem;
   margin-inline: 0;
-  padding-inline: 1rem;
   width: 100%;
 }
 
@@ -57,7 +56,7 @@
 @media (min-width: 1440px) {
   #mainIndex {
     max-width: 1400px;
-    padding-inline: 4rem;
+   
   }
 }
 
