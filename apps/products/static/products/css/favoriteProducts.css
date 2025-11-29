@@ -1,9 +1,7 @@
 #navbar-container{
   display: none;
 }
-.product-list{
-  padding: 1rem;
-}
+
 .categories {
   display: flex;
   flex-wrap: nowrap;
@@ -51,6 +49,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  padding-inline: 1rem;
 
 }
 
@@ -88,9 +87,7 @@
 }
 
 @media (min-width: 768px) {
-  .product-list {
-    padding: 2rem;
-  }
+  
 
   .category-btn {
     font-size: var(--font-size-dm);
@@ -114,7 +111,7 @@
   .product-list {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 3rem;
+   
   }
 
   #search{
