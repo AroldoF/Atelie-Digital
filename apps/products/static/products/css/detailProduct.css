@@ -655,6 +655,19 @@ h3,h4{
     width: 14px;
     height: 14px;
   }
+
+  /* removendo spin buttons */
+  /* Remove spin buttons em WebKit/Blink (Chrome, Edge, Safari) */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+
+  /* Remove spin buttons em Firefox */
+  input[type="number"] {
+      -moz-appearance: textfield;
+  }
 }
 
 
@@ -800,6 +813,9 @@ h3,h4{
   .tipoLoja p{
     font-size: var(--font-size-xxs);
   }
+  .tipoLoja p{
+    font-size: var(--font-size-xxxs);
+  }
 
  
 
@@ -835,13 +851,7 @@ h3,h4{
   .drop-content p {
     font-size: var(--font-size-sm); 
   }
+  
 }
 
 
-@media screen and (max-width: 375px) {
-
-  .tipoLoja p{
-    font-size: var(--font-size-xxxs);
-  }
-
-}
