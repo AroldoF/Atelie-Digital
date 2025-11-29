@@ -9,34 +9,34 @@
 
 /* carousel de produtos */
 .carouselProduto {
-  width: 100%;
-  max-width: 250px;
-  margin: 0 auto;
   position: relative;
 }
+
 
 .carouselInner {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 250px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carouselItem {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: none;
 }
 
 .carouselItem.active {
   display: block;
-}
-
-#searchProduct {
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  position: absolute;
-  top: 3%;
-  transform: translateY(-50%);
-  right: -49px;
 }
 
 .carousel-btn {
@@ -46,16 +46,28 @@
   background: none;
   border: none;
   cursor: pointer;
+  z-index: 10; 
 }
+
 
 .carousel-btn.prev {
-  left: -60px;
+  left: -10px;
 }
 
-.carousel-btn.next {
-  right: -60px;
+.carousel-btn.next{
+  right: -10px;
 }
 
+#searchProduct {
+  position: absolute;
+  top: 5%;
+  transform: translateY(-50%);
+  right: -10px; 
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
 .arrow {
   width: 32px;
   height: 32px;
@@ -676,23 +688,6 @@ h3,h4{
     padding: 0.5rem;
   }
 
-  .carouselProduto {
-    max-width: 200px;
-  }
-
-  #searchProduct {
-    right: -35px;
-    width: 26px;
-    height: 26px;
-  }
-
-  .carousel-btn.prev {
-    left: -40px;
-  }
-
-  .carousel-btn.next {
-    right: -40px;
-  }
 
   .arrow {
     width: 26px;
