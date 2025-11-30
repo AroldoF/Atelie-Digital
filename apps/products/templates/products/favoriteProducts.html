@@ -12,11 +12,17 @@
 
   
   <div class="area-title-searchbar">
-    <h2 class="section-title">4 Produtos Favoritados</h2>
-
+    <h2 class="section-title">Meus produtos favoritos</h2>
+      
+    <p>4 prontos salvos na sua lista</p>
     {% include "partials/searchbar.html" with container_class="search-bar-container" placeholder='Busque pelos produtos' %}
-  </div>
+    </div>
 
+    {% include 'products/partials/category.html' with search=True %}
+    {% include 'products/partials/category.html' with type=True title="Todos"%}
+    
+
+ 
 
   <div class="products-list">
    {% include 'products/partials/card.html' with url='media/carrosel3.png' description='Laço Pérola com Pontas' off=True text='20' price='R$ 22,00'  %}

@@ -1,0 +1,16 @@
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/partials/category.css' %}">
+{% endblock style %}
+
+{% if search %}
+  <button class="category-btn category-search active">
+    <img id="search" src="{% static 'products/media/icons/search.svg' %}" alt="Buscar">
+  </button>
+{% endif %}
+
+{%if type%}
+  <button class="category-btn ">{{title}}</button>
+{%endif %}
+  

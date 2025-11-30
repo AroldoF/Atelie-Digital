@@ -52,10 +52,10 @@
     font-size: var(--font-size-xxs);
     padding: 0.5rem 1rem;
   }
-   #search{
+   /* #search{
     width: 16px;
     height: 16px;
-  }
+  } */
 
   .textResult {
     font-size: var(--font-size-xs);
