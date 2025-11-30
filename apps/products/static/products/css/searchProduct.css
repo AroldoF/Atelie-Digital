@@ -82,21 +82,17 @@
 
 @media (min-width: 1024px) {
   #searchProduct {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
   
   }
 
   .category-btn {
     font-size: 1.1rem;
-    padding: 0.85rem 1.5rem;
+
   } 
   
 
-  #search{
-    width: 30px;
-    height: 30px;
-  }
   .textResult {
     font-size: var(--font-size-lg);
   }
