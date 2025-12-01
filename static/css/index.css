@@ -12,7 +12,7 @@
 }
 
 .sec:first-of-type {
-  margin-top: 1.5rem;
+  margin-top: 3rem;
 }
 
 .h2Index {
@@ -48,7 +48,7 @@
   }
 
   .h2Index {
-    font-size: var(--font-size-2xl); 
+    font-size: var(--font-size-3xl); 
   }
 }
 
