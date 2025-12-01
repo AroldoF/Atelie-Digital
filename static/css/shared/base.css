@@ -29,7 +29,13 @@
   --line-height-normal: 1.4;
   --line-height-relaxed: 1.6;
 
-  --padding-x-fluid: clamp(1.0rem, 0.8rem + 1vw, 2.0rem);
+  
+  
+  --padding-x-fluid: clamp(0.8rem, 0.4rem + 3.5vw, 4rem); 
+
+
+  --padding-y-fluid: clamp(1.0rem, 0.8rem + 1vw, 2.0rem);;
+
 
 
 
@@ -188,6 +194,7 @@ body {
 main{
 
   padding-inline: var(--padding-x-fluid);
+  padding-block: var(--padding-y-fluid);
  
 }
 

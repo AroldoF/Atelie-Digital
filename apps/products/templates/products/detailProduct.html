@@ -31,22 +31,22 @@
 
     <div class="carouselProduto">
 
+      
+      
       <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
-
-
       <div class="carouselInner">
             <img src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" class="carouselItem active">
             <img src="{% static 'products/media/imgVariantionsProducts/v2.png' %}" class="carouselItem">
             <img src="{% static 'products/media/imgVariantionsProducts/v3.png' %}" class="carouselItem">
-        </div>
+            <button class="carousel-btn prev">
+                <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
+            </button>
+      
+            <button class="carousel-btn next">
+                <img src="{% static 'products/media/icons/next.svg' %}" class="arrow arrow-next">
+            </button>
+      </div>
 
-        <button class="carousel-btn prev">
-            <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
-        </button>
-
-        <button class="carousel-btn next">
-            <img src="{% static 'products/media/icons/next.svg' %}" class="arrow arrow-next">
-        </button>
 
         <div class="carousel-dots"></div>
 
