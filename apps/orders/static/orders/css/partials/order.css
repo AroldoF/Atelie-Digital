@@ -1,6 +1,7 @@
 .card_order{
     background-color: var(--color-accent);
     border-radius: 10px;
+    width: 300px;
 }
 
 .card_order_wrapper{
