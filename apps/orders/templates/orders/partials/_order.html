@@ -2,12 +2,12 @@
 
 {% block style %}
   <link rel="stylesheet" href="{% static 'orders/css/partials/order.css' %}">
-{% endblock style %}
+{% endblock style %} 
 
 <div class="container card_order">
     <div class="row align-items-center">
-        <div class="col justify-content-center ">
-            <p id="text_id" class="color">#{{ order_id }}</p>
+        <div class="col justify-content-center">
+            <p id="text_id">#{{ order_id }}</p>
             <p id="text_date">{{ order_date }}</p>
         </div>
         <div class="col text-end">

@@ -43,13 +43,15 @@
   --color-primary: #C47A53;         /* Terracota suave */
   --color-primary-dark: #A6603A;    /* Terracota escura */
   --color-accent: #6A88A4;          /* Azul artesanal */
+  --color-card: #F7F1EB;
 
   --color-rose: #E9B7C8;            /* Rosa artesanal */
   --color-gold: #D8B878;            /* Dourado suave */
   --color-green: #7DA068;           /* Verde natural orgânico */
+  --color-red: #C85A54;
 
   --color-background: #FFFFFF;
-  --color-surface: #F7F1EB;         /* Fundo tipo papel artesanal */
+  --color-surface: #FCFAF8;         /* Fundo tipo papel artesanal */
   --color-gray: #4A4A4A;
   --color-text: #1E1E1E;
 
@@ -58,8 +60,6 @@
   /* Recomendo definir também as sombras */
   --shadow-focus: 0 0 0 0.25rem color-mix(in srgb, var(--color-primary) 25%, transparent);
   --transition-fast: 0.2s ease;
-
-
 
 }
 /* BOTÕES */
@@ -188,6 +188,8 @@ body {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-relaxed);
+  background-color: var(--color-surface);
+
 
 }
 

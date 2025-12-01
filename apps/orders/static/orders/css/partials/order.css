@@ -1,7 +1,10 @@
 .card_order{
-    background-color: var(--color-order);
+    background-color: var(--color-accent);
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card_order_wrapper{
+    margin-bottom: 10px;
 }
 
 .tag{
@@ -22,4 +25,4 @@
 
 #tag_cancelled{
     color: var(--color-red);
-}
+} 

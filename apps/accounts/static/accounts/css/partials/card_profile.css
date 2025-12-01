@@ -1,8 +1,8 @@
 .card_profile{
-    background-color: var(--color-surface);
+    background-color: var(--color-background);
     border-radius: 10px;
     padding: 20px 28px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .profile_img{
@@ -18,7 +18,7 @@ p{
 }
 
 #name{
-    color: #1f2937;
+    color: var(--color-text);
     margin-bottom: 4px;
 }
 
