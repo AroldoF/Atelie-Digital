@@ -24,7 +24,7 @@
   font-size: var(--font-size-2xl);
   text-align: start;
   margin: 0;
-  color: var(--color-hover);
+  color: var(--color-primary);
 }
 
 .qtd-save {
@@ -75,6 +75,11 @@
   border: 0.5px solid #dddddd88;
   cursor: pointer;
   min-width: 140px;
+}
+.sort-select:focus {
+ 
+  outline: none;
+  box-shadow: 0 0 0 3px #e9b7c845; 
 }
 
 .sort-wrapper::after {
