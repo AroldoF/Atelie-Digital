@@ -2,9 +2,24 @@
   display: none;
 }
 
+.icon-search {
+  width: 18px;
+}
+.area-searchbar .search-container{
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.129);
+}
+.area-searchbar input.form-control::placeholder {
+  font-size: var(--font-size-sm); 
+  opacity: 1;
+}
+
+.area-searchbar .form-control {
+  border: 0.5px solid #dddddd88;
+}
+
 
 .section-title {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-2xl);
   text-align: start;
   margin: 0;
   color: var(--color-hover);
@@ -52,10 +67,10 @@
   padding: 0.5rem 2rem 0.5rem 1rem;
   border-radius: 5px;
   background: var(--color-background);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.129);
   font-size: var(--font-size-sm);
   color: var(--color-hover);
-  border: 1px solid #dddddd88;
+  border: 0.5px solid #dddddd88;
   cursor: pointer;
   min-width: 140px;
 }
@@ -79,10 +94,10 @@
   padding: 0.5rem 1rem;
   border-radius: 5px;
   background: var(--color-background);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.129);
   font-size: var(--font-size-sm);
   color: var(--color-hover);
-  border: 1px solid #dddddd88;
+  border: 0.5px solid #dddddd88;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -161,6 +176,13 @@
 }
 
 @media (max-width: 320px) {
+
+  .icon-search {
+  width: 16px;
+ }
+  .area-searchbar input.form-control::placeholder {
+    font-size: var(--font-size-xs); 
+  }
   .area-title-searchbar {
     padding-inline: 0.5rem; 
   }
@@ -169,9 +191,10 @@
     gap: 0.5rem;
   }
 
-  .area-text .section-title {
-    font-size: var(--font-size-sm); 
-  }
+  
+.section-title {
+  font-size: var(--font-size-lg);
+}
 
   .qtd-save {
     font-size: var(--font-size-xs);
@@ -183,7 +206,7 @@
   }
 
   .sort-select {
-    font-size: var(--font-size-xs); 
+    font-size: var(--font-size-xxs); 
     padding: 0.35rem 1.3rem 0.35rem 0.7rem;
     min-width: 90px; 
     border-radius: 4px;
@@ -198,7 +221,7 @@
   }
 
   .clear-button {
-    font-size: var(--font-size-xs); 
+    font-size: var(--font-size-xxs); 
     padding: 0.35rem 0.7rem;
     border-radius: 6px; 
   }
@@ -219,7 +242,7 @@
   }
 
   .section-title {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-3xl);
   }
 
   .footer {
