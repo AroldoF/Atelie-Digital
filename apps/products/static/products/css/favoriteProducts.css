@@ -1,3 +1,4 @@
+/* componetes externos */
 #navbar-container {
   display: none;
 }
@@ -18,6 +19,7 @@
 }
 
 
+/* unicos da página */
 .section-title {
   font-size: var(--font-size-2xl);
   text-align: start;
@@ -183,6 +185,9 @@
   .area-searchbar input.form-control::placeholder {
     font-size: var(--font-size-xs); 
   }
+  .area-searchbar .form-control {
+  padding: 0.2rem .75rem; 
+}
   .area-title-searchbar {
     padding-inline: 0.5rem; 
   }
@@ -190,11 +195,15 @@
   .header-row {
     gap: 0.5rem;
   }
+  .area-title-searchbar {
+   
+    margin-bottom: 2rem;
+  }
 
   
-.section-title {
-  font-size: var(--font-size-lg);
-}
+  .section-title {
+    font-size: var(--font-size-lg);
+  }
 
   .qtd-save {
     font-size: var(--font-size-xs);
