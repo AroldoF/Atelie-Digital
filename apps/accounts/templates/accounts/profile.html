@@ -1,4 +1,4 @@
-{% extends "shared/base.html" %} <!--Como verificar se esta puxando do base global-->
+{% extends "shared/base.html" %} 
 {% load static %}
 
 {% block style %}
@@ -9,14 +9,12 @@
 <div class="container">
     <div class="col">
         <h1 id="title">Meu Perfil</h1>
-
-        <!--Card de usuário-->
         {% include 'accounts/partials/_card_profile.html' with url='accounts/media/hermione.png' description='imagem do usuário' name='Hermione Granger' email='hermione.leviosa@gmail.com' profile=True%}
     </div>
     
-    <div class="row justify-content-between">
-        <!--Meus pedidos-->
-        <div class="col-6 margin summary-card">
+    <div class="row justify-content-between gy-4">
+        
+        <div class="col-12 col-xl-6 margin summary-card">
             <div class="row align-self-center">
                 <div class="col">
                     <h3 class="title_section">Meus Pedidos</h3>
@@ -25,29 +23,24 @@
                     <p><a href="{% url 'list' %}">Ver todos</a></p>
                 </div>
             </div>
+            
             <div class="order-grid">
                 <div class="card_order_wrapper">
                     {% include 'orders/partials/_order.html' with order_id='AT001234' order_date='15 de Janeiro, 2025' status='progress' %}
                 </div>
-
                 <div class="card_order_wrapper">
                     {% include 'orders/partials/_order.html' with order_id='AT001235' order_date='15 de Janeiro, 2025' status='delivered' %}
                 </div>
-
                 <div class="card_order_wrapper">
                     {% include 'orders/partials/_order.html' with order_id='AT001236' order_date='15 de Janeiro, 2025' status='delivered' %}
                 </div>
-
                 <div class="card_order_wrapper">
                     {% include 'orders/partials/_order.html' with order_id='AT001237' order_date='15 de Janeiro, 2025' status='cancelled' %}
                 </div> 
             </div>
-            
-
         </div>
 
-        <!--Produtos favoritos-->
-        <div class="col-5 margin summary-card">
+        <div class="col-12 col-xl-5 margin summary-card">
             <div class="row align-self-center">
                 <div class="col">
                     <h3 class="title_section">Produtos Favoritos</h3>
@@ -58,17 +51,11 @@
             </div>
             <div class="products-grid">
                 {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' favor=False %}
-
                 {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False %}
-
                 {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' favor=False %}
-
                 {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False %}
             </div>
         </div>
     </div>
-    
 </div>
-
-
 {% endblock main %}

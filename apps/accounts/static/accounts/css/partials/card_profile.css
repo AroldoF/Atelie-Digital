@@ -1,81 +1,123 @@
-.card_profile{
+/* --- ESTRUTURA BASE (MOBILE FIRST) --- */
+
+.card_profile {
     background-color: var(--color-background);
     border-radius: 10px;
-    padding: 20px 28px;
+    padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    margin-bottom: 30px; 
 }
 
-.profile_img{
-    width: 100px;
-    height: 100px;
+.card_profile .row {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px; 
+}
+
+.card_profile .col-auto, 
+.card_profile .ms-auto {
+    margin: 0 auto !important;
+    width: 100%; 
+}
+
+.profile_img {
+    width: 80px; 
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-p{
-    font-family: inter;
-}
-
-#name{
+#name {
     color: var(--color-text);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-lg); 
     margin-bottom: 4px;
+    font-family: var(--font-family-heading);
 }
 
-#email{
-    color: #6b7280;
-    margin-bottom: 8px;
+#email {
+    color: var(--color-gray); 
+    font-size: var(--font-size-xs); 
+    margin-bottom: 0;
+    font-family: var(--font-family-base);
 }
 
-#tag_user{
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    padding: 4px 12px;
-    border-radius: 10px;
-}
-
-#btn_profile{
+#btn_profile {
     display: inline-block;
     background-color: var(--color-green);
     color: var(--color-background);
-    border-radius: 12px;
-    padding: 10px 22px;
+    border-radius: 8px;
     text-decoration: none;
-    cursor:pointer;
+    cursor: pointer;
     transition: background 0.3s;
+    font-weight: var(--font-weight-medium);
+    
+    /* Botão Mobile */
+    padding: 8px 16px;
+    font-size: var(--font-size-xs);
+    width: 100%;
+    max-width: 200px; 
 }
 
-#btn_profile:hover{
-    background-color: #858110;
+#btn_profile:hover {
+    background-color: color-mix(in srgb, var(--color-green) 85%, black);
 }
 
-@media (max-width: 430px) {
 
-    /* Forçar a row a virar coluna */
+/* --- TABLET e DESKTOP (min-width: 768px) --- */
+
+@media (min-width: 768px) {
+    
+    .card_profile {
+        padding: 20px 28px;
+    }
+
     .card_profile .row {
-        flex-direction: column !important;
-        text-align: center;
+        flex-direction: row; 
+        text-align: left;
+        gap: 0;
     }
 
-    /* Tirar o ms-auto e centralizar tudo */
-    .card_profile .col-auto,
-    .card_profile .col {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+    .card_profile .col-auto, 
+    .card_profile .ms-auto {
+        width: auto;
+        margin: 0 !important; 
+    }
+    
+    .card_profile .ms-auto {
+        margin-left: auto !important;
     }
 
-    /* Espaçamento entre os elementos */
     .profile_img {
-        margin-bottom: 12px;
+        width: 100px; 
+        height: 100px;
     }
 
-    #tag_user {
-        display: inline-block;
-        margin-top: 8px;
+    #name {
+        font-size: var(--font-size-xl); 
+    }
+
+    #email {
+        font-size: var(--font-size-sm); 
     }
 
     #btn_profile {
-        margin-top: 16px;
-        display: inline-block;
+        width: auto; 
+        padding: 10px 22px;
+        font-size: var(--font-size-sm);
+        border-radius: 12px;
+    }
+}
+
+/* --- DESKTOP LARGE (min-width: 1024px) --- */
+@media (min-width: 1024px) {
+    .profile_img {
+        width: 110px; 
+        height: 110px;
+    }
+
+    #name {
+        font-size: var(--font-size-2xl); 
     }
 }

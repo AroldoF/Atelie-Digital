@@ -1,29 +1,56 @@
-.card_order{
+.card_order {
     background-color: var(--color-accent);
     border-radius: 10px;
-    width: 300px;
+    width: 100%;
+    height: 100%; 
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px 20px; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.card_order_wrapper{
-    margin-bottom: 10px;
+.card_order_wrapper {
+    margin-bottom: 0;
 }
 
-.tag{
+/* TEXTOS */
+#text_id {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-dark);
+    line-height: var(--line-height-tight);
+    font-size: var(--font-size-sm); 
+}
+
+#text_date {
+    margin: 0;
+    color: var(--color-gray);
+    line-height: var(--line-height-tight);
+    font-size: var(--font-size-xs);
+}
+
+/* TAGS */
+.tag {
     background-color: var(--color-background);
-    border-radius: 10px;
-    padding: 5px 10px;
-    white-space: nowrap;
-    font-size: 0.9rem;
+    border-radius: 8px;
+    white-space: nowrap; 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-medium);
+    padding: 6px 12px;
+    font-size: var(--font-size-xs);
 }
 
-#tag_progress{
-    color: var(--color-accent);
-}
+/* Cores */
+#tag_progress { color: var(--color-accent); }
+#tag_delivered { color: var(--color-green); }
+#tag_cancelled { color: var(--color-red); }
 
-#tag_delivered{
-    color: var(--color-green);
+/* MEDIA QUERIES PARA FONTE */
+@media (min-width: 1400px) {
+    #text_id { font-size: var(--font-size-md); }
+    .tag { font-size: var(--font-size-sm); padding: 8px 16px; }
 }
-
-#tag_cancelled{
-    color: var(--color-red);
-} 
