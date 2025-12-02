@@ -29,7 +29,7 @@ main {
 
 #side_logo {
     flex: 1; 
-    background-color: #A65C35;
+    background-color: var(--color-primary-dark);
     display: flex; 
     justify-content: center;
     align-items: center;
@@ -38,7 +38,7 @@ main {
 
 .img_logo {
     max-width: 80%;
-    height: auto;
+    height: 280px;
 }
 
 
