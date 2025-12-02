@@ -47,7 +47,7 @@
 
 /* --- Badge do Número do Pedido (Caixa Azulada) --- */
 .order-badge {
-    background-color: var(--color-rose); /* Azul/Lilás bem claro */
+    background-color: var(--color-card); /* Azul/Lilás bem claro */
     color: #6b7280; /* Cor do texto "Número do Pedido" */
     display: inline-block;
     padding: 1rem 2rem;
