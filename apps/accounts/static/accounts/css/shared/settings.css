@@ -55,13 +55,10 @@ h1{
     line-height: var(--line-height-normal);
 }
 
-#btn_profile{
+.btn-green{
     display: inline-block;
-    background-color: var(--color-green);
-    color: var(--color-background);
     border-radius: 12px;
     padding: 10px 22px;
     text-decoration: none;
-    transition: 0.2s ease-in-out;
     margin: 20px 0 30px 0;
 }

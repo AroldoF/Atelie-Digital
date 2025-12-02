@@ -43,10 +43,8 @@
     font-family: var(--font-family-base);
 }
 
-#btn_profile {
+.btn-green {
     display: inline-block;
-    background-color: var(--color-green);
-    color: var(--color-background);
     border-radius: 8px;
     text-decoration: none;
     cursor: pointer;
@@ -58,10 +56,6 @@
     font-size: var(--font-size-xs);
     width: 100%;
     max-width: 200px; 
-}
-
-#btn_profile:hover {
-    background-color: color-mix(in srgb, var(--color-green) 85%, black);
 }
 
 

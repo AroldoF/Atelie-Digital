@@ -22,6 +22,7 @@ a{
 .form_container{
     padding: 30px 40px; /* Espaçamento interno */
     border: 1px solid var(--color-primary); 
+    background-color: var(--color-background);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 20px 0 20px 0;
@@ -113,22 +114,11 @@ a{
 }
 
 /* Estilo do Botão "Alterar Foto" */
-.btn-upload-custom {
-    background-color: var(--color-green); 
-    color: white;
+.btn-green {
     padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: var(--font-weight-regular);
-    font-size: var(--font-size-sm);
-    transition: background 0.3s;
-    display: inline-block;
     white-space: nowrap;
 }
 
-.btn-upload-custom:hover {
-    background-color: #858110; 
-}
 
 /* MEDIA QUERY: Ajustes para telas pequenas */
 @media (max-width: 425px) {
