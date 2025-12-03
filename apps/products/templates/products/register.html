@@ -6,9 +6,7 @@
 <link rel="stylesheet" href="{% static 'products/css/register.css' %}">
 <style>
   :root {
-    --primary: #d47a00;
-    --primary-light: #fff9f5;
-    --primary-dark: #b65f00;
+    --color-primary-light: #fff9f5;
     --secondary: #4361ee;
     --success: #28a745;
     --danger: #dc3545;
@@ -32,10 +30,10 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: var(--primary);
+    color: var(--color-primary);
     margin-bottom: 1.5rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--primary-light);
+    border-bottom: 2px solid var(--color-primary-light);
   }
   
   .section-title svg {
@@ -67,7 +65,7 @@
 
   .info-hint {
     background: rgba(212, 122, 0, 0.08);
-    border-left: 3px solid var(--primary);
+    border-left: 3px solid var(--color-primary);
     padding: 1rem;
     border-radius: 0 8px 8px 0;
     margin: 1.2rem 0;
@@ -76,7 +74,7 @@
   }
   
   .info-hint strong {
-    color: var(--primary-dark);
+    color: var(--color-primary-dark);
   }
 
   /* Upload de imagem melhorado */
@@ -89,8 +87,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px dashed var(--primary);
-    background-color: var(--primary-light);
+    border: 2px dashed var(--color-primary);
+    background-color: var(--color-primary-light);
     border-radius: var(--border-radius);
     padding: 2.5rem;
     cursor: pointer;
@@ -101,7 +99,7 @@
   
   .upload-box:hover {
     background-color: #fff3ea;
-    border-color: var(--primary-dark);
+    border-color: var(--color-primary-dark);
   }
   
   .upload-box.dragover {
@@ -122,7 +120,7 @@
   .upload-content svg {
     width: 48px;
     height: 48px;
-    fill: var(--primary);
+    fill: var(--color-primary);
     margin-bottom: 12px;
     transition: var(--transition);
   }
@@ -139,7 +137,7 @@
   
   .upload-subtext {
     font-size: 0.9rem;
-    color: var(--primary-dark);
+    color: var(--color-primary-dark);
     opacity: 0.8;
   }
   
@@ -206,7 +204,7 @@
   }
   
   .attribute-item:hover {
-    border-color: var(--primary);
+    border-color: var(--color-primary);
     background: rgba(212, 122, 0, 0.05);
   }
   
@@ -215,7 +213,7 @@
   }
   
   .attribute-content strong {
-    color: var(--primary);
+    color: var(--color-primary);
   }
   
   .remove-btn {
@@ -335,7 +333,7 @@
 {% block main %}
 <div class="product-container">
   <div class="text-center mb-4">
-    <h1 class="display-5 fw-bold mb-2" style="color: var(--primary);">Cadastro do Produto</h1>
+    <h1 class="display-5 fw-bold mb-2" style="color: var(--color-primary);">Cadastro do Produto</h1>
     <p class="text-muted mb-0">Crie e personalize seu produto com variantes e atributos</p>
   </div>
 
