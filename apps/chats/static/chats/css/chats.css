@@ -7,7 +7,9 @@
     --text-color: #333333;
     --secondary-text: #777777;
 }
-
+main {
+    padding: 0 !important;
+}
 .chat-container {
     height: calc(100vh - 90px) !important;
     background-color: var(--left-panel-bg);
