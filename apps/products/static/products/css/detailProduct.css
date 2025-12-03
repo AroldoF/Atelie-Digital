@@ -281,16 +281,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 0.5rem;
   margin: auto;
   padding-inline: 1rem;
   padding-block: 0.2rem;
+
   background-color: var(--color-background);
   border: 1px solid var(--color-gold);
   border-radius: 5px;
   width: fit-content;
+  font-weight: bolder;
 }
-
 #chatButton p {
   color: var(--color-gold);
   font-size: var(--font-size-md); 
