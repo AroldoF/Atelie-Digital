@@ -69,7 +69,7 @@
   background-color: var(--color-green);
   border:none;
   border-color: var(--color-green);
-  color: #fff;
+  color: #fff !important;
   transition: background-color var(--transition-fast),
               border-color var(--transition-fast),
               box-shadow var(--transition-fast);
