@@ -66,8 +66,9 @@
 
 /* Botão primário — verde*/ 
 .btn-green {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: var(--color-green);
+  border:none;
+  border-color: var(--color-green);
   color: #fff;
   transition: background-color var(--transition-fast),
               border-color var(--transition-fast),
@@ -78,11 +79,12 @@
 .btn-green:hover,
 .btn-green:focus,
 .btn-green:active {
-  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
-  border-color: color-mix(in srgb, var(--color-primary) 80%, black);
+  background-color: color-mix(in srgb, var(--color-green) 85%, black);
+  border-color: color-mix(in srgb, var(--color-green) 80%, black);
 }
 
 .btn-green:focus:active {
+  background-color: color-mix(in srgb, var(--color-green) 85%, black);
   transform: scale(1.02);
 }
 
@@ -90,7 +92,8 @@
 
 .btn-primary {
   background-color: var(--color-primary);
-  border-color: var(--color-primary) !important;
+  border-color: var(--color-primary);
+  border: none !important;
   color: #fff;
   transition: background-color var(--transition-fast),
               border-color var(--transition-fast),
