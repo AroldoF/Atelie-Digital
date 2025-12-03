@@ -615,8 +615,12 @@ h3,h4{
   }
    .store-header{
     display: flex;
+    align-items: center;
+    gap: 0.3rem;
   }
-
+  .store-logo{
+    width: 70px;
+  }
   .seller-header {
     display: flex;
     align-items: center;
