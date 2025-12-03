@@ -31,16 +31,27 @@
 }
 
 
-@media (max-width: 320px) {
+
+
+@media (max-width: 425px){
+  main{
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
   
   .textResult {
     font-size: var(--font-size-xs);
   }
-
+  main{
+    padding-inline: .5rem;
+  }
+  #areaResultsCards{
+    justify-content: center;
+  }
   
 }
-
-
 
 
 @media (min-width: 768px) {
