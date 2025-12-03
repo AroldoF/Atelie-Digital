@@ -150,18 +150,11 @@ body {
     margin: 16px 0;
 }
 
-.btn-checkout {
+.btn-green {
     display: block;
     width: 100%;
     padding: 16px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-align: center;
-    text-decoration: none;
-    border: none;
     border-radius: 8px;
-    background-color: var(--color-green); /* Laranja primário */
-    color: #ffffff;
     margin-bottom: 12px;
     cursor: pointer;
 }
@@ -175,8 +168,8 @@ body {
     text-align: center;
     text-decoration: none;
     border-radius: 8px;
-    background-color: #fff4e6; /* Fundo bege claro */
-    color: var(--color-primary); /* Texto laranja */
+    background-color: #fff4e6; 
+    color: var(--color-primary); 
     cursor: pointer;
 }
 

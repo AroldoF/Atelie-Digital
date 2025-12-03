@@ -43,13 +43,15 @@
   --color-primary: #C47A53;         /* Terracota suave */
   --color-primary-dark: #A6603A;    /* Terracota escura */
   --color-accent: #6A88A4;          /* Azul artesanal */
+  --color-card: #F7F1EB;
 
   --color-rose: #E9B7C8;            /* Rosa artesanal */
   --color-gold: #D8B878;            /* Dourado suave */
   --color-green: #7DA068;           /* Verde natural orgânico */
+  --color-red: #C85A54;
 
   --color-background: #FFFFFF;
-  --color-surface: #F7F1EB;         /* Fundo tipo papel artesanal */
+  --color-surface: #FCFAF8;         /* Fundo tipo papel artesanal */
   --color-gray: #4A4A4A;
   --color-text: #1E1E1E;
 
@@ -59,16 +61,35 @@
   --shadow-focus: 0 0 0 0.25rem color-mix(in srgb, var(--color-primary) 25%, transparent);
   --transition-fast: 0.2s ease;
 
-
-
 }
 /* BOTÕES */
 
-/* Botão primário — terracota ou verde?  
-   Você usava verde, mas aqui deixo o VERDE orgânico, pois ficou mais harmônico. */
-.btn-primary {
+/* Botão primário — verde*/ 
+.btn-green {
   background-color: var(--color-green);
   border-color: var(--color-green);
+  color: #fff;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.btn-green:hover,
+.btn-green:focus,
+.btn-green:active {
+  background-color: color-mix(in srgb, var(--color-green) 85%, black);
+  border-color: color-mix(in srgb, var(--color-green) 80%, black);
+}
+
+.btn-green:focus:active {
+  transform: scale(1.02);
+}
+
+/*Botão terracota*/
+
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
   color: #fff;
   transition: background-color var(--transition-fast),
               border-color var(--transition-fast),
@@ -78,8 +99,8 @@
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-  background-color: color-mix(in srgb, var(--color-green) 85%, black);
-  border-color: color-mix(in srgb, var(--color-green) 80%, black);
+  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
+  border-color: color-mix(in srgb, var(--color-primary) 80%, black);
 }
 
 .btn-primary:focus:active {
@@ -188,6 +209,8 @@ body {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-relaxed);
+  background-color: var(--color-surface);
+
 
 }
 

@@ -10,12 +10,11 @@
       <img src="{% static url %}" class="profile_img" alt="{{ description }}">
     </div>
     <div class="col-auto">
-      <h3 id="name">{{ name }}</h3>
+      <h4 id="name">{{ name }}</h4>
       <p id="email">{{ email }}</p>
-      <span id="tag_user">{{ tag_user }}</span> <!--Customer/Artisian-->
     </div>
     <div class="col-auto ms-auto">
-      <a href="{% url 'settings_user' %}" id="btn_profile">Editar Perfil</a>
+      <a href="{% url 'settings_user' %}" class="btn-green">Editar Perfil</a>
     </div>
   </div>
 </div>

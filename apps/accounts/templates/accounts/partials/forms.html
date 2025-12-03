@@ -22,7 +22,7 @@
                         {{ field }} 
                     </div>
 
-                    <label for="{{ field.id_for_label }}" class="btn-upload-custom">
+                    <label for="{{ field.id_for_label }}" class="btn-green">
                         Alterar Foto
                     </label>
                 </div>
@@ -42,7 +42,7 @@
         {% endfor %}
     
         <!--Incluir componente de botão-->
-        <a class='d-block' href="{% url 'profile' %}"><button type="button" class="btn btn_acess">{{ btn_text }}</button></a>
+        <a class='d-block' href="{% url 'profile' %}"><button type="button" class="btn btn-primary">{{ btn_text }}</button></a>
     </form>
     
     <!--Retorna somente na tela de login-->
