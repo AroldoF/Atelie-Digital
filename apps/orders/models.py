@@ -1,21 +1,21 @@
 from django.db import models
-from apps.accounts.models import Users
-from apps.stores.models import Stores
-from apps.products.models import ProductVariants
+from django.conf import settings
+from apps.stores.models import Store
+from apps.products.models import ProductVariant
 
-class Orders(models.Model):
+class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    store = models.ForeignKey(Stores, related_name='orders', on_delete=models.CASCADE)
-    user = models.ForeignKey(Users, related_name='orders', on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, related_name='orders', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='orders', on_delete=models.CASCADE)
     created_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = 'orders'
 
-class Buys(models.Model):
+class Buy(models.Model):
     buy_id = models.AutoField(primary_key=True)
-    order = models.ForeignKey(Orders, related_name='buys', on_delete=models.CASCADE)
-    product_variant = models.ForeignKey(ProductVariants, related_name='buys', on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='buys', on_delete=models.CASCADE)
+    product_variant = models.ForeignKey(ProductVariant, related_name='buys', on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price_total = models.DecimalField(max_digits=10, decimal_places=2)
 

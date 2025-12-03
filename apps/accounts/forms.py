@@ -1,5 +1,5 @@
 from django import forms
-from .models import Addresses
+from .models import Address
 
 BRAZILIAN_STATES = [
     ('AC', 'Acre'),
@@ -68,7 +68,7 @@ class FormRegisterUser(forms.Form):
             'placeholder': 'exemplo@gmail.com'
         })
     )    
-    date = forms.DateField(
+    date_of_birth = forms.DateField(
         label="Data de Nascimento",
         widget=forms.DateInput(attrs={
             'type':'date'
@@ -126,7 +126,7 @@ class FormEditUser(forms.Form):
             'placeholder': 'exemplo@gmail.com'
         })
     )
-    date = forms.DateField(
+    date_of_birth = forms.DateField(
         label="Data de Nascimento",
         widget=forms.DateInput(attrs={'type': 'date'})
     )
@@ -171,7 +171,7 @@ class FormAdressUser(forms.Form):
     
 class AddressesForm(forms.ModelForm):
     class Meta: 
-        model = Addresses
+        model = Address
         fields = ['street', 'neighborhood', 'number','city', 'cep', 'state', 'complement']
         labels = {
             'street': 'Rua', 

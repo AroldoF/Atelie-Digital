@@ -42,7 +42,7 @@
         {% endfor %}
     
         <!--Incluir componente de botão-->
-        <a class='d-block' href="{% url 'profile' %}"><button type="button" class="btn btn-primary">{{ btn_text }}</button></a>
+        <a class='d-block' href="{% url 'accounts:profile' %}"><button type="button" class="btn btn_acess">{{ btn_text }}</button></a>
     </form>
     
     <!--Retorna somente na tela de login-->
@@ -60,7 +60,7 @@
 
     {% if text_link and link_url %}
         <p class="form_footer">
-            {{ text_link }} <a href="/accounts/register/" class="link_recuperar">{{ link_text }}</a>
+            {{ text_link }} <a href="{% url 'accounts:register' %}" class="link_recuperar">{{ link_text }}</a>
         </p>
     {% endif %}
 </div>

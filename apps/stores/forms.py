@@ -1,9 +1,9 @@
 from django import forms
-from .models import Stores, StoreCategories
+from .models import Store, StoreCategory
 
 class Store_Form(forms.ModelForm):
     class Meta:
-        model = Stores
+        model = Store
         fields = ['name', 'description', 'email', 'phone_number', 'cnpj', 'image', 'banner']
         labels = {
             'name': 'Nome', 
@@ -45,7 +45,7 @@ class Store_Form(forms.ModelForm):
 
 class StoreCategories_Form(forms.ModelForm):
     class Meta: 
-        model = StoreCategories
+        model = StoreCategory
         labels = {'category': 'Categorias da Loja'}
         fields = ['category']
         widgets = {

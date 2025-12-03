@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Users, Addresses
+from .models import User, Address
 
-@admin.register(Users)
+@admin.register(User)
 class UsersAdmin(admin.ModelAdmin):
     list_display = ['name']
 
-@admin.register(Addresses)
+@admin.register(Address)
 class AddressesAdmin(admin.ModelAdmin):
     list_display = ['street', 'user']

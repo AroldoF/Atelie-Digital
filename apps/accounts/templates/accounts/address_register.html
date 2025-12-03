@@ -1,0 +1,380 @@
+{% extends "shared/base_clean.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Novo Endereço{% endblock %}
+
+{% block style %}
+<style>
+  :root {
+    --color-primary-light: #fff9f5;
+    --border-radius: 12px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --transition: all 0.3s ease;
+  }
+
+  body {
+    background-color: #FAF8F5 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-primary-light);
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  
+  .section-title svg {
+    width: 24px;
+    height: 24px;
+    background: rgba(212, 122, 0, 0.1);
+    border-radius: 8px;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.8rem;
+    margin-bottom: 1.8rem;
+    transition: var(--transition);
+    border: 1px solid #eaeaea;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 8px 20px rgba(212, 122, 0, 0.15);
+    transform: translateY(-3px);
+  }
+
+  .info-hint {
+    background: rgba(212, 122, 0, 0.08);
+    border-left: 3px solid var(--color-primary);
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.2rem 0;
+    font-size: 0.95rem;
+    color: #5a3921;
+  }
+  
+  .info-hint strong {
+    color: var(--color-primary-dark);
+  }
+
+  /* Botão de ação */
+  .submit-section {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .btn-submit {
+    border: none;
+    padding: 1rem 2.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: var(--transition);
+    min-width: 280px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(131, 179, 69, 0.4);
+  }
+  
+  .btn-submit:active {
+    transform: translateY(0);
+  }
+  
+  .btn-submit i {
+    font-size: 1.2rem;
+  }
+
+  /* Estilo para campos (melhor contraste, bordas suaves) */
+  .form-control {
+    border: 1px solid #dee2e6;
+    padding: 0.65rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.6rem;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(212, 122, 0, 0.25);
+  }
+
+  /* Labels mais visíveis */
+  .form-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Validacao */
+  .is-invalid {
+    border-color: #dc3545 !important;
+  }
+  .invalid-feedback {
+    font-size: 0.875rem;
+    color: #dc3545;
+  }
+
+  /* Switch personalizado */
+  .form-switch .form-check-input {
+    cursor: pointer;
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .product-card {
+      padding: 1.5rem;
+    }
+    
+    .btn-submit {
+      min-width: 100%;
+      width: 100%;
+    }
+    
+    .section-title {
+      flex-direction: column;
+      text-align: center;
+      gap: 8px;
+      font-size: 1.2rem;
+    }
+    
+    .info-hint {
+      border-radius: 8px;
+      border-left-width: 2px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .btn-submit {
+      padding: 0.9rem 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .section-title svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+</style>
+{% endblock style %}
+
+
+{% block main %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+      <div class="text-center mb-5">
+        <div class="d-inline-block mb-3">
+        </div>
+        <h1 class="fw-bold mb-2" style="color: var(--color-primary);">Novo endereço de entrega</h1>
+        <p class="text-muted mb-0">Preencha seus dados de endereço para entregas e faturamento</p>
+      </div>
+
+      <form method="post" id="addressForm">
+        {% csrf_token %}
+        
+        <!-- Dados do Endereço -->
+        <div class="product-card mb-4">
+          <h2 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 0 0-10 10c0 11 11 20 11 20s11-9 11-20a10 10 0 0 0-10-10z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Dados do Endereço
+          </h2>
+          
+          <div class="row g-4">
+            <div class="col-md-8">
+              {{ form.street|as_crispy_field }}
+            </div>
+            <div class="col-md-4">
+              {{ form.number|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+              {{ form.complement|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+              {{ form.neighborhood|as_crispy_field }}
+            </div>
+            <div class="col-md-12">
+              {{ form.cep|as_crispy_field }} 
+            </div>
+            <div class="col-md-8">
+              {{ form.city|as_crispy_field }}
+            </div>
+            <div class="col-md-4">
+              {{ form.state|as_crispy_field }}
+            </div>
+          </div>
+          
+          <div class="info-hint mt-3">
+            <strong>Dica:</strong> O CEP ajuda a preencher automaticamente os outros campos para maior precisão
+          </div>
+        </div>
+
+        <!-- Botão de Ação -->
+        <div class="submit-section">
+          <button type="submit" class="btn btn-submit btn-primary">
+            <i class="bi bi-check2-circle me-2"></i> Salvar Endereço
+          </button>
+          
+          <div class="text-center mt-3">
+            <a href="{% url 'confirm-address' %}" class="text-decoration-none text-muted d-inline-flex align-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              Voltar para meus endereços
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock main %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Máscara para CEP
+    const $postalCode = $('#id_postal_code');
+    if ($postalCode.length) {
+      $postalCode.mask('00000-000');
+      
+      // Buscar endereço automaticamente quando CEP for preenchido
+      $postalCode.on('blur', function() {
+        const cep = $(this).val().replace(/\D/g, '');
+        if (cep.length === 8) {
+          fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(response => response.json())
+            .then(data => {
+              if (!data.erro) {
+                $('#id_street').val(data.logradouro);
+                $('#id_neighborhood').val(data.bairro);
+                $('#id_city').val(data.localidade);
+                $('#id_state').val(data.uf);
+              }
+            })
+            .catch(error => console.log('Erro ao buscar CEP:', error));
+        }
+      });
+    }
+
+    // Máscara para telefone (caso precise no futuro)
+    const $phone = $('#id_phone');
+    if ($phone.length) {
+      const phoneMaskBehavior = function (val) {
+        return val.replace(/\D/g, '').length > 10 ? '(00) 00000-0000' : '(00) 0000-0000';
+      };
+      const phoneOptions = { 
+        onKeyPress: function(val, e, field, options) {
+          field.mask(phoneMaskBehavior.apply({}, arguments), options);
+        }
+      };
+      $phone.mask(phoneMaskBehavior($phone.val()), phoneOptions);
+    }
+
+    // Validação do formulário
+    const addressForm = document.getElementById('addressForm');
+    if (addressForm) {
+      addressForm.addEventListener('submit', function(e) {
+        const requiredFields = ['street', 'number', 'neighborhood', 'city', 'state', 'postal_code'];
+        let isValid = true;
+        
+        requiredFields.forEach(fieldId => {
+          const field = document.getElementById(`id_${fieldId}`);
+          if (field && !field.value.trim()) {
+            field.classList.add('is-invalid');
+            isValid = false;
+          } else if (field) {
+            field.classList.remove('is-invalid');
+          }
+        });
+        
+        if (!isValid) {
+          e.preventDefault();
+          const firstInvalid = document.querySelector('.is-invalid');
+          if (firstInvalid) {
+            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstInvalid.focus();
+          }
+          
+          // Mostrar mensagem de erro
+          let errorMsg = document.querySelector('.address-error');
+          if (!errorMsg) {
+            errorMsg = document.createElement('div');
+            errorMsg.className = 'address-error alert alert-danger mt-3';
+            errorMsg.style.position = 'fixed';
+            errorMsg.style.top = '20px';
+            errorMsg.style.right = '20px';
+            errorMsg.style.zIndex = '1050';
+            errorMsg.style.maxWidth = '300px';
+            errorMsg.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            errorMsg.innerHTML = '<strong>Erro:</strong> Por favor, preencha todos os campos obrigatórios.';
+            document.body.appendChild(errorMsg);
+            
+            // Remover após 5 segundos
+            setTimeout(() => {
+              errorMsg.remove();
+            }, 5000);
+          }
+        }
+      });btn btn-continue
+      
+      // Remover validação quando o usuário digita
+      document.querySelectorAll('.form-control').forEach(field => {
+        field.addEventListener('input', function() {
+          this.classList.remove('is-invalid');
+        });
+      });
+    }
+
+    // --- FEEDBACK VISUAL NO ENVIO ---
+    const submitButton = document.querySelector('.btn-submit');
+    if (submitButton) {
+      submitButton.addEventListener('click', function() {
+        if (this.form.checkValidity()) {
+          const originalText = this.innerHTML;
+          this.innerHTML = `
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Salvando...
+          `;
+          this.disabled = true;
+          
+          // Simular sucesso após 2 segundos
+          setTimeout(() => {
+            this.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Salvo com sucesso!
+            `;
+            
+            // Redirecionar após 1.5 segundos
+            setTimeout(() => {
+              // window.location.href = '{% url "addresses" %}'; // Descomente para redirecionar
+              this.innerHTML = originalText;
+              this.disabled = false;
+            }, 1500);
+          }, 2000);
+        }
+      });
+    }
+  });
+</script>

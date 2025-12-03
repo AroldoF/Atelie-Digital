@@ -213,7 +213,7 @@
           </div>
         </div>
         
-        <a href="{% url 'addresses' %}" class="btn btn-secondary">
+        <a href="{% url 'accounts:addresses_register' %}" class="btn btn-secondary">
           Adicionar Novo Endereço
         </a>
       </div>
@@ -268,7 +268,7 @@
     
     <!-- Coluna Direita: Resumo do Pedido -->
     <div class="order-summary-container">
-      {% include 'orders/partials/_order_summary_card.html' with subtotal=599.9 frete=25 desconto=50 total=574.9 url_finalizar='checkout' url_continuar='#' btn_name="Continuar" btn_two_name="Adicionar produtos" cart_shopping=True cart=True %}
+      {% include 'orders/partials/_order_summary_card.html' with subtotal=599.9 frete=25 desconto=50 total=574.9 url_finalizar='orders:checkout' url_continuar='#' btn_name="Continuar" btn_two_name="Adicionar produtos" cart_shopping=True cart=True %}
     </div>
   </div>
 </div>

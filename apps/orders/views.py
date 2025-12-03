@@ -1,15 +1,17 @@
-from django.shortcuts import render
-from apps.accounts.models import Addresses
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from apps.accounts.models import Address
+from .models import Order
 
-def confirmAddress(request):
-    user_id = request.user.id
-    addresses = Addresses.objects.filter(user=user_id)
+def orders_detail(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    context = {'order': order}
+    return JsonResponse({'message': 'ainda não implemetado'})
+
+def shipping(request):
+    addresses = Address.objects.filter(user=request.user)
     context = {'addresses': addresses}
-    return render(request, 'orders/confirm-address.html', context)
-
-# Create your views here.
-def list(request):
-    return render(request, "orders/list.html")
+    return render(request, 'orders/shipping.html', context)
 
 def shopping_cart(request):
     return render(request, 'orders/shopping_cart.html')

@@ -1,10 +1,10 @@
 from django.db import models
-from apps.accounts.models import Users
-from apps.core.models import Categories
+from django.conf import settings
+from apps.core.models import Category
 
-class Stores(models.Model):
+class Store(models.Model):
     store_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(Users, related_name='stores', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='stores', on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
     phone_number = models.CharField(unique=True, max_length=15)
@@ -16,18 +16,18 @@ class Stores(models.Model):
     class Meta:
         db_table = 'stores'
 
-class StoreImages(models.Model):
+class StoreImage(models.Model):
     store_image_id = models.AutoField(primary_key=True)
-    store = models.ForeignKey('Stores', models.CASCADE)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
     image = models.TextField()
 
     class Meta:
         db_table = 'store_images'
 
-class StoreCategories(models.Model):
+class StoreCategory(models.Model):
     store_categories_id = models.AutoField(primary_key=True)
-    category = models.ForeignKey(Categories, related_name='store_categories', on_delete=models.CASCADE)
-    store = models.ForeignKey(Stores, related_name='store_categories', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='store_categories', on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, related_name='store_categories', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'store_categories'

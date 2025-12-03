@@ -9,9 +9,22 @@
 
 {% block main %}
 <div class="container">
-    <div class="col">
-        <h1 id="title">Meu Perfil</h1>
-        {% include 'accounts/partials/_card_profile.html' with url='accounts/media/hermione.png' description='imagem do usuário' name='Hermione Granger' email='hermione.leviosa@gmail.com' profile=True%}
+    <h1 id="title">Meu Perfil</h1>
+
+    <!--Card de usuário-->
+    {% include 'accounts/partials/card_profile.html' with url='accounts/media/hermione.png' description='imagem do usuário' name='Hermione Granger' email='hermione.leviosa@gmail.com' tag_user='Cliente' profile=True%}
+
+    <!--Produtos favoritos-->
+    <div class="margin">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="title_section">Produtos Favoritos</h2>
+            </div>
+            <div class="col text-end">
+                <p class="color"><a href="{% url 'accounts:favorites' %}">Ver todos</a></p>
+            </div>
+        </div>
+        {% include 'accounts/partials/products_favors.html' %}
     </div>
     
     <div class="row justify-content-between gy-4">
