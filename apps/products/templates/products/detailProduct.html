@@ -72,18 +72,23 @@
               <p class="textPrice">R$ 40,70</p>
             </div>
 
-            <button id="comprarButton">
-              <img  class="iconComprarButton" src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
-              <p class="textComprarButton">Comprar</p>
-            </button>
+            <a href="{% url 'confirm-address' %}">
+              <button id="comprarButton">
+                <img  class="iconComprarButton" src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
+                <p class="textComprarButton">Comprar</p>
+              </button>
+            </a>
+
           </div>
 
         
         <div class="areaAdicionar">
-          <button id="adicionarButton">
-            <img id="imgShopping" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
-            <p class="addCart">Adicionar ao Carrinho</p>
-          </button>
+          <a href="{% url 'shopping_cart' %}">
+            <button id="adicionarButton">
+              <img id="imgShopping" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
+              <p class="addCart">Adicionar ao Carrinho</p>
+            </button>
+          </a>
         </div>
 
       </div>
@@ -121,10 +126,12 @@
 
   <div class="contato-artesao">
     <p>Você pode entrar em contato com o artesão e solicitar produtos personalizados especialmente para você.</p>
-    <button id="chatButton">
-      <p>Chat para personalização</p>
-      <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
-    </button>
+    <a href="{% url 'chats:chat' %}">
+      <button id="chatButton">
+        <p>Chat para personalização</p>
+        <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
+      </button>
+     </a>
   </div>
 
   <div>
@@ -214,15 +221,18 @@
               <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
             </div>
           </div>
-
-          <button type="button" class="btn-buy desktop-btn">
-            <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
-            <span>Comprar</span>
-          </button>
-          <button type="button" class="btn-add-cart desktop-btn">
-            <img  class="img-btn-cart" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
-            <span>Adicionar ao Carrinho</span>
-          </button>
+          <a href="{% url 'confirm-address' %}">
+            <button type="button" class="btn-buy desktop-btn">
+              <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
+              <span>Comprar</span>
+            </button>
+          </a>
+          <a href="{% url 'shopping_cart' %}">
+            <button type="button" class="btn-add-cart desktop-btn">
+              <img  class="img-btn-cart" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
+              <span>Adicionar ao Carrinho</span>
+            </button>
+          </a>
         </div>
 
         <div class="seller-card">
@@ -240,10 +250,12 @@
 
           <div class="personalization">
             <p>Deseja personalizar o seu produto?</p>
-            <button type="button" class="btn-chat">
-              <span>Chat para personalização</span>
-              <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
-            </button>
+            <a href="{% url 'chats:chat' %}">
+              <button type="button" class="btn-chat">
+                <span>Chat para personalização</span>
+                <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
+              </button>
+             </a>
           </div>
         </div>
 

@@ -93,25 +93,7 @@
   pointer-events: none;
 }
 
-.clear-button {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
 
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  background: var(--color-background);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.129);
-  font-size: var(--font-size-sm);
-  color: var(--color-hover);
-  border: 0.5px solid #dddddd88;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.clear-button:hover {
-  background: #f5f5f5;
-}
 
 
 .area-title-searchbar {
@@ -171,12 +153,7 @@
     right: 8px; 
   }
 
-  .clear-button {
-    font-size: var(--font-size-xs); 
-    padding: 0.4rem 0.8rem; 
-    border-radius: 8px; 
-  }
-
+ 
   .products-list {
     gap: 1.2rem;
   }
@@ -225,21 +202,14 @@
     min-width: 90px; 
     border-radius: 4px;
   }
-  .clear-button{
-    border-radius: 4px;
-  }
+  
 
   .sort-wrapper::after {
     font-size: 0.75rem;
     right: 6px;
   }
 
-  .clear-button {
-    font-size: var(--font-size-xxs); 
-    padding: 0.35rem 0.7rem;
-    border-radius: 6px; 
-  }
-
+  
 
   .products-list {
     gap: 1rem;
