@@ -1,5 +1,6 @@
 {% extends "shared/base_clean.html" %}
 {% load crispy_forms_tags %}
+{% block title %}Cadastro da Loja{% endblock %}
 
 {% block main %}
 <div class="container py-4">
@@ -16,7 +17,7 @@
             </svg>
           </div> {% endcomment %}
         </div>
-        <h1 class="fw-bold mb-2" style="color: #d47a00;">Cadastro da Loja</h1>
+        <h1 class="fw-bold mb-2" style="color: var(--color-primary);">Cadastro da Loja</h1>
         <p class="text-muted mb-0">Preencha os dados abaixo para registrar sua loja no sistema</p>
       </div>
 
@@ -147,9 +148,7 @@
 </div>
 <style>
   :root {
-    --primary: #d47a00;
-    --primary-light: #fff9f5;
-    --primary-dark: #b65f00;
+    --color-primary-light: #fff9f5;
     --border-radius: 12px;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     --transition: all 0.3s ease;
@@ -164,10 +163,10 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: var(--primary);
+    color: var(--color-primary);
     margin-bottom: 1.5rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--primary-light);
+    border-bottom: 2px solid var(--color-primary-light);
     font-size: 1.3rem;
     font-weight: 600;
   }
@@ -198,7 +197,7 @@
 
   .info-hint {
     background: rgba(212, 122, 0, 0.08);
-    border-left: 3px solid var(--primary);
+    border-left: 3px solid var(--color-primary);
     padding: 1rem;
     border-radius: 0 8px 8px 0;
     margin: 1.2rem 0;
@@ -207,7 +206,7 @@
   }
   
   .info-hint strong {
-    color: var(--primary-dark);
+    color: var(--color-primary-dark);
   }
 
   /* Upload de imagem melhorado */
@@ -220,8 +219,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px dashed var(--primary);
-    background-color: var(--primary-light);
+    border: 2px dashed var(--color-primary);
+    background-color: var(--color-primary-light);
     border-radius: var(--border-radius);
     padding: 2.5rem;
     cursor: pointer;
@@ -232,7 +231,7 @@
   
   .upload-box:hover {
     background-color: #fff3ea;
-    border-color: var(--primary-dark);
+    border-color: var(--color-primary-dark);
   }
   
   .upload-box.dragover {
@@ -253,7 +252,7 @@
   .upload-content svg {
     width: 48px;
     height: 48px;
-    fill: var(--primary);
+    fill: var(--color-primary);
     margin-bottom: 12px;
     transition: var(--transition);
   }
@@ -270,7 +269,7 @@
   
   .upload-subtext {
     font-size: 0.9rem;
-    color: var(--primary-dark);
+    color: var(--color-primary-dark);
     opacity: 0.8;
   }
   
@@ -337,7 +336,7 @@
     transition: border-color 0.25s, box-shadow 0.25s;
   }
   .form-control:focus {
-    border-color: var(--primary);
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 0.2rem rgba(212, 122, 0, 0.25);
   }
 

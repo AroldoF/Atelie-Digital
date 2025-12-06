@@ -2,83 +2,65 @@
   display: none;
 }
 
-#searchProduct{
-  padding: 1rem;
+#search-product{
   width: 100%;
 
 }
-
-.categories {
+.area-categories-textResult{
   display: flex;
-  flex-wrap: nowrap;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
 }
-
-.category-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 20px;
-  font-size: var(--font-size-xs);
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  background-color: var(--color-background);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: var(--color-hover);
-}
-
-.category-btn.active {
-  background: var(--color-surface);
-}
-
 
 .textResult{
   font-size: var(--font-size-sm);
   margin-bottom: 1.5rem;
 }
 
+.categories{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+}
 
-#areaResultsCards{
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 0.75rem;
+#areaResultsCards {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 2rem;
 }
 
 
-@media (max-width: 320px) {
-  #searchProduct {
-    padding: 0.75rem;
-  }
 
-   .category-btn {
-    font-size: var(--font-size-xxs);
-    padding: 0.5rem 1rem;
-  }
-   #search{
-    width: 16px;
-    height: 16px;
-  }
 
-  #areaResultsCards {
-    gap: 0.5rem;
+@media (max-width: 425px){
+  main{
+    padding-inline: 1.5rem;
   }
+}
 
+@media (max-width: 400px) {
+  
   .textResult {
     font-size: var(--font-size-xs);
   }
+  main{
+    padding-inline: .5rem;
+  }
+  #areaResultsCards{
+    justify-content: center;
+  }
+  
 }
 
 
-
-
 @media (min-width: 768px) {
-  #searchProduct {
-    padding: 2rem;
-  }
-
+ 
   #areaFilter {
     gap: 1rem;
+  }
+  .categories{
+    gap: 0.5rem;
   }
    
 
@@ -86,39 +68,18 @@
     font-size: var(--font-size-dm);
   }
 
-  #areaResultsCards {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
   
 }
 
 
 @media (min-width: 1024px) {
-  #searchProduct {
-    max-width: 1200px;
+  #search-product {
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 3rem;
-  }
-
-  .category-btn {
-    font-size: 1.1rem;
-    padding: 0.85rem 1.5rem;
-  } 
   
-
-  #search{
-    width: 30px;
-    height: 30px;
-  }
-  .textResult {
-    font-size: var(--font-size-lg);
   }
 
-  #areaResultsCards {
-    grid-template-columns: repeat(4, 1fr); 
-  }
+
 
   
 }

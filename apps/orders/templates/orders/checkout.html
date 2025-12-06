@@ -1,6 +1,9 @@
 {% extends "shared/base.html" %}
 {% load static %}
 
+{% block title %}Método de Pagamento{% endblock %}
+
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'orders/css/shared/checkout.css' %}">
 <link rel="stylesheet" href="{% static 'orders/css/shared/shopping_cart.css' %}">
@@ -13,7 +16,7 @@
             <!-- Método de Pagamento -->
             <div class="card">
                 <div class="card-header text-center">
-                    <h2 class="mb-0">Método de Pagamento</h2>
+                    <h3 class="mb-0">Método de Pagamento</h3>
                 </div>
                 <div class="card-body">
                     <!-- Opções de pagamento - include em payment -->

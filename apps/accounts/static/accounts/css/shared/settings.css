@@ -43,11 +43,12 @@ h1{
 
 .border{
     padding: 30px 40px; 
-    border: 1px solid var(--color-primary); 
+    border: 1px solid var(--color-primary) !important; 
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px;
+    margin: 20px 0 20px 0;
 }
+
 
 .fonts_artisian{
     font-size: var(--font-size-lg);
@@ -55,13 +56,10 @@ h1{
     line-height: var(--line-height-normal);
 }
 
-#btn_profile{
+.btn-green{
     display: inline-block;
-    background-color: var(--color-green);
-    color: var(--color-background);
     border-radius: 12px;
     padding: 10px 22px;
     text-decoration: none;
-    transition: 0.2s ease-in-out;
     margin: 20px 0 30px 0;
 }

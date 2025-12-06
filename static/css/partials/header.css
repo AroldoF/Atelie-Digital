@@ -4,7 +4,7 @@
 }
 
 .header__container {
-    background-color: #EADDCF;
+    background-color: var(--color-surface);
     padding: 20px 40px; 
     display: flex;
     align-items: center;        
@@ -17,7 +17,7 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 24px;
-    color: #A65C35;
+    color: var(--color-primary);
     text-decoration: none;
     margin: 0;
     line-height: 1; /* evita altura extra */
@@ -40,7 +40,7 @@ a {
 }
 
 #header__menu-user-login a {
-    color: var(--color-primary) !important;
+    color: var(--color-primary);
 }
 
 .header__menu-user svg {
@@ -66,7 +66,7 @@ a {
 }
 
 .header__navbar {
-    background-color: #88460C;
+    background-color: var(--color-primary);
 }
 
 /* ====== RESPONSIVIDADE ====== */
@@ -120,9 +120,4 @@ a {
         width: 25px;
         height: 25px;
     }
-
-    /* h1 {
-        text-align: start;
-        font-size: 20px;
-    } */
 }

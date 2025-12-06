@@ -1,12 +1,11 @@
 {% extends "shared/base_clean.html" %}
 {% load crispy_forms_tags %}
+{% block title %}Novo Endereço{% endblock %}
 
 {% block style %}
 <style>
   :root {
-    --primary: #d47a00;
-    --primary-light: #fff9f5;
-    --primary-dark: #b65f00;
+    --color-primary-light: #fff9f5;
     --border-radius: 12px;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     --transition: all 0.3s ease;
@@ -21,10 +20,10 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: var(--primary);
+    color: var(--color-primary);
     margin-bottom: 1.5rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--primary-light);
+    border-bottom: 2px solid var(--color-primary-light);
     font-size: 1.3rem;
     font-weight: 600;
   }
@@ -55,7 +54,7 @@
 
   .info-hint {
     background: rgba(212, 122, 0, 0.08);
-    border-left: 3px solid var(--primary);
+    border-left: 3px solid var(--color-primary);
     padding: 1rem;
     border-radius: 0 8px 8px 0;
     margin: 1.2rem 0;
@@ -64,7 +63,7 @@
   }
   
   .info-hint strong {
-    color: var(--primary-dark);
+    color: var(--color-primary-dark);
   }
 
   /* Botão de ação */
@@ -109,7 +108,7 @@
     transition: border-color 0.25s, box-shadow 0.25s;
   }
   .form-control:focus {
-    border-color: var(--primary);
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 0.2rem rgba(212, 122, 0, 0.25);
   }
 
@@ -180,7 +179,7 @@
       <div class="text-center mb-5">
         <div class="d-inline-block mb-3">
         </div>
-        <h1 class="fw-bold mb-2" style="color: #d47a00;">Novo endereço de entrega</h1>
+        <h1 class="fw-bold mb-2" style="color: var(--color-primary);">Novo endereço de entrega</h1>
         <p class="text-muted mb-0">Preencha seus dados de endereço para entregas e faturamento</p>
       </div>
 
@@ -336,7 +335,7 @@
             }, 5000);
           }
         }
-      });
+      });btn btn-continue
       
       // Remover validação quando o usuário digita
       document.querySelectorAll('.form-control').forEach(field => {

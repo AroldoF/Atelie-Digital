@@ -1,7 +1,7 @@
-.storeProfile {
-  padding: 1.5rem;
+ .storeProfile {
+    padding-block: 2rem;
+   
 }
-
 
 .storeBanner {
   position: relative;
@@ -140,9 +140,7 @@ ul{
 }
 
 @media (min-width: 768px) {
-  .storeProfile {
-    padding: 2rem;
-  }
+ 
 
   .storeBanner {
     height: 200px;
@@ -185,7 +183,6 @@ ul{
 @media (min-width: 1024px) {
   .storeProfile {
     margin: 0 auto;
-    padding: 4rem;
   }
 
   .storeBanner {

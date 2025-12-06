@@ -1,6 +1,8 @@
 {% extends "shared/base.html" %}
 {% load static %}
 
+{% block title %}Chat{% endblock %}
+
 {% block style %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{% static 'chats/css/chats.css' %}">
@@ -15,7 +17,7 @@
             <div class="list-header p-3 d-flex align-items-center">
                 <div class="search-container">
                     <i class="bi bi-search search-icon"></i>
-                    <input class="form-control" type="text" placeholder="Pesquise pela conversa">
+                    <input class="form-control search-input" type="text" placeholder="Pesquise pela conversa">
                 </div>
             </div>
             

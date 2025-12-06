@@ -7,7 +7,9 @@
     --text-color: #333333;
     --secondary-text: #777777;
 }
-
+main {
+    padding: 0 !important;
+}
 .chat-container {
     height: calc(100vh - 90px) !important;
     background-color: var(--left-panel-bg);
@@ -30,9 +32,8 @@
     width: 100%;
 }
 
-.search-container .form-control {
+.search-container .search-input {
     padding-left: 40px;
-    border-radius: 25px;
     background-color: #f0f0f0;
     border: none;
 }
