@@ -8,6 +8,9 @@ class Chat(models.Model):
     store = models.ForeignKey(Store, related_name='chats', on_delete=models.CASCADE)
     created_at = models.DateTimeField(blank=True, null=True,)
 
+    def __str__(self):
+        return f'{self.user} - {self.store}'
+
     class Meta:
         db_table = 'chats'
         unique_together = (('user', 'store'),)
@@ -19,6 +22,9 @@ class Message(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(blank=True, null=True)
     is_read = models.BooleanField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.sender} - {self.created_at}'
 
     class Meta:
         db_table = 'messages'

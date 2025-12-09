@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from apps.core.models import Category
+from apps.utils.storage import store_gallery_upload_path, store_image_upload_path, banner_upload_path
 
 class Store(models.Model):
     store_id = models.AutoField(primary_key=True)
@@ -10,8 +11,11 @@ class Store(models.Model):
     phone_number = models.CharField(unique=True, max_length=15)
     cnpj = models.CharField(unique=True, max_length=14, blank=True, null=True)
     email = models.EmailField(unique=True, max_length=255)
-    image = models.ImageField()
-    banner = models.ImageField()
+    image = models.ImageField(upload_to=store_image_upload_path)
+    banner = models.ImageField(upload_to=banner_upload_path)
+
+    def __str__(self):
+        return f'{self.name} (ID: {self.store_id})'
 
     class Meta:
         db_table = 'stores'
@@ -19,7 +23,10 @@ class Store(models.Model):
 class StoreImage(models.Model):
     store_image_id = models.AutoField(primary_key=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    image = models.TextField()
+    image = models.ImageField(upload_to=store_gallery_upload_path)
+
+    def __str__(self):
+        return f'Imagem da loja: {self.store.name}'
 
     class Meta:
         db_table = 'store_images'
@@ -28,6 +35,9 @@ class StoreCategory(models.Model):
     store_categories_id = models.AutoField(primary_key=True)
     category = models.ForeignKey(Category, related_name='store_categories', on_delete=models.CASCADE)
     store = models.ForeignKey(Store, related_name='store_categories', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.store.name} → {self.category.name}'
 
     class Meta:
         db_table = 'store_categories'

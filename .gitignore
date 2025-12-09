@@ -5,7 +5,8 @@ build/
 dist/
 wheels/
 *.egg-info
-
+/media
+!static/**/media
 # Created by https://www.toptal.com/developers/gitignore/api/venv,django,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv,django,python
 

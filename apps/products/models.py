@@ -1,14 +1,19 @@
 from django.db import models
 from apps.core.models import Category
 from apps.stores.models import Store
+from apps.utils.storage import product_image_upload_path, variant_image_upload_path
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     store = models.ForeignKey(Store, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     description = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to=product_image_upload_path)
+    is_favorite = models.BooleanField(default=False)
     is_active = models.BooleanField()
+
+    def __str__(self):
+        return f'{self.name} (ID: {self.product_id})'   
 
     class Meta:
         db_table = 'products'
@@ -29,13 +34,19 @@ class ProductVariant(models.Model):
     is_customizable = models.BooleanField()
     is_active = models.BooleanField()
 
+    def __str__(self):
+        return f'{self.product.name} - SKU: {self.sku}'
+
     class Meta:
         db_table = 'product_variants'
 
 class VariantImage(models.Model):
     variant_image_id = models.AutoField(primary_key=True)
     product_variant = models.ForeignKey(ProductVariant, models.CASCADE)
-    image = models.ImageField()
+    image = models.ImageField(upload_to=variant_image_upload_path)
+
+    def __str__(self):
+        return f'Imagem da variante {self.product_variant.sku}'
 
     class Meta:
         db_table = 'variant_images'
@@ -44,6 +55,9 @@ class ProductCategory(models.Model):
     product_categories_id = models.AutoField(primary_key=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='product_categories', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.product.name} -> {self.category.name}'
 
     class Meta:
         db_table = 'product_categories'
@@ -65,6 +79,9 @@ class VariantAttribute(models.Model):
     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
     product_variant = models.ForeignKey(ProductVariant, related_name='variant_attributes', on_delete=models.CASCADE)
     value = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.product_variant.sku} - {self.attribute.name}: {self.value}'
 
     class Meta:
         db_table = 'variant_attributes'

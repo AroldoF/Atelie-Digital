@@ -1,6 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.conf import settings
+from apps.utils.storage import profile_image_upload_path
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
@@ -11,11 +17,7 @@ class UserManager(BaseUserManager):
 
         email = self.normalize_email(email)
 
-        user = self.model(
-            username=username,
-            email=email,
-            **extra_fields
-        )
+        user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -49,26 +51,37 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = "username"   # login por username
-    REQUIRED_FIELDS = ["email"]   # exigido ao criar superuser
-
-    class Meta:
-        db_table = "users"
+    USERNAME_FIELD = "username"  # login por username
+    REQUIRED_FIELDS = ["email"]  # exigido ao criar superuser
 
     def __str__(self):
         return self.username
 
+    class Meta:
+        db_table = "users"
+
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        related_name="profile",
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
     bio = models.TextField(blank=True, null=True)
-    profile_image = models.CharField(max_length=255, blank=True, null=True)
+    profile_image = models.ImageField(upload_to=profile_image_upload_path)
+
+    def __str__(self):
+        return self.user.username
 
     class Meta:
-        db_table = 'profiles'
+        db_table = "profiles"
+
 
 class Address(models.Model):
     address_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='addresses', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="addresses", on_delete=models.CASCADE
+    )
     complement = models.TextField(blank=True, null=True)
     number = models.IntegerField()
     street = models.CharField(max_length=255)
@@ -78,5 +91,8 @@ class Address(models.Model):
     cep = models.CharField(max_length=8)
     is_main = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'{self.street}, Nº {self.number}. {self.city}'
+
     class Meta:
-        db_table = 'addresses'
+        db_table = "addresses"
