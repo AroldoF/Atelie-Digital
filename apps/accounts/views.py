@@ -13,12 +13,10 @@ def register(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    context = {'user': request.user}
+    return render(request, 'accounts/profile.html', context)
 
-def settings(request):
-    return render(request, "accounts/settings.html")
-
-def settings_user(request):
+def profileEdit(request):
     user = request.user
 
     if user.is_authenticated:
@@ -32,16 +30,28 @@ def settings_user(request):
         form = FormEditUser()
     return render(request, 'accounts/settings_user.html', {'form': form})
 
-def settings_address(request):
-    form = FormAdressUser(request.POST or None)
-    return render(request, 'accounts/settings_address.html', {'form': form})
+def settings(request):
+    return render(request, "accounts/settings.html")
 
-def settings_artisian(request):
+def becomeArtisian(request):
     return render(request, 'accounts/settings_artisian.html')
+
+def addressesList(request):
+    return render(request, 'accounts/addresses.html')
 
 class AddressesRegister(View):
     def get(self, request):
         context = {
             'form': AddressesForm
         }
-        return render(request, 'accounts/addresses.html', context)
+        return render(request, 'accounts/address_register.html', context)
+
+def addressEdit(request):
+    form = FormAdressUser(request.POST or None)
+    return render(request, 'accounts/settings_address.html', {'form': form})
+
+def favoriteProduct(request):
+    return render(request, 'products/favoriteProducts.html')
+
+def usersOrders(request):
+    return render(request, "orders/list.html")

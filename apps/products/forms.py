@@ -1,9 +1,9 @@
 from django import forms
-from .models import ProductVariants, Products, VariantAttributes
+from .models import ProductVariant, Product, VariantAttribute
 
 class Product_Form(forms.ModelForm):
     class Meta: 
-        model = Products
+        model = Product
         fields = ['name', 'description', 'image'] #falta o campo de imagem
         labels = {
             'name': 'Nome',
@@ -22,7 +22,7 @@ class Product_Form(forms.ModelForm):
 
 class Product_Variant_Form(forms.ModelForm): 
     class Meta:
-        model = ProductVariants
+        model = ProductVariant
         exclude = ['product', 'is_active']
         labels = {
             'sku': 'Código da Variante',
@@ -56,7 +56,7 @@ class Product_Variant_Form(forms.ModelForm):
 
 class Attributes_Form(forms.ModelForm):
     class Meta:
-        model = VariantAttributes
+        model = VariantAttribute
         exclude = ['product_variant']
         labels = {
             'attribute': 'Atributo',

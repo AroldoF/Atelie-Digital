@@ -6,7 +6,7 @@
 
 
   <div class="card" >
-    <a href="{% url 'detailProducts' %}">
+    <a href="{% url 'products:detail' 1 %}">
       <div id="areaImg">
         <img src="{% static url %}" class="card-img-top img" alt="{{ description }}">
         {% if favor %}

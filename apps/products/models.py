@@ -1,25 +1,29 @@
 from django.db import models
-from apps.core.models import Categories
-from apps.stores.models import Stores
+from apps.core.models import Category
+from apps.stores.models import Store
+from apps.utils.storage import product_image_upload_path, variant_image_upload_path
 
-class Products(models.Model):
+class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
-    store = models.ForeignKey(Stores, related_name='products', on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     description = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to=product_image_upload_path)
     is_active = models.BooleanField()
+
+    def __str__(self):
+        return f'{self.name} (ID: {self.product_id})'   
 
     class Meta:
         db_table = 'products'
 
-class ProductVariants(models.Model):
+class ProductVariant(models.Model):
     TYPE_CHOISES = [
         ('DEMAND', 'Demanda'),
         ('STOCK', 'Estoque')
     ]
     product_variant_id = models.AutoField(primary_key=True)
-    product = models.ForeignKey(Products, related_name='variants', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
     sku = models.CharField(unique=True, max_length=100)
     description = models.TextField()
     type = models.CharField(max_length=7, choices=TYPE_CHOISES, default='DEMAND')
@@ -29,27 +33,36 @@ class ProductVariants(models.Model):
     is_customizable = models.BooleanField()
     is_active = models.BooleanField()
 
+    def __str__(self):
+        return f'{self.product.name} - SKU: {self.sku}'
+
     class Meta:
         db_table = 'product_variants'
 
-class VariantImages(models.Model):
+class VariantImage(models.Model):
     variant_image_id = models.AutoField(primary_key=True)
-    product_variant = models.ForeignKey(ProductVariants, models.CASCADE)
-    image = models.ImageField()
+    product_variant = models.ForeignKey(ProductVariant, models.CASCADE)
+    image = models.ImageField(upload_to=variant_image_upload_path)
+
+    def __str__(self):
+        return f'Imagem da variante {self.product_variant.sku}'
 
     class Meta:
         db_table = 'variant_images'
 
-class ProductCategories(models.Model):
+class ProductCategory(models.Model):
     product_categories_id = models.AutoField(primary_key=True)
-    category = models.ForeignKey(Categories, on_delete=models.CASCADE)
-    product = models.ForeignKey(Products, related_name='product_categories', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='product_categories', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.product.name} -> {self.category.name}'
 
     class Meta:
         db_table = 'product_categories'
         unique_together = (('category', 'product'),)
 
-class Attributes(models.Model):
+class Attribute(models.Model):
     attribute_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
@@ -60,11 +73,14 @@ class Attributes(models.Model):
     def __str__(self):
         return self.name
 
-class VariantAttributes(models.Model):
+class VariantAttribute(models.Model):
     variant_attributes_id = models.AutoField(primary_key=True)
-    attribute = models.ForeignKey(Attributes, on_delete=models.CASCADE)
-    product_variant = models.ForeignKey(ProductVariants, related_name='variant_attributes', on_delete=models.CASCADE)
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
+    product_variant = models.ForeignKey(ProductVariant, related_name='variant_attributes', on_delete=models.CASCADE)
     value = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.product_variant.sku} - {self.attribute.name}: {self.value}'
 
     class Meta:
         db_table = 'variant_attributes'

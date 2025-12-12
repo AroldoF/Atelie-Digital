@@ -9,11 +9,11 @@
 
 {% block main %}
 <div class="container">
-    <div class="col">
-        <h1 id="title">Meu Perfil</h1>
-        {% include 'accounts/partials/_card_profile.html' with url='accounts/media/hermione.png' description='imagem do usuário' name='Hermione Granger' email='hermione.leviosa@gmail.com' profile=True%}
-    </div>
-    
+    <h1 id="title">Meu Perfil</h1>
+
+    <!--Card de usuário-->
+    {% include 'accounts/partials/_card_profile.html' with url='accounts/media/hermione.png' description='imagem do usuário' name='Hermione Granger' email='hermione.leviosa@gmail.com' tag_user='Cliente' profile=True%}
+
     <div class="row justify-content-between gy-4">
         
         <div class="col-12 col-xl-6 margin summary-card">
@@ -22,7 +22,7 @@
                     <h3 class="title_section">Meus Pedidos</h3>
                 </div>
                 <div class="col text-end">
-                    <p><a href="{% url 'list' %}">Ver todos</a></p>
+                    <p><a href="{% url 'accounts:orders' %}">Ver todos</a></p>
                 </div>
             </div>
             
@@ -48,7 +48,7 @@
                     <h3 class="title_section">Produtos Favoritos</h3>
                 </div>
                 <div class="col text-end">
-                    <p><a href="{% url 'favoriteProduct' %}">Ver todos</a></p>
+                    <p><a href="{% url 'accounts:favorites' %}">Ver todos</a></p>
                 </div>
             </div>
             <div class="products-grid">
