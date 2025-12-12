@@ -14,14 +14,14 @@
     <ul class="row tabs">
         <li class="col-auto">
             <a href="{% url 'accounts:profile_edit' %}"
-            class="{% if request.resolver_match.url_name == 'settings_user' %}active{% endif %}">
+            class="{% if request.resolver_match.url_name == 'profile_edit' %}active{% endif %}">
                 Dados Pessoais
             </a>
         </li>
 
         <li class="col-auto">
             <a href="{% url 'accounts:addresses' %}"
-            class="{% if request.resolver_match.url_name == 'settings_address' %}active{% endif %}">
+            class="{% if request.resolver_match.url_name == 'addresses' %}active{% endif %}">
                 Endereço
             </a>
         </li>

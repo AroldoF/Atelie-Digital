@@ -25,8 +25,8 @@ class Order(models.Model):
 
 class OrderProduct(models.Model):
     order_product_id = models.AutoField(primary_key=True)
-    order = models.ForeignKey(Order, related_name='buys', on_delete=models.CASCADE)
-    product_variant = models.ForeignKey(ProductVariant, related_name='buys', on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='order_products', on_delete=models.CASCADE)
+    product_variant = models.ForeignKey(ProductVariant, related_name='order_products', on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price_total = models.DecimalField(max_digits=10, decimal_places=2)
 

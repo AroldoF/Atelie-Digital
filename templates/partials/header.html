@@ -55,12 +55,12 @@
                     </a>
 
                     <ul class="dropdown-menu mt-2">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Perfil</a></li>
                         {% if user.is_artisan %}
                         <li><a class="dropdown-item" href="#">Dashboard</a></li>
                         {% endif %}
                         <li><a class="dropdown-item" href="#">Pedidos</a></li>
-                        <li><a class="dropdown-item" href="#">Favoritos</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:favorites' %}">Favoritos</a></li>
                         <hr>
                         <li><a class="dropdown-item text-danger" href="#">Sair</a></li>
                     </ul>

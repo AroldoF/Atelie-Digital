@@ -9,7 +9,6 @@ class Product(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField()
     image = models.ImageField(upload_to=product_image_upload_path)
-    is_favorite = models.BooleanField(default=False)
     is_active = models.BooleanField()
 
     def __str__(self):
