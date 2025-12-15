@@ -1,5 +1,7 @@
 from django import forms
-from .models import Address
+from .models import User, Address
+from django.contrib.auth.forms import UserCreationForm
+
 
 BRAZILIAN_STATES = [
     ('AC', 'Acre'),
@@ -46,54 +48,78 @@ class FormLogin(forms.Form):
         })
     )
 
-class FormRegisterUser(forms.Form):
-    name = forms.CharField(
-        max_length=50, 
-        label="Nome",
-        widget=forms.TextInput(attrs={
-            'placeholder': 'Maria José'
-        })
-    )
-    cpf = forms.CharField(
-        max_length=11, 
-        label="CPF",
-        widget=forms.TextInput(attrs={
-            'placeholder': '00122099098'
-        }),
-        help_text= "Insira somente a numeração"
-    )
-    email = forms.EmailField(
-        label="Email", 
-        widget=forms.EmailInput(attrs={
-            'placeholder': 'exemplo@gmail.com'
-        })
-    )    
-    date_of_birth = forms.DateField(
-        label="Data de Nascimento",
-        widget=forms.DateInput(attrs={
-            'type':'date'
-        })
-    )
-    cell_phone = forms.CharField(
-        max_length=20, 
-        label="Telefone",
-        widget=forms.TextInput(attrs={
-            'placeholder': '(DDD) 99999-9999'
-        })
-        )
-    password = forms.CharField(
-        label="Senha", 
+class RegisterUserForm(UserCreationForm):
+    password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={
+            'password1': 'Senha',
             'placeholder': 'Crie uma senha segura'
         }), 
-        help_text="Insira no mínimo 8 caracteres"
     )
-    password_confirm = forms.CharField(
-        label="Confirme a senha", 
+    password2 = forms.CharField(
         widget=forms.PasswordInput(attrs={
+            'password2': 'Confirmar Senha',
             'placeholder': 'Digite a mesma senha'
         })
     )
+
+    class Meta:
+        model = User
+        fields = ['name', 'email', 'cpf', 'phone_number', 'date_of_birth']
+        labels = {
+            'name': 'Nome',
+            'email': 'E-mail',
+            'cpf': 'CPF',
+            'phone_number': 'Telefone',
+            'date_of_birth':'Data de nascimento',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Ex.: Maria José'
+            }),
+            'cpf': forms.TextInput(attrs={
+                'placeholder': 'Ex.: 001.220.990-98'
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Ex.: exemplo@gmail.com'
+            }),
+            'date_of_birth': forms.DateInput(attrs={
+                'type':'date'
+            }),
+            'phone_number': forms.TextInput(attrs={
+                'placeholder': 'Ex.: (DDD) 99999-9999'
+            }),
+
+         
+        }
+        help_texts = {
+            'phone_number': 'Insire o DDD e o dígito 9',
+            'cpf': 'Insira somente a numeração',
+        }
+    
+    def save(self, commit=True):
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password1']
+
+        base_username = email.split('@')[0]
+        username = base_username
+        counter = 1
+
+        while User.objects.filter(username=username).exists():
+            username = f"{base_username}_{counter}"
+            counter += 1
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            name=self.cleaned_data['name'],
+            cpf=self.cleaned_data['cpf'],
+            phone_number=self.cleaned_data['phone_number'],
+            date_of_birth=self.cleaned_data['date_of_birth'],
+            is_active=True,
+        )
+
+        return user
 
 
 class FormEditUser(forms.Form):
@@ -196,7 +222,7 @@ class AddressesForm(forms.ModelForm):
                 'placeholder': 'Ex.: Pau dos Ferros'
             }), 
             'cep': forms.TextInput(attrs={
-                'placeholder': 'Ex.: 59940-000'
+                'placeholder': 'Ex.: 59900-000'
             }), 
             'state': forms.TextInput(attrs={
                 'placeholder': 'Ex.: RN'

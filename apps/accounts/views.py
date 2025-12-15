@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from .forms import FormLogin, FormRegisterUser, FormEditUser, FormAdressUser,  AddressesForm
+from django.shortcuts import render, redirect
+from .forms import FormLogin, RegisterUserForm, FormEditUser, FormAdressUser,  AddressesForm
 from django.views import View
+from django.contrib import messages
 # Create your views here.
 
 
@@ -9,7 +10,16 @@ def login(request):
     return render(request, "accounts/login.html", {"form": form})
 
 def register(request):
-    form = FormRegisterUser(request.POST or None)
+    if request.method == 'POST':
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('profile')
+        else:
+            messages.error(request, 'Error')
+    else:
+        form = RegisterUserForm()
     return render(request, 'accounts/register.html', {'form': form})
 
 def profile(request):
