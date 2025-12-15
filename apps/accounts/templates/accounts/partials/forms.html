@@ -8,7 +8,7 @@
     <h2>{{ title }}</h2>
     <p>{{ info_text }}</p>
     
-    <form method="POST" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+    <form method="POST" action="{% url 'accounts:register' %}" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
         {% csrf_token %}
     
         {% for field in form %}
@@ -42,7 +42,7 @@
         {% endfor %}
     
         <!--Incluir componente de botão-->
-        <a class='d-block' href="{% url 'accounts:profile' %}"><button type="button" class="btn btn_acess btn-primary">{{ btn_text }}</button></a>
+       <button type="button" class="btn btn_acess btn-primary">{{ btn_text }}</button>
     </form>
     
     <!--Retorna somente na tela de login-->
