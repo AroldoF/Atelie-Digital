@@ -50,14 +50,14 @@ class FormLogin(forms.Form):
 
 class RegisterUserForm(UserCreationForm):
     password1 = forms.CharField(
+        label='Senha',
         widget=forms.PasswordInput(attrs={
-            'password1': 'Senha',
             'placeholder': 'Crie uma senha segura'
         }), 
     )
     password2 = forms.CharField(
+        label='Confirmar Senha',
         widget=forms.PasswordInput(attrs={
-            'password2': 'Confirmar Senha',
             'placeholder': 'Digite a mesma senha'
         })
     )
