@@ -1,6 +1,10 @@
 from django import forms
+from datetime import date
 from .models import User, Address
 from django.contrib.auth.forms import UserCreationForm
+import re
+
+
 
 
 BRAZILIAN_STATES = [
@@ -95,6 +99,33 @@ class RegisterUserForm(UserCreationForm):
             'phone_number': 'Insire o DDD e o dígito 9',
             'cpf': 'Insira somente a numeração',
         }
+    
+    def clean_cpf(self):
+        cpf = re.sub(r'\D', '', self.cleaned_data['cpf'])
+
+        if len(cpf) != 11 or cpf == cpf[0] * 11:
+            raise forms.ValidationError("CPF inválido")
+        
+    #  adicionar validação da verificação de digitos
+
+        return cpf
+
+    def clean_phone_number(self):
+        phone = re.sub(r'\D', '', self.cleaned_data['phone_number'])
+
+        if len(phone) not in (10, 11):
+            raise forms.ValidationError("Telefone inválido")
+
+        return phone
+
+    def clean_date_of_birth(self):
+        dob = self.cleaned_data['date_of_birth']
+
+        if dob and dob > date.today():
+            raise forms.ValidationError("Data de nascimento inválida")
+
+        return dob
+    
     
     def save(self, commit=True):
         email = self.cleaned_data['email']
