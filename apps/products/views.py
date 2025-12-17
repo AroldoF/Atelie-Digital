@@ -6,12 +6,26 @@ from .forms import Product_Form, Product_Variant_Form, Attributes_Form
 from .models import Product, Favorite
 from django.http import HttpResponse
 from .models import Product, ProductVariant
+from django.shortcuts import get_object_or_404
 
 
-def detailProduct(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    context = {'product': product}
-    return render(request, 'products/detailProduct.html', context)
+
+def detail_product(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+
+    is_available = product.is_active
+
+    unavailable_message = None
+    if not is_available:
+        unavailable_message = 'Produto indisponível no momento.'
+
+    context = {
+        'product': product,
+        'is_available': is_available,
+        'unavailable_message': unavailable_message,
+    }
+
+    return render(request, 'products/detail.html', context)
     
 def searchProduct(request):
     return render(request, 'products/searchProduct.html')
