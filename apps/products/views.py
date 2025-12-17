@@ -9,18 +9,26 @@ from .models import Product, ProductVariant
 from django.shortcuts import get_object_or_404
 
 
-
 def detail_product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
 
-    is_available = product.is_active
+    # Variante padrão (primeira ativa)
+    variant = (
+        product.variants
+        .filter(is_active=True)
+        .order_by('product_variant_id')
+        .first()
+    )
+
+    is_available = product.is_active and variant is not None
 
     unavailable_message = None
     if not is_available:
-        unavailable_message = 'Produto indisponível no momento.'
+        unavailable_message = 'Este produto está indisponível no momento.'
 
     context = {
         'product': product,
+        'variant': variant,
         'is_available': is_available,
         'unavailable_message': unavailable_message,
     }

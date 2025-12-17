@@ -18,7 +18,7 @@
 
   <div id="areaDivisao">
     <div class="header">
-      <h2>Laço Pérola com Pontas</h2>
+      <h2>{{ product.name }}</h2>
       
       <div class="area-tag-review">
           <div id="FreteGratis" class="car">
@@ -70,8 +70,11 @@
                     <p  id="textOff">26% Off</p>
                 </div>
               </div>
-              
-              <p class="textPrice">R$ 40,70</p>
+              {% if variant %}
+              <p class="textPrice">R$ {{ variant.price|floatformat:2 }}</p>
+              {% else %}
+              <p class="textPrice">R$ 0,00</p>
+              {% endif %}
             </div>
 
             {% if is_available %}
@@ -157,7 +160,7 @@
   </div>
 
   <div>
-      {% include 'products/partials/drop.html' with title='Descrição' content='Este é um lindo laço decorativo perfeito para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim, o laço possui um design elegante com pontas retas e bem definidas. No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado e festivo.' %}
+      {% include 'products/partials/drop.html' with title='Descrição' content=product.description %}
 
       {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
 
@@ -195,18 +198,19 @@
           </div>
       </aside>
 
-       <article class="desktop-product-info">
+      <article class="desktop-product-info">
+        
+        <h1 class="product-title">{{ product.name }}</h1>
+        {% include "products/partials/review.html" %}
 
-        <h1 class="product-title">Laço Pérola com Pontas</h1>
           <p class="description-product" id="descriptionPreview">
-           Este lindo laço decorativo é a escolha perfeita para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim ou organza, o laço possui um design elegante com pontas retas e bem definidas, garantindo um visual impecável e profissional.No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado, festivo e romântico; ideal para ocasiões especiais.
+           {{ product.description }}
            
           </p> 
           <a href="#more-datails">
-            <button type="button" class="btn-see-more">Mais detalhes</button>
+            <button type="button" class="btn-see-more">Mais informações</button>
           </a>    
 
-          {% include "products/partials/review.html" %}
 
           <div id="FreteGratis" class="car desktop-car">
                   <img class="imgCar" src="{% static 'products/media/icons/carro.svg'%}" alt="">
@@ -223,6 +227,7 @@
         <div class="price-card">
       
           <div class="price-row">
+            
             <div class="original-price">R$ <span class="textPriceRick">55,00</span></div>
             <div class="discount-badge">
             
@@ -232,8 +237,11 @@
                 </div>
             </div>
           </div>
-          <div class="current-price">R$ 40,70</div>
-
+          {% if variant %}
+            <div class="current-price">R$ {{ variant.price|floatformat:2 }}</div>
+          {% else %}
+            <div class="current-price">R$ 0,00</div>
+          {% endif %}
           <div class="area-quantity">
 
             <p>Quantidade</p>
@@ -315,7 +323,7 @@
     </div>
     <div id="more-datails">
 
-        {% include 'products/partials/drop.html' with title='Descrição' content='Este lindo laço decorativo é a escolha perfeita para elevar a apresentação de qualquer presente. Feito em tecido de alta qualidade com acabamento brilhante, como cetim ou organza, o laço possui um design elegante com pontas retas e bem definidas, garantindo um visual impecável e profissional.No centro, uma delicada flor azul, confeccionada em feltro, é adornada com pequenas pérolas brancas e detalhes dourados, conferindo um toque sofisticado, festivo e romântico; ideal para ocasiões especiais.' %}
+        {% include 'products/partials/drop.html' with title='Descrição' content=product.description %}
     
       {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
 
