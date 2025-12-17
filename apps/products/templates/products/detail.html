@@ -5,10 +5,12 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'products/css/partials/card.css' %}">
-<link rel="stylesheet" href="{% static 'products/css/detailProduct.css' %}">
+<link rel="stylesheet" href="{% static 'products/css/detail.css' %}">
 {% endblock style %}
 
 {% block main %}
+
+
 
 <main id="mainDetalheProduto">
 
@@ -72,24 +74,44 @@
               <p class="textPrice">R$ 40,70</p>
             </div>
 
+            {% if is_available %}
             <a href="">
               <button id="comprarButton">
                 <img  class="iconComprarButton" src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
                 <p class="textComprarButton">Comprar</p>
               </button>
             </a>
+            {% else %}
+              <button id="comprarButton" disabled>
+                <img  class="iconComprarButton" src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
+                <p class="textComprarButton">Comprar</p>
+              </button>
+            {% endif %}
 
           </div>
 
         
         <div class="areaAdicionar">
-          <a href="">
-            <button id="adicionarButton">
+          {% if is_available %}
+            <a href="">
+              <button id="adicionarButton">
+                <img id="imgShopping" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
+                <p class="addCart">Adicionar ao Carrinho</p>
+              </button>
+            </a>
+          {% else %}
+            <button id="adicionarButton" disabled>
               <img id="imgShopping" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
               <p class="addCart">Adicionar ao Carrinho</p>
             </button>
-          </a>
+          {% endif %}
         </div>
+
+        {% if not is_available %}
+          <div class="product-unavailable mt-3 ">
+              {{ unavailable_message }}
+          </div>
+        {% endif %}
 
       </div>
 
@@ -199,6 +221,7 @@
 
         <aside class="desktop-sidebar">
         <div class="price-card">
+      
           <div class="price-row">
             <div class="original-price">R$ <span class="textPriceRick">55,00</span></div>
             <div class="discount-badge">
@@ -221,18 +244,45 @@
               <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
             </div>
           </div>
-          <a href="">
-            <button type="button" class="btn-buy desktop-btn">
-              <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
-              <span>Comprar</span>
+
+          {% if is_available %}
+            <a href="">
+              <button type="button" class="btn-buy desktop-btn">
+                <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
+                <span>Comprar</span>
+              </button>
+             </a>
+          {% else %}
+            <button type="button" class="btn-buy desktop-btn" disabled>
+                <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
+                <span>Comprar</span>
             </button>
-          </a>
-          <a href="">
-            <button type="button" class="btn-add-cart desktop-btn">
+          {% endif %}
+
+
+
+          {% if is_available %}
+            <a href="">
+              <button type="button" class="btn-add-cart desktop-btn">
+                <img  class="img-btn-cart" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
+                <span>Adicionar ao Carrinho</span>
+              </button>
+            </a>
+          {% else %}
+            <button type="button" class="btn-add-cart desktop-btn" disabled>
               <img  class="img-btn-cart" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
               <span>Adicionar ao Carrinho</span>
             </button>
-          </a>
+          {% endif %}
+
+          {% if not is_available %}
+            <div class="product-unavailable mt-3 ">
+              {{ unavailable_message }}
+            </div>
+          {% endif %}
+
+
+          
         </div>
 
         <div class="seller-card">
