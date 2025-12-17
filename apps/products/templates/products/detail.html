@@ -36,10 +36,12 @@
       
       
       <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
-      <div class="carouselInner">
-            <img src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" class="carouselItem active">
-            <img src="{% static 'products/media/imgVariantionsProducts/v2.png' %}" class="carouselItem">
-            <img src="{% static 'products/media/imgVariantionsProducts/v3.png' %}" class="carouselItem">
+      <div class="carouselInner" id="mobileCarouselInner">
+            {% for img in variant.variantimage_set.all %}
+              <img
+                src="{{ img.image.url }}"
+                class="carouselItem {% if forloop.first %}active{% endif %}">
+            {% endfor %}
             <button class="carousel-btn prev">
                 <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
             </button>
@@ -122,6 +124,25 @@
       
   </div>
 
+    <div class="variant-selector d-flex flex-wrap gap-2 mt-3">
+    {% for v in variants %}
+      <button
+        type="button"
+        class="variant-card btn btn-outline-secondary btn-sm
+              {% if v.id == variant.id %}active{% endif %}"
+        data-price="{{ v.price }}"
+        data-images='[
+          {% for img in v.variantimage_set.all %}
+            "{{ img.image.url }}"{% if not forloop.last %},{% endif %}
+          {% endfor %}
+        ]'
+        {% if not v.is_active %}disabled{% endif %}
+      >
+        {{ v.sku }}
+      </button>
+    {% endfor %}
+</div>
+
  
   <div class="info-loja">
       <div id="areaLogoLoja">
@@ -180,22 +201,18 @@
               <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
               
             </div>
-          <img id="mainImageDesktop" src="{{product.image.url}}" 
-              alt="Laço Pérola com Pontas — vista principal" class="main-image">
+          <img id="mainImageDesktop" src="{{ variant.variantimage_set.first.image.url }}" 
+              class="main-image">
 
           <div class="thumbnail-list">
-            
-           
-            <img src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
-                data-src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
-                class="thumbnail active" alt="Vista frontal">
-            <img src="{% static 'products/media/imgVariantionsProducts/v2.png' %}" 
-                data-src="{% static 'products/media/imgVariantionsProducts/v2.png' %}" 
-                class="thumbnail" alt="Detalhe das pérolas">
-            <img src="{% static 'products/media/imgVariantionsProducts/v3.png' %}" 
-                data-src="{% static 'products/media/imgVariantionsProducts/v3.png' %}" 
-                class="thumbnail" alt="Vista lateral">
-          </div>
+          {% for img in variant.variantimage_set.all %}
+            <img
+              src="{{ img.image.url }}"
+              data-src="{{ img.image.url }}"
+              class="thumbnail {% if forloop.first %}active{% endif %}">
+          {% endfor %}
+        </div>
+
       </aside>
 
       <article class="desktop-product-info">
