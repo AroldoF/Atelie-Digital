@@ -11,6 +11,6 @@ urlpatterns = [
     path('favorite/<int:product_id>/', views.toggle_favorite, name='toggle_favorite'),
 
     # rotas dinâmicas por ultimo
-    path('<int:product_id>/', views.detailProduct, name='detail'),
+    path('<int:product_id>/', views.detail_product, name='detail'),
     
 ]
