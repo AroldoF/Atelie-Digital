@@ -73,7 +73,7 @@
                 </div>
               </div>
               {% if variant %}
-              <p class="textPrice">R$ {{ variant.price|floatformat:2 }}</p>
+              <p class="textPrice" id="variantPriceMobile">R$ {{ variant.price|floatformat:2 }}</p>
               {% else %}
               <p class="textPrice">R$ 0,00</p>
               {% endif %}
@@ -123,25 +123,34 @@
 
       
   </div>
+  <!-- variantes -->
+            <div class="variant-selector d-flex flex-wrap gap-2">
+              {% for v in variants %}
+                {% with v.variantimage_set.first as img %}
+                  <a
+                    href="{% url 'products:detail' product.product_id %}?variant={{ v.product_variant_id }}"
+                    class="variant-card border rounded p-1
+                          {% if v.product_variant_id == variant.product_variant_id %}active{% endif %}
+                          {% if not v.is_active %}disabled{% endif %}"
+                  >
+                    {% if img %}
+                      <img
+                        src="{{ img.image.url }}"
+                        alt="Variante {{ v.sku }}"
+                        class="variant-thumb"
+                      >
+                    {% else %}
+                      <img
+                        src="{% static 'products/media/no-image.png' %}"
+                        alt="Sem imagem"
+                        class="variant-thumb"
+                      >
+                    {% endif %}
+                  </a>
+                {% endwith %}
+              {% endfor %}
+          </div>
 
-    <div class="variant-selector d-flex flex-wrap gap-2 mt-3">
-    {% for v in variants %}
-      <button
-        type="button"
-        class="variant-card btn btn-outline-secondary btn-sm
-              {% if v.id == variant.id %}active{% endif %}"
-        data-price="{{ v.price }}"
-        data-images='[
-          {% for img in v.variantimage_set.all %}
-            "{{ img.image.url }}"{% if not forloop.last %},{% endif %}
-          {% endfor %}
-        ]'
-        {% if not v.is_active %}disabled{% endif %}
-      >
-        {{ v.sku }}
-      </button>
-    {% endfor %}
-</div>
 
  
   <div class="info-loja">
@@ -181,7 +190,7 @@
   </div>
 
   <div>
-      {% include 'products/partials/drop.html' with title='Descrição' content=product.description %}
+      {% include 'products/partials/drop.html' with title='Descrição' content=variant.description|default:product.description %}
 
       {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
 
@@ -201,8 +210,13 @@
               <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
               
             </div>
-          <img id="mainImageDesktop" src="{{ variant.variantimage_set.first.image.url }}" 
+          {% with variant.variantimage_set.first as img %}
+            <img
+              id="mainImageDesktop"
+              src="{% if img %}{{ img.image.url }}{% else %}{% static 'products/media/no-image.png' %}{% endif %}"
               class="main-image">
+          {% endwith %}
+
 
           <div class="thumbnail-list">
           {% for img in variant.variantimage_set.all %}
@@ -221,8 +235,7 @@
         {% include "products/partials/review.html" %}
 
           <p class="description-product" id="descriptionPreview">
-           {{ product.description }}
-           
+          {{ variant.description|default:product.description }}           
           </p> 
           <a href="#more-datails">
             <button type="button" class="btn-see-more">Mais informações</button>
@@ -234,7 +247,35 @@
                   <p class="textTagCar">Frete grátis </p>
           </div>
          
-          
+          <!-- variantes -->
+            <div class="variant-selector d-flex flex-wrap gap-2">
+              {% for v in variants %}
+                {% with v.variantimage_set.first as img %}
+                  <a
+                    href="{% url 'products:detail' product.product_id %}?variant={{ v.product_variant_id }}"
+                    class="variant-card border rounded p-1
+                          {% if v.product_variant_id == variant.product_variant_id %}active{% endif %}
+                          {% if not v.is_active %}disabled{% endif %}"
+                  >
+                    {% if img %}
+                      <img
+                        src="{{ img.image.url }}"
+                        alt="Variante {{ v.sku }}"
+                        class="variant-thumb"
+                      >
+                    {% else %}
+                      <img
+                        src="{% static 'products/media/no-image.png' %}"
+                        alt="Sem imagem"
+                        class="variant-thumb"
+                      >
+                    {% endif %}
+                  </a>
+                {% endwith %}
+              {% endfor %}
+            </div>
+
+
         
 
       
@@ -245,7 +286,7 @@
       
           <div class="price-row">
             
-            <div class="original-price">R$ <span class="textPriceRick">55,00</span></div>
+            <div class="original-price">R$ <span  class="textPriceRick">55,00</span></div>
             <div class="discount-badge">
             
               <div id="off">
@@ -255,7 +296,7 @@
             </div>
           </div>
           {% if variant %}
-            <div class="current-price">R$ {{ variant.price|floatformat:2 }}</div>
+            <div class="current-price" id="variantPriceDesktop">R$ {{ variant.price|floatformat:2 }}</div>
           {% else %}
             <div class="current-price">R$ 0,00</div>
           {% endif %}
@@ -340,7 +381,7 @@
     </div>
     <div id="more-datails">
 
-        {% include 'products/partials/drop.html' with title='Descrição' content=product.description %}
+        {% include 'products/partials/drop.html' with title='Descrição' content=variant.description|default:product.description %}
     
       {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
 
