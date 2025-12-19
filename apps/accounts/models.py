@@ -39,7 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=150)
     username = models.CharField(unique=True, max_length=50)
     email = models.EmailField(unique=True, max_length=255)
-    cpf = models.CharField(unique=True, max_length=11)
+    cpf = models.CharField(unique=True, max_length=14)
     phone_number = models.CharField(max_length=15)
     date_of_birth = models.DateField(null=True, blank=True)
     is_artisan = models.BooleanField(default=False)

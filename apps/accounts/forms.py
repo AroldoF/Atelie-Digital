@@ -4,9 +4,6 @@ from .models import User, Address
 from django.contrib.auth.forms import UserCreationForm
 import re
 
-
-
-
 BRAZILIAN_STATES = [
     ('AC', 'Acre'),
     ('AL', 'Alagoas'),
@@ -56,7 +53,8 @@ class RegisterUserForm(UserCreationForm):
     password1 = forms.CharField(
         label='Senha',
         widget=forms.PasswordInput(attrs={
-            'placeholder': 'Crie uma senha segura'
+            'placeholder': 'Crie uma senha segura',
+            'help_text': 'Pelo menos 8 caracteres<br>Pelo'
         }), 
     )
     password2 = forms.CharField(
@@ -81,7 +79,7 @@ class RegisterUserForm(UserCreationForm):
                 'placeholder': 'Ex.: Maria José'
             }),
             'cpf': forms.TextInput(attrs={
-                'placeholder': 'Ex.: 001.220.990-98'
+                'placeholder': 'Ex.: 001.220.990-98',
             }),
             'email': forms.EmailInput(attrs={
                 'placeholder': 'Ex.: exemplo@gmail.com'
@@ -90,13 +88,11 @@ class RegisterUserForm(UserCreationForm):
                 'type':'date'
             }),
             'phone_number': forms.TextInput(attrs={
-                'placeholder': 'Ex.: (DDD) 99999-9999'
+                'placeholder': 'Ex.: (DDD) 99999-9999',
+                'maxlength': '15'
             }),
-
-         
         }
         help_texts = {
-            'phone_number': 'Insire o DDD e o dígito 9',
             'cpf': 'Insira somente a numeração',
         }
     
@@ -106,7 +102,6 @@ class RegisterUserForm(UserCreationForm):
         if len(cpf) != 11 or cpf == cpf[0] * 11:
             raise forms.ValidationError("CPF inválido")
         
-    #  adicionar validação da verificação de digitos
 
         return cpf
 
