@@ -17,7 +17,7 @@
         <div class="cards">
             {% for product in products %}
             <div class="card current-card">
-                {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name off=True text='20' price=product.variants.first.price favor=True %}
+                {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name off=True text='20' price=product.min_price favor=True is_favorite=product.is_favorite %}
             </div>
             {% endfor %}
         </div>

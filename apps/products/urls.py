@@ -8,6 +8,8 @@ urlpatterns = [
     path('search/', views.searchProduct, name='search'), 
     # path('favorites/', views.favoriteProduct, name='favorites'), não deveria estar aqui
 
+    path('favorite/<int:product_id>/', views.toggle_favorite, name='toggle_favorite'),
+
     # rotas dinâmicas por ultimo
     path('<int:product_id>/', views.detailProduct, name='detail'),
     

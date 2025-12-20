@@ -1,0 +1,7 @@
+{% load static %}
+
+{% if is_favorite %}
+<img id="imgHard" src="{% static 'media/icons/favoriteHover.svg' %}" alt="">
+{% else %}
+<img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
+{% endif %}

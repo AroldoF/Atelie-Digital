@@ -10,12 +10,11 @@
       <div id="areaImg">
         <img src={{url}} class="card-img-top img" alt="{{ description }}">
         {% if favor %}
-          <button id="hard">
-            <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
+          <button id="hard" hx-post="{% url 'products:toggle_favorite' product.pk %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+            {% include "products/partials/favorite.html" with is_favorite=is_favorite %}
           </button>
         {%endif%}
       </div>
-
     </a>
     
     <div class="card-body">

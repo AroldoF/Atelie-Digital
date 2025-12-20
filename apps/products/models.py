@@ -1,6 +1,7 @@
 from django.db import models
 from apps.core.models import Category
 from apps.stores.models import Store
+from django.conf import settings
 from apps.utils.storage import product_image_upload_path, variant_image_upload_path
 
 class Product(models.Model):
@@ -9,13 +10,25 @@ class Product(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField()
     image = models.ImageField(upload_to=product_image_upload_path)
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.name} (ID: {self.product_id})'   
 
     class Meta:
         db_table = 'products'
+
+class Favorite(models.Model):
+    favorite_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="favorites", on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name="favorites", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.product.name} - Favoritado por {self.user}"
+
+    class Meta:
+        db_table = 'favorites'
+        unique_together = [['user', 'product']]
 
 class ProductVariant(models.Model):
     TYPE_CHOISES = [
@@ -24,20 +37,21 @@ class ProductVariant(models.Model):
     ]
     product_variant_id = models.AutoField(primary_key=True)
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
-    sku = models.CharField(unique=True, max_length=100)
+    sku = models.CharField(max_length=100)
     description = models.TextField()
     type = models.CharField(max_length=7, choices=TYPE_CHOISES, default='DEMAND')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField(blank=True, null=True)
     production_days = models.IntegerField(blank=True, null=True)
     is_customizable = models.BooleanField()
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.product.name} - SKU: {self.sku}'
 
     class Meta:
         db_table = 'product_variants'
+        unique_together = [['sku', 'product']]
 
 class VariantImage(models.Model):
     variant_image_id = models.AutoField(primary_key=True)

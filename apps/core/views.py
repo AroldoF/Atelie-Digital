@@ -1,14 +1,31 @@
 from django.shortcuts import render
 from django.views import View
-from apps.products.models import Product, ProductVariant
-from django.db.models import Min, Sum, Prefetch
+from apps.products.models import Product, ProductVariant, Favorite
+from django.db.models.functions import Coalesce
+from django.db.models import Min, Sum, Value, Prefetch
 
 class IndexView(View):
     def get(self, request):
+        from django.db.models import Exists, OuterRef
+
+        # usuário atual
+        user = request.user
+
+        favorite_subquery = Favorite.objects.filter(
+            user=user,
+            product=OuterRef('pk')
+        )
 
         products = (
             Product.objects
-            .annotate(min_price=Min('variants__price'))
+            .annotate(
+                min_price=Min('variants__price'),
+                total_sales=Coalesce(
+                    Sum('variants__order_products__quantity'),
+                    Value(0)
+                ),
+                is_favorite=Exists(favorite_subquery)
+            )
             .prefetch_related(
                 Prefetch(
                     'variants',
@@ -18,15 +35,13 @@ class IndexView(View):
             )
         )
 
-        cheapest_products = (  # produtos mais baratos
+        cheapest_products = (
             products
-            .annotate(min_price=Min('variants__price'))
             .order_by('min_price')[:12]
         )
 
         best_selling_products = (
             products
-            .annotate(total_sales=Sum('variants__order_products__quantity'))  
             .order_by('-total_sales')[:12]
         )
 
