@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem; 
-    border: 0.51px solid hsla(0, 1%, 27%, 0.23); 
     display: inline-flex; 
     border-radius: 9px;
     padding-inline: 2.55px;
