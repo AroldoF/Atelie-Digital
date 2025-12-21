@@ -379,16 +379,15 @@
 
 
     </div>
+    
+
+   
+
     <div id="more-datails">
-
-      {% include 'products/partials/drop.html' with title='Descrição do produto' content=product.description%}
-
-
-      {% include 'products/partials/drop.html' with title='Detalhes da variante' content=variant.description|default:'Não há detalhes específicos para esta variante.'%}
-
-
-
+      {% include 'products/partials/drop.html' with product=product variant=variant %}
     </div>
+
+
 
 
 

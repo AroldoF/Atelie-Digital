@@ -327,7 +327,7 @@ h3,h4{
 
 @media screen and (min-width: 1024px) {
   .mobile-only { display: none; }
-  .desktop-only { display: block; }
+  .desktop-only { display: block;}
 
   .desktop-div-colunas {
     display: flex;
@@ -341,9 +341,14 @@ h3,h4{
     background-color: var(--color-background);
     border-radius: 8px;
   }
-  #more-datails{
+   #more-datails{
     max-width: 1200px;
     margin: 0 auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    background-color: var(--color-background);
+    border-radius: 8px;
+    margin-top: 1rem;
+    padding: 1rem;
   }
 
   /* Coluna 1: Galeria */

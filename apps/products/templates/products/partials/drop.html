@@ -1,30 +1,81 @@
-{% load static%}
+{% load static %}
 
-{% block style %}
 <link rel="stylesheet" href="{% static 'products/css/partials/drop.css' %}">
-{% endblock style %}
 
-
-<div class="drop" role="region" aria-labelledby="drop-title-{{ forloop.counter|default:0 }}">
-  <button 
-    class="dropHeader" 
-    aria-expanded="false"
-    {% if title == 'Descrição' %}id="descricao"{% endif %}
-    aria-controls="drop-content-{{ forloop.counter|default:0 }}"
-  >
-    <span id="drop-title-{{ forloop.counter|default:0 }}" class="dropTitle">{{ title }}</span>
-    <img class="dropIcon" src="{% static 'products/media/icons/chevron-down.svg' %}" alt="">
+<div class="drop" role="region">
+  <button class="dropHeader" aria-expanded="false">
+    <span class="dropTitle">Informações do produto</span>
+    <img
+      class="dropIcon"
+      src="{% static 'products/media/icons/chevron-down.svg' %}"
+      alt=""
+    >
   </button>
 
-  <div 
-    id="drop-content-{{ forloop.counter|default:0 }}" 
-    class="dropContent"
-    aria-hidden="true"
-  >
-    <p>{{ content }}</p>
+  <div class="dropContent" aria-hidden="true">
+
+    {# DESCRIÇÃO DO PRODUTO #}
+    {% if product.description %}
+      <section class="dropSection">
+        <h4>Descrição</h4>
+        <p>{{ product.description }}</p>
+      </section>
+    {% endif %}
+
+    {# DETALHES DA VARIANTE #}
+    {% if variant.description %}
+      <section class="dropSection">
+        <h4>Detalhes da variante</h4>
+        <p>{{ variant.description }}</p>
+      </section>
+    {% endif %}
+
+    {# ESPECIFICAÇÕES (ATRIBUTOS) #}
+    {% if variant.variant_attributes.exists %}
+      <section class="dropSection">
+        <h4>Especificações</h4>
+        <ul class="specList">
+          {% for attr in variant.variant_attributes.all %}
+            <li>
+              <strong>{{ attr.attribute.name }}:</strong>
+              {{ attr.value }}
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    {# INFORMAÇÕES ADICIONAIS #}
+    <section class="dropSection">
+      <h4>Informações adicionais</h4>
+      <ul class="specList">
+        <li>
+          <strong>Tipo de venda:</strong>
+          {{ variant.get_type_display }}
+        </li>
+
+        {% if variant.stock != None %}
+          <li>
+            <strong>Estoque:</strong>
+            {{ variant.stock }}
+          </li>
+        {% endif %}
+
+        {% if variant.production_days %}
+          <li>
+            <strong>Prazo de produção:</strong>
+            {{ variant.production_days }} dias
+          </li>
+        {% endif %}
+
+        <li>
+          <strong>Personalizável:</strong>
+          {% if variant.is_customizable %}Sim{% else %}Não{% endif %}
+        </li>
+      </ul>
+    </section>
+
   </div>
 </div>
 
-{% block scripts %}
 <script src="{% static 'products/js/partials/drop.js' %}"></script>
-{% endblock scripts %}
