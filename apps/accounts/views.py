@@ -1,6 +1,9 @@
-from django.shortcuts import render
-from .forms import FormLogin, FormRegisterUser, FormEditUser, FormAdressUser,  AddressesForm
+from django.shortcuts import render, redirect 
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from .forms import FormLogin, RegisterUserForm, FormEditUser, FormAdressUser,  AddressesForm
 from django.views import View
+from django.contrib import messages
 # Create your views here.
 
 
@@ -9,7 +12,23 @@ def login(request):
     return render(request, "accounts/login.html", {"form": form})
 
 def register(request):
-    form = FormRegisterUser(request.POST or None)
+    if request.method == 'POST':
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Seu cadastro foi realizado com sucesso!")
+            return render(
+                request,
+                'accounts/register.html',
+                {
+                    'form': RegisterUserForm(),
+                    'redirect_after': True
+                }
+            )
+        else:
+            messages.error(request, 'Erro ao tentar realizar cadastro')
+    else:
+        form = RegisterUserForm()
     return render(request, 'accounts/register.html', {'form': form})
 
 def profile(request):

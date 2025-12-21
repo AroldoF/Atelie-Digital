@@ -7,7 +7,6 @@ from django.contrib.auth.models import (
 from django.conf import settings
 from apps.utils.storage import profile_image_upload_path
 
-
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         if not username:
@@ -41,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(unique=True, max_length=50)
     email = models.EmailField(unique=True, max_length=255)
     cpf = models.CharField(unique=True, max_length=11)
-    phone_number = models.CharField(unique=True, max_length=15)
+    phone_number = models.CharField(max_length=15)
     date_of_birth = models.DateField(null=True, blank=True)
     is_artisan = models.BooleanField(default=False)
 
@@ -51,8 +50,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = "username"  # login por username
-    REQUIRED_FIELDS = ["email"]  # exigido ao criar superuser
+    USERNAME_FIELD = "email"  # login por username
+    REQUIRED_FIELDS = ["username"]  # exigido ao criar superuser
 
     def __str__(self):
         return self.username

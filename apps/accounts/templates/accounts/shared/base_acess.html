@@ -15,6 +15,14 @@
 <body>
     <main id="sections_acess">
         <section id="side_form">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
             {% block content_form %}
             {% endblock %}
         </section>
@@ -22,5 +30,11 @@
             <img src="{% static 'accounts/media/logo.png' %}" class="img_logo" alt="Logo do Sistema">
         </section>
     </main>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    {% block script_acess %}
+    {% endblock script_acess %}
+    
 </body>
 </html>

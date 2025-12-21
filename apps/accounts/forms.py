@@ -1,5 +1,10 @@
 from django import forms
-from .models import Address
+from datetime import date
+from .models import User, Address
+from django.contrib.auth.forms import UserCreationForm
+from django_cpf_cnpj.validators import validate_cpf
+from django.core.exceptions import ValidationError
+import re
 
 BRAZILIAN_STATES = [
     ('AC', 'Acre'),
@@ -46,54 +51,109 @@ class FormLogin(forms.Form):
         })
     )
 
-class FormRegisterUser(forms.Form):
-    name = forms.CharField(
-        max_length=50, 
-        label="Nome",
-        widget=forms.TextInput(attrs={
-            'placeholder': 'Maria José'
-        })
-    )
+class RegisterUserForm(UserCreationForm):
     cpf = forms.CharField(
-        max_length=11, 
-        label="CPF",
+        max_length=14,
+        label='CPF',
         widget=forms.TextInput(attrs={
-            'placeholder': '00122099098'
+            'placeholder': '000.000.00-00',
         }),
         help_text= "Insira somente a numeração"
     )
-    email = forms.EmailField(
-        label="Email", 
-        widget=forms.EmailInput(attrs={
-            'placeholder': 'exemplo@gmail.com'
-        })
-    )    
-    date_of_birth = forms.DateField(
-        label="Data de Nascimento",
-        widget=forms.DateInput(attrs={
-            'type':'date'
-        })
-    )
-    cell_phone = forms.CharField(
-        max_length=20, 
-        label="Telefone",
-        widget=forms.TextInput(attrs={
-            'placeholder': '(DDD) 99999-9999'
-        })
-        )
-    password = forms.CharField(
-        label="Senha", 
+
+    password1 = forms.CharField(
+        label='Senha',
+        help_text= 'Insira pelo menos 8 caracteres',
         widget=forms.PasswordInput(attrs={
-            'placeholder': 'Crie uma senha segura'
+            'placeholder': 'Crie uma senha segura',
         }), 
-        help_text="Insira no mínimo 8 caracteres"
     )
-    password_confirm = forms.CharField(
-        label="Confirme a senha", 
+    password2 = forms.CharField(
+        label='Confirmar Senha',
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Digite a mesma senha'
         })
     )
+
+    class Meta:
+        model = User
+        fields = ['name', 'email', 'cpf', 'phone_number', 'date_of_birth']
+        labels = {
+            'name': 'Nome',
+            'email': 'E-mail',
+            'cpf': 'CPF',
+            'phone_number': 'Telefone',
+            'date_of_birth':'Data de nascimento',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Ex.: Maria José'
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Ex.: exemplo@gmail.com'
+            }),
+            'date_of_birth': forms.DateInput(attrs={
+                'type':'date'
+            }),
+            'phone_number': forms.TextInput(attrs={
+                'placeholder': 'Ex.: (DDD) 99999-9999',
+                'maxlength': '15'
+            }),
+        }  
+    
+    def clean_cpf(self):
+        cpf = self.cleaned_data.get('cpf')
+        cpf = re.sub(r'\D', '', cpf)
+
+        try:
+            validate_cpf(cpf)
+        except ValidationError:
+            raise forms.ValidationError("CPF inválido")
+
+        return cpf
+
+
+    def clean_phone_number(self):
+        phone = re.sub(r'\D', '', self.cleaned_data['phone_number'])
+
+        if len(phone) not in (10, 11):
+            raise forms.ValidationError("Telefone inválido")
+
+        return phone
+
+    def clean_date_of_birth(self):
+        dob = self.cleaned_data['date_of_birth']
+
+        if dob and dob > date.today():
+            raise forms.ValidationError("Data de nascimento inválida")
+
+        return dob
+    
+    
+    def save(self, commit=True):
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password1']
+
+        base_username = email.split('@')[0]
+        username = base_username
+        counter = 1
+
+        while User.objects.filter(username=username).exists():
+            username = f"{base_username}_{counter}"
+            counter += 1
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            name=self.cleaned_data['name'],
+            cpf=self.cleaned_data['cpf'],
+            phone_number=self.cleaned_data['phone_number'],
+            date_of_birth=self.cleaned_data['date_of_birth'],
+            is_active=True,
+        )
+
+        return user
 
 
 class FormEditUser(forms.Form):
@@ -104,8 +164,7 @@ class FormEditUser(forms.Form):
             'accept': 'image/*' # Opcional: ajuda o navegador a filtrar apenas imagens
         })
     )
-    cpf = forms.CharField(
-        max_length=11, 
+    cpf = forms.CharField( 
         label="CPF",
         widget=forms.TextInput(attrs={
             'placeholder': '00122099098',
@@ -196,7 +255,7 @@ class AddressesForm(forms.ModelForm):
                 'placeholder': 'Ex.: Pau dos Ferros'
             }), 
             'cep': forms.TextInput(attrs={
-                'placeholder': 'Ex.: 59940-000'
+                'placeholder': 'Ex.: 59900-000'
             }), 
             'state': forms.TextInput(attrs={
                 'placeholder': 'Ex.: RN'
