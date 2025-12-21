@@ -687,6 +687,10 @@ h3,h4{
   input[type="number"] {
       -moz-appearance: textfield;
   }
+
+  .variant-selector{
+  margin-top: 8rem;
+}
 }
 
 
@@ -873,10 +877,18 @@ button:disabled {
   cursor: not-allowed;
 }
 
-
-.variant-selector{
-  margin-top: 8rem;
+.product-unavailable {
+  background-color: #fff3cd;
+  color: #664d03;
+  border: 1px solid #ffeeba;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  font-size: var(--font-size-xs);
 }
+
+
 .variant-card {
   width: 64px;
   height: 64px;

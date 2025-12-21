@@ -381,13 +381,15 @@
     </div>
     <div id="more-datails">
 
-        {% include 'products/partials/drop.html' with title='Descrição' content=variant.description|default:product.description %}
-    
-      {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
+      {% include 'products/partials/drop.html' with title='Descrição do produto' content=product.description%}
 
-      {% include 'products/partials/drop.html' with title='Dimensões' content='15cm' %}
+
+      {% include 'products/partials/drop.html' with title='Detalhes da variante' content=variant.description|default:'Não há detalhes específicos para esta variante.'%}
+
+
 
     </div>
+
 
 
 </div>
