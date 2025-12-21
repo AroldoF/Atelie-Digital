@@ -2,6 +2,8 @@ from django import forms
 from datetime import date
 from .models import User, Address
 from django.contrib.auth.forms import UserCreationForm
+from django_cpf_cnpj.validators import validate_cpf
+from django.core.exceptions import ValidationError
 import re
 
 BRAZILIAN_STATES = [
@@ -50,11 +52,20 @@ class FormLogin(forms.Form):
     )
 
 class RegisterUserForm(UserCreationForm):
+    cpf = forms.CharField(
+        max_length=14,
+        label='CPF',
+        widget=forms.TextInput(attrs={
+            'placeholder': '000.000.00-00',
+        }),
+        help_text= "Insira somente a numeração"
+    )
+
     password1 = forms.CharField(
         label='Senha',
+        help_text= 'Insira pelo menos 8 caracteres',
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Crie uma senha segura',
-            'help_text': 'Pelo menos 8 caracteres<br>Pelo'
         }), 
     )
     password2 = forms.CharField(
@@ -78,9 +89,6 @@ class RegisterUserForm(UserCreationForm):
             'name': forms.TextInput(attrs={
                 'placeholder': 'Ex.: Maria José'
             }),
-            'cpf': forms.TextInput(attrs={
-                'placeholder': 'Ex.: 001.220.990-98',
-            }),
             'email': forms.EmailInput(attrs={
                 'placeholder': 'Ex.: exemplo@gmail.com'
             }),
@@ -91,19 +99,19 @@ class RegisterUserForm(UserCreationForm):
                 'placeholder': 'Ex.: (DDD) 99999-9999',
                 'maxlength': '15'
             }),
-        }
-        help_texts = {
-            'cpf': 'Insira somente a numeração',
-        }
+        }  
     
     def clean_cpf(self):
-        cpf = re.sub(r'\D', '', self.cleaned_data['cpf'])
+        cpf = self.cleaned_data.get('cpf')
+        cpf = re.sub(r'\D', '', cpf)
 
-        if len(cpf) != 11 or cpf == cpf[0] * 11:
+        try:
+            validate_cpf(cpf)
+        except ValidationError:
             raise forms.ValidationError("CPF inválido")
-        
 
         return cpf
+
 
     def clean_phone_number(self):
         phone = re.sub(r'\D', '', self.cleaned_data['phone_number'])
@@ -156,8 +164,7 @@ class FormEditUser(forms.Form):
             'accept': 'image/*' # Opcional: ajuda o navegador a filtrar apenas imagens
         })
     )
-    cpf = forms.CharField(
-        max_length=11, 
+    cpf = forms.CharField( 
         label="CPF",
         widget=forms.TextInput(attrs={
             'placeholder': '00122099098',

@@ -21,6 +21,7 @@ dependencies = [
     { name = "django" },
     { name = "django-channels" },
     { name = "django-cloudinary-storage" },
+    { name = "django-cpf-cnpj" },
     { name = "django-crispy-forms" },
     { name = "django-environ" },
     { name = "django-filter" },
@@ -44,6 +45,7 @@ requires-dist = [
     { name = "django", specifier = ">=5.2.6" },
     { name = "django-channels", specifier = ">=0.7.0" },
     { name = "django-cloudinary-storage", specifier = ">=0.3.0" },
+    { name = "django-cpf-cnpj", specifier = ">=1.0.0" },
     { name = "django-crispy-forms", specifier = ">=2.4" },
     { name = "django-environ", specifier = ">=0.12.0" },
     { name = "django-filter", specifier = ">=25.2" },
@@ -260,6 +262,17 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/72/da/6072905410b869566d3cb9f6706803d0a9d2052d90e0b8ed783031acdb6d/django-cloudinary-storage-0.3.0.tar.gz", hash = "sha256:debd403a5f225c9d35c4af508ff4abc7fdc262129464134b60b2feeb2c44d3e1", size = 21669, upload-time = "2020-08-23T22:19:57.854Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fe/e2/e52f63ddafa0985e2af70197c4d3e18963d0ea854083fc23705b88014891/django_cloudinary_storage-0.3.0-py3-none-any.whl", hash = "sha256:95c855c7334141b2a485ea7eb5716de87bb6ce0d848e205debb3a3ab7bbbd49a", size = 18866, upload-time = "2020-08-23T22:19:55.767Z" },
+]
+
+[[package]]
+name = "django-cpf-cnpj"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e1/b7/87684f5bddea216868e834034746cdd7d7bc3c65c86044a9ebb0943fe0a2/django_cpf_cnpj-1.0.0-py3-none-any.whl", hash = "sha256:9e3400b8181d9f4dd99ebd5d3c2d127d1180cb9a4e5448145f6904629c61ad12", size = 8630, upload-time = "2021-06-14T16:31:15.974Z" },
 ]
 
 [[package]]

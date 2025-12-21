@@ -1,4 +1,5 @@
 from django import forms
+from django_cpf_cnpj.validators import validate_cnpj
 from .models import Store, StoreCategory
 
 class Store_Form(forms.ModelForm):
