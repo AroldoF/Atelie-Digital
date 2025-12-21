@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect 
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from .forms import FormLogin, RegisterUserForm, FormEditUser, FormAdressUser,  AddressesForm
 from django.views import View
 from django.contrib import messages
@@ -14,9 +16,17 @@ def register(request):
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('accounts:profile')
+            messages.success(request, "Seu cadastro foi realizado com sucesso!")
+            return render(
+                request,
+                'accounts/register.html',
+                {
+                    'form': RegisterUserForm(),
+                    'redirect_after': True
+                }
+            )
         else:
-            messages.error(request, 'Error')
+            messages.error(request, 'Erro ao tentar realizar cadastro')
     else:
         form = RegisterUserForm()
     return render(request, 'accounts/register.html', {'form': form})

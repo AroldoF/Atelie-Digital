@@ -42,6 +42,10 @@ a{
     box-sizing: border-box; 
 } 
 
+.form_footer{
+    margin-top: 15px;
+}
+
 /* Estilização dos erros */
 .form_group.has-error input,
 .form_group.has-error select,
