@@ -230,54 +230,55 @@
       </aside>
 
       <article class="desktop-product-info">
+        <div class="product-main-info">
+          <h1 class="product-title">{{ product.name }}</h1>
+          {% include "products/partials/review.html" %}
+
+            <p class="description-product" id="descriptionPreview">
+            {{ variant.description|default:product.description }}           
+            </p> 
+            <a href="#more-datails">
+              <button type="button" class="btn-see-more">Mais informações</button>
+            </a>    
+
+
+            <div id="FreteGratis" class="car desktop-car">
+                    <img class="imgCar" src="{% static 'products/media/icons/carro.svg'%}" alt="">
+                    <p class="textTagCar">Frete grátis </p>
+            </div>
+        </div>
         
-        <h1 class="product-title">{{ product.name }}</h1>
-        {% include "products/partials/review.html" %}
-
-          <p class="description-product" id="descriptionPreview">
-          {{ variant.description|default:product.description }}           
-          </p> 
-          <a href="#more-datails">
-            <button type="button" class="btn-see-more">Mais informações</button>
-          </a>    
-
-
-          <div id="FreteGratis" class="car desktop-car">
-                  <img class="imgCar" src="{% static 'products/media/icons/carro.svg'%}" alt="">
-                  <p class="textTagCar">Frete grátis </p>
-          </div>
          
           <!-- variantes -->
-            <div class="variant-selector d-flex flex-wrap gap-2">
-              {% for v in variants %}
-                {% with v.variantimage_set.first as img %}
-                  <a
-                    href="{% url 'products:detail' product.product_id %}?variant={{ v.product_variant_id }}"
-                    class="variant-card border rounded p-1
-                          {% if v.product_variant_id == variant.product_variant_id %}active{% endif %}
-                          {% if not v.is_active %}disabled{% endif %}"
-                  >
-                    {% if img %}
-                      <img
-                        src="{{ img.image.url }}"
-                        alt="Variante {{ v.sku }}"
-                        class="variant-thumb"
-                      >
-                    {% else %}
-                      <img
-                        src="{% static 'products/media/no-image.png' %}"
-                        alt="Sem imagem"
-                        class="variant-thumb"
-                      >
-                    {% endif %}
-                  </a>
-                {% endwith %}
-              {% endfor %}
-            </div>
-
-
-        
-
+           <div class="area-variante">
+            <p>Variações</p>
+             <div class="variant-selector d-flex flex-wrap gap-2">
+               {% for v in variants %}
+                 {% with v.variantimage_set.first as img %}
+                   <a
+                     href="{% url 'products:detail' product.product_id %}?variant={{ v.product_variant_id }}"
+                     class="variant-card border rounded p-1
+                           {% if v.product_variant_id == variant.product_variant_id %}active{% endif %}
+                           {% if not v.is_active %}disabled{% endif %}"
+                   >
+                     {% if img %}
+                       <img
+                         src="{{ img.image.url }}"
+                         alt="Variante {{ v.sku }}"
+                         class="variant-thumb"
+                       >
+                     {% else %}
+                       <img
+                         src="{% static 'products/media/no-image.png' %}"
+                         alt="Sem imagem"
+                         class="variant-thumb"
+                       >
+                     {% endif %}
+                   </a>
+                 {% endwith %}
+               {% endfor %}
+             </div>
+           </div>
       
         </article>
 
