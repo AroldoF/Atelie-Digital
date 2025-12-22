@@ -129,7 +129,7 @@
                 {% with v.variantimage_set.first as img %}
                   <a
                     href="{% url 'products:detail' product.product_id %}?variant={{ v.product_variant_id }}"
-                    class="variant-card border rounded p-1
+                    class="variant-card 
                           {% if v.product_variant_id == variant.product_variant_id %}active{% endif %}
                           {% if not v.is_active %}disabled{% endif %}"
                   >
@@ -251,7 +251,7 @@
          
           <!-- variantes -->
            <div class="area-variante">
-            <p>Variações</p>
+            <p class="title-variante">Variações</p>
              <div class="variant-selector d-flex flex-wrap gap-2">
                {% for v in variants %}
                  {% with v.variantimage_set.first as img %}

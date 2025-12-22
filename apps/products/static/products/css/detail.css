@@ -330,13 +330,17 @@ h3,h4{
   .desktop-only { display: block;}
 
   .desktop-div-colunas {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2rem;
+    display: grid;
+    grid-template-columns: minmax(300px, 350px) 1fr 300px;
+    gap: 1.5rem; 
+
     max-width: 1200px;
     margin: 0 auto;
+    padding: 1.5rem;
+
+    box-sizing: border-box;
+
+    
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     background-color: var(--color-background);
     border-radius: 8px;
@@ -356,8 +360,7 @@ h3,h4{
 
   /* Coluna 1: Galeria */
   .desktop-gallery {
-    width: 400px;
-    flex-shrink: 0;  
+    width: 100%; 
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -372,10 +375,11 @@ h3,h4{
 
   .main-image {
     width: 100%;
-    height: 500px;
+    height: auto; 
+    max-height: 450px; 
     object-fit: contain;
     display: block;
-     padding-block: 1rem;
+    padding-block: 1rem;
   }
   .icons-gallery {
       display: flex;
@@ -423,10 +427,10 @@ h3,h4{
   /* Coluna 2: Informações do Produto */
   .desktop-product-info {
     flex: 1;
-    min-width: 400px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    overflow: hidden;
     
     
    
@@ -447,7 +451,7 @@ h3,h4{
   
   position: relative;
    white-space: normal;
-  overflow-wrap: anywhere;   /* quebra palavras longas */
+  overflow-wrap: anywhere;   
   word-break: break-word; 
 }
 
@@ -497,14 +501,14 @@ h3,h4{
 
   /* Coluna 3: Sidebar (Preço + Vendedor) */
   .desktop-sidebar {
-    width: 400px;
+    width: 100%; 
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-width: 0;
   }
-  .desktop-car{
-    margin-block: 1rem;
-  }
+  
 
   /* Card de Preço */
   .price-card {
@@ -904,7 +908,7 @@ button:disabled {
 
 
 .product-main-info {
-  min-height: 260px; /* ajuste fino depois */
+  min-height: 260px;
   display: flex;
  
   flex-direction: column;
@@ -920,30 +924,49 @@ button:disabled {
   margin-top: 3rem;
 }
 
+.title-variante {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+/* Container das variantes */
+.variant-selector {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
 
 
 .variant-card {
-  width: 90px;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 90px;          
+  height: 90px;           
+  object-fit: cover;
+  border: 3px solid transparent; 
+  border-radius: 6px;    
   cursor: pointer;
-  
+  transition: border-color 0.2s;
+  overflow: hidden;
+  display: block;
 }
 
-.variant-card img.variant-thumb {
+
+.variant-card:hover,
+.variant-card.active {
+  border-color: var(--color-primary) !important; 
+}
+
+
+.variant-thumb {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
-.variant-card.selected {
-  border-color: var(--color-primary);
-}
-
 
 
 .variant-card.disabled {
-  pointer-events: none;
   opacity: 0.4;
+  pointer-events: none;
+  filter: grayscale(1);
 }
