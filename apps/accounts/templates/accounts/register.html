@@ -3,15 +3,4 @@
 
 {% block content_form %}
 {% include "accounts/partials/forms.html" with title="Cadastre-se" info_text="Insira os dados para criar sua conta!" btn_text="Registrar" text_link="Já tem uma conta?" link_text="Fazer Login" link_url="login" form=form %}
-
-{% block script_acess %}
-    {% if redirect_after %}
-        <script>
-        setTimeout(() => {
-            window.location.href = "{% url 'accounts:profile' %}";
-        }, 2000);
-        </script>
-    {% endif %}
-{% endblock script_acess %}
-
 {% endblock content_form %}

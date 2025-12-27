@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from .forms import FormLogin, RegisterUserForm, FormEditUser, FormAdressUser,  AddressesForm
 from django.views import View
 from django.contrib import messages
+from django.contrib.auth import login as login_django
 # Create your views here.
 
 
@@ -15,16 +16,10 @@ def register(request):
     if request.method == 'POST':
         form = RegisterUserForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login_django(request, user)
             messages.success(request, "Seu cadastro foi realizado com sucesso!")
-            return render(
-                request,
-                'accounts/register.html',
-                {
-                    'form': RegisterUserForm(),
-                    'redirect_after': True
-                }
-            )
+            return redirect('accounts:profile')
         else:
             messages.error(request, 'Erro ao tentar realizar cadastro')
     else:

@@ -166,6 +166,13 @@
 /* =========================================================
    BADGES E ESTADOS
    ========================================================= */
+.messages {
+    transition: opacity 0.5s ease-out;
+}
+
+.messages.fade-out {
+    opacity: 0;
+}
 
 /* Sucesso (verde orgânico) */
 .badge-success {

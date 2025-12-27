@@ -16,6 +16,13 @@
 <body>
     {% include "partials/header.html"%}
     <main>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible fade show messages message-container" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
         {% block main %}
         {% endblock main %}
     </main>
@@ -24,6 +31,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="{% static 'js/shared/messages.js' %}"></script>
     
     {% block scripts %}
     {% endblock scripts %}
