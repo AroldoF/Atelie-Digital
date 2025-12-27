@@ -17,7 +17,7 @@
         <section id="side_form">
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                    <div class="alert {{ message.tags }} alert-dismissible fade show messages message-container" role="alert">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -36,5 +36,6 @@
     {% block script_acess %}
     {% endblock script_acess %}
     
+    <script src="{% static 'js/shared/messages.js' %}"></script>
 </body>
 </html>
