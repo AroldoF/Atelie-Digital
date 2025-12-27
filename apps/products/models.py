@@ -3,6 +3,7 @@ from apps.core.models import Category
 from apps.stores.models import Store
 from django.conf import settings
 from apps.utils.storage import product_image_upload_path, variant_image_upload_path
+from .managers import ProductManager
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
@@ -11,6 +12,8 @@ class Product(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to=product_image_upload_path)
     is_active = models.BooleanField(default=True)
+
+    objects = ProductManager()
 
     def __str__(self):
         return f'{self.name} (ID: {self.product_id})'   

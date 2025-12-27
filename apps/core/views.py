@@ -1,55 +1,23 @@
 from django.shortcuts import render
 from django.views import View
-from apps.products.models import Product, ProductVariant, Favorite
-from django.db.models.functions import Coalesce
-from django.db.models import Min, Sum, Value, Prefetch
+from apps.products.models import Product
 
 class IndexView(View):
     def get(self, request):
-        from django.db.models import Exists, OuterRef
-
         # usuário atual
         user = request.user
 
-        favorite_subquery = Favorite.objects.filter(
-            user=user,
-            product=OuterRef('pk')
-        )
+        # Queryset base com todos os produtos
+        products = Product.objects.cards_with_favorites(user)
 
-        products = (
-            Product.objects
-            .annotate(
-                min_price=Min('variants__price'),
-                total_sales=Coalesce(
-                    Sum('variants__order_products__quantity'),
-                    Value(0)
-                ),
-                is_favorite=Exists(favorite_subquery)
-            )
-            .prefetch_related(
-                Prefetch(
-                    'variants',
-                    queryset=ProductVariant.objects.order_by('price'),
-                    to_attr='sorted_variants'
-                )
-            )
-        )
+        # Selecionando os 12 mais baratos
+        cheapest_products = products.order_by('min_price')[:12]
 
-        cheapest_products = (
-            products
-            .order_by('min_price')[:12]
-        )
+        # Selecionando os 12 mais vendidos
+        best_selling_products = products.with_total_sales().order_by('-total_sales')[:12]
 
-        best_selling_products = (
-            products
-            .order_by('-total_sales')[:12]
-        )
-
-
-        top_rated_products = (  #
-            products
-            .order_by('-pk')[:12]
-        )
+        # Selecionando os 12 produtos "top rated" (mais recentes ou outro critério)
+        top_rated_products = products.order_by('-pk')[:12]
 
         context = {
             'cheapest_products': cheapest_products,
