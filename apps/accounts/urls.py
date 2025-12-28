@@ -5,7 +5,7 @@ app_name = 'accounts'
 
 urlpatterns = [
     # autenticação
-    path("login/", views.login, name="login"),
+    path("login/", views.UserLoginView.as_view(), name="login"),
     path("register/", views.register, name="register"),
 
     # perfil e configurações

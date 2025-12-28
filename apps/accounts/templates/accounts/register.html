@@ -2,5 +2,5 @@
 {% load static %}
 
 {% block content_form %}
-{% include "accounts/partials/forms.html" with title="Cadastre-se" info_text="Insira os dados para criar sua conta!" btn_text="Registrar" text_link="Já tem uma conta?" link_text="Fazer Login" link_url="login" form=form %}
+{% include "accounts/partials/forms.html" with action_url="accounts:register" title="Cadastre-se" info_text="Insira os dados para criar sua conta!" btn_text="Registrar" text_link="Já tem uma conta?" link_text="Fazer Login" link_url="login" form=form %}
 {% endblock content_form %}
