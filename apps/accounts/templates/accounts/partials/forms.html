@@ -8,7 +8,7 @@
     <h2>{{ title }}</h2>
     <p>{{ info_text }}</p>
     
-    <form method="POST" action="{% url 'accounts:register' %}" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+    <form method="POST" action="{% url action_url %}" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
         {% csrf_token %}
     
         {% for field in form %}
@@ -45,7 +45,7 @@
 
                 </div>
             {% endif %}
-            <!--Retorna somente na tela de login-->
+
             {% if field.name == 'password' and title == 'Acessar conta'%}
                 <p>
                     <a href="{#{% url 'password_reset' %}#}" class="link_recuperar">Recuperar senha</a> 
@@ -69,7 +69,7 @@
 
     {% if text_link and link_url %}
         <p class="form_footer">
-            {{ text_link }} <a {% if link_url == 'signup' %}href="{% url 'accounts:register'%}"{% else %}href="{% url 'accounts:login'%}"{% endif %} class="link_recuperar">{{ link_text }}</a>
+            {{ text_link }} <a {% if link_url == 'signup' %}href="{% url 'accounts:register' %}"{% else %}href="{% url 'accounts:login' %}"{% endif %} class="link_recuperar">{{ link_text }}</a>
         </p>
     {% endif %}
 </div>

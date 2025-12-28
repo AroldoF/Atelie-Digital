@@ -1,16 +1,29 @@
 from django.shortcuts import render, redirect 
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-from .forms import FormLogin, RegisterUserForm, FormEditUser, FormAdressUser,  AddressesForm
+from .forms import LoginAuthenticationForm, RegisterUserForm, FormEditUser, FormAdressUser,  AddressesForm
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth import login as login_django
+from django.contrib.auth.views import LoginView
 # Create your views here.
 
 
-def login(request):
-    form = FormLogin(request.POST or None)
-    return render(request, "accounts/login.html", {"form": form})
+class UserLoginView(LoginView):
+    template_name = 'accounts/login.html'
+    authentication_form = LoginAuthenticationForm
+    redirect_authenticated_user = True
+
+    def form_valid(self, form):
+        messages.success(self.request, "Login realizado com sucesso!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "E-mail ou senha inválidos")
+        return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profile')
 
 def register(request):
     if request.method == 'POST':

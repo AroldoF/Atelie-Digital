@@ -1,7 +1,7 @@
 from django import forms
 from datetime import date
 from .models import User, Address
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django_cpf_cnpj.validators import validate_cpf
 from django.core.exceptions import ValidationError
 import re
@@ -37,8 +37,8 @@ BRAZILIAN_STATES = [
 ]
 
 
-class FormLogin(forms.Form):
-    email = forms.EmailField(
+class LoginAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(
         label="Email", 
         widget=forms.EmailInput(attrs={
             'placeholder': 'exemplo@gmail.com'
@@ -50,6 +50,20 @@ class FormLogin(forms.Form):
             'placeholder': 'Insira sua senha'
         })
     )
+
+# class FormLogin(forms.Form):
+#     email = forms.EmailField(
+#         label="Email", 
+#         widget=forms.EmailInput(attrs={
+#             'placeholder': 'exemplo@gmail.com'
+#         })
+#     )
+#     password = forms.CharField(
+#         label="Senha", 
+#         widget=forms.PasswordInput(attrs={
+#             'placeholder': 'Insira sua senha'
+#         })
+#     )
 
 class RegisterUserForm(UserCreationForm):
     cpf = forms.CharField(
