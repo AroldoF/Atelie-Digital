@@ -62,7 +62,12 @@
                         <li><a class="dropdown-item" href="#">Pedidos</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:favorites' %}">Favoritos</a></li>
                         <hr>
-                        <li><a class="dropdown-item text-danger" href="#">Sair</a></li>
+                        <li>
+                            <form action="{% url 'accounts:logout' %}" method="post">
+                                {% csrf_token %}
+                                <button class="dropdown-item text-danger" type="submit">Sair</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
                     <a href="{% url 'accounts:profile' %}">
