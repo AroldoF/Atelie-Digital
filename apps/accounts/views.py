@@ -6,6 +6,9 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth import login as login_django
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
+
 # Create your views here.
 
 
@@ -39,6 +42,8 @@ def register(request):
         form = RegisterUserForm()
     return render(request, 'accounts/register.html', {'form': form})
 
+@never_cache
+@login_required
 def profile(request):
     context = {'user': request.user}
     return render(request, 'accounts/profile.html', context)
