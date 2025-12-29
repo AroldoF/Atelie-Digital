@@ -123,7 +123,9 @@
       
   </div>
   <!-- variantes -->
-            <div class="variant-selector d-flex flex-wrap gap-2">
+          <div class="d-flex flex-column mt-3 px-3">
+            <p class="title-variante-mb">Variantes</p>
+            <div class="variant-selector d-flex flex-wrap gap-2 mt-2">
               {% for v in variants %}
                 {% with v.variantimage_set.first as img %}
                   <a
@@ -148,6 +150,7 @@
                   </a>
                 {% endwith %}
               {% endfor %}
+          </div>
           </div>
 
 
@@ -389,13 +392,13 @@
 
 
 
-<section class="container mt-5" id="reviews-section">
-    <hr>
+<section class="container mt-1 area-review " id="reviews-section">
+
     <input type="hidden" id="avg-data" value="{{ rating_average|default:'0' }}">
 
     <div class="row pt-4">
           <div class="col-md-4 mb-4">
-              <h3 class="h4 fw-bold" style="color: var(--color-primary-dark);">Avaliações de clientes</h3>
+              <h3 class="title-area-review fw-bold">Avaliações de clientes</h3>
               
               <div class="d-flex align-items-center gap-3 my-3">
                   <span class="display-4 fw-bold text-dark">{{ rating_average|stringformat:".1f" }}</span>
@@ -439,13 +442,13 @@
 
 
 
-              <button type="button" class="btn btn-light border w-100 fw-bold py-2 shadow-sm mt-4" data-bs-toggle="modal" data-bs-target="#modalAvaliar">
+              <button type="button" class="btn border w-100 fw-bold py-2 mt-4 btn-avaliar" data-bs-toggle="modal" data-bs-target="#modalAvaliar">
                   Avaliar
               </button>
           </div>
 
           <div class="col-md-8">
-              <h4 class="h5 fw-bold mb-4 border-bottom pb-2" style="color: var(--color-primary-dark);">Principais avaliações</h4>
+              <h4 class="text-main-review fw-bold mb-4 border-bottom pb-2">Principais avaliações</h4>
               <div class="reviews-list">
                   {% for review in reviews %}
                       <div class="review-item mb-4 pb-4 border-bottom">
@@ -495,7 +498,7 @@
         
         <div class="modal-footer border-0">
             <button type="button" class="btn btn-link text-muted" data-bs-dismiss="modal">cancelar</button>
-            <button type="submit" class="btn btn-warning fw-bold px-4" style="background-color: #cdaa36;">Enviar</button>
+            <button type="submit" class="btn fw-bold px-4 btn-enviar-modal">Enviar</button>
         </div>
       </form>
     </div>
