@@ -78,3 +78,18 @@
   font-size: var(--font-size-sm);
   margin-top: .3rem;
 }
+
+
+
+/* estrelas apenas para exibição */
+.rating-component.is-readonly .liStar {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.8;
+}
+
+/* estrelas ativas (modal) */
+.rating-component.is-interactive .liStar {
+    pointer-events: auto;
+    cursor: pointer;
+}

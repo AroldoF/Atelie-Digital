@@ -986,3 +986,7 @@ button:disabled {
   border-bottom: 1px solid #ddd;
   padding-block: .75rem;
 }
+
+.text-warning {
+  color: #cdaa36 !important;  
+}

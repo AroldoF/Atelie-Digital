@@ -51,7 +51,6 @@
             </button>
       </div>
 
-
         <div class="carousel-dots"></div>
 
     </div>
@@ -190,12 +189,7 @@
   </div>
 
   <div>
-      {% include 'products/partials/drop.html' with title='Descrição' content=variant.description|default:product.description %}
-
-      {% include 'products/partials/drop.html' with title='Como usar' content='Pode ser utilizado em festas, eventos e uso diário.' %}
-
-      {% include 'products/partials/drop.html' with title='Dimensões' content='15cm' %}
-
+      {% include 'products/partials/drop.html' with product=product variant=variant %}
   </div>
  
 </div>
@@ -232,7 +226,7 @@
       <article class="desktop-product-info">
         <div class="product-main-info">
           <h1 class="product-title">{{ product.name }}</h1>
-          {% include "products/partials/review.html" %}
+          {% include "products/partials/review.html" with mode="display" %}
 
             <p class="description-product" id="descriptionPreview">
             {{ variant.description|default:product.description }}           
@@ -383,7 +377,6 @@
     
 
    
-
     <div id="more-datails">
       {% include 'products/partials/drop.html' with product=product variant=variant %}
     </div>
@@ -402,13 +395,14 @@
 
     <div class="row pt-4">
           <div class="col-md-4 mb-4">
-              <h3 class="h4 fw-bold">Avaliações de clientes</h3>
+              <h3 class="h4 fw-bold" style="color: var(--color-primary-dark);">Avaliações de clientes</h3>
               
               <div class="d-flex align-items-center gap-3 my-3">
                   <span class="display-4 fw-bold text-dark">{{ rating_average|stringformat:".1f" }}</span>
                   <div class="rating-display-only">
-                      {% include "products/partials/review.html" %}
+                      {% include "products/partials/review.html" with mode="display" %}
                   </div>
+
               </div>
 
               <div class="rating-bars mt-4" id="rating-bars">
@@ -422,7 +416,7 @@
                         data-percentage="{{ item.percentage }}"
                         style="font-size: 0.85rem;"
                     >
-                        <!-- Texto esquerda -->
+                      
                         <div style="width: 70px;">
                             {{ item.star_number }} estrela{{ item.star_number|pluralize }}
                         </div>
@@ -446,19 +440,22 @@
 
 
               <button type="button" class="btn btn-light border w-100 fw-bold py-2 shadow-sm mt-4" data-bs-toggle="modal" data-bs-target="#modalAvaliar">
-                  Escrever uma avaliação
+                  Avaliar
               </button>
           </div>
 
           <div class="col-md-8">
-              <h4 class="h5 fw-bold mb-4 border-bottom pb-2">Principais avaliações</h4>
+              <h4 class="h5 fw-bold mb-4 border-bottom pb-2" style="color: var(--color-primary-dark);">Principais avaliações</h4>
               <div class="reviews-list">
                   {% for review in reviews %}
                       <div class="review-item mb-4 pb-4 border-bottom">
+                        <div class="d-flex justify-content-between ">
                           <div class="d-flex align-items-center gap-2 mb-2">
                               <span class="fw-bold">{{ review.user.username }}</span>
                           </div>
                           <div class="text-warning mb-2">{{ review.rating }} ★</div>
+                        </div>
+                          
                           <p class="text-dark">{{ review.comment }}</p>
                           <small class="text-muted">{{ review.created_at|date:"d/m/Y" }}</small>
                       </div>
@@ -484,8 +481,9 @@
             <p class="small text-muted mb-3">Sua nota para: <strong>{{ product.name }}</strong></p>
             
             <div id="modal-rating-area">
-                {% include "products/partials/review.html" %}
+                {% include "products/partials/review.html" with mode="interactive" %}
             </div>
+
             
             <input type="hidden" name="rating" id="rating-input" value="0">
 
