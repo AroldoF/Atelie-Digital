@@ -1,6 +1,8 @@
 {% extends "shared/base.html" %}
 {% load static %}
 
+
+
 {% block title %}Detalhe do produto{% endblock %}
 
 {% block style %}
@@ -455,6 +457,11 @@
                         <div class="d-flex justify-content-between ">
                           <div class="d-flex align-items-center gap-2 mb-2">
                               <span class="fw-bold">{{ review.user.username }}</span>
+                             {% if has_bought %}
+                                <span class="review-verified">
+                                    comprador verificado
+                                </span>
+                              {% endif %}
                           </div>
                           <div class="text-warning mb-2">{{ review.rating }} ★</div>
                         </div>

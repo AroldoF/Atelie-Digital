@@ -14,6 +14,8 @@ from .forms import Product_Form, Product_Variant_Form, Attributes_Form,ProductRe
 from .models import Product, ProductVariant, ProductReview
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg,Count
+from apps.utils.purchases import user_bought_product
+
 
 def detail_product(request, product_id):
 
@@ -22,6 +24,11 @@ def detail_product(request, product_id):
     # Lógica de variantes e disponibilidade
     variants = product.variants.filter(is_active=True)
     variant_id = request.GET.get('variant')
+
+    # Verifica se o usuário comprou o produto
+    # has_bought = user_bought_product(request.user, product) 
+    has_bought = True # para teste
+
     
     if variant_id:
         variant = product.variants.filter(product_variant_id=variant_id).first()
@@ -65,6 +72,7 @@ def detail_product(request, product_id):
         'rating_average': round(rating_average, 1),
         'reviews_count': reviews_count,
         'stars_composition': stars_composition,
+        'has_bought': has_bought,
     }
     
     return render(request, 'products/detail.html', context)
