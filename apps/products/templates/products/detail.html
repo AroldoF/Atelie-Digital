@@ -472,6 +472,18 @@
                   {% empty %}
                       <p class="text-muted italic text-center py-4">Ainda não há avaliações para este produto.</p>
                   {% endfor %}
+
+                  {% if has_more_reviews %}
+                  <div class="text-center mt-4">
+                    <a
+                      href="?reviews_limit={{ next_reviews_limit }}"
+                      class="btn btn-outline-secondary fw-bold"
+                    >
+                      Ver mais comentários
+                    </a>
+                  </div>
+                {% endif %}
+
               </div>
           </div>
     </div>

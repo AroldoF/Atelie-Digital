@@ -25,11 +25,6 @@ def detail_product(request, product_id):
     variants = product.variants.filter(is_active=True)
     variant_id = request.GET.get('variant')
 
-    # Verifica se o usuário comprou o produto
-    # has_bought = user_bought_product(request.user, product) 
-    has_bought = True # para teste
-
-    
     if variant_id:
         variant = product.variants.filter(product_variant_id=variant_id).first()
     else:
@@ -37,6 +32,13 @@ def detail_product(request, product_id):
 
     # Produto disponível se o pai estiver ativo e houver variante ativa
     is_available = product.is_active and variant is not None and variant.is_active
+
+
+
+    # Verifica se o usuário comprou o produto
+    # has_bought = user_bought_product(request.user, product) 
+    has_bought = True # para teste
+
 
     # Cálculos de Avaliações 
     reviews_data = product.reviews.aggregate(
@@ -62,6 +64,18 @@ def detail_product(request, product_id):
             'percentage': round(percentage, 1)
         })
 
+  
+    # LIMITE PROGRESSIVO DE COMENTÁRIOS
+   
+    DEFAULT_LIMIT = 3
+    reviews_limit = int(request.GET.get("reviews_limit", DEFAULT_LIMIT))
+
+    all_reviews_qs = product.reviews.all().order_by("-created_at")
+    reviews = all_reviews_qs[:reviews_limit]
+
+    has_more_reviews = reviews_limit < all_reviews_qs.count()
+    next_reviews_limit = reviews_limit + DEFAULT_LIMIT
+
     context = {
         'product': product,
         'variant': variant,
@@ -73,6 +87,10 @@ def detail_product(request, product_id):
         'reviews_count': reviews_count,
         'stars_composition': stars_composition,
         'has_bought': has_bought,
+        
+        # controle do botão
+        "has_more_reviews": has_more_reviews,
+        "next_reviews_limit": next_reviews_limit,
     }
     
     return render(request, 'products/detail.html', context)
