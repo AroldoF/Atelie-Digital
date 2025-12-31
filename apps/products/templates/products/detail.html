@@ -474,15 +474,16 @@
                   {% endfor %}
 
                   {% if has_more_reviews %}
-                  <div class="text-center mt-4">
-                    <a
-                      href="?reviews_limit={{ next_reviews_limit }}"
-                      class="btn btn-outline-secondary fw-bold"
-                    >
-                      Ver mais comentários
-                    </a>
-                  </div>
-                {% endif %}
+                    <div class="text-center mt-4">
+                      <a
+                        href="?reviews_limit={{ next_reviews_limit }}#reviews-section"
+                        class="btn btn-read-more fw-bold"
+                      >
+                        Ver mais comentários
+                      </a>
+                    </div>
+                  {% endif %}
+
 
               </div>
           </div>
@@ -516,7 +517,7 @@
         </div>
         
         <div class="modal-footer border-0">
-            <button type="button" class="btn btn-link text-muted" data-bs-dismiss="modal">cancelar</button>
+            <button type="button" class="btn btn-link text-muted btn-cancelar" data-bs-dismiss="modal">cancelar</button>
             <button type="submit" class="btn fw-bold px-4 btn-enviar-modal">Enviar</button>
         </div>
       </form>

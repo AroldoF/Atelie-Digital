@@ -444,9 +444,23 @@ button:disabled {
     background-color: var(--color-primary-light);
   }
   .btn-enviar-modal{
-    background-color: #cdaa36;
-    color: var(--color-text);
+    background-color: var(--color-green);
+    color: var(--color-background);
 
+  }
+  
+
+  .btn-cancelar{
+    text-decoration: none;
+  }
+
+  .btn-read-more{
+    border: solid 1px var(--color-primary-dark);
+    color: var(--color-primary-dark);
+  }
+  .btn-read-more:hover{
+    border: solid 1px var(--color-primary);
+    color: var(--color-primary);
   }
   
 
