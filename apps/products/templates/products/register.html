@@ -5,330 +5,6 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'products/css/register.css' %}">
-<style>
-  :root {
-    --color-primary-light: #fff9f5;
-    --secondary: #4361ee;
-    --success: #28a745;
-    --danger: #dc3545;
-    --border-radius: 12px;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    --transition: all 0.3s ease;
-  }
-
-  body {
-    background-color: #FAF8F5 !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  .product-container {
-    max-width: 1000px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-
-  .section-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--color-primary);
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--color-primary-light);
-  }
-  
-  .section-title svg {
-    width: 28px;
-    height: 28px;
-    background: rgba(212, 122, 0, 0.1);
-    border-radius: 8px;
-    padding: 4px;
-  }
-
-  .product-card {
-    background: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: 1.8rem;
-    margin-bottom: 1.8rem;
-    transition: var(--transition);
-    border: 1px solid #eaeaea;
-  }
-  
-  .product-card:hover {
-    box-shadow: 0 8px 20px rgba(212, 122, 0, 0.15);
-    transform: translateY(-3px);
-  }
-
-  .form-section {
-    margin-bottom: 2rem;
-  }
-
-  .info-hint {
-    background: rgba(212, 122, 0, 0.08);
-    border-left: 3px solid var(--color-primary);
-    padding: 1rem;
-    border-radius: 0 8px 8px 0;
-    margin: 1.2rem 0;
-    font-size: 0.95rem;
-    color: #5a3921;
-  }
-  
-  .info-hint strong {
-    color: var(--color-primary-dark);
-  }
-
-  /* Upload de imagem melhorado */
-  .upload-container {
-    margin: 1.5rem 0;
-  }
-  
-  .upload-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed var(--color-primary);
-    background-color: var(--color-primary-light);
-    border-radius: var(--border-radius);
-    padding: 2.5rem;
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-    min-height: 200px;
-  }
-  
-  .upload-box:hover {
-    background-color: #fff3ea;
-    border-color: var(--color-primary-dark);
-  }
-  
-  .upload-box.dragover {
-    background-color: rgba(212, 122, 0, 0.15);
-    border-style: solid;
-  }
-  
-  .upload-content {
-    text-align: center;
-    color: #a14d00;
-    transition: var(--transition);
-  }
-  
-  .upload-box:hover .upload-content {
-    opacity: 0.7;
-  }
-  
-  .upload-content svg {
-    width: 48px;
-    height: 48px;
-    fill: var(--color-primary);
-    margin-bottom: 12px;
-    transition: var(--transition);
-  }
-  
-  .upload-box:hover .upload-content svg {
-    transform: scale(1.1);
-  }
-  
-  .upload-content p {
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin: 0 0 8px 0;
-  }
-  
-  .upload-subtext {
-    font-size: 0.9rem;
-    color: var(--color-primary-dark);
-    opacity: 0.8;
-  }
-  
-  .upload-preview {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    display: none;
-  }
-  
-  .preview-img {
-    max-width: 100%;
-    max-height: 150px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-  }
-  
-  .remove-preview {
-    background: var(--danger);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: var(--transition);
-  }
-  
-  .remove-preview:hover {
-    background: #c82333;
-    transform: scale(1.1);
-  }
-
-  /* Atributos */
-  .attribute-list {
-    margin-top: 1.5rem;
-  }
-  
-  .attribute-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 0.8rem 1.2rem;
-    margin-bottom: 0.8rem;
-    transition: var(--transition);
-  }
-  
-  .attribute-item:hover {
-    border-color: var(--color-primary);
-    background: rgba(212, 122, 0, 0.05);
-  }
-  
-  .attribute-content {
-    flex: 1;
-  }
-  
-  .attribute-content strong {
-    color: var(--color-primary);
-  }
-  
-  .remove-btn {
-    background: none;
-    border: 1px solid var(--danger);
-    color: var(--danger);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.85rem;
-    padding: 0;
-    transition: var(--transition);
-    margin-left: 10px;
-  }
-  
-  .remove-btn:hover {
-    background: var(--danger);
-    color: white;
-    transform: scale(1.1);
-  }
-
-  /* Botão de ação */
-  .submit-section {
-    text-align: center;
-    margin-top: 1.5rem;
-  }
-  
-  .btn-submit {
-    border: none;
-    padding: 1rem 2.8rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: var(--transition);
-    min-width: 280px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .btn-submit:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(212, 122, 0, 0.4);
-  }
-  
-  .btn-submit:active {
-    transform: translateY(0);
-  }
-  
-  .btn-submit i {
-    font-size: 1.2rem;
-  }
-
-  /* Transições */
-  .transition-box {
-    overflow: hidden;
-    transition: height 0.35s ease, opacity 0.35s ease;
-  }
-  
-  .transition-box.open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .product-card {
-      padding: 1.5rem;
-    }
-    
-    .btn-submit {
-      min-width: 100%;
-      width: 100%;
-    }
-    
-    .upload-box {
-      padding: 1.8rem;
-      min-height: 180px;
-    }
-    
-    .section-title {
-      flex-direction: column;
-      text-align: center;
-      gap: 8px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .btn-submit {
-      padding: 0.9rem 1.5rem;
-      font-size: 1rem;
-    }
-    
-    .upload-content p {
-      font-size: 1rem;
-    }
-  }
-  .transition-box {
-  overflow: hidden;
-  height: 0;
-  transition: height 0.3s ease;
-}
-
-.transition-box.open {
-  /* permite altura natural após a animação */
-  height: auto;
-}
-
-</style>
 {% endblock style %}
 
 {% block main %}
@@ -336,394 +12,398 @@
   <div class="text-center mb-4">
     <h1 class="display-5 fw-bold mb-2" style="color: var(--color-primary);">Cadastro do Produto</h1>
     <p class="text-muted mb-0">Crie e personalize seu produto com variantes e atributos</p>
+    {{ form.non_field_errors }}
   </div>
 
   <form method="post" enctype="multipart/form-data" id="productForm">
     {% csrf_token %}
-    
-    <!-- Informações do Produto -->
-    <div class="product-card">
-      <h2 class="section-title">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-        </svg>
-        Informações do Produto
-      </h2>
-      
-      <div class="g-4">
-        <div class="">
-          {{ form_products.name|as_crispy_field }}
-        </div>
-        <div class="">
-          {{ form_products.description|as_crispy_field }}
-        </div>
-      </div>
-      
+
+    <!-- -- PRODUCT FORM -- -->
+    <div class="product-card mb-4">
+      <h2 class="section-title">Informações do Produto</h2>
+      {{ product_form.name|as_crispy_field }}
+      {{ product_form.description|as_crispy_field }}
+
       <div class="upload-container mt-4">
-        <label for="id_image" class="upload-box" id="imageUploadBox">
+        <label class="upload-box" id="imageUploadBox">
           <div class="upload-content" id="imageUploadContent">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-              <path d="M8 40q-1.2 0-2.1-.9Q5 38.2 5 37V11q0-1.2.9-2.1Q6.8 8 8 8h32q1.2 0 2.1.9.9.9.9 2.1v26q0 1.2-.9 2.1-.9.9-2.1.9Zm0-3h32V11H8v26Zm3-4h26l-8.65-11.55-6.75 8.45-4.9-6.5Z"/>
-            </svg>
-            <p>Clique para fazer upload da imagem</p>
+            <p id="imageUploadText">Clique para fazer upload da imagem</p>
             <p class="upload-subtext">Formatos suportados: JPG, PNG, WEBP (máx. 5MB)</p>
           </div>
-                   {{ form_products.image }}
+          {{ product_form.image }}
         </label>
       </div>
-      
-      <div class="info-hint">
-        <strong>Dica:</strong> Produtos com imagens de alta qualidade têm 35% mais chances de conversão!
+      {% if product_form.image.errors %}
+        <div class="text-danger">
+            {% for error in product_form.image.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+
+    <!-- -- VARIANT FORMSET -- -->
+    <div class="product-card mb-4">
+      <h2 class="section-title">Variantes do Produto</h2>
+
+      {# management form é obrigatório #}
+      {{ variant_formset.management_form }}
+
+      <div id="variantsContainer">
+        {# cada form do formset vira um card de variante #}
+        {% for form in variant_formset.forms %}
+          <div class="card variant-card mb-3 p-3" data-index="{{ forloop.counter0 }}">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 class="mb-0">Variante {{ forloop.counter }}</h5>
+              <div>
+                <button type="button" class="btn btn-sm btn-danger remove-variant">Remover</button>
+              </div>
+            </div>
+
+            <div class="variant-fields mt-2">
+              {% comment %} escondidos (id, DELETE etc) {% endcomment %}
+              {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+              {% endfor %}
+
+              {% for field in form.visible_fields %}
+                <div class="mb-2">
+                  {{ field|as_crispy_field }}
+                </div>
+              {% endfor %}
+            </div>
+
+            <hr>
+
+            <!-- ATRIBUTOS desta variante -->
+            <h6 class="mb-0">Atributos</h6>
+            <div class="attribute-list mb-2">
+              
+            </div>
+
+            {# hidden onde o JS vai gravar o JSON de atributos desta variante #}
+            <input type="hidden" class="variant-attributes-json"
+                   name="variants-{{ forloop.counter0 }}-attributes" value="">
+
+            <div class="d-flex gap-2 mt-2">
+              <button type="button" class="btn btn-sm btn-secondary add-attribute">+ Atributo</button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- template para clonar uma nova variante (empty_form do formset) -->
+      <template id="emptyVariantTemplate">
+        <div class="card variant-card mb-3 p-3" data-index="__prefix__">
+          <div class="d-flex justify-content-between align-items-start">
+            <h5 class="mb-0">Variante __num__</h5>
+            <div>
+              <button type="button" class="btn btn-sm btn-danger remove-variant">Remover</button>
+            </div>
+          </div>
+
+          <div class="variant-fields mt-2">
+            {% for hidden in variant_formset.empty_form.hidden_fields %}
+              {{ hidden.as_widget }}
+            {% endfor %}
+
+            {% for field in variant_formset.empty_form.visible_fields %}
+              <div class="mb-2">
+                {{ field|as_crispy_field }}
+              </div>
+            {% endfor %}
+          </div>
+
+          <hr>
+          <h6>Atributos</h6>
+          <div class="attribute-list mb-2"></div>
+
+          <input type="hidden" class="variant-attributes-json"
+                 name="variants-__prefix__-attributes" value="">
+
+          <div class="d-flex gap-2 mt-2">
+            <button type="button" class="btn btn-sm btn-secondary add-attribute">+ Atributo</button>
+          </div>
+        </div>
+      </template>
+
+      <div class="mt-3">
+        <button type="button" id="addVariantButton" class="btn btn-secondary">
+          <i class="bi bi-plus-circle me-1"></i> Adicionar nova variante
+        </button>
+      </div>
+
+      <input type="hidden" name="deleted_variants" id="deletedVariantsInput" value="">
+    </div>
+
+    <template id="attributeTemplate">
+  <div class="row g-2 mb-2 attribute-row">
+    <div class="col-md-5 align-items-center">
+      <div class="attr-select-wrapper">
+        {{ attribute_variant.attribute|as_crispy_field }}
       </div>
     </div>
-    
-    <!-- Variantes do Produto -->
-    <div class="product-card">
-      <h2 class="section-title">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-        Variantes do Produto
-      </h2>
-      
-      {{ form_variant|crispy }}
+    <div class="col-md-6">
+      <div class="attr-value-wrapper">
+        {{ attribute_variant.value|as_crispy_field }}
+      </div>
     </div>
-    
-    <!-- Atributos das Variantes -->
-    <div class="product-card">
-      <h2 class="section-title">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"></path>
-          <path d="M12 7v5l4 4"></path>
-        </svg>
-        Atributos das Variantes
-      </h2>
-      
-      <div class="row g-3 mb-4 align-items-center">
-        <div class="col-md-4">
-          {{ form_attribute.attribute|as_crispy_field }}
-        </div>
-        <div class="col-md-8">
-          {{ form_attribute.value|as_crispy_field }}
-        </div>
-        <div class="col-md-4 col-12 d-flex align-items-end">
-          <button type="button" id="addButton" class="btn btn-secondary w-100 py-2 fw-medium">
-            <i class="bi bi-plus-circle me-1"></i> Adicionar
-          </button>
-        </div>
-      </div>
-      
-      <div class="form-text text-muted mb-3">
-        <i class="bi bi-lightbulb me-1"></i> Adicione características específicas como cor, material, tamanho, etc.
-      </div>
-      
-      <div class="attribute-list" id="attributeList">
-        <!-- Os atributos serão adicionados aqui pelo JavaScript -->
-      </div>
-      
-      <input type="hidden" name="attributes_json" id="attributesData">
+    <div class="col-md-1 d-flex align-items-center">
+      <button type="button" class="btn btn-danger btn-sm remove-attribute">×</button>
     </div>
-    
-    <!-- Botão de Submissão -->
-    <div class="submit-section">
+  </div>
+</template>
+
+    <input type="hidden" name="variants_json" id="variantsJsonInput">
+
+    <!-- SUBMIT -->
+    <div class="submit-section mt-4">
       <button type="submit" class="btn btn-submit btn-primary">
         <i class="bi bi-check2-circle"></i> Cadastrar Produto
       </button>
     </div>
   </form>
 </div>
+
+<style>
+  input[type="file"] { position: absolute; opacity: 0; width: 0; height: 0; }
+  .variant-card.deleted { display: none; opacity: 0.4; }
+  .attribute-row { margin-bottom: 8px; }
+</style>
+
+<script>
+
+document.getElementById('productForm').addEventListener('submit', function (e) {
+  const variantsArray = [];
+
+  // 1. Percorrer cada card de variante
+  document.querySelectorAll('.variant-card').forEach(card => {
+    
+   const attributes = [];
+
+// Pegamos todas as linhas de atributo do card
+card.querySelectorAll('.attribute-row').forEach(row => {
+    
+    // Em vez de classe, buscamos diretamente pela tag que o Django gerou
+    const selectEl = row.querySelector('select'); // O campo 'attribute'
+    const inputEl = row.querySelector('input[type="text"]'); // O campo 'value'
+
+    if (selectEl && inputEl) {
+        const id = selectEl.value;
+        const val = inputEl.value;
+
+        if (id && val) {
+            attributes.push({ 
+                attribute_id: id, 
+                value: val 
+            });
+        }
+    }
+});
+
+// TESTE: Mostra no console se pegou algo
+console.log("Atributos capturados:", attributes);
+
+    // 3. Capturar os campos da variante (SKU, Preço, etc)
+    // Usamos seletores que buscam o final do nome do input gerado pelo Django
+    const variantData = {
+      sku: card.querySelector('[name$="-sku"]').value,
+      price: card.querySelector('[name$="-price"]').value,
+      type: card.querySelector('[name$="-type"]').value,
+      stock: card.querySelector('[name$="-stock"]')?.value || null,
+      production_days: card.querySelector('[name$="-production_days"]')?.value || null,
+      is_customizable: card.querySelector('[name$="-is_customizable"]')?.checked || false,
+      attributes: attributes // Insere o array de atributos aqui dentro
+    };
+
+    variantsArray.push(variantData);
+  });
+
+  // 4. Transformar o array completo em string JSON e colocar no input escondido
+  document.getElementById('variantsJsonInput').value = JSON.stringify(variantsArray);
+  
+  // O formulário seguirá o envio normal, levando o product_form e o variants_json
+});
+(function () {
+  const prefix = 'variants'; // garanta que o formset no view use prefix='variants'
+  const totalFormsInput = document.querySelector(`input[name="${prefix}-TOTAL_FORMS"]`);
+  const initialFormsInput = document.querySelector(`input[name="${prefix}-INITIAL_FORMS"]`);
+  const variantsContainer = document.getElementById('variantsContainer');
+  const addVariantBtn = document.getElementById('addVariantButton');
+  const emptyTemplateHTML = document.getElementById('emptyVariantTemplate').innerHTML;
+  const deletedInput = document.getElementById('deletedVariantsInput');
+
+  // util
+  function getTotalForms() { return parseInt(totalFormsInput.value, 10); }
+  function setTotalForms(v) { totalFormsInput.value = String(v); }
+  function getInitialForms() { return parseInt(initialFormsInput.value, 10); }
+  function setInitialForms(v) { initialFormsInput.value = String(v); }
+
+  // cria um novo card a partir do empty_form substituindo __prefix__
+  function renderEmptyForm(index) {
+    return emptyTemplateHTML
+      .replace(/__prefix__/g, index)
+      .replace(/__num__/g, (index + 1));
+  }
+
+  // adiciona uma nova variante (clona empty_form)
+  function addVariant() {
+    const index = getTotalForms();
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = renderEmptyForm(index);
+    const card = wrapper.firstElementChild;
+    // marca como "nova" (não inicial)
+    card.dataset.initial = 'false';
+    card.dataset.index = index;
+    variantsContainer.appendChild(card);
+    setTotalForms(index + 1);
+    // opcional: focar no novo card
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // adiciona um atributo ao card (clona template)
+  function addAttributeToCard(card, attributeId='', value='') {
+    const tpl = document.getElementById('attributeTemplate');
+    const node = tpl.content.cloneNode(true);
+    // preencher valores se fornecidos
+    if (attributeId) {
+      node.querySelector('.attribute-select').value = attributeId;
+    }
+    if (value) {
+      node.querySelector('.attribute-value').value = value;
+    }
+    card.querySelector('.attribute-list').appendChild(node);
+  }
+
+  // serializa atributos do card para o hidden JSON
+  function serializeAttributes(card) {
+    const arr = [];
+    card.querySelectorAll('.attribute-row').forEach(row => {
+      const attr = row.querySelector('[data-attr="attribute"]').value;
+      const val = row.querySelector('[data-attr="value"]').value;
+      if (attr && val) {
+        arr.push({ attribute_id: attr, value: val });
+      }
+    });
+    const hidden = card.querySelector('.variant-attributes-json');
+    if (hidden) hidden.value = JSON.stringify(arr);
+  }
+
+  // reindexa todos os cards para ficarem 0..N-1 e corrige nomes dos inputs
+  function reindexAll() {
+    const cards = Array.from(variantsContainer.querySelectorAll('.variant-card'));
+    cards.forEach((card, newIndex) => {
+      const oldIndex = card.dataset.index;
+      card.dataset.index = newIndex;
+      // atualiza título
+      const title = card.querySelector('h5');
+      if (title) title.textContent = `Variante ${newIndex + 1}`;
+      // atualizar todos os elementos com attribute name
+      card.querySelectorAll('[name]').forEach(el => {
+        // substitui o primeiro ocorrência variants-\d+- por variants-newIndex-
+        el.name = el.name.replace(new RegExp(`${prefix}-\\d+-`), `${prefix}-${newIndex}-`);
+      });
+      // também atualiza any id attributes (opcional)
+      card.querySelectorAll('[id]').forEach(el => {
+        el.id = el.id.replace(new RegExp(`${prefix}-\\d+-`), `${prefix}-${newIndex}-`);
+      });
+      // atualizar hidden JSON name se existir
+      const jsonHidden = card.querySelector('.variant-attributes-json');
+      if (jsonHidden) jsonHidden.name = `${prefix}-${newIndex}-attributes`;
+    });
+    // atualizar TOTAL_FORMS
+    setTotalForms(cards.length);
+    // ajustar INITIAL_FORMS para quantidade de cards que são iniciais
+    const remainingInitials = cards.filter(c => c.dataset.initial === 'true').length;
+    setInitialForms(remainingInitials);
+  }
+
+  // remover variante:
+  // - se for existente (data-initial=true e possui data-variant-id) -> registrar id em deleted_variants
+  // - remover card DOM (então reindexar todos)
+  function removeVariantCard(card) {
+    const variantId = card.dataset.variantId;
+    const isInitial = card.dataset.initial === 'true';
+    if (isInitial && variantId) {
+      // registra para backend remover
+      const current = deletedInput.value ? JSON.parse(deletedInput.value) : [];
+      current.push(variantId);
+      deletedInput.value = JSON.stringify(current);
+    }
+    // remove o card do DOM (novo ou existente) e reindexa
+    card.remove();
+    reindexAll();
+  }
+
+  // evento delegation
+  document.addEventListener('click', function (e) {
+    const addAttrBtn = e.target.closest('.add-attribute');
+    if (addAttrBtn) {
+      const card = addAttrBtn.closest('.variant-card');
+      addAttributeToCard(card);
+      return;
+    }
+
+    const removeAttrBtn = e.target.closest('.remove-attribute');
+    if (removeAttrBtn) {
+      removeAttrBtn.closest('.attribute-row').remove();
+      return;
+    }
+
+    const removeVariantBtn = e.target.closest('.remove-variant');
+    if (removeVariantBtn) {
+      const card = removeVariantBtn.closest('.variant-card');
+      // confirmação opcional
+      removeVariantCard(card);
+      return;
+    }
+  });
+
+  // adicionar nova variante
+  addVariantBtn.addEventListener('click', function () {
+    addVariant();
+  });
+
+  // antes de submeter: serializa atributos e reindex para garantir names corretos
+  document.getElementById('productForm').addEventListener('submit', function (e) {
+    // serializar atributos de cada card
+    document.querySelectorAll('.variant-card').forEach(card => {
+      serializeAttributes(card);
+    });
+    // reindex (por segurança)
+    reindexAll();
+    // OK: form será submetido
+  });
+
+  // init: marca data-initial/data-variant-id se houver input id no card
+  (function initExisting() {
+    const cards = Array.from(variantsContainer.querySelectorAll('.variant-card'));
+    cards.forEach((card, idx) => {
+      // tenta encontrar campo id dentro do card: name = variants-<idx>-id
+      const idInput = card.querySelector(`input[name^="${prefix}-"][name$="-id"]`);
+      if (idInput && idInput.value) {
+        card.dataset.variantId = idInput.value;
+        card.dataset.initial = 'true';
+      } else {
+        card.dataset.initial = 'false';
+      }
+      // garantir índice coerente
+      card.dataset.index = idx;
+      // se quiser popular atributos existentes por variante (edição), adicione aqui:
+      // const attrsJson = card.dataset.attrs; if (attrsJson) parse e chamar addAttributeToCard(...)
+    });
+    // garantir TOTAL_FORMS coerente (caso backend renderize diferente)
+    setTotalForms(cards.length);
+  })();
+
+})();
+</script>
 {% endblock main %}
+
+
+
 
 {% block scripts %}
 <script src="{% static 'products/js/register.js' %}"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // --- CORREÇÃO DO UPLOAD DE IMAGEM ---
-    const imageInput = document.getElementById("id_image");
-    const imagePreview = document.getElementById("imagePreview");
-    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
-    const imageUploadContent = document.getElementById("imageUploadContent");
-    const imageUploadBox = document.getElementById("imageUploadBox");
-    //const removeImagePreview = document.getElementById("removeImagePreview");
-    
-    if (imageInput) {
-      // Preview da imagem
-      imageInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          
-          reader.onload = function(event) {
-            imagePreview.src = event.target.result;
-            imagePreviewContainer.style.display = 'flex';
-            imageUploadContent.style.display = 'none';
-          }
-          
-          reader.readAsDataURL(file);
-        }
-      });
-      
-      // Remover preview
-      /*removeImagePreview.addEventListener('click', function() {
-        imageInput.value = '';
-        imagePreviewContainer.style.display = 'none';
-        imageUploadContent.style.display = 'flex';
-        imagePreview.src = '';
-      });*/
-      
-      // Drag and drop
-      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        imageUploadBox.addEventListener(eventName, preventDefaults, false);
-      });
-      
-      function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      
-      ['dragenter', 'dragover'].forEach(eventName => {
-        imageUploadBox.addEventListener(eventName, highlight, false);
-      });
-      
-      ['dragleave', 'drop'].forEach(eventName => {
-        imageUploadBox.addEventListener(eventName, unhighlight, false);
-      });
-      
-      function highlight() {
-        imageUploadBox.classList.add('dragover');
-      }
-      
-      function unhighlight() {
-        imageUploadBox.classList.remove('dragover');
-      }
-      
-      imageUploadBox.addEventListener('drop', handleDrop, false);
-      
-      function handleDrop(e) {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        
-        if (files.length) {
-          imageInput.files = files;
-          imageInput.dispatchEvent(new Event('change'));
-        }
-      }
-      
-      // Reset no formulário
-      document.getElementById('productForm').addEventListener('reset', function() {
-        setTimeout(() => {
-          imagePreviewContainer.style.display = 'none';
-          imageUploadContent.style.display = 'flex';
-          imagePreview.src = '';
-        }, 100);
-      });
-    }
-  
-    // --- ATRIBUTOS DINÂMICOS ---
-    const attributeInput = document.querySelector('#id_attribute_name');
-    const valueInput = document.querySelector('#id_attribute_value');
-    const addButton = document.querySelector('#addButton');
-    const attributeList = document.querySelector('#attributeList');
-    const attributesData = document.querySelector('#attributesData');
-    const formAttribute = document.querySelector('form');
-    
-    let attributes = [];
-    
-    if (addButton && attributeInput && valueInput) {
-      addButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const attribute_id = attributeInput.value.trim();
-        const attribute_name = attributeInput.options[attributeInput.selectedIndex].text;
-        const value = valueInput.value.trim();
-        
-        let errorMsg = formAttribute.querySelector('.text-danger');
-        
-        if (!attribute_id || !value) {
-          if (!errorMsg) {
-            errorMsg = document.createElement('div');
-            errorMsg.className = 'text-danger mt-2';
-            formAttribute.insertBefore(errorMsg, addButton);
-            errorMsg.textContent = 'Por favor, selecione um atributo e preencha seu valor.';
-          }
-          else {
-            errorMsg.remove();
-          }
-          setTimeout(() => {
-            if (errorMsg) errorMsg.remove();
-          }, 3000);
-          return;
-        }
-        
-        // Remover mensagem de erro se existir
-        if (errorMsg) errorMsg.remove();
-        
-        // Criar objeto do atributo
-        const newItem = {
-          id: attribute_id,
-          name: attribute_name,
-          value: value
-        };
-        
-        attributes.push(newItem);
-        
-        // Atualizar campo hidden
-        if (attributesData) {
-          attributesData.value = JSON.stringify(attributes);
-        }
-        
-        // Criar elemento visual
-        const attributeItem = document.createElement('div');
-        attributeItem.className = 'attribute-item';
-        attributeItem.innerHTML = `
-          <div class="attribute-content">
-            <strong>${attribute_name}:</strong> ${value}
-          </div>
-          <button type="button" class="remove-btn" data-index="${attributes.length - 1}">✕</button>
-        `;
-        
-        // Adicionar ao DOM
-        attributeList.appendChild(attributeItem);
-        
-        // Limpar campos
-        attributeInput.value = '';
-        valueInput.value = '';
-        
-        // Focar no próximo campo relevante
-        attributeInput.focus();
-        
-        // Adicionar evento de remoção
-        const removeBtn = attributeItem.querySelector('.remove-btn');
-        removeBtn.addEventListener('click', function() {
-          const index = parseInt(this.getAttribute('data-index'));
-          attributes.splice(index, 1);
-          
-          // Re-indexar os atributos restantes
-          attributes.forEach((attr, idx) => {
-            const item = attributeList.children[idx];
-            if (item) {
-              const btn = item.querySelector('.remove-btn');
-              if (btn) btn.setAttribute('data-index', idx);
-            }
-          });
-          
-          // Atualizar campo hidden
-          if (attributesData) {
-            attributesData.value = JSON.stringify(attributes);
-          }
-          
-          // Remover elemento visual
-          attributeItem.remove();
-        });
-      });
-      
-      // Suporte para Enter nos campos
-      attributeInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          valueInput.focus();
-        }
-      });
-      
-      valueInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          addButton.click();
-        }
-      });
-    }
-    
-    // --- FEEDBACK VISUAL NO ENVIO ---
-    const submitButton = document.querySelector('.btn-submit');
-    if (submitButton) {
-      submitButton.addEventListener('click', function() {
-        const originalText = this.innerHTML;
-        this.innerHTML = `
-          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-          Processando...
-        `;
-        this.disabled = true;
-        
-        // Reverter após 3 segundos (para testes)
-        setTimeout(() => {
-          this.innerHTML = originalText;
-          this.disabled = false;
-        }, 3000);
-      });
-    }
-  });
-
-  // pega os elementos
-const days = document.querySelector('#div_id_production_days');
-const stock = document.querySelector('#div_id_stock');
-const customizable = document.querySelector('#div_id_is_customizable');
-const radios = document.querySelectorAll('input[name="type"]');
-
-// aplica classe base
-[days, stock, customizable].forEach(el => {
-  if (el) el.classList.add('transition-box');
-});
-
-function expand(el) {
-  if (!el) return;
-
-  // inicia a partir da altura atual (0 ou a altura fechada)
-  el.style.height = '0px';
-  el.style.display = 'block';
-
-  // força reflow
-  void el.offsetHeight;
-
-  // anima para a altura real
-  const finalHeight = el.scrollHeight + 'px';
-  el.style.height = finalHeight;
-
-  // depois da animação → libera altura dinâmica
-  el.addEventListener('transitionend', function handler() {
-    el.classList.add('open');
-    el.style.height = 'auto';
-    el.removeEventListener('transitionend', handler);
-  });
-}
-
-function collapse(el) {
-  if (!el) return;
-
-  // pega altura atual (auto → converter para px)
-  const startHeight = el.scrollHeight + 'px';
-
-  el.style.height = startHeight;
-  el.classList.remove('open');
-
-  // força reflow
-  void el.offsetHeight;
-
-  // anima para 0px        
-  el.style.height = '0px';
-
-  el.addEventListener('transitionend', function handler() {
-    el.style.display = 'none';
-    el.removeEventListener('transitionend', handler);
-  });
-}
-
-function updateVisibility() {
-  const checked = document.querySelector('input[name="type"]:checked');
-
-  if (checked && checked.value === 'DEMAND') {
-    expand(days);
-    collapse(stock);
-    expand(customizable);
-  } else {
-    collapse(days);
-    expand(stock);
-    collapse(customizable);
-  }
-}
-
-radios.forEach(radio => radio.addEventListener('change', updateVisibility));
-updateVisibility();
-
-</script>
 {% endblock scripts %}
 

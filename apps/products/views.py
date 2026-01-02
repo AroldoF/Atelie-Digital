@@ -20,13 +20,17 @@ from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from decimal import Decimal
+from django.db import transaction
+from .forms import Product_Form, Product_Variant_Form, Attributes_Form, VarianteInlineFormSet
+from .models import Product, Favorite, ProductVariant, VariantAttribute, Attribute
+from django.http import HttpResponse, JsonResponse
+import json
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
     "madeira": ["madeira","caixa", "caixinha", "madeira"],
     "ceramica": ["cerâmica","vaso", "caneca", "prato"],
 }
-
 
 def detail_product(request, product_id):
 
@@ -187,16 +191,97 @@ def search_product(request):
     return render(request, "products/search.html",{ "query": query,"products_page": products_page, "active_filter": active_filter,})
 
 
-class Product_Register_View(PermissionRequiredMixin, View):
+class ProductCreateView(PermissionRequiredMixin, View):
     permission_required = 'products.add_product'
 
     def get(self, request):
         context = {
-            'form_products': Product_Form(),
-            'form_variant': Product_Variant_Form(),
-            'form_attribute': Attributes_Form()
+            "product_form": Product_Form(prefix="product"),
+            "variant_formset": VarianteInlineFormSet(
+                instance=None,
+                prefix="variants"
+            ),
+            # Usado APENAS como ponte para Attribute
+            "attribute_variant": Attributes_Form(),
         }
-        return render(request, 'products/register.html', context)
+        return render(request, "products/register.html", context)
+
+    def post(self, request):
+        product_form = Product_Form(request.POST, request.FILES, prefix="product")
+        variants_json = request.POST.get("variants_json")
+
+        if not product_form.is_valid():
+            return render(
+                request,
+                "products/register.html",
+                self._context_with_errors(product_form)
+            )
+        if not variants_json:
+            product_form.add_error(None, "Adicione ao menos uma variante.")
+            return render(
+                request,
+                "products/register.html",
+                self._context_with_errors(product_form)
+            )
+
+        try:
+            variants_data = json.loads(variants_json)
+        except json.JSONDecodeError:
+            product_form.add_error(None, "Dados das variantes inválidos.")
+            return render(
+                request,
+                "products/register.html",
+                self._context_with_errors(product_form)
+            )
+
+        store = request.user.stores.first()
+        if not store:
+            product_form.add_error(None, "Usuário não possui loja cadastrada.")
+            return render(
+                request,
+                "products/register.html",
+                self._context_with_errors(product_form)
+            )
+
+        with transaction.atomic():
+            # 1️⃣ Produto
+            product = product_form.save(commit=False)
+            product.store = store
+            product.save()
+
+            # 2️⃣ Variantes + atributos
+            for variant_data in variants_data:
+                variant = ProductVariant.objects.create(
+                    product=product,
+                    sku=variant_data.get("sku"),
+                    price=variant_data.get("price"),
+                    type=variant_data.get("type"),
+                    stock=variant_data.get("stock"),
+                    production_days=variant_data.get("production_days"),
+                    is_customizable=variant_data.get("is_customizable", False),
+                )
+
+                for attr in variant_data.get("attributes", []):
+                    attribute = Attribute.objects.get(pk=attr["attribute_id"])
+
+                    VariantAttribute.objects.create(
+                        product_variant=variant,
+                        attribute=attribute,
+                        value=attr["value"]
+                    )
+
+        return redirect("index")
+
+    def _context_with_errors(self, product_form):
+        """Garante que o GET seja refeito corretamente após erro"""
+        return {
+            "product_form": product_form,
+            "variant_formset": VarianteInlineFormSet(
+                instance=None,
+                prefix="variants"
+            ),
+            "attribute_variant": Attributes_Form(),
+        }
 
 
 @require_POST
@@ -215,11 +300,9 @@ def toggle_favorite(request, product_id):
     # Redireciona de volta para a mesma página
     response["HX-Redirect"] = request.META.get("HTTP_REFERER", "/")
     return response
-    return redirect(request.META.get('HTTP_REFERER', '/'))
-
 
         
-@login_required(login_url="accounts:login")
+@login_required
 def submit_review(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     variant_id = request.GET.get("variant")
