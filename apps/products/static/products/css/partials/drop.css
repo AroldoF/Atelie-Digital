@@ -1,5 +1,5 @@
 .drop {
-  border-bottom: 1px solid #d9d9d9;
+ 
   padding-block: .5rem;
 }
 
@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 .dropTitle{
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .dropIcon {
@@ -33,8 +33,43 @@
   max-height: 300px;
 }
 
+.dropContent {
+  padding: .5rem 0;
+}
+
+.dropSection {
+  margin-bottom: 1rem;
+}
+
+.dropSection h4 {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-bottom: .25rem;
+  color: var(--color-primary);
+}
+
+.dropSection p {
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.specList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.specList li {
+  font-size: var(--font-size-sm);
+  padding: .15rem 0;
+}
+
+
+
 @media screen and (max-width: 425px){
   .drop,.dropTitle{
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
   }
 }
+

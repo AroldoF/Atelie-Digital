@@ -1,5 +1,5 @@
 from django import forms
-from .models import ProductVariant, Product, VariantAttribute
+from .models import ProductVariant, Product, VariantAttribute, ProductReview
 
 class Product_Form(forms.ModelForm):
     class Meta: 
@@ -65,5 +65,18 @@ class Attributes_Form(forms.ModelForm):
         widgets = {
             'value': forms.TextInput (attrs={
                 'placeholder': 'Digite o valor do atributo'
+            })
+        }
+
+
+class ProductReviewForm(forms.ModelForm):
+    class Meta:
+        model = ProductReview
+        fields = ["rating", "comment"]
+        widgets = {
+            "rating": forms.HiddenInput(),
+            "comment": forms.Textarea(attrs={
+                "rows": 4,
+                "placeholder": "Escreva seu comentário..."
             })
         }

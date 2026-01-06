@@ -4,30 +4,24 @@
 <link rel="stylesheet" href="{% static 'products/css/partials/review.css' %}">
 {% endblock style %}
 
-
-<div class="rating-component">
-
+<div class="rating-component" data-mode="{{ mode|default:'display' }}">
     <ul id="review">
+        {% for i in "12345" %}
         <li class="liStar">
-            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação" class="imgStar">
+            <img
+              src="{% static 'products/media/icons/star.svg' %}"
+              class="imgStar"
+              data-value="{{ forloop.counter }}"
+              alt="Estrela {{ forloop.counter }}"
+            >
         </li>
-        <li class="liStar">
-            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação"
-            class="imgStar">
-        </li>
-        <li class="liStar">
-            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação 3"class="imgStar">
-        </li>
-        <li class="liStar">
-            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação 4" class="imgStar">
-        </li>
-        <li class="liStar">
-            <img src="{% static 'products/media/icons/star.svg'%}" alt="Estrela de Avaliação 5" class="imgStar">
-        </li>
+        {% endfor %}
     </ul>
 
-    <p class="review-count">(120)</p>
+    <p class="review-count">{{ reviews.count }} avaliações</p>
 </div>
+
+
 
 
 {% block scripts %}
