@@ -175,16 +175,39 @@ renderStaticRatings();
     });
   }
   initDesktopGallery();
-
-
-  /* QUANTIDADE */
-  window.changeQuantity = function (delta) {
-    const input = document.getElementById("quantity");
-    if (!input) return;
-
-    let value = parseInt(input.value) || 1;
-    value = Math.max(1, Math.min(20, value + delta));
-    input.value = value;
-  };
-
+  
+  
+  
 });
+
+
+// Controle de quantidade do produto baseado no estoque.
+window.changeQuantity = function (delta) {
+  const input = document.getElementById("quantity");
+  const btnPlus = document.getElementById("qty-plus");
+  const btnMinus = document.getElementById("qty-minus");
+
+  if (!input) return;
+
+  const min = parseInt(input.min) || 1;
+  const maxAttr = input.getAttribute("max");
+  const max = maxAttr ? parseInt(maxAttr) : Infinity;
+
+  let value = parseInt(input.value) || min;
+  const nextValue = value + delta;
+
+  // Não deixa ultrapassar o estoque
+  if (nextValue > max) {
+    btnPlus.disabled = true;
+    return;
+  }
+
+  // Quantidade válida
+  btnPlus.disabled = false;
+  input.value = Math.max(min, nextValue);
+
+  // Desativa botão − no mínimo
+  btnMinus.disabled = input.value <= min;
+};
+
+

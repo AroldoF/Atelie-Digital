@@ -34,7 +34,6 @@ def detail_product(request, product_id):
     is_available = product.is_active and variant is not None and variant.is_active
 
 
-
     # Verifica se o usuário comprou o produto
     # has_bought = user_bought_product(request.user, product) 
     has_bought = True # para teste
@@ -76,6 +75,14 @@ def detail_product(request, product_id):
     has_more_reviews = reviews_limit < all_reviews_qs.count()
     next_reviews_limit = reviews_limit + DEFAULT_LIMIT
 
+
+    # LIMITE DE QUANTIDADE PELO ESTOQUE
+    max_quantity = None
+
+    if variant and variant.type == 'STOCK':
+        max_quantity = variant.stock
+
+
     context = {
         'product': product,
         'variant': variant,
@@ -91,6 +98,9 @@ def detail_product(request, product_id):
         # controle do botão
         "has_more_reviews": has_more_reviews,
         "next_reviews_limit": next_reviews_limit,
+
+
+        'max_quantity':max_quantity
     }
     
     return render(request, 'products/detail.html', context)

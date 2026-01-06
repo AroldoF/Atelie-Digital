@@ -301,15 +301,43 @@
             <div class="current-price">R$ 0,00</div>
           {% endif %}
           <div class="area-quantity">
-
             <p>Quantidade</p>
+
             <div class="quantity-selector">
-              
-              <button type="button" class="qty-btn" onclick="changeQuantity(-1)">−</button>
-              <input type="number" id="quantity" value="1" min="1" max="10" class="qty-input">
-              <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
+              <button
+                type="button"
+                class="qty-btn"
+                id="qty-minus"
+                onclick="changeQuantity(-1)"
+              >−</button>
+
+              <input
+                type="number"
+                id="quantity"
+                value="1"
+                min="1"
+                {% if max_quantity %}
+                  max="{{ max_quantity }}"
+                {% endif %}
+                class="qty-input"
+                readonly
+              >
+
+              <button
+                type="button"
+                class="qty-btn"
+                id="qty-plus"
+                onclick="changeQuantity(1)"
+              >+</button>
             </div>
+
+
+            
           </div>
+
+
+
+
 
           {% if is_available %}
             <a href="">

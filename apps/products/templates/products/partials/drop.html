@@ -14,7 +14,7 @@
 
   <div class="dropContent" aria-hidden="true">
 
-    {# DESCRIÇÃO DO PRODUTO #}
+    
     {% if product.description %}
       <section class="dropSection">
         <h4>Descrição</h4>
@@ -22,7 +22,7 @@
       </section>
     {% endif %}
 
-    {# DETALHES DA VARIANTE #}
+    
     {% if variant.description %}
       <section class="dropSection">
         <h4>Detalhes da variante</h4>
@@ -30,7 +30,7 @@
       </section>
     {% endif %}
 
-    {# ESPECIFICAÇÕES (ATRIBUTOS) #}
+    
     {% if variant.variant_attributes.exists %}
       <section class="dropSection">
         <h4>Especificações</h4>
@@ -45,7 +45,7 @@
       </section>
     {% endif %}
 
-    {# INFORMAÇÕES ADICIONAIS #}
+   
     <section class="dropSection">
       <h4>Informações adicionais</h4>
       <ul class="specList">
