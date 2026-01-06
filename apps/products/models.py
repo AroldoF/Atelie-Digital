@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from apps.core.models import Category
 from apps.stores.models import Store
 from django.conf import settings
@@ -102,3 +103,31 @@ class VariantAttribute(models.Model):
     class Meta:
         db_table = 'variant_attributes'
         unique_together = (('attribute', 'product_variant'),)
+
+
+class ProductReview(models.Model):
+    review_id = models.AutoField(primary_key=True)
+
+    product = models.ForeignKey(
+        Product,
+        related_name="reviews",
+        on_delete=models.CASCADE
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="product_reviews",
+        on_delete=models.CASCADE
+    )
+
+    rating = models.PositiveSmallIntegerField() 
+    comment = models.TextField(blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "product_reviews"
+        unique_together = ("product", "user")  
+
+    def __str__(self):
+        return f"{self.product.name} - {self.rating} estrelas"

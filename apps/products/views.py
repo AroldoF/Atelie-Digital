@@ -6,6 +6,12 @@ from .forms import Product_Form, Product_Variant_Form, Attributes_Form
 from .models import Product, Favorite
 from django.http import HttpResponse
 from .models import Product, ProductVariant
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from django.views import View
+from .forms import Product_Form, Product_Variant_Form, Attributes_Form,ProductReviewForm
+from .models import Product, ProductVariant, ProductReview
 from django.shortcuts import get_object_or_404
 
 
@@ -56,6 +62,7 @@ class Product_Register_View(View):
         }
         return render(request, 'products/register.html', context)
 
+<<<<<<< HEAD
 @require_POST
 @login_required
 def toggle_favorite(request, product_id):
@@ -73,3 +80,6 @@ def toggle_favorite(request, product_id):
     response["HX-Redirect"] = request.META.get("HTTP_REFERER", "/")
     return response
     return redirect(request.META.get('HTTP_REFERER', '/'))
+=======
+
+>>>>>>> 4daf469 (feat: criando o models e forms para o review)

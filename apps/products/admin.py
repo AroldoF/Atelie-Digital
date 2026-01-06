@@ -34,6 +34,10 @@ class AttributeAdmin(admin.ModelAdmin):
 # class VariantImageAdmin(admin.ModelAdmin):
 #     pass
 
-# @admin.register(models.ProductCategory)
-# class ProductCategoryAdmin(admin.ModelAdmin):
-#     pass
+@admin.register(models.ProductCategory)
+class ProductCategoryAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(models.ProductReview)
+class ProductReviewAdmin(admin.ModelAdmin):
+    pass
