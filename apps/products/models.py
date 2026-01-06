@@ -115,7 +115,7 @@ class ProductReview(models.Model):
 
     class Meta:
         db_table = "product_reviews"
-        unique_together = ("product", "user") # Garante uma avaliação por usuário
+       
 
     def __str__(self):
         return f"{self.product.name} - {self.rating} estrelas"

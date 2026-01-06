@@ -396,55 +396,113 @@
 
 
 
-<section class="product-reviews" style="margin-top: 2rem; padding: 1rem; border-top: 1px solid #eee;">
-    <h3>Avaliações de Clientes</h3>
+<section class="container mt-5" id="reviews-section">
+    <hr>
+    <input type="hidden" id="avg-data" value="{{ rating_average|default:'0' }}">
 
-    {% if is_available %}
-        {% if user.is_authenticated %}
-            <form method="post" action="{% url 'products:submit_review' product.product_id %}" style="margin-bottom: 2rem;">
-                {% csrf_token %}
-                <p>Sua nota:</p>
-                {% include "products/partials/review.html" %}
+    <div class="row pt-4">
+          <div class="col-md-4 mb-4">
+              <h3 class="h4 fw-bold">Avaliações de clientes</h3>
+              
+              <div class="d-flex align-items-center gap-3 my-3">
+                  <span class="display-4 fw-bold text-dark">{{ rating_average|stringformat:".1f" }}</span>
+                  <div class="rating-display-only">
+                      {% include "products/partials/review.html" %}
+                  </div>
+              </div>
 
-                <input type="hidden" name="rating" id="rating-input" value="0">
+              <div class="rating-bars mt-4" id="rating-bars">
+                    <p class="fw-bold mb-2 small">Classificação por estrelas</p>
 
-                <textarea
-                    name="comment"
-                    placeholder="O que você achou deste produto?"
-                    style="width: 100%; min-height: 100px; margin-block: 10px; padding: 10px;"
-                    required
-                ></textarea>
+                    {% for item in stars_composition %}
+                    <div 
+                        class="rating-row d-flex align-items-center mb-2"
+                        data-stars="{{ item.star_number }}"
+                        data-count="{{ item.count }}"
+                        data-percentage="{{ item.percentage }}"
+                        style="font-size: 0.85rem;"
+                    >
+                        <!-- Texto esquerda -->
+                        <div style="width: 70px;">
+                            {{ item.star_number }} estrela{{ item.star_number|pluralize }}
+                        </div>
 
-                <button type="submit" class="btn-buy" style="width: auto; padding-inline: 2rem;">
-                    Enviar avaliação
-                </button>
-            </form>
-        {% else %}
-            <div style="padding: 1rem; background: #f9f9f9; border-radius: 8px; margin-bottom: 1rem;">
-                <p>Para avaliar, <a href="{% url 'accounts:login' %}" style="color: var(--color-primary); font-weight: bold;">faça login aqui</a>.</p>
-            </div>
-        {% endif %}
-    {% else %}
-        <div style="padding: 1rem; background: #fff3cd; color: #856404; border-radius: 8px; margin-bottom: 1rem;">
-            <p style="margin-bottom: 0;">Novas avaliações estão desativadas enquanto o produto estiver indisponível.</p>
-        </div>
-    {% endif %}
+                        <!-- Barra -->
+                        <div class="progress flex-grow-1 mx-2"
+                            style="height: 14px; background-color: #f0f0f0; border-radius: 4px;">
+                            <div class="progress-bar"
+                                style="width: 0%; background-color: #cdaa36;">
+                            </div>
+                        </div>
 
-    <div class="reviews-list">
-        {% for review in reviews %}
-            <div class="review-item" style="border-bottom: 1px solid #f0f0f0; padding-block: 1rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <strong>{{ review.user.username }}</strong>
-                    <span style="color: #FFD700;">{{ review.rating }} ★</span>
-                </div>
-                <small style="color: #888;">{{ review.created_at|date:"d/m/Y" }}</small>
-                <p style="margin-top: 10px;">{{ review.comment }}</p>
-            </div>
-        {% empty %}
-            <p style="color: #666; font-style: italic;">Nenhuma avaliação ainda. Seja o primeiro!</p>
-        {% endfor %}
+                        <!-- Porcentagem -->
+                        <div class="percentage-text" style="width: 40px; text-align: right;">
+                            0%
+                        </div>
+                    </div>
+                    {% endfor %}
+              </div>
+
+
+
+              <button type="button" class="btn btn-light border w-100 fw-bold py-2 shadow-sm mt-4" data-bs-toggle="modal" data-bs-target="#modalAvaliar">
+                  Escrever uma avaliação
+              </button>
+          </div>
+
+          <div class="col-md-8">
+              <h4 class="h5 fw-bold mb-4 border-bottom pb-2">Principais avaliações</h4>
+              <div class="reviews-list">
+                  {% for review in reviews %}
+                      <div class="review-item mb-4 pb-4 border-bottom">
+                          <div class="d-flex align-items-center gap-2 mb-2">
+                              <span class="fw-bold">{{ review.user.username }}</span>
+                          </div>
+                          <div class="text-warning mb-2">{{ review.rating }} ★</div>
+                          <p class="text-dark">{{ review.comment }}</p>
+                          <small class="text-muted">{{ review.created_at|date:"d/m/Y" }}</small>
+                      </div>
+                  {% empty %}
+                      <p class="text-muted italic text-center py-4">Ainda não há avaliações para este produto.</p>
+                  {% endfor %}
+              </div>
+          </div>
     </div>
 </section>
+
+<div class="modal fade" id="modalAvaliar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold">Avaliar produto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <form method="post" action="{% url 'products:submit_review' product.product_id %}">
+        {% csrf_token %}
+        <div class="modal-body">
+            <p class="small text-muted mb-3">Sua nota para: <strong>{{ product.name }}</strong></p>
+            
+            <div id="modal-rating-area">
+                {% include "products/partials/review.html" %}
+            </div>
+            
+            <input type="hidden" name="rating" id="rating-input" value="0">
+
+            <div class="mt-4">
+                <label class="form-label fw-bold small">Seu comentário</label>
+                <textarea name="comment" class="form-control" rows="4" required placeholder="O que você mais gostou ou não gostou?"></textarea>
+            </div>
+        </div>
+        
+        <div class="modal-footer border-0">
+            <button type="button" class="btn btn-link text-muted" data-bs-dismiss="modal">cancelar</button>
+            <button type="submit" class="btn btn-warning fw-bold px-4" style="background-color: #cdaa36;">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 </main>
 
