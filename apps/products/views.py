@@ -33,21 +33,20 @@ def detail_product(request, product_id):
     else:
         variant = variants.first()
 
-    is_available = product.is_active and variant is not None
+    reviews = product.reviews.select_related("user").order_by("-created_at")
 
-    unavailable_message = None
-    if not is_available:
-        unavailable_message = "Este produto está indisponível no momento."
+    review_form = ProductReviewForm()
 
     context = {
         "product": product,
         "variants": variants,
         "variant": variant,
-        "is_available": is_available,
-        "unavailable_message": unavailable_message,
+        "reviews": reviews,
+        "review_form": review_form,
     }
 
     return render(request, "products/detail.html", context)
+
 
 def searchProduct(request):
     return render(request, 'products/searchProduct.html')
@@ -62,7 +61,7 @@ class Product_Register_View(View):
         }
         return render(request, 'products/register.html', context)
 
-<<<<<<< HEAD
+
 @require_POST
 @login_required
 def toggle_favorite(request, product_id):
@@ -80,6 +79,22 @@ def toggle_favorite(request, product_id):
     response["HX-Redirect"] = request.META.get("HTTP_REFERER", "/")
     return response
     return redirect(request.META.get('HTTP_REFERER', '/'))
-=======
 
->>>>>>> 4daf469 (feat: criando o models e forms para o review)
+
+@login_required(login_url="login")
+def submit_review(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+
+    if request.method == "POST":
+        form = ProductReviewForm(request.POST)
+        if form.is_valid():
+            review, created = ProductReview.objects.update_or_create(
+                product=product,
+                user=request.user,
+                defaults={
+                    "rating": form.cleaned_data["rating"],
+                    "comment": form.cleaned_data["comment"],
+                }
+            )
+    return redirect("detail_product", product_id=product_id)
+

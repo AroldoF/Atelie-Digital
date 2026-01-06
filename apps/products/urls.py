@@ -12,5 +12,6 @@ urlpatterns = [
 
     # rotas dinâmicas por ultimo
     path('<int:product_id>/', views.detail_product, name='detail'),
+    path("products/<int:product_id>/review/",views.submit_review,name="submit_review"),
     
 ]
