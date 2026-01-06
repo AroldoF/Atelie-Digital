@@ -107,27 +107,15 @@ class VariantAttribute(models.Model):
 
 class ProductReview(models.Model):
     review_id = models.AutoField(primary_key=True)
-
-    product = models.ForeignKey(
-        Product,
-        related_name="reviews",
-        on_delete=models.CASCADE
-    )
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name="product_reviews",
-        on_delete=models.CASCADE
-    )
-
+    product = models.ForeignKey(Product, related_name="reviews", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="product_reviews", on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField() 
     comment = models.TextField(blank=True, null=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "product_reviews"
-        unique_together = ("product", "user")  
+        unique_together = ("product", "user") # Garante uma avaliação por usuário
 
     def __str__(self):
         return f"{self.product.name} - {self.rating} estrelas"

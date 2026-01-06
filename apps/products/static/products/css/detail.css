@@ -970,3 +970,19 @@ button:disabled {
   pointer-events: none;
   filter: grayscale(1);
 }
+
+.product-reviews {
+  margin-top: 2rem;
+}
+
+.review-form textarea {
+  width: 100%;
+  min-height: 100px;
+  font-size: var(--font-size-sm);
+  margin-block: .5rem;
+}
+
+.review-item {
+  border-bottom: 1px solid #ddd;
+  padding-block: .75rem;
+}

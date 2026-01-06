@@ -13,39 +13,42 @@ from django.views import View
 from .forms import Product_Form, Product_Variant_Form, Attributes_Form,ProductReviewForm
 from .models import Product, ProductVariant, ProductReview
 from django.shortcuts import get_object_or_404
+from django.db.models import Avg
 
-
-from django.shortcuts import render, get_object_or_404
-from .models import Product
 
 def detail_product(request, product_id):
+   
     product = get_object_or_404(Product, pk=product_id)
     variants = product.variants.filter(is_active=True)
-    variant_id = request.GET.get("variant")
-
+    variant_id = request.GET.get('variant')
     if variant_id:
-        variant = get_object_or_404(
-            ProductVariant,
-            pk=variant_id,
-            product=product,
-            is_active=True
-        )
+        
+        variant = product.variants.filter(product_variant_id=variant_id).first()
     else:
+        
         variant = variants.first()
 
-    reviews = product.reviews.select_related("user").order_by("-created_at")
+ 
+    is_available = product.is_active and variant is not None and variant.is_active
 
-    review_form = ProductReviewForm()
+    unavailable_message = None
+    if not is_available:
+        unavailable_message = "Este produto está indisponível no momento."
 
+    
+    reviews = product.reviews.all().order_by('-created_at')
+
+   
     context = {
-        "product": product,
-        "variants": variants,
-        "variant": variant,
-        "reviews": reviews,
-        "review_form": review_form,
+        'product': product,
+        'variant': variant,
+        'variants': variants,
+        'is_available': is_available,
+        'unavailable_message': unavailable_message,
+        'reviews': reviews,
     }
-
-    return render(request, "products/detail.html", context)
+    
+    return render(request, 'products/detail.html', context)
 
 
 def searchProduct(request):
@@ -83,18 +86,17 @@ def toggle_favorite(request, product_id):
 
 @login_required(login_url="login")
 def submit_review(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-
     if request.method == "POST":
-        form = ProductReviewForm(request.POST)
-        if form.is_valid():
-            review, created = ProductReview.objects.update_or_create(
-                product=product,
-                user=request.user,
-                defaults={
-                    "rating": form.cleaned_data["rating"],
-                    "comment": form.cleaned_data["comment"],
-                }
-            )
-    return redirect("detail_product", product_id=product_id)
+        product = get_object_or_404(Product, pk=product_id)
+        rating = request.POST.get("rating")
+        comment = request.POST.get("comment")
 
+        if rating:
+            # update_or_create permite que o usuário atualize a nota se já tiver avaliado
+            ProductReview.objects.update_or_create(
+                product=product, 
+                user=request.user,
+                defaults={'rating': int(rating), 'comment': comment}
+            )
+        
+    return redirect('products:detail', product_id=product_id)

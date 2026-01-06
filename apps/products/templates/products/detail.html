@@ -395,6 +395,57 @@
 </div>
 
 
+
+<section class="product-reviews" style="margin-top: 2rem; padding: 1rem; border-top: 1px solid #eee;">
+    <h3>Avaliações de Clientes</h3>
+
+    {% if is_available %}
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'products:submit_review' product.product_id %}" style="margin-bottom: 2rem;">
+                {% csrf_token %}
+                <p>Sua nota:</p>
+                {% include "products/partials/review.html" %}
+
+                <input type="hidden" name="rating" id="rating-input" value="0">
+
+                <textarea
+                    name="comment"
+                    placeholder="O que você achou deste produto?"
+                    style="width: 100%; min-height: 100px; margin-block: 10px; padding: 10px;"
+                    required
+                ></textarea>
+
+                <button type="submit" class="btn-buy" style="width: auto; padding-inline: 2rem;">
+                    Enviar avaliação
+                </button>
+            </form>
+        {% else %}
+            <div style="padding: 1rem; background: #f9f9f9; border-radius: 8px; margin-bottom: 1rem;">
+                <p>Para avaliar, <a href="{% url 'accounts:login' %}" style="color: var(--color-primary); font-weight: bold;">faça login aqui</a>.</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div style="padding: 1rem; background: #fff3cd; color: #856404; border-radius: 8px; margin-bottom: 1rem;">
+            <p style="margin-bottom: 0;">Novas avaliações estão desativadas enquanto o produto estiver indisponível.</p>
+        </div>
+    {% endif %}
+
+    <div class="reviews-list">
+        {% for review in reviews %}
+            <div class="review-item" style="border-bottom: 1px solid #f0f0f0; padding-block: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong>{{ review.user.username }}</strong>
+                    <span style="color: #FFD700;">{{ review.rating }} ★</span>
+                </div>
+                <small style="color: #888;">{{ review.created_at|date:"d/m/Y" }}</small>
+                <p style="margin-top: 10px;">{{ review.comment }}</p>
+            </div>
+        {% empty %}
+            <p style="color: #666; font-style: italic;">Nenhuma avaliação ainda. Seja o primeiro!</p>
+        {% endfor %}
+    </div>
+</section>
+
 </main>
 
 
