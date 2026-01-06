@@ -2,8 +2,12 @@ from django.contrib import admin
 from . import models
 
 
+class ProfileInline(admin.TabularInline):
+    model = models.Profile
+
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
+    inlines = [ProfileInline]
     list_display = [
         "user_id",
         "username",
@@ -19,11 +23,10 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ["is_staff", "is_artisan", "is_active"]
 
 
-@admin.register(models.Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ["user", "bio"]
-    search_fields = ["user__username", "user__email"]
-    readonly_fields = ["user"]  # opcional, se você não quiser alterar o user diretamente
+# @admin.register(models.Profile)
+# class ProfileAdmin(admin.ModelAdmin):
+#     list_display = ["user", "bio"]
+#     search_fields = ["user__username", "user__email"]
 
 
 @admin.register(models.Address)

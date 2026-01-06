@@ -16,17 +16,17 @@
 
       <section id="achadinhos" class="sec">
         <h2 class="h2Index">Achadinhos</h2>
-        {% include 'partials/cardsCarousel.html'%}
+        {% include 'partials/cardsCarousel.html' with products=cheapest_products %}
       </section>
 
       <section id="produtoMaisComprados" class="sec">
         <h2  class="h2Index" >Produtos mais comprados</h2>
-        {% include 'partials/cardsCarousel.html'%}
+        {% include 'partials/cardsCarousel.html' with products=best_selling_products %}
       </section>
 
       <section id="EmAlta" class="sec">
         <h2  class="h2Index">Em alta</h2>
-        {% include 'partials/cardsCarousel.html'%}
+        {% include 'partials/cardsCarousel.html' with products=top_rated_products %}
       </section>
   </main>
    

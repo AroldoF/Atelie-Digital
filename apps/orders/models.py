@@ -7,7 +7,7 @@ class Order(models.Model):
     ORDER_TYPE_CHOICES = [
         ('PENDING', 'Pendente'),
         ('IN_PROGRESS', 'Em andamento'),
-        ('COMPLETED', 'Conclu�do'),
+        ('COMPLETED', 'Concluído'),
         ('CANCELLED', 'Cancelado'),
     ]
 
