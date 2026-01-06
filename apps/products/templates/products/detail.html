@@ -300,9 +300,11 @@
           {% else %}
             <div class="current-price">R$ 0,00</div>
           {% endif %}
+
+        {% if variant and variant.type == 'STOCK' %}
           <div class="area-quantity">
             <p>Quantidade</p>
-
+          
             <div class="quantity-selector">
               <button
                 type="button"
@@ -335,7 +337,15 @@
             
           </div>
 
+        {% else %}
 
+          <div class="area-on-demand">
+            <p class="on-demand-label">
+              Produto sob encomenda
+            </p>
+          </div>
+
+        {% endif %}
 
 
 

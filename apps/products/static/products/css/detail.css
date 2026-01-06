@@ -904,6 +904,24 @@ button:disabled {
       font-size: 0.75rem;
   }
 
+  
+  .area-on-demand {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .on-demand-label {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: .375rem; 
+    background-color: #fff3cd; 
+    color: #664d03;
+    font-size: .875rem;
+    font-weight: 500;
+    border: 1px solid #ffecb5;
+  }
 
   
 }
