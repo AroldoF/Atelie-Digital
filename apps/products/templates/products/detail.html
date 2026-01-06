@@ -160,11 +160,11 @@
   <div class="info-loja">
       <div id="areaLogoLoja">
         <a href="">
-          <img id="imgLogoLoja" src="{% static 'products/media/logoLoja.jpg' %}" alt="">
+          <img id="imgLogoLoja" src="{{ product.store.image.url }}" alt="Logo da {{ product.store.name }}">
         </a>
         <div id="areaNomeLoja">
-          <h4>Val Laços</h4>
-          <p>Princesa Estilosa</p>
+          <h4>{{ product.store.name }}</h4>
+          <p>{{ product.store.user}}</p>
         </div>
       </div>
 
@@ -354,11 +354,11 @@
         <div class="seller-card">
           <div class="store-header">
             <a href="" class="store-logo-link">
-              <img src="{% static 'products/media/logoLoja.jpg' %}" alt="Logo da loja Val Laços" class="store-logo">
+              <img src="{{ product.store.image.url }}" alt="Logo da {{ product.store.name }}" class="store-logo">
             </a>
             <div class="store-name">
-              <h3>Val Laços</h3>
-              <p>Princesa Estilosa</p>
+              <h3>{{ product.store.name }}</h3>
+              <p>{{ product.store.user}}</p>
             </div>
           </div>
 
