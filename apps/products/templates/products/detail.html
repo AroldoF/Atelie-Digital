@@ -494,13 +494,34 @@
                       <div class="review-item mb-4 pb-4 border-bottom">
                         <div class="d-flex justify-content-between ">
                           <div class="d-flex align-items-center gap-2 mb-2">
-                              <span class="fw-bold">{{ review.user.username }}</span>
-                             {% if has_bought %}
-                                <span class="review-verified">
-                                    comprador verificado
-                                </span>
-                              {% endif %}
+                                <!-- Avatar -->
+                                <div class="review-avatar">
+                                  {% if review.user.profile.profile_image %}
+                                    <img
+                                      src="{{ review.user.profile.profile_image.url }}"
+                                      alt="Foto de {{ review.user.username }}"
+                                      class="avatar-img"
+                                    >
+                                  {% else %}
+                                    <div class="avatar-placeholder">
+                                      <i class="bi bi-person-fill"></i>
+                                    </div>
+                                  {% endif %}
+                                </div>
+
+                                <!-- Nome + selo -->
+                                <div class="d-flex align-items-center gap-2">
+                                  <span class="fw-bold">{{ review.user.username }}</span>
+
+                                  {% if has_bought %}
+                                    <span class="review-verified">
+                                      comprador verificado
+                                    </span>
+                                  {% endif %}
+                                </div>
+
                           </div>
+
                           <div class="text-warning mb-2">{{ review.rating }} ★</div>
                         </div>
                           
