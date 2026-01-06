@@ -72,7 +72,7 @@
               <p class="textPrice">R$ 40,70</p>
             </div>
 
-            <a href="{% url 'confirm-address' %}">
+            <a href="">
               <button id="comprarButton">
                 <img  class="iconComprarButton" src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
                 <p class="textComprarButton">Comprar</p>
@@ -83,7 +83,7 @@
 
         
         <div class="areaAdicionar">
-          <a href="{% url 'shopping_cart' %}">
+          <a href="">
             <button id="adicionarButton">
               <img id="imgShopping" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
               <p class="addCart">Adicionar ao Carrinho</p>
@@ -100,7 +100,7 @@
  
   <div class="info-loja">
       <div id="areaLogoLoja">
-        <a href="{% url 'storeProfile' %}">
+        <a href="">
           <img id="imgLogoLoja" src="{% static 'products/media/logoLoja.jpg' %}" alt="">
         </a>
         <div id="areaNomeLoja">
@@ -155,7 +155,7 @@
               <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
               
             </div>
-          <img id="mainImageDesktop" src="{% static 'products/media/imgVariantionsProducts/v1.png' %}" 
+          <img id="mainImageDesktop" src="{{product.image.url}}" 
               alt="Laço Pérola com Pontas — vista principal" class="main-image">
 
           <div class="thumbnail-list">
@@ -221,13 +221,13 @@
               <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
             </div>
           </div>
-          <a href="{% url 'confirm-address' %}">
+          <a href="">
             <button type="button" class="btn-buy desktop-btn">
               <img src="{% static 'products/media/icons/shopping-bag.svg' %}" alt="">
               <span>Comprar</span>
             </button>
           </a>
-          <a href="{% url 'shopping_cart' %}">
+          <a href="">
             <button type="button" class="btn-add-cart desktop-btn">
               <img  class="img-btn-cart" src="{% static 'products/media/icons/shoppingCart.svg' %}" alt="">
               <span>Adicionar ao Carrinho</span>
@@ -237,7 +237,7 @@
 
         <div class="seller-card">
           <div class="store-header">
-            <a href="{% url 'storeProfile' %}" class="store-logo-link">
+            <a href="" class="store-logo-link">
               <img src="{% static 'products/media/logoLoja.jpg' %}" alt="Logo da loja Val Laços" class="store-logo">
             </a>
             <div class="store-name">
@@ -275,6 +275,7 @@
 
 
 </div>
+
 
 </main>
 

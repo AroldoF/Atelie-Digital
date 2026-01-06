@@ -5,10 +5,14 @@ from django.views import View
 from .forms import Product_Form, Product_Variant_Form, Attributes_Form
 from .models import Product, Favorite
 from django.http import HttpResponse
+from .models import Product, ProductVariant
 
-def detailProduct(request):
-    return render(request, 'products/detailProduct.html')
 
+def detailProduct(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    context = {'product': product}
+    return render(request, 'products/detailProduct.html', context)
+    
 def searchProduct(request):
     return render(request, 'products/searchProduct.html')
 
