@@ -94,7 +94,9 @@ VarianteInlineFormSet = inlineformset_factory(
     ProductVariant,
     form=Product_Variant_Form,
     formset=HiddenDeleteInlineFormSet,
-    extra=1,
+    min_num=1,
+    validate_min=True,
+    extra=0,
     can_delete=True
 )
 

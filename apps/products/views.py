@@ -21,7 +21,8 @@ from django.core.paginator import Paginator
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from decimal import Decimal
 from django.db import transaction
-from .forms import Product_Form, Product_Variant_Form, Attributes_Form, VarianteInlineFormSet
+from django.contrib import messages
+from .forms import Product_Form, Attributes_Form, VarianteInlineFormSet
 from .models import Product, Favorite, ProductVariant, VariantAttribute, Attribute
 from django.http import HttpResponse, JsonResponse
 import json
@@ -193,7 +194,8 @@ def search_product(request):
 
 class ProductCreateView(PermissionRequiredMixin, View):
     permission_required = 'products.add_product'
-
+    template_name = "products/register.html"
+    
     def get(self, request):
         context = {
             "product_form": Product_Form(prefix="product"),
@@ -204,24 +206,37 @@ class ProductCreateView(PermissionRequiredMixin, View):
             # Usado APENAS como ponte para Attribute
             "attribute_variant": Attributes_Form(),
         }
-        return render(request, "products/register.html", context)
+        return render(request, self.template_name, context)
 
     def post(self, request):
-        product_form = Product_Form(request.POST, request.FILES, prefix="product")
+        product_form = Product_Form(
+            request.POST,
+            request.FILES,
+            prefix="product"
+        )
+
+        variant_formset = VarianteInlineFormSet(
+            request.POST,
+            request.FILES,
+            prefix="variants"
+        )
+
         variants_json = request.POST.get("variants_json")
 
-        if not product_form.is_valid():
+        # 1️⃣ Validação básica
+        if not product_form.is_valid() or not variant_formset.is_valid():
             return render(
                 request,
-                "products/register.html",
-                self._context_with_errors(product_form)
+                self.template_name,
+                self._context_with_errors(product_form, variant_formset)
             )
+
         if not variants_json:
             product_form.add_error(None, "Adicione ao menos uma variante.")
             return render(
                 request,
-                "products/register.html",
-                self._context_with_errors(product_form)
+                self.template_name,
+                self._context_with_errors(product_form, variant_formset)
             )
 
         try:
@@ -230,56 +245,61 @@ class ProductCreateView(PermissionRequiredMixin, View):
             product_form.add_error(None, "Dados das variantes inválidos.")
             return render(
                 request,
-                "products/register.html",
-                self._context_with_errors(product_form)
+                self.template_name,
+                self._context_with_errors(product_form, variant_formset)
             )
 
         store = request.user.stores.first()
-        if not store:
-            product_form.add_error(None, "Usuário não possui loja cadastrada.")
-            return render(
-                request,
-                "products/register.html",
-                self._context_with_errors(product_form)
-            )
+
 
         with transaction.atomic():
-            # 1️⃣ Produto
+            # 2️⃣ Produto
             product = product_form.save(commit=False)
             product.store = store
             product.save()
 
-            # 2️⃣ Variantes + atributos
-            for variant_data in variants_data:
-                variant = ProductVariant.objects.create(
-                    product=product,
-                    sku=variant_data.get("sku"),
-                    price=variant_data.get("price"),
-                    type=variant_data.get("type"),
-                    stock=variant_data.get("stock"),
-                    production_days=variant_data.get("production_days"),
-                    is_customizable=variant_data.get("is_customizable", False),
-                )
+            # 3️⃣ Vincula produto ao formset
+            variant_formset.instance = product
 
-                for attr in variant_data.get("attributes", []):
-                    attribute = Attribute.objects.get(pk=attr["attribute_id"])
+            # 4️⃣ Salva TODAS as variantes (VALIDADAS)
+            variant_formset.save()
 
-                    VariantAttribute.objects.create(
-                        product_variant=variant,
-                        attribute=attribute,
-                        value=attr["value"]
+            # 5️⃣ Atributos (usando a ordem do formset)
+            for form, variant_data in zip(variant_formset.forms, variants_data):
+                variant = form.instance
+
+                for attr_data in variant_data.get("attributes", []):
+                    attr_form = Attributes_Form(
+                        data={
+                            "attribute": attr_data["attribute_id"],
+                            "value": attr_data["value"],
+                        }
                     )
 
+                    if not attr_form.is_valid():
+                        form.add_error(
+                            None,
+                            f"Atributo inválido: {attr_form.errors.as_text()}"
+                        )
+                        transaction.set_rollback(True)
+                        return render(
+                            request,
+                            self.template_name,
+                            self._context_with_errors(product_form, variant_formset)
+                        )
+
+                    variant_attr = attr_form.save(commit=False)
+                    variant_attr.product_variant = variant
+                    variant_attr.save()
+
+
+        messages.success(request, "Produto cadastrado com sucesso!")
         return redirect("index")
 
-    def _context_with_errors(self, product_form):
-        """Garante que o GET seja refeito corretamente após erro"""
+    def _context_with_errors(self, product_form, variant_formset):
         return {
             "product_form": product_form,
-            "variant_formset": VarianteInlineFormSet(
-                instance=None,
-                prefix="variants"
-            ),
+            "variant_formset": variant_formset,
             "attribute_variant": Attributes_Form(),
         }
 
