@@ -13,6 +13,10 @@ def create_groups_and_permissions(apps, schema_editor):
     artisian_group, _ = Group.objects.get_or_create(name='Artisians')
 
     codenames_user = [
+        # Accounts: 
+        'add_address','view_address', 'change_address', 'delete_address',
+        # Profile:
+        'view_profile', 'change_profile',
         # Products: apenas ver
         'view_product', 
         # Orders: criar e ver seus pedidos

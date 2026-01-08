@@ -15,6 +15,7 @@ from .models import Product, ProductVariant, ProductReview
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg,Count
 from apps.utils.purchases import user_bought_product
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 def detail_product(request, product_id):
@@ -109,8 +110,8 @@ def detail_product(request, product_id):
 def searchProduct(request):
     return render(request, 'products/searchProduct.html')
 
-
-class Product_Register_View(View):
+class Product_Register_View(PermissionRequiredMixin, View):
+    permission_required = 'products.add_product'
     def get(self, request):
         context = {
             'form_products': Product_Form(),
