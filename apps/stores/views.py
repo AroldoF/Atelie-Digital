@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .forms import Store_Form, StoreCategories_Form
+from .forms import StoreCreationForm, StoreCategories_Form
 
 # Create your views here.
 
@@ -16,10 +16,10 @@ def artisan_products(request):
 def artisan_orders(request):
     return render(request, 'stores/artisan_orders_table.html', {'active_page': 'orders'})
 
-class Store_Register_View(View):
+class StoreCreationView(View):
     def get(self, request):
         context = {
-            'form': Store_Form(),
+            'form': StoreCreationForm(),
             'form_category': StoreCategories_Form()
         }
         return render(request, 'stores/register.html', context)
