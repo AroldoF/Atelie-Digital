@@ -109,23 +109,33 @@ def detail_product(request, product_id):
 
 def search_product(request):
     query = request.GET.get("q", "").strip()
-    products = Product.objects.none()
+    category = request.GET.get("category", "").strip()
+
+    products = Product.objects.filter(is_active=True)
 
     if query:
-        products = Product.objects.filter(
+        products = products.filter(
             Q(name__icontains=query) |
-            Q(description__icontains=query),
-            is_active=True
-        ).distinct()
+            Q(description__icontains=query) |
+            Q(product_categories__category__name__icontains=query)
+        )
+
+    if category:
+        products = products.filter(
+            product_categories__category__slug=category
+        )
+
+    products = products.distinct()
 
     context = {
         "query": query,
         "products": products,
         "results_count": products.count(),
+        "selected_category": category,
     }
 
     return render(request, "products/search.html", context)
-
+    
 class Product_Register_View(View):
     def get(self, request):
         context = {
