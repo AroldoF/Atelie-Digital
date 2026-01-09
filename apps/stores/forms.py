@@ -15,6 +15,17 @@ class StoreCreationForm(forms.ModelForm):
         })
     )
 
+    cnpj = forms.CharField(
+        max_length=18,
+        label='CNPJ',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'placeholder': '00.000.000/0000-00',
+            'inputmode': 'numeric'
+        }),
+        help_text= "Insira somente a numeração"
+    )
+
     class Meta:
         model = Store
         fields = ['name', 'description', 'email', 'phone_number', 'cnpj', 'image', 'banner']
@@ -44,11 +55,6 @@ class StoreCreationForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '(11) 99999-9999',
-                'inputmode': 'numeric'
-            }),
-            'cnpj': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': '00.000.000/0000-00',
                 'inputmode': 'numeric'
             }),
         }

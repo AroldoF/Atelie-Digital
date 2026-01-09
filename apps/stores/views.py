@@ -5,11 +5,15 @@ from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
 from apps.core.models import Category
 
+@method_decorator(never_cache, name='dispatch')
 class StoreCreateView(LoginRequiredMixin, CreateView):
     model = Store
     form_class = StoreCreationForm
@@ -62,6 +66,8 @@ class StoreCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('stores:dashboard', kwargs={'store_id': self.object.store_id})
 
+@login_required
+@never_cache
 def dashboard(request, store_id): 
     store = get_object_or_404(Store, pk=store_id)
     return render(request, 'stores/dashboard.html', {'store': store, 'store_id': store_id})
