@@ -16,7 +16,12 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Avg,Count
 from apps.utils.purchases import user_bought_product
 from django.db.models import Q
-
+from django.contrib.postgres.search import (
+    SearchVector,
+    SearchQuery,
+    SearchRank,
+    TrigramSimilarity
+)
 
 
 def detail_product(request, product_id):
@@ -107,17 +112,38 @@ def detail_product(request, product_id):
     
     return render(request, 'products/detail.html', context)
 
+
 def search_product(request):
     query = request.GET.get("q", "").strip()
-    category = request.GET.get("category", "").strip()
+    category = request.GET.get("category")
 
-    products = Product.objects.filter(is_active=True)
+    products = Product.objects.none()
 
     if query:
-        products = products.filter(
-            Q(name__icontains=query) |
-            Q(description__icontains=query) |
-            Q(product_categories__category__name__icontains=query)
+        vector = (
+            SearchVector("name", weight="A", config="portuguese") +
+            SearchVector("description", weight="B", config="portuguese")
+        )
+
+        search_query = SearchQuery(query, config="portuguese")
+
+        products = (
+            Product.objects
+            .annotate(
+                search=vector,
+                rank=SearchRank(vector, search_query),
+                similarity=(
+                    TrigramSimilarity("name", query) +
+                    TrigramSimilarity("description", query)
+                )
+            )
+            .filter(
+                Q(search=search_query) |
+                Q(similarity__gt=0.2),
+                is_active=True
+            )
+            .order_by("-rank", "-similarity")
+            .distinct()
         )
 
     if category:
@@ -125,17 +151,17 @@ def search_product(request):
             product_categories__category__slug=category
         )
 
-    products = products.distinct()
+    return render(
+        request,
+        "products/search.html",
+        {
+            "query": query,
+            "products": products,
+            "results_count": products.count(),
+        }
+    )
 
-    context = {
-        "query": query,
-        "products": products,
-        "results_count": products.count(),
-        "selected_category": category,
-    }
 
-    return render(request, "products/search.html", context)
-    
 class Product_Register_View(View):
     def get(self, request):
         context = {
