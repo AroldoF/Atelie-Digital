@@ -1,21 +1,28 @@
+window.addEventListener('load', function() {
+    if (window.jQuery) {
+        $('#id_cpf').mask('000.000.000-00');
+        $('#id_phone_number').mask('(00) 00000-0000');
+    }
+}); 
+
 document.addEventListener('DOMContentLoaded', function () {
 // Máscara adaptativa para telefone (8 ou 9 dígitos)
-    const $phone = $('#id_phone_number');
-    if ($phone.length) {
-        const phoneMaskBehavior = function (val) {
-        return val.replace(/\D/g, '').length > 10 ? '(00) 00000-0000' : '(00) 0000-0000';
-        };
-        const phoneOptions = { onKeyPress: function(val, e, field, options) {
-        field.mask(phoneMaskBehavior.apply({}, arguments), options);
-        }};
-        $phone.mask(phoneMaskBehavior($phone.val()), phoneOptions);
-    }
+    // const $phone = $('#id_phone_number');
+    // if ($phone.length) {
+    //     const phoneMaskBehavior = function (val) {
+    //     return val.replace(/\D/g, '').length > 10 ? '(00) 00000-0000' : '(00) 0000-0000';
+    //     };
+    //     const phoneOptions = { onKeyPress: function(val, e, field, options) {
+    //     field.mask(phoneMaskBehavior.apply({}, arguments), options);
+    //     }};
+    //     $phone.mask(phoneMaskBehavior($phone.val()), phoneOptions);
+    // }
 
-    // Máscara CNPJ
-    const $cnpj = $('#id_cnpj');
-    if ($cnpj.length) {
-        $cnpj.mask('00.000.000/0000-00');
-    }
+    // // Máscara CNPJ
+    // const $cnpj = $('#id_cnpj');
+    // if ($cnpj.length) {
+    //     $cnpj.mask('00.000.000/0000-00');
+    // }
 
     // --- UPLOAD DE IMAGEM DA LOJA ---
     const imageInput = document.getElementById("id_image");
@@ -65,22 +72,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // --- FEEDBACK VISUAL NO ENVIO ---
-    const submitButton = document.querySelector('.btn-submit');
-    if (submitButton) {
-        submitButton.addEventListener('click', function() {
-        const originalText = this.innerHTML;
-        this.innerHTML = `
-            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-            Processando...
-        `;
-        this.disabled = true;
-        
-        // Reverter após 3 segundos (para testes)
-        setTimeout(() => {
-            this.innerHTML = originalText;
-            this.disabled = false;
-        }, 3000);
-        });
-    }
 });

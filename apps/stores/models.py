@@ -9,6 +9,7 @@ class Store(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
     phone_number = models.CharField(unique=True, max_length=15)
+    date_creation = models.DateTimeField(auto_now_add=True)
     cnpj = models.CharField(unique=True, max_length=14, blank=True, null=True)
     email = models.EmailField(unique=True, max_length=255)
     image = models.ImageField(upload_to=store_image_upload_path)

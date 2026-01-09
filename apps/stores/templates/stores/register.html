@@ -14,14 +14,6 @@
     <div class="col-12 col-lg-10">
       <div class="text-center mb-5">
         <div class="d-inline-block mb-3">
-          {% comment %} <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary">
-              <path d="M3 3h18v18H3z"></path>
-              <path d="M7 7h10v10H7z"></path>
-              <path d="M12 7v10"></path>
-              <path d="M7 12h10"></path>
-            </svg>
-          </div> {% endcomment %}
         </div>
         <h1 class="fw-bold mb-2" style="color: var(--color-primary);">Cadastro da Loja</h1>
         <p class="text-muted mb-0">Preencha os dados abaixo para registrar sua loja no sistema</p>
@@ -52,6 +44,32 @@
             <div class="col-md-6">
               {{ form.email|as_crispy_field }}
             </div>
+          </div>
+        </div>
+
+        <!-- Descrição -->
+        <div class="product-card mb-4">
+          <h2 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v18h18"></path>
+              <path d="M9 9h6v6H9z"></path>
+            </svg>
+            Descrição
+          </h2>
+          
+          <div class="row g-4">
+            <div class="col-12">
+              {{ form.description|as_crispy_field }} 
+            </div>
+          </div>
+          
+          <div class="form-text text-muted mt-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1" style="vertical-align: -0.25rem;">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12" y2="8"></line>
+            </svg>
+            Aproveite para descrever a alma do seu negócio
           </div>
         </div>
         
@@ -120,8 +138,14 @@
           
           <div class="row g-3">
             <div class="col-12">
-              {% comment %} {{ form_category.category_name|as_crispy_field }} {% endcomment %}
-              <input class='form-control' type="text" placeholder='Ex.: artesanato'>
+              {{ form.category_name|as_crispy_field }} 
+
+              <!-- Datalist para categorias -->
+              <datalist id="category_list">
+                {% for cat in categories %}
+                  <option value="{{ cat.name }}"></option>
+                {% endfor %}
+              </datalist>
             </div>
           </div>
           
@@ -135,20 +159,12 @@
           </div>
         </div>
         
-        <!-- Botão de Ação -->
         <div class="submit-section">
           <button type="submit" class="btn btn-submit btn-green">
             <i class="bi bi-check2-circle me-2"></i> Cadastrar Loja
           </button>
         </div>
       </form>
-      
-      <!-- Datalist para categorias -->
-      <datalist id="category_list">
-        {% for cat in categories %}
-          <option value="{{ cat.category|escape }}">{{ cat.category }}</option>
-        {% endfor %}
-      </datalist>
     </div>
   </div>
 </div>

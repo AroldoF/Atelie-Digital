@@ -1,8 +1,20 @@
 from django import forms
 from django_cpf_cnpj.validators import validate_cnpj
+from django.core.exceptions import ValidationError
+import re
+
 from .models import Store, StoreCategory
  
 class StoreCreationForm(forms.ModelForm):
+    category_name = forms.CharField(
+        label='Categoria Principal',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'placeholder': 'Ex: Tecidos, Cerâmica...',
+            'list':'category_list'
+        })
+    )
+
     class Meta:
         model = Store
         fields = ['name', 'description', 'email', 'phone_number', 'cnpj', 'image', 'banner']
@@ -42,6 +54,25 @@ class StoreCreationForm(forms.ModelForm):
                 'id': 'cnpj'
             }),
         }
+
+    def clean_cnpj(self):
+        cnpj = self.cleaned_data.get('cnpj')
+        cnpj = re.sub(r'\D', '', cnpj)
+
+        try:
+            validate_cnpj(cnpj)
+        except ValidationError:
+            raise forms.ValidationError("CNPJ inválido")
+
+        return cnpj
+    
+    def clean_phone_number(self):
+        phone = re.sub(r'\D', '', self.cleaned_data['phone_number'])
+
+        if len(phone) not in (10, 11):
+            raise forms.ValidationError("Telefone inválido")
+
+        return phone
 
 
 class StoreCategories_Form(forms.ModelForm):
