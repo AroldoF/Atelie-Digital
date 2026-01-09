@@ -5,12 +5,23 @@
 {% endblock style %}
 
 {% if search %}
-  <button class="category-btn category-search active">
-    <img id="search" src="{% static 'products/media/icons/search.svg' %}" alt="Buscar">
-  </button>
+  <a
+    href="{% url 'products:search' %}"
+    class="category-btn category-search {% if active_filter == 'todos' %}active{% endif %}"
+  >
+    <img
+      id="search"
+      src="{% static 'products/media/icons/search.svg' %}"
+      alt="Buscar"
+    >
+  </a>
 {% endif %}
 
-{%if type%}
-  <button class="category-btn ">{{title}}</button>
-{%endif %}
-  
+{% if type %}
+  <a
+    href="{% url 'products:search' %}?category={{ slug }}"
+    class="category-btn {% if active_filter == slug %}active{% endif %}"
+  >
+    {{ title }}
+  </a>
+{% endif %}

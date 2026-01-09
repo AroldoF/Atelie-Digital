@@ -16,12 +16,14 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Avg,Count
 from apps.utils.purchases import user_bought_product
 from django.db.models import Q
-from django.contrib.postgres.search import (
-    SearchVector,
-    SearchQuery,
-    SearchRank,
-    TrigramSimilarity
-)
+from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
+from django.core.paginator import Paginator
+
+CATEGORY_KEYWORDS = {
+    "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
+    "madeira": ["madeira","caixa", "caixinha", "madeira"],
+    "ceramica": ["cerâmica","vaso", "caneca", "prato"],
+}
 
 
 def detail_product(request, product_id):
@@ -117,49 +119,51 @@ def search_product(request):
     query = request.GET.get("q", "").strip()
     category = request.GET.get("category")
 
-    products = Product.objects.none()
+    if category:
+        category = category.lower()
 
+    products = Product.objects.filter(is_active=True)
+    active_filter = category if category else "todos"
+
+    # Busca textual
     if query:
         vector = (
             SearchVector("name", weight="A", config="portuguese") +
             SearchVector("description", weight="B", config="portuguese")
         )
-
         search_query = SearchQuery(query, config="portuguese")
 
-        products = (
-            Product.objects
-            .annotate(
-                search=vector,
-                rank=SearchRank(vector, search_query),
-                similarity=(
-                    TrigramSimilarity("name", query) +
-                    TrigramSimilarity("description", query)
-                )
-            )
-            .filter(
-                Q(search=search_query) |
-                Q(similarity__gt=0.2),
-                is_active=True
-            )
-            .order_by("-rank", "-similarity")
-            .distinct()
+        products = products.annotate(
+            rank=SearchRank(vector, search_query),
+            similarity=(
+                TrigramSimilarity("name", query) +
+                TrigramSimilarity("description", query)
+            ),
+        ).filter(
+            Q(rank__gt=0) | Q(similarity__gt=0.2)
         )
 
-    if category:
-        products = products.filter(
-            product_categories__category__slug=category
-        )
+    # Filtro por categoria
+    if category and category in CATEGORY_KEYWORDS:
+        include_q = Q()
+        for keyword in CATEGORY_KEYWORDS[category]:
+            include_q |= Q(name__icontains=keyword)
+            include_q |= Q(description__icontains=keyword)
 
-    return render(
-        request,
-        "products/search.html",
-        {
-            "query": query,
-            "products": products,
-            "results_count": products.count(),
-        }
-    )
+        products = products.filter(include_q)
+
+    # Ordenação
+    if query:
+        products = products.order_by("-rank", "-similarity")
+    else:
+        products = products.order_by("name")
+
+    products = products.distinct()
+
+    return render(request, "products/search.html",{ "query": query,"products": products, "active_filter": active_filter,})
+
+
+
 
 
 class Product_Register_View(View):

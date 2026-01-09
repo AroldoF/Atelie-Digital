@@ -14,19 +14,31 @@
   <div class="area-categories-textResult">
 
     <div class="categories">
-      {% include 'products/partials/category.html' with search=True %}
-      {% include 'products/partials/category.html' with type=True title="Cerâmica" %}
-      {% include 'products/partials/category.html' with type=True title="Tecidos" %}
-      {% include 'products/partials/category.html' with type=True title="Madeira" %}
+      
+    {% include 'products/partials/category.html' with search=True %}
+
+    {% include 'products/partials/category.html' with type=True title="Cerâmica" slug="ceramica" active_filter=active_filter %}
+
+    {% include 'products/partials/category.html' with type=True title="Tecidos" slug="tecidos" active_filter=active_filter %}
+
+    {% include 'products/partials/category.html' with type=True title="Madeira" slug="madeira" active_filter=active_filter %}
+
     </div>
 
     {% if query %}
+    <p class="textResult">
+      Resultados para "<strong>{{ query }}</strong>"
+    </p>
+
+    {% elif active_filter %}
       <p class="textResult">
-        Resultados para "<strong>{{ query }}</strong>"
+        Resultados da categoria
+        <strong>{{ active_filter|title }}</strong>
       </p>
+
     {% else %}
       <p class="textResult">
-        Digite algo para buscar produtos
+      
       </p>
     {% endif %}
 
