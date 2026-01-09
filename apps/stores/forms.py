@@ -44,19 +44,21 @@ class StoreCreationForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '(11) 99999-9999',
-                'inputmode': 'numeric',
-                'id': 'phone_number'
+                'inputmode': 'numeric'
             }),
             'cnpj': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '00.000.000/0000-00',
-                'inputmode': 'numeric',
-                'id': 'cnpj'
+                'inputmode': 'numeric'
             }),
         }
 
     def clean_cnpj(self):
         cnpj = self.cleaned_data.get('cnpj')
+
+        if not cnpj:
+            return None
+    
         cnpj = re.sub(r'\D', '', cnpj)
 
         try:

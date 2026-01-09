@@ -13,11 +13,10 @@ from apps.core.models import Category
 class StoreCreateView(LoginRequiredMixin, CreateView):
     model = Store
     form_class = StoreCreationForm
-    template_name = 'stores/register.html'
+    template_name = 'stores/register.html' 
 
     def dispatch(self, request, *args, **kwargs):
         # Valida se o usuário já possui uma loja (já é artesão)
-        # Assumindo que você tem uma lógica para checar isso (ex: atributo is_artisan)
         if hasattr(request.user, 'stores') and request.user.stores.exists():
             messages.info(request, "Você já possui uma loja cadastrada!")
             user_store = request.user.stores.first()
