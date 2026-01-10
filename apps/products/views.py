@@ -160,7 +160,12 @@ def search_product(request):
 
     products = products.distinct()
 
-    return render(request, "products/search.html",{ "query": query,"products": products, "active_filter": active_filter,})
+    # paginação
+    paginator = Paginator(products, 4) 
+    page_number = request.GET.get("page")
+    products_page = paginator.get_page(page_number)
+
+    return render(request, "products/search.html",{ "query": query,"products_page": products_page, "active_filter": active_filter,})
 
 
 

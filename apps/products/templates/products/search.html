@@ -46,8 +46,8 @@
 
   <div id="areaResultsCards">
 
-    {% if products %}
-      {% for product in products %}
+    {% if products_page %}
+      {% for product in products_page.object_list %}
         <div class="card current-card">
           {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name off=True text='20' price=product.min_price favor=True is_favorite=product.is_favorite %}
         </div>
@@ -59,8 +59,55 @@
         </p>
       </div>
     {% endif %}
-
   </div>
+
+    <!-- paginação -->
+    {% if products_page.paginator.num_pages > 1 %}
+    <div class="d-flex justify-content-center mt-5">
+      <nav aria-label="Paginação de produtos">
+        <ul class="pagination">
+
+     
+          <li class="page-item {% if not products_page.has_previous %}disabled{% endif %}">
+            {% if products_page.has_previous %}
+              <a class="page-link"
+                href="?page={{ products_page.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if active_filter != 'todos' %}&category={{ active_filter }}{% endif %}">
+                Anterior
+              </a>
+            {% else %}
+              <span class="page-link">Anterior</span>
+            {% endif %}
+          </li>
+
+         
+          {% for num in products_page.paginator.page_range %}
+            <li class="page-item {% if products_page.number == num %}active{% endif %}">
+              <a class="page-link"
+                href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if active_filter != 'todos' %}&category={{ active_filter }}{% endif %}">
+                {{ num }}
+              </a>
+            </li>
+          {% endfor %}
+
+          <li class="page-item {% if not products_page.has_next %}disabled{% endif %}">
+            {% if products_page.has_next %}
+              <a class="page-link"
+                href="?page={{ products_page.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if active_filter != 'todos' %}&category={{ active_filter }}{% endif %}">
+                Próximo
+              </a>
+            {% else %}
+              <span class="page-link">Próximo</span>
+            {% endif %}
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+    {% endif %}
+
+
+
+
 
 </section>
 
