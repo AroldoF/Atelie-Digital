@@ -55,8 +55,8 @@ def profileEdit(request):
         form = FormEditUser(initial={
             'name': user.name,
             'email': user.email,
-            'date': user.date,
-            'cell_phone': user.cell_phone,
+            'date': user.date_of_birth,
+            'cell_phone': user.phone_number,
         })
     else:
         form = FormEditUser()
