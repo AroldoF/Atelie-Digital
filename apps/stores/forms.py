@@ -18,8 +18,9 @@ class StoreCreationForm(forms.ModelForm):
     )
 
     cnpj = forms.CharField(
-        max_length=18,
         label='CNPJ',
+        max_length=18,
+        required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control', 
             'placeholder': '00.000.000/0000-00',
