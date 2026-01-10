@@ -11,7 +11,6 @@ from django.views.decorators.cache import never_cache
 
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
-from apps.core.models import Category
 
 @method_decorator(never_cache, name='dispatch')
 class StoreCreateView(LoginRequiredMixin, CreateView):
@@ -30,7 +29,7 @@ class StoreCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Busca todas as categorias cadastradas para o datalist
-        context['categories'] = Category.objects.all()
+        context['categories'] = StoreCategory.objects.all()
         return context
 
     def form_valid(self, form):
@@ -39,18 +38,21 @@ class StoreCreateView(LoginRequiredMixin, CreateView):
                 # 1. Associa o usuário logado à loja antes de salvar
                 self.object = form.save(commit=False)
                 self.object.user = self.request.user
-                self.object.save()
-
+                
                 # 2. Lógica para Categoria (pegando do campo de texto do template)
-                category_name = self.request.POST.get('category_name').strip().title()
+                category_name = form.cleaned_data.get('category_name').strip().title()
+
                 if category_name:
-                    category_obj, created = Category.objects.get_or_create(name=category_name)
-                    StoreCategory.objects.create(store=self.object, category=category_obj)
+                    category_obj, created = StoreCategory.objects.get_or_create(name=category_name)
+                    self.object.category = category_obj
+
+                self.object.save()
 
                 # 3. Implementar lógica para alterar que o usuário seja também um artesão
                 user = self.request.user
-                user.is_artisan = True  
-                user.save()
+                if not user.is_artisan:
+                    user.is_artisan = True  
+                    user.save()
 
                 messages.success(self.request, "Sua loja foi cadastrada com sucesso! Agora você é um artesão.")
                 return super().form_valid(form)

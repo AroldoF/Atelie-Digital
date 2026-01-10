@@ -3,15 +3,17 @@ from django_cpf_cnpj.validators import validate_cnpj
 from django.core.exceptions import ValidationError
 import re
 
-from .models import Store, StoreCategory
+from .models import Store
  
 class StoreCreationForm(forms.ModelForm):
     category_name = forms.CharField(
         label='Categoria Principal',
+        required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control', 
             'placeholder': 'Ex: Tecidos, Cerâmica...',
-            'list':'category_list'
+            'list':'category_list', 
+            'autocomplete': 'off'
         })
     )
 
@@ -83,16 +85,4 @@ class StoreCreationForm(forms.ModelForm):
         return phone
 
 
-class StoreCategories_Form(forms.ModelForm):
-    class Meta: 
-        model = StoreCategory
-        labels = {'category': 'Categorias da Loja'}
-        fields = ['category']
-        widgets = {
-            'category': forms.TextInput(attrs={
-                'placeholder': 'Digite as Categorias'
-            })
-        }
-
-       
     
