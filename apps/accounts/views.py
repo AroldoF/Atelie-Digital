@@ -48,18 +48,19 @@ def profile(request):
     context = {'user': request.user}
     return render(request, 'accounts/profile.html', context)
 
+
+@never_cache
+@login_required
 def profileEdit(request):
     user = request.user
 
-    if user.is_authenticated:
-        form = FormEditUser(initial={
-            'name': user.name,
-            'email': user.email,
-            'date': user.date_of_birth,
-            'cell_phone': user.phone_number,
-        })
-    else:
-        form = FormEditUser()
+    form = FormEditUser(initial={
+        'name': user.name,
+        'email': user.email,
+        'date_of_birth': user.date_of_birth,
+        'cell_phone': user.phone_number,
+    })
+    
     return render(request, 'accounts/settings_user.html', {'form': form})
 
 def settings(request):
