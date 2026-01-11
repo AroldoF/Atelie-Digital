@@ -171,6 +171,10 @@ class RegisterUserForm(UserCreationForm):
 
 
 class FormEditUser(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)   #usuário logado
+        super().__init__(*args, **kwargs)
+
     profile_image = forms.ImageField(
         label="Foto de Perfil",
         required=False, # False para não obrigar o usuário a trocar a foto toda vez
@@ -210,6 +214,33 @@ class FormEditUser(forms.Form):
             'placeholder': '(DDD) 99999-9999'
         })
     )
+
+
+    # VALIDAÇÕES
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        # Verifica email duplicado ignorando o próprio usuário
+        if User.objects.filter(email=email).exclude(pk=self.user.pk).exists():
+            raise ValidationError("Este e-mail já está em uso.")
+
+        return email
+
+    def clean_cell_phone(self):
+        phone = re.sub(r'\D', '', self.cleaned_data.get('cell_phone'))
+
+        if len(phone) not in (10, 11):
+            raise ValidationError("Telefone inválido.")
+
+        return phone
+
+    def clean_date_of_birth(self):
+        dob = self.cleaned_data.get('date_of_birth')
+
+        if dob and dob > date.today():
+            raise ValidationError("Data de nascimento inválida.")
+
+        return dob
 
 class FormAdressUser(forms.Form):
     cep = forms.CharField(
