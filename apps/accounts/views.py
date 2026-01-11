@@ -54,12 +54,21 @@ def profile(request):
 def profileEdit(request):
     user = request.user
 
-    form = FormEditUser(initial={
-        'name': user.name,
-        'email': user.email,
-        'date_of_birth': user.date_of_birth,
-        'cell_phone': user.phone_number,
-    })
+    if request.method == "POST":
+        form = FormEditUser(request.POST,request.FILES)
+
+        if form.is_valid():
+            messages.success(request, "Dados validados com sucesso!")
+        else:
+            messages.error(request, "Corrija os erros abaixo.")
+
+    else:
+        form = FormEditUser(initial={
+            'name': user.name,
+            'email': user.email,
+            'date_of_birth': user.date_of_birth,
+            'cell_phone': user.phone_number,
+        })
     
     return render(request, 'accounts/settings_user.html', {'form': form})
 
