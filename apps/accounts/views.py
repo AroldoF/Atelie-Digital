@@ -58,7 +58,9 @@ def profileEdit(request):
         form = FormEditUser(request.POST,request.FILES,user=user)
 
         if form.is_valid():
+            update_user_profile(user=user,data=form.cleaned_data)
             messages.success(request, "Dados validados com sucesso!")
+            return redirect('accounts:profile')
         else:
             messages.error(request, "Corrija os erros abaixo.")
 
@@ -68,6 +70,7 @@ def profileEdit(request):
             'email': user.email,
             'date_of_birth': user.date_of_birth,
             'cell_phone': user.phone_number,
+            'cpf': user.cpf,
         },
             user=user
         )
