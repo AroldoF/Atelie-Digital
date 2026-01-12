@@ -18,6 +18,7 @@ from apps.utils.purchases import user_bought_product
 from django.db.models import Q
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
@@ -168,10 +169,9 @@ def search_product(request):
     return render(request, "products/search.html",{ "query": query,"products_page": products_page, "active_filter": active_filter,})
 
 
+class Product_Register_View(PermissionRequiredMixin, View):
+    permission_required = 'products.add_product'
 
-
-
-class Product_Register_View(View):
     def get(self, request):
         context = {
             'form_products': Product_Form(),
