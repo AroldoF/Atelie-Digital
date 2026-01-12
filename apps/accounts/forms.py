@@ -206,6 +206,7 @@ class FormEditUser(forms.Form):
     )
     date_of_birth = forms.DateField(
         label="Data de Nascimento",
+        required=False,
         widget=forms.DateInput(attrs={'type': 'date'})
     )
     cell_phone = forms.CharField(

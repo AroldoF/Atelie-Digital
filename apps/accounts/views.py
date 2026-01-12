@@ -71,7 +71,10 @@ def profileEdit(request):
         form = FormEditUser(initial={
             'name': user.name,
             'email': user.email,
-            'date_of_birth': user.date_of_birth,
+            'date_of_birth': (
+            user.date_of_birth.strftime('%Y-%m-%d')
+            if user.date_of_birth else None
+            ),
             'cell_phone': user.phone_number,
             'cpf': user.cpf,
         },
