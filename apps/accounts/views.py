@@ -8,6 +8,9 @@ from django.contrib.auth import login as login_django
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
+from apps.accounts.services import update_user_profile
+
+
 
 # Create your views here.
 
@@ -60,7 +63,7 @@ def profileEdit(request):
         if form.is_valid():
             update_user_profile(user=user,data=form.cleaned_data)
             messages.success(request, "Dados validados com sucesso!")
-            return redirect('accounts:profile')
+            return redirect('accounts:profile_edit')
         else:
             messages.error(request, "Corrija os erros abaixo.")
 

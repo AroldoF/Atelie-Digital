@@ -12,7 +12,13 @@
     <h1 id="title">Meu Perfil</h1>
 
     <!--Card de usuário-->
-    {% include 'accounts/partials/_card_profile.html' with url='accounts/media/hermione.png' description='imagem do usuário' name='Hermione Granger' email='hermione.leviosa@gmail.com' tag_user='Cliente' profile=True%}
+    {% if user.is_artisan %}
+        {% include 'accounts/partials/_card_profile.html' with url=user.profile.profile_image.url|default:'accounts/media/semFotoPerfil.jpg' description='imagem do usuário' name=user.name email=user.email tag_user='Vendedor' profile=True %}
+    {% else %}
+        {% include 'accounts/partials/_card_profile.html' with url=user.profile.profile_image.url|default:'accounts/media/semFotoPerfil.jpg' description='imagem do usuário' name=user.name email=user.email tag_user='Cliente' profile=True %}
+    {% endif %}
+
+
 
     <div class="row justify-content-between gy-4">
         
@@ -52,10 +58,10 @@
                 </div>
             </div>
             <div class="products-grid">
-                {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' favor=False %}
+                <!-- {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' favor=False %}
                 {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False %}
                 {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' favor=False %}
-                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False %}
+                {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' favor=False %} -->
             </div>
         </div>
     </div>
