@@ -18,6 +18,8 @@ from apps.utils.purchases import user_bought_product
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
+
+
 def detail_product(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
@@ -106,12 +108,24 @@ def detail_product(request, product_id):
     
     return render(request, 'products/detail.html', context)
 
-
 def searchProduct(request):
-    return render(request, 'products/searchProduct.html')
+    query = request.GET.get('q', '').strip()  
+    products = Product.objects.none()
 
-class Product_Register_View(PermissionRequiredMixin, View):
-    permission_required = 'products.add_product'
+    
+    if query:
+        products = Product.objects.filter(
+            name__icontains=query, 
+            is_active=True          
+        )
+
+    context = {
+        'query': query,
+        'products': products,
+    }
+    return render(request, 'products/searchProduct.html', context)
+
+class Product_Register_View(View):
     def get(self, request):
         context = {
             'form_products': Product_Form(),
