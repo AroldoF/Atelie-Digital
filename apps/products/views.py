@@ -15,8 +15,7 @@ from .models import Product, ProductVariant, ProductReview
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg,Count
 from apps.utils.purchases import user_bought_product
-from django.contrib.auth.mixins import PermissionRequiredMixin
-
+from django.db.models import Q
 
 
 
@@ -108,22 +107,24 @@ def detail_product(request, product_id):
     
     return render(request, 'products/detail.html', context)
 
-def searchProduct(request):
-    query = request.GET.get('q', '').strip()  
+def search_product(request):
+    query = request.GET.get("q", "").strip()
     products = Product.objects.none()
 
-    
     if query:
         products = Product.objects.filter(
-            name__icontains=query, 
-            is_active=True          
-        )
+            Q(name__icontains=query) |
+            Q(description__icontains=query),
+            is_active=True
+        ).distinct()
 
     context = {
-        'query': query,
-        'products': products,
+        "query": query,
+        "products": products,
+        "results_count": products.count(),
     }
-    return render(request, 'products/searchProduct.html', context)
+
+    return render(request, "products/search.html", context)
 
 class Product_Register_View(View):
     def get(self, request):
