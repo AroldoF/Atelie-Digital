@@ -15,7 +15,7 @@
             {% if field.name == 'profile_image' %}
                 <div class="form_group profile-upload-wrapper">
                     <div class="image-preview-container">
-                        <img id="img-preview" src="{% static 'accounts/media/hermione.png' %}" alt="Foto de Perfil">
+                       <img id="img-preview" src="{% if user.profile and user.profile.profile_image %}{{ user.profile.profile_image.url }}{% else %}{% static 'accounts/media/semFotoPerfil.jpg' %}{% endif %}" alt="Foto de Perfil">
                     </div>
 
                     <div class="input-hidden-container">

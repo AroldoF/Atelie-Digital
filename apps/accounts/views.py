@@ -8,6 +8,9 @@ from django.contrib.auth import login as login_django
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
+from apps.accounts.services import update_user_profile
+
+
 
 # Create your views here.
 
@@ -48,18 +51,36 @@ def profile(request):
     context = {'user': request.user}
     return render(request, 'accounts/profile.html', context)
 
+
+@never_cache
+@login_required
 def profileEdit(request):
     user = request.user
 
-    if user.is_authenticated:
+    if request.method == "POST":
+        form = FormEditUser(request.POST,request.FILES,user=user)
+
+        if form.is_valid():
+            update_user_profile(user=user,data=form.cleaned_data)
+            messages.success(request, "Dados validados com sucesso!")
+            return redirect('accounts:profile_edit')
+        else:
+            messages.error(request, "Corrija os erros abaixo.")
+
+    else:
         form = FormEditUser(initial={
             'name': user.name,
             'email': user.email,
-            'date': user.date,
-            'cell_phone': user.cell_phone,
-        })
-    else:
-        form = FormEditUser()
+            'date_of_birth': (
+            user.date_of_birth.strftime('%Y-%m-%d')
+            if user.date_of_birth else None
+            ),
+            'cell_phone': user.phone_number,
+            'cpf': user.cpf,
+        },
+            user=user
+        )
+    
     return render(request, 'accounts/settings_user.html', {'form': form})
 
 def settings(request):

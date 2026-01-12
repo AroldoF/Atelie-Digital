@@ -4,7 +4,7 @@
 {% block content %}
 
 <div>
-    {% include "accounts/partials/forms.html" with btn_text="Salvar" form=form %}
+    {% include "accounts/partials/forms.html" with btn_text="Salvar" form=form action_url="accounts:profile_edit" %}
 </div>
 
 {% endblock %}
