@@ -188,7 +188,8 @@ class FormEditUser(forms.Form):
             'placeholder': '00122099098',
             'disabled': 'disabled'
         }),
-        help_text= "Insira somente a numeração"
+        help_text= "Insira somente a numeração",
+        required=False
     )
     name = forms.CharField(
         max_length=50,
