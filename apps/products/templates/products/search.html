@@ -1,0 +1,114 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block title %}Pesquisa de produtos{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'products/css/searchProduct.css' %}">
+{% endblock style %}
+
+{% block main %}
+
+<section id="search-product">
+
+  <div class="area-categories-textResult">
+
+    <div class="categories">
+      
+    {% include 'products/partials/category.html' with search=True %}
+
+    {% include 'products/partials/category.html' with type=True title="Cerâmica" slug="ceramica" active_filter=active_filter %}
+
+    {% include 'products/partials/category.html' with type=True title="Tecidos" slug="tecidos" active_filter=active_filter %}
+
+    {% include 'products/partials/category.html' with type=True title="Madeira" slug="madeira" active_filter=active_filter %}
+
+    </div>
+
+    {% if query %}
+    <p class="textResult">
+      Resultados para "<strong>{{ query }}</strong>"
+    </p>
+
+    {% elif active_filter %}
+      <p class="textResult">
+        Resultados da categoria
+        <strong>{{ active_filter|title }}</strong>
+      </p>
+
+    {% else %}
+      <p class="textResult">
+      
+      </p>
+    {% endif %}
+
+  </div>
+
+  <div id="areaResultsCards">
+
+    {% if products_page %}
+      {% for product in products_page.object_list %}
+        <div class="card current-card">
+          {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name off=True text='20' price=product.min_price favor=True is_favorite=product.is_favorite %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="d-flex justify-content-center align-items-center w-100">
+        <p class="text-muted text-center mt-5">
+          Nenhum produto encontrado.
+        </p>
+      </div>
+    {% endif %}
+  </div>
+
+    <!-- paginação -->
+    {% if products_page.paginator.num_pages > 1 %}
+    <div class="d-flex justify-content-center mt-5">
+      <nav aria-label="Paginação de produtos">
+        <ul class="pagination">
+
+     
+          <li class="page-item {% if not products_page.has_previous %}disabled{% endif %}">
+            {% if products_page.has_previous %}
+              <a class="page-link"
+                href="?page={{ products_page.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if active_filter != 'todos' %}&category={{ active_filter }}{% endif %}">
+                Anterior
+              </a>
+            {% else %}
+              <span class="page-link">Anterior</span>
+            {% endif %}
+          </li>
+
+         
+          {% for num in products_page.paginator.page_range %}
+            <li class="page-item {% if products_page.number == num %}active{% endif %}">
+              <a class="page-link"
+                href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if active_filter != 'todos' %}&category={{ active_filter }}{% endif %}">
+                {{ num }}
+              </a>
+            </li>
+          {% endfor %}
+
+          <li class="page-item {% if not products_page.has_next %}disabled{% endif %}">
+            {% if products_page.has_next %}
+              <a class="page-link"
+                href="?page={{ products_page.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if active_filter != 'todos' %}&category={{ active_filter }}{% endif %}">
+                Próximo
+              </a>
+            {% else %}
+              <span class="page-link">Próximo</span>
+            {% endif %}
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+    {% endif %}
+
+
+
+
+
+</section>
+
+{% endblock main %}

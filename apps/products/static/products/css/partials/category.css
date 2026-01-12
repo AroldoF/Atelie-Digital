@@ -13,9 +13,15 @@
 }
 
 .category-btn.active {
-  background: var(--color-surface);
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  box-shadow: var(--shadow-focus);
 }
 
+.category-btn:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 15%, var(--color-background));
+  color: var(--color-primary-dark);
+}
 
 @media (max-width: 320px) {
   

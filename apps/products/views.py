@@ -15,7 +15,16 @@ from .models import Product, ProductVariant, ProductReview
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg,Count
 from apps.utils.purchases import user_bought_product
+from django.db.models import Q
+from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
+from django.core.paginator import Paginator
 from django.contrib.auth.mixins import PermissionRequiredMixin
+
+CATEGORY_KEYWORDS = {
+    "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
+    "madeira": ["madeira","caixa", "caixinha", "madeira"],
+    "ceramica": ["cerâmica","vaso", "caneca", "prato"],
+}
 
 
 def detail_product(request, product_id):
@@ -107,11 +116,62 @@ def detail_product(request, product_id):
     return render(request, 'products/detail.html', context)
 
 
-def searchProduct(request):
-    return render(request, 'products/searchProduct.html')
+def search_product(request):
+    query = request.GET.get("q", "").strip()
+    category = request.GET.get("category")
+
+    if category:
+        category = category.lower()
+
+    products = Product.objects.filter(is_active=True)
+    active_filter = category if category else "todos"
+
+    # Busca textual
+    if query:
+        vector = (
+            SearchVector("name", weight="A", config="portuguese") +
+            SearchVector("description", weight="B", config="portuguese")
+        )
+        search_query = SearchQuery(query, config="portuguese")
+
+        products = products.annotate(
+            rank=SearchRank(vector, search_query),
+            similarity=(
+                TrigramSimilarity("name", query) +
+                TrigramSimilarity("description", query)
+            ),
+        ).filter(
+            Q(rank__gt=0) | Q(similarity__gt=0.2)
+        )
+
+    # Filtro por categoria
+    if category and category in CATEGORY_KEYWORDS:
+        include_q = Q()
+        for keyword in CATEGORY_KEYWORDS[category]:
+            include_q |= Q(name__icontains=keyword)
+            include_q |= Q(description__icontains=keyword)
+
+        products = products.filter(include_q)
+
+    # Ordenação
+    if query:
+        products = products.order_by("-rank", "-similarity")
+    else:
+        products = products.order_by("name")
+
+    products = products.distinct()
+
+    # paginação
+    paginator = Paginator(products, 4) 
+    page_number = request.GET.get("page")
+    products_page = paginator.get_page(page_number)
+
+    return render(request, "products/search.html",{ "query": query,"products_page": products_page, "active_filter": active_filter,})
+
 
 class Product_Register_View(PermissionRequiredMixin, View):
     permission_required = 'products.add_product'
+
     def get(self, request):
         context = {
             'form_products': Product_Form(),
