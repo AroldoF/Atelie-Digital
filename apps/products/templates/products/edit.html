@@ -69,23 +69,33 @@
               {% for field in form.visible_fields %}
                 <div class="mb-2">
                   {% if field.name == 'images' %}
-                  <div class="upload-container mt-4">
-                    <label class="upload-box">
-                      <div class="upload-content">
-                        <p class="upload-text">Clique para fazer upload das imagens</p>
-                        <p class="upload-subtext">
-                          Formatos suportados: JPG, PNG, WEBP (máx. 5MB)
-                        </p>
-                      </div>
+<div class="upload-container mt-4">
+  <label class="upload-box">
+    <div class="upload-content">
+      <p class="upload-text">Clique para adicionar mais imagens</p>
+    </div>
 
-                      <div class="image-preview d-flex flex-wrap justify-content-start"></div>
+    <div class="image-preview d-flex flex-wrap justify-content-start gap-2">
+      
+      {# --- IMAGENS QUE JÁ ESTÃO NO BANCO --- #}
+      {% if form.instance.pk %}
+        {% for img_obj in form.instance.images.all %}
+          <div class="preview-wrapper position-relative" id="ex-img-{{ img_obj.variant_image_id }}">
+            <img src="{{ img_obj.image.url }}" class="preview-thumb mt-2">
+            <span class="badge bg-success position-absolute top-0 start-0">Salva</span>
+            
+            <button type="button" class="btn btn-sm btn-danger remove-existing-img" 
+                    onclick="removeExistingImage('{{ img_obj.variant_image_id }}')">×</button>
+          </div>
+        {% endfor %}
+      {% endif %}
+      
+      </div>
 
-                      {{ field }}
-                    </label>
-                  </div>
-
-        
-                  {% else %}
+    {{ field }}
+  </label>
+</div>
+                    {% else %}
                   {{ field|as_crispy_field }}
                   {% endif %}
                 </div>
@@ -270,7 +280,52 @@ document.addEventListener("change", function (event) {
   input.files = dt.files;
   text.textContent = `${dt.files.length} imagem(ns) selecionada(s)`;
 });
+document.addEventListener("change", function (event) {
+  const input = event.target;
+  if (input.tagName !== "INPUT" || input.type !== "file") return;
 
+  const uploadBox = input.closest(".upload-box");
+  const preview = uploadBox.querySelector(".image-preview");
+  const text = uploadBox.querySelector(".upload-text");
+
+  // Remove APENAS os previews de fotos novas anteriores (mantém as do banco)
+  preview.querySelectorAll(".preview-new").forEach(el => el.remove());
+
+  const files = Array.from(input.files);
+  if (!files.length) return;
+
+  files.forEach(file => {
+    if (!file.type.startsWith("image/")) return;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "preview-wrapper preview-new position-relative"; // Classe preview-new
+
+      const thumb = document.createElement("img");
+      thumb.src = e.target.result;
+      thumb.className = "preview-thumb mt-2";
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "remove-image btn btn-sm btn-danger position-absolute top-0 end-0";
+      removeBtn.textContent = "×";
+
+      removeBtn.onclick = ev => {
+        ev.preventDefault();
+        const newDt = new DataTransfer();
+        [...input.files].forEach(f => { if (f !== file) newDt.items.add(f); });
+        input.files = newDt.files;
+        wrapper.remove();
+      };
+
+      wrapper.appendChild(thumb);
+      wrapper.appendChild(removeBtn);
+      preview.appendChild(wrapper);
+    };
+    reader.readAsDataURL(file);
+  });
+});
 </script>
 {% endblock main %}
 

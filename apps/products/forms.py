@@ -21,7 +21,26 @@ class Product_Form(forms.ModelForm):
             'image': forms.ClearableFileInput()
         }
 
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("widget", MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        print('>>>', data, initial)
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = [single_file_clean(data, initial)]
+        return result
+
 class Product_Variant_Form(forms.ModelForm): 
+    images = MultipleFileField()
     class Meta:
         model = ProductVariant
         exclude = ['product', 'is_active']
@@ -77,7 +96,6 @@ class Product_Variant_Form(forms.ModelForm):
                 self.add_error('stock', 'Para produtos em estoque, informe a quantidade.')
 
         return cleaned_data
-
        
 from django.forms.models import BaseInlineFormSet
 from django.forms import HiddenInput
