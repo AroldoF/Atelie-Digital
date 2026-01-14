@@ -4,7 +4,7 @@ from apps.stores.models import Store
 from apps.products.models import ProductVariant
 
 class Order(models.Model):
-    ORDER_TYPE_CHOICES = [
+    ORDER_STATUS_CHOICES = [
         ('PENDING', 'Pendente'),
         ('IN_PROGRESS', 'Em andamento'),
         ('COMPLETED', 'Concluído'),
@@ -14,8 +14,8 @@ class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     store = models.ForeignKey(Store, related_name='orders', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='orders', on_delete=models.CASCADE)
-    type = models.CharField(choices=ORDER_TYPE_CHOICES)
-    created_at = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(choices=ORDER_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.type} - {self.created_at}'
