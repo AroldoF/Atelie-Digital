@@ -29,7 +29,7 @@
             {% else %}
                 <div class="form_group {% if field.errors %}has-error{% endif %}">
                     <label for="{{ field.id_for_label }}" class="form_label">{{ field.label }}</label> 
-                    {{ field }}
+                    {{ field }} 
 
                     {% if field.errors %}
                         <ul class="error-list">

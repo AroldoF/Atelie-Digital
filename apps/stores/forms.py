@@ -38,8 +38,8 @@ class StoreCreationForm(forms.ModelForm):
             'email': 'Email', 
             'phone_number': "Telefone da loja", 
             'cnpj': 'CNPJ',
-            'image': 'Imagem',
-            'banner': 'Banner da Loja'
+            'image': '',
+            'banner': ''
         }
         widgets = {
             'name': forms.TextInput(attrs={

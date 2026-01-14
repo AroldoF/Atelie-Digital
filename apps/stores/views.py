@@ -83,12 +83,5 @@ def artisan_products(request):
 def artisan_orders(request):
     return render(request, 'stores/artisan_orders_table.html', {'active_page': 'orders'})
 
-# class StoreCreationView(View):
-#     def get(self, request):
-#         context = {
-#             'form': StoreCreationForm(),
-#             'form_category': StoreCategories_Form()
-#         }
-#         return render(request, 'stores/register.html', context)
     
 

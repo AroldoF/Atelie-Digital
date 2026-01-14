@@ -17,7 +17,7 @@ class Store(models.Model):
     store_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='stores', on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=False, null=True)
     category = models.ForeignKey(StoreCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='stores')
     phone_number = models.CharField(unique=True, max_length=15)
     date_creation = models.DateTimeField(auto_now_add=True)
