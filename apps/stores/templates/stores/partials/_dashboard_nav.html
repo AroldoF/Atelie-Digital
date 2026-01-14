@@ -1,11 +1,11 @@
 {% load static %}
 
 <nav class="dashboard-nav">
-    <a href="{% url 'dashboard' %}" class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+    <a href="{% url 'stores:dashboard' store_id=store.store_id %}" class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">
         Dashboard
     </a>
 
-    <a href="{% url 'storeProfile' %}" class="nav-item {% if active_page == 'storeProfile' %}active{% endif %}">
+    {% comment %} <a href="{% url 'storeProfile' %}" class="nav-item {% if active_page == 'storeProfile' %}active{% endif %}">
         Sua Loja
     </a>
 
@@ -15,5 +15,16 @@
 
     <a href="{% url 'artisan_orders' %}" class="nav-item {% if active_page == 'orders' %}active{% endif %}">
         Pedidos
+    </a>  {% endcomment %}
+    <a href="#" class="nav-item {% if active_page == 'storeProfile' %}active{% endif %}">
+        Sua Loja
     </a>
+
+    <a href="#" class="nav-item {% if active_page == 'products' %}active{% endif %}">
+        Produtos
+    </a>
+
+    <a href="#" class="nav-item {% if active_page == 'orders' %}active{% endif %}">
+        Pedidos
+    </a> 
 </nav>

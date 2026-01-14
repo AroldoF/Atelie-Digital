@@ -51,20 +51,6 @@ class LoginAuthenticationForm(AuthenticationForm):
         })
     )
 
-# class FormLogin(forms.Form):
-#     email = forms.EmailField(
-#         label="Email", 
-#         widget=forms.EmailInput(attrs={
-#             'placeholder': 'exemplo@gmail.com'
-#         })
-#     )
-#     password = forms.CharField(
-#         label="Senha", 
-#         widget=forms.PasswordInput(attrs={
-#             'placeholder': 'Insira sua senha'
-#         })
-#     )
-
 class RegisterUserForm(UserCreationForm):
     cpf = forms.CharField(
         max_length=14,

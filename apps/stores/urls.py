@@ -4,7 +4,7 @@ from . import views
 app_name = 'stores'
 
 urlpatterns = [
-    path('register/', views.Store_Register_View.as_view(), name='register'),
+    path('register/', views.StoreCreateView.as_view(), name='register'),
 
     # rotas dinâmicas
     path('<int:store_id>/dashboard/', views.dashboard, name='dashboard'),

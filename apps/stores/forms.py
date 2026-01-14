@@ -1,8 +1,34 @@
 from django import forms
 from django_cpf_cnpj.validators import validate_cnpj
-from .models import Store, StoreCategory
+from django.core.exceptions import ValidationError
+import re
 
-class Store_Form(forms.ModelForm):
+from .models import Store
+ 
+class StoreCreationForm(forms.ModelForm):
+    category_name = forms.CharField(
+        label='Categoria Principal',
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'placeholder': 'Ex: Tecidos, Cerâmica...',
+            'list':'category_list', 
+            'autocomplete': 'off'
+        })
+    )
+
+    cnpj = forms.CharField(
+        label='CNPJ',
+        max_length=18,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'placeholder': '00.000.000/0000-00',
+            'inputmode': 'numeric'
+        }),
+        help_text= "Insira somente a numeração"
+    )
+
     class Meta:
         model = Store
         fields = ['name', 'description', 'email', 'phone_number', 'cnpj', 'image', 'banner']
@@ -12,8 +38,8 @@ class Store_Form(forms.ModelForm):
             'email': 'Email', 
             'phone_number': "Telefone da loja", 
             'cnpj': 'CNPJ',
-            'image': 'Imagem',
-            'banner': 'Banner da Loja'
+            'image': '',
+            'banner': ''
         }
         widgets = {
             'name': forms.TextInput(attrs={
@@ -32,28 +58,32 @@ class Store_Form(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '(11) 99999-9999',
-                'inputmode': 'numeric',
-                'id': 'phone_number'
-            }),
-            'cnpj': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': '00.000.000/0000-00',
-                'inputmode': 'numeric',
-                'id': 'cnpj'
+                'inputmode': 'numeric'
             }),
         }
 
+    def clean_cnpj(self):
+        cnpj = self.cleaned_data.get('cnpj')
 
-class StoreCategories_Form(forms.ModelForm):
-    class Meta: 
-        model = StoreCategory
-        labels = {'category': 'Categorias da Loja'}
-        fields = ['category']
-        widgets = {
-            'category': forms.TextInput(attrs={
-                'placeholder': 'Digite as Categorias'
-            })
-        }
+        if not cnpj:
+            return None
+    
+        cnpj = re.sub(r'\D', '', cnpj)
 
-       
+        try:
+            validate_cnpj(cnpj)
+        except ValidationError:
+            raise forms.ValidationError("CNPJ inválido")
+
+        return cnpj
+    
+    def clean_phone_number(self):
+        phone = re.sub(r'\D', '', self.cleaned_data['phone_number'])
+
+        if len(phone) not in (10, 11):
+            raise forms.ValidationError("Telefone inválido")
+
+        return phone
+
+
     
