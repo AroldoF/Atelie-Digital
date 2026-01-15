@@ -1,37 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* EXIBIÇÃO DA MÉDIA*/
+  /* --- 1. EXIBIÇÃO DA MÉDIA DE ESTRELAS --- */
   function renderStaticRatings() {
-  const avgElement = document.getElementById("avg-data");
-  if (!avgElement) return;
+    const avgElement = document.getElementById("avg-data");
+    if (!avgElement) return;
 
-  const averageRating = parseFloat(avgElement.value.replace(",", ".")) || 0;
+    // Substitui vírgula por ponto para garantir float correto
+    const averageRating = parseFloat(avgElement.value.replace(",", ".")) || 0;
 
-  document
-    .querySelectorAll('.rating-component[data-mode="display"]')
-    .forEach(component => {
-      const stars = component.querySelectorAll(".imgStar");
+    document
+      .querySelectorAll('.rating-component[data-mode="display"]')
+      .forEach(component => {
+        const stars = component.querySelectorAll(".imgStar");
 
-      stars.forEach((star, index) => {
-        const level = index + 1;
+        stars.forEach((star, index) => {
+          const level = index + 1;
 
-        star.src =
-          level <= Math.floor(averageRating)
-            ? "/static/products/media/icons/star-filled.svg"
-            : "/static/products/media/icons/star.svg";
+          star.src =
+            level <= Math.floor(averageRating)
+              ? "/static/products/media/icons/star-filled.svg"
+              : "/static/products/media/icons/star.svg";
 
-        // bloqueia interação
-        star.style.pointerEvents = "none";
-        star.style.cursor = "default";
+          // Bloqueia interação visual
+          star.style.pointerEvents = "none";
+          star.style.cursor = "default";
+        });
       });
-    });
-}
-
-renderStaticRatings();
+  }
+  renderStaticRatings();
 
 
-
-  /* BARRAS DE CLASSIFICAÇÃO*/
+  /* --- 2. BARRAS DE CLASSIFICAÇÃO (PROGRESS BARS) --- */
   function renderRatingBars() {
     const rows = document.querySelectorAll(".rating-row");
     if (!rows.length) return;
@@ -41,40 +40,45 @@ renderStaticRatings();
       const bar = row.querySelector(".progress-bar");
       const text = row.querySelector(".percentage-text");
 
-      bar.style.width = percentage + "%";
-      text.textContent = Math.round(percentage) + "%";
+      if (bar && text) {
+        bar.style.width = percentage + "%";
+        text.textContent = Math.round(percentage) + "%";
+      }
     });
   }
   renderRatingBars();
 
 
-  /* ESTRELAS INTERATIVAS DO MODAL */
+  /* --- 3. ESTRELAS INTERATIVAS DO MODAL --- */
   function initInteractiveStars() {
     const allStars = document.querySelectorAll(".imgStar");
     const ratingInput = document.getElementById("rating-input");
 
+    // Se não tiver input de rating (modal não existe), não faz nada
+    if (!ratingInput) return;
+
     allStars.forEach(star => {
       const isInsideModal = star.closest("#modalAvaliar");
 
-      // fora do modal  bloqueado
+      // Fora do modal -> Bloqueado
       if (!isInsideModal) {
         star.style.pointerEvents = "none";
         star.style.cursor = "default";
         return;
       }
 
-      // dentro do modal  interativo
+      // Dentro do modal -> Interativo
       star.style.pointerEvents = "auto";
       star.style.cursor = "pointer";
 
       const value = parseInt(star.dataset.value);
 
-      // Hover
+      // Evento Hover
       star.addEventListener("mouseenter", () => {
         highlightStars(value, isInsideModal);
       });
 
-      // Clique
+      // Evento Click
       star.addEventListener("click", () => {
         ratingInput.value = value;
         highlightStars(value, isInsideModal, true);
@@ -96,7 +100,19 @@ renderStaticRatings();
     if (!persist) {
       container.addEventListener(
         "mouseleave",
-        () => resetStars(container),
+        () => {
+           // Só reseta se o usuário não tiver clicado ainda (input zerado)
+           // Ou reseta visualmente para a nota salva
+           const ratingInput = document.getElementById("rating-input");
+           const savedValue = parseInt(ratingInput.value) || 0;
+           
+           if(savedValue === 0) {
+              resetStars(container);
+           } else {
+              // Restaura visualmente a nota clicada
+              highlightStars(savedValue, container, true);
+           }
+        },
         { once: true }
       );
     }
@@ -112,7 +128,7 @@ renderStaticRatings();
   initInteractiveStars();
 
 
-  /* MOBILE CAROUSEL */
+  /* --- 4. MOBILE CAROUSEL --- */
   function initMobileCarousel(container) {
     const items = container.querySelectorAll(".carouselItem");
     const prevBtn = container.querySelector(".carousel-btn.prev");
@@ -125,6 +141,7 @@ renderStaticRatings();
     const DOT_ACTIVE = "/static/products/media/icons/circleCurrent.svg";
     let index = 0;
 
+    // Gera os dots dinamicamente
     dotsContainer.innerHTML = "";
     items.forEach((_, i) => {
       const dot = document.createElement("img");
@@ -149,17 +166,22 @@ renderStaticRatings();
       updateCarousel();
     }
 
-    prevBtn.onclick = () =>
+    prevBtn.onclick = (e) => {
+      e.preventDefault(); // Evita scroll ou submit acidental
       goTo((index - 1 + items.length) % items.length);
-    nextBtn.onclick = () =>
+    }
+    
+    nextBtn.onclick = (e) => {
+      e.preventDefault();
       goTo((index + 1) % items.length);
+    }
   }
 
   const mobileCarousel = document.querySelector(".mobile-only");
   if (mobileCarousel) initMobileCarousel(mobileCarousel);
 
 
-  /* GALERIA DESKTOP */
+  /* --- 5. GALERIA DESKTOP --- */
   function initDesktopGallery() {
     const mainImage = document.getElementById("mainImageDesktop");
     const thumbs = document.querySelectorAll(".thumbnail");
@@ -168,46 +190,39 @@ renderStaticRatings();
 
     thumbs.forEach(thumb => {
       thumb.onclick = () => {
-        mainImage.src = thumb.dataset.src;
+        // Pega URL da imagem grande via data-src
+        const bigSrc = thumb.dataset.src || thumb.src;
+        mainImage.src = bigSrc;
+
+        // Atualiza classe active
         thumbs.forEach(t => t.classList.remove("active"));
         thumb.classList.add("active");
       };
     });
   }
   initDesktopGallery();
-  
-  
-  
+
 });
 
 
-// Controle de quantidade do produto baseado no estoque.
+/* --- 6. CONTROLE DE QUANTIDADE (GLOBAL) --- */
 window.changeQuantity = function (delta) {
   const input = document.getElementById("quantity");
-  const btnPlus = document.getElementById("qty-plus");
-  const btnMinus = document.getElementById("qty-minus");
-
   if (!input) return;
 
   const min = parseInt(input.min) || 1;
+  
+  // Pega o max definido no HTML (vem do backend)
+  // Se não tiver max (produto sob encomenda), define Infinito
   const maxAttr = input.getAttribute("max");
   const max = maxAttr ? parseInt(maxAttr) : Infinity;
 
-  let value = parseInt(input.value) || min;
-  const nextValue = value + delta;
+  let currentValue = parseInt(input.value) || min;
+  const nextValue = currentValue + delta;
 
-  // Não deixa ultrapassar o estoque
-  if (nextValue > max) {
-    btnPlus.disabled = true;
-    return;
-  }
-
-  // Quantidade válida
-  btnPlus.disabled = false;
-  input.value = Math.max(min, nextValue);
-
-  // Desativa botão − no mínimo
-  btnMinus.disabled = input.value <= min;
+  // Validação simples: só atualiza se estiver dentro dos limites
+  if (nextValue >= min && nextValue <= max) {
+    input.value = nextValue;
+  } 
+  
 };
-
-
