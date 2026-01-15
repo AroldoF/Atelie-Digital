@@ -16,7 +16,7 @@ class ProductQuerySet(models.QuerySet):
     def with_total_sales(self):
         return self.annotate(
             total_sales=Coalesce(
-                Sum('variants__order_products__quantity'),
+                Sum('variants__order_items__quantity'),
                 Value(0)
             )
         )
