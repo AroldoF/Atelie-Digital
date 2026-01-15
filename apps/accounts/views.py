@@ -9,11 +9,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from apps.accounts.services import update_user_profile
-
-
-
-# Create your views here.
-
+from apps.products.models import Product
 
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
@@ -103,8 +99,23 @@ def addressEdit(request):
     form = FormAdressUser(request.POST or None)
     return render(request, 'accounts/settings_address.html', {'form': form})
 
+
 def favoriteProduct(request):
-    return render(request, 'products/favoriteProducts.html')
+    user = request.user
+    products = Product.objects.cards_with_favorites(user).filter(is_favorite=True)
+
+    order = request.GET.get('sort')
+    
+    if order == 'recentes':
+        products = products.order_by('-pk') 
+    elif order == 'antigos':
+        products = products.order_by('pk')
+    elif order == 'preco_menor':
+        products = products.order_by('min_price')
+    elif order == 'preco_maior':
+        products = products.order_by('-min_price')
+
+    return render(request, 'products/favoriteProducts.html', context={'products': products})
 
 def usersOrders(request):
     return render(request, "orders/list.html")
