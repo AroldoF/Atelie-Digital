@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from apps.accounts.models import Address
 from .models import Order
+from django.contrib.auth.decorators import login_required
 
 def orders_detail(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
@@ -13,6 +14,7 @@ def shipping(request):
     context = {'addresses': addresses}
     return render(request, 'orders/shipping.html', context)
 
+@login_required
 def shopping_cart(request):
     return render(request, 'orders/shopping_cart.html')
 
