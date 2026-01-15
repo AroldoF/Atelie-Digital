@@ -22,7 +22,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from decimal import Decimal
 from django.db import transaction
 from django.contrib import messages
-from .forms import Product_Form, Attributes_Form, VarianteInlineFormSet
+from .forms import ProductForm, VarianteInlineFormSet
 from .models import Product, Favorite, ProductVariant, VariantAttribute, Attribute, VariantImage
 from django.http import HttpResponse, JsonResponse
 import json
@@ -198,18 +198,16 @@ class ProductCreateView(PermissionRequiredMixin, View):
     
     def get(self, request):
         context = {
-            "product_form": Product_Form(prefix="product"),
+            "product_form": ProductForm(prefix="product"),
             "variant_formset": VarianteInlineFormSet(
                 instance=None,
                 prefix="variants"
             ),
-            # Usado APENAS como ponte para Attribute
-            "attribute_variant": Attributes_Form(),
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
-        product_form = Product_Form(
+        product_form = ProductForm(
             request.POST,
             request.FILES,
             prefix="product"
@@ -221,33 +219,12 @@ class ProductCreateView(PermissionRequiredMixin, View):
             prefix="variants"
         )
 
-        variants_json = request.POST.get("variants_json")
-
         # 1️⃣ Validação básica
         if not product_form.is_valid() or not variant_formset.is_valid():
-            return render(
-                request,
-                self.template_name,
-                self._context_with_errors(product_form, variant_formset)
-            )
-
-        if not variants_json:
-            product_form.add_error(None, "Adicione ao menos uma variante.")
-            return render(
-                request,
-                self.template_name,
-                self._context_with_errors(product_form, variant_formset)
-            )
-
-        try:
-            variants_data = json.loads(variants_json)
-        except json.JSONDecodeError:
-            product_form.add_error(None, "Dados das variantes inválidos.")
-            return render(
-                request,
-                self.template_name,
-                self._context_with_errors(product_form, variant_formset)
-            )
+            return render(request, self.template_name, {
+                'product_form': product_form,
+                'variant_formset': variant_formset
+            })
 
         store = request.user.stores.first()
 
@@ -264,143 +241,10 @@ class ProductCreateView(PermissionRequiredMixin, View):
             # 4️⃣ Salva TODAS as variantes (VALIDADAS)
             variant_formset.save()
 
-            # 5️⃣ Atributos (usando a ordem do formset)
-            for form, variant_data in zip(variant_formset.forms, variants_data):
-                variant = form.instance
-
-                imagens = form.cleaned_data.get('images')
-
-                if imagens:
-                    for image in imagens:
-                        VariantImage.objects.create(
-                            product_variant = variant,
-                            image = image
-                        )
-                for attr_data in variant_data.get("attributes", []):
-                    attr_form = Attributes_Form(
-                        data={
-                            "attribute": attr_data["attribute_id"],
-                            "value": attr_data["value"],
-                        }
-                    )
-
-                    if not attr_form.is_valid():
-                        form.add_error(
-                            None,
-                            f"Atributo inválido: {attr_form.errors.as_text()}"
-                        )
-                        return render(
-                            request,
-                            self.template_name,
-                            self._context_with_errors(product_form, variant_formset)
-                        )
-
-                    variant_attr = attr_form.save(commit=False)
-                    variant_attr.product_variant = variant
-                    variant_attr.save()
-
 
         messages.success(request, "Produto cadastrado com sucesso!")
         return redirect("index")
 
-    def _context_with_errors(self, product_form, variant_formset):
-        return {
-            "product_form": product_form,
-            "variant_formset": variant_formset,
-            "attribute_variant": Attributes_Form(),
-        }
-
-import json
-from django.db import transaction
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-
-def product_edit(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    
-    if request.method == 'GET':
-        product_form = Product_Form(instance=product, prefix="product")
-        variant_formset = VarianteInlineFormSet(instance=product, prefix="variants")
-        
-        # Prepara os dados de atributos para o JavaScript
-        for form in variant_formset.forms:
-            if form.instance.pk:
-                # 🔴 CORREÇÃO: Usando o related_name 'variant_attributes' do seu model
-                attrs = form.instance.variant_attributes.all() 
-                attrs_data = [
-                    {
-                        "attribute_id": a.attribute.attribute_id, # Seu PK é attribute_id
-                        "value": a.value
-                    } 
-                    for a in attrs
-                ]
-                form.initial_attributes_json = json.dumps(attrs_data)
-            else:
-                form.initial_attributes_json = "[]"
-
-    elif request.method == 'POST':
-        product_form = Product_Form(request.POST, request.FILES, instance=product, prefix="product")
-        variant_formset = VarianteInlineFormSet(request.POST, request.FILES, instance=product, prefix="variants")
-        
-        deleted_variants_json = request.POST.get("deleted_variants")
-        
-        if product_form.is_valid() and variant_formset.is_valid():
-            try:
-                with transaction.atomic():
-                    product = product_form.save()
-                    
-                    # Processa deleções de variantes enviadas pelo JS
-                    if deleted_variants_json:
-                        deleted_ids = json.loads(deleted_variants_json)
-                        ProductVariant.objects.filter(product_variant_id__in=deleted_ids, product=product).delete()
-
-                    # Salva as variantes (Formset)
-                    variants = variant_formset.save()
-
-                    # Processa os Atributos (VariantAttribute) via JSON
-                    for i, form in enumerate(variant_formset.forms):
-                        # Se o form foi marcado para deletar pelo formset padrão do Django
-                        if form in variant_formset.deleted_forms:
-                            continue
-                            
-                        variant = form.instance
-                        if not variant.pk:
-                            continue
-
-                        # Pega o JSON de atributos específico desta variante (enviado pelo JS)
-                        attr_json = request.POST.get(f"variants-{i}-attributes")
-                        
-                        if attr_json:
-                            attributes_data = json.loads(attr_json)
-                            
-                            # 🔴 CORREÇÃO: Usando o related_name correto para limpar os antigos
-                            variant.variant_attributes.all().delete() 
-                            
-                            for attr_item in attributes_data:
-                                if attr_item.get("attribute_id") and attr_item.get("value"):
-                                    # 🔴 CORREÇÃO: Nome do Model é VariantAttribute e FK é product_variant
-                                    VariantAttribute.objects.create(
-                                        product_variant=variant,
-                                        attribute_id=attr_item["attribute_id"],
-                                        value=attr_item["value"]
-                                    )
-                    
-                    messages.success(request, "Produto atualizado com sucesso!")
-                    return redirect("index")
-            except Exception as e:
-                messages.error(request, f"Erro ao salvar: {str(e)}")
-        else:
-            # Em caso de erro de validação, mantém os dados no template
-            for i, form in enumerate(variant_formset.forms):
-                form.initial_attributes_json = request.POST.get(f"variants-{i}-attributes", "[]")
-
-    context = {
-        "product_form": product_form,
-        "variant_formset": variant_formset,
-        "attribute_variant": Attributes_Form(), # Usado apenas para renderizar o template vazio
-        "is_edit": True,
-    }
-    return render(request, 'products/register.html', context)
 
 @require_POST
 @login_required

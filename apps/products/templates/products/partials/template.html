@@ -1,0 +1,121 @@
+{% load crispy_forms_tags %}  
+
+  <!-- template para clonar uma nova variante (empty_form do formset) -->
+<template id="emptyVariantTemplate">
+<div class="card variant-card mb-3 p-3" data-index="__prefix__">
+    <div class="d-flex justify-content-between align-items-start">
+    <h5 class="mb-0">Variante __num__</h5>
+    <div>
+        <button type="button" class="btn btn-sm btn-danger remove-variant">Remover</button>
+    </div>
+    </div>
+
+    <div class="variant-fields mt-2">
+    {% for hidden in variant_formset.empty_form.hidden_fields %}
+        {{ hidden.as_widget }}
+    {% endfor %}
+
+    {% for field in variant_formset.empty_form.visible_fields %}
+        <div class="mb-2">
+        {{ field|as_crispy_field }}
+        </div>
+    {% endfor %}
+    </div>
+
+    <!-- preview das imagens desta variante -->
+    {{ variant_formset.empty_form.nested_images.management_form }}
+    <h6>Imagens da Variante</h6>
+    <div class="image-list mb-2 d-flex flex-wrap gap-3">
+        {% for image_form in variant_formset.empty_form.nested_images.forms %}
+        <label class='label-image' for="{{ image_form.image.id_for_label }}">
+        <div class="upload-box position-relative d-inline-block me-2 mb-2 align-items-center justify-content-center">
+        <div class="image-preview align-items-center justify-content-center text-center row">
+            {{ image_form.image }}
+            <svg class='my-5 mx-4' width='40' height='40' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+            <g transform="matrix(1.43 0 0 1.43 12 12)" >
+                <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-8, -8.5)" d="M 2.5 3 C 1.675781 3 1 3.675781 1 4.5 L 1 12.5 C 1 13.324219 1.675781 14 2.5 14 L 13.5 14 C 14.324219 14 15 13.324219 15 12.5 L 15 4.5 C 15 3.675781 14.324219 3 13.5 3 Z M 2.5 4 L 13.5 4 C 13.78125 4 14 4.21875 14 4.5 L 14 10.871094 L 9.503906 7.027344 L 8.109375 8.21875 L 5.5 6.03125 L 2 8.96875 L 2 4.5 C 2 4.21875 2.21875 4 2.5 4 Z M 12 5 C 11.449219 5 11 5.449219 11 6 C 11 6.550781 11.449219 7 12 7 C 12.550781 7 13 6.550781 13 6 C 13 5.449219 12.550781 5 12 5 Z M 5.5 7.335938 L 7.335938 8.878906 L 2.515625 13 L 2.5 13 C 2.21875 13 2 12.78125 2 12.5 L 2 10.273438 Z M 9.503906 8.34375 L 14 12.1875 L 14 12.5 C 14 12.78125 13.78125 13 13.5 13 L 4.054688 13 Z" stroke-linecap="round" />
+            </g>
+            </svg>
+        </div>
+        <div class='mt-2 me-2' style="position: absolute; top: 0; right: 0;"><button class="btn btn-danger btn-sm remove-image" onclick="removeImage(this)">X</button></div>
+        </div>
+        </label>
+        {% endfor %}
+        <button type="button" class='addImage upload-box position-relative d-inline-block me-2 mb-2 align-content-center'>
+        + imagens
+        </button>
+    </div>
+
+    <hr>
+
+    <!-- ATRIBUTOS desta variante -->
+    {{ variant_formset.empty_form.nested_attributes.management_form }}
+    <h6 class="mb-0">Atributos</h6>
+    <div class="attribute-list mb-2">
+        {% for attribute_form in variant_formset.empty_form.nested_attributes.forms %}
+        <div class="row g-2 mb-2 attribute-row">
+            <div class="col-md-5 ">
+            <div class="attr-select-wrapper">
+                {{ attribute_form.attribute|as_crispy_field }}
+            </div>
+            </div>
+            <div class="col-md-5">
+            <div class="attr-value-wrapper">
+                {{ attribute_form.value|as_crispy_field }}
+            </div>
+            </div>
+            <div class="col-md-2 d-flex align-items-center mb-sm-0 mb-2">
+            <button type="button" class="btn btn-danger btn-sm remove-attribute mt-md-3">remover</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="d-flex gap-2 mt-2">
+        <button type="button" class="btn btn-sm btn-secondary add-attribute">+ Atributo</button>
+    </div>
+    </div>
+</div>
+</template>
+
+<div class="mt-3">
+<button type="button" id="addVariantButton" class="btn btn-secondary">
+    <i class="bi bi-plus-circle me-1"></i> Adicionar nova variante
+</button>
+</div>
+
+<template id="imageTemplate">
+    <label class='label-image' for="{{ variant_formset.empty_form.nested_images.empty_form.image.id_for_label }}">
+    <div class="upload-box position-relative d-inline-block me-2 mb-2 align-items-center justify-content-center">
+    <div class="image-preview align-items-center justify-content-center text-center row">
+        {{ variant_formset.empty_form.nested_images.empty_form.image }}
+        <svg class='my-5 mx-4' width='40' height='40' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+        <g transform="matrix(1.43 0 0 1.43 12 12)" >
+            <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-8, -8.5)" d="M 2.5 3 C 1.675781 3 1 3.675781 1 4.5 L 1 12.5 C 1 13.324219 1.675781 14 2.5 14 L 13.5 14 C 14.324219 14 15 13.324219 15 12.5 L 15 4.5 C 15 3.675781 14.324219 3 13.5 3 Z M 2.5 4 L 13.5 4 C 13.78125 4 14 4.21875 14 4.5 L 14 10.871094 L 9.503906 7.027344 L 8.109375 8.21875 L 5.5 6.03125 L 2 8.96875 L 2 4.5 C 2 4.21875 2.21875 4 2.5 4 Z M 12 5 C 11.449219 5 11 5.449219 11 6 C 11 6.550781 11.449219 7 12 7 C 12.550781 7 13 6.550781 13 6 C 13 5.449219 12.550781 5 12 5 Z M 5.5 7.335938 L 7.335938 8.878906 L 2.515625 13 L 2.5 13 C 2.21875 13 2 12.78125 2 12.5 L 2 10.273438 Z M 9.503906 8.34375 L 14 12.1875 L 14 12.5 C 14 12.78125 13.78125 13 13.5 13 L 4.054688 13 Z" stroke-linecap="round" />
+        </g>
+        </svg>
+    </div>
+    <div class='mt-2 me-2' style="position: absolute; top: 0; right: 0;"><button class="btn btn-danger btn-sm remove-image" onclick="removeImage(this)">X</button></div>
+            </div>
+    </div>
+    </label>
+</template>
+
+
+<template id="attributeTemplate">
+    <div class="row g-2 mb-2 attribute-row">
+        <div class="col-md-5 ">
+        <div class="attr-select-wrapper">
+            {{ variant_formset.empty_form.nested_attributes.empty_form.attribute|as_crispy_field }}
+        </div>
+        </div>
+        <div class="col-md-5">
+        <div class="attr-value-wrapper">
+            {{ variant_formset.empty_form.nested_attributes.empty_form.value|as_crispy_field }}
+        </div>
+        </div>
+        <div class="col-md-1 d-flex align-items-center">
+        <button type="button" class="btn btn-danger btn-sm remove-attribute mt-md-3">remover</button>
+        </div>
+    </div>
+</template>

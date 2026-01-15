@@ -33,13 +33,8 @@
           {{ product_form.image }}
         </label>
       </div>
-      {% if product_form.image.errors %}
-        <div class="text-danger">
-            {% for error in product_form.image.errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
+
+
     </div>
 
     <!-- -- VARIANT FORMSET -- -->
@@ -68,41 +63,59 @@
 
               {% for field in form.visible_fields %}
                 <div class="mb-2">
-                  {% if field.name == 'images' %}
-                  <div class="upload-container mt-4">
-                    <label class="upload-box">
-                      <div class="upload-content">
-                        <p class="upload-text">Clique para fazer upload das imagens</p>
-                        <p class="upload-subtext">
-                          Formatos suportados: JPG, PNG, WEBP (máx. 5MB)
-                        </p>
-                      </div>
-
-                      <div class="image-preview d-flex flex-wrap justify-content-start"></div>
-
-                      {{ field }}
-                    </label>
-                  </div>
-
-        
-                  {% else %}
                   {{ field|as_crispy_field }}
-                  {% endif %}
                 </div>
               {% endfor %}
+            </div>
+
+            <!-- preview das imagens desta variante -->
+            {{ form.nested_images.management_form }}
+            <h6>Imagens da Variante</h6>
+            <div class="image-list mb-2 d-flex flex-wrap gap-3">
+              {% for image_form in form.nested_images.forms %}
+              <label class='label-image' for="{{ image_form.image.id_for_label }}">
+              <div class="upload-box position-relative d-inline-block me-2 mb-2 align-items-center justify-content-center">
+                <div class="image-preview align-items-center justify-content-center text-center row">
+                  {{ image_form.image }}
+                  <svg class='my-5 mx-4' width='40' height='40' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+                    <g transform="matrix(1.43 0 0 1.43 12 12)" >
+                      <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-8, -8.5)" d="M 2.5 3 C 1.675781 3 1 3.675781 1 4.5 L 1 12.5 C 1 13.324219 1.675781 14 2.5 14 L 13.5 14 C 14.324219 14 15 13.324219 15 12.5 L 15 4.5 C 15 3.675781 14.324219 3 13.5 3 Z M 2.5 4 L 13.5 4 C 13.78125 4 14 4.21875 14 4.5 L 14 10.871094 L 9.503906 7.027344 L 8.109375 8.21875 L 5.5 6.03125 L 2 8.96875 L 2 4.5 C 2 4.21875 2.21875 4 2.5 4 Z M 12 5 C 11.449219 5 11 5.449219 11 6 C 11 6.550781 11.449219 7 12 7 C 12.550781 7 13 6.550781 13 6 C 13 5.449219 12.550781 5 12 5 Z M 5.5 7.335938 L 7.335938 8.878906 L 2.515625 13 L 2.5 13 C 2.21875 13 2 12.78125 2 12.5 L 2 10.273438 Z M 9.503906 8.34375 L 14 12.1875 L 14 12.5 C 14 12.78125 13.78125 13 13.5 13 L 4.054688 13 Z" stroke-linecap="round" />
+                    </g>
+                  </svg>
+                </div>
+                <div class='mt-2 me-2' style="position: absolute; top: 0; right: 0;"><button class="btn btn-danger btn-sm remove-image" onclick="removeImage(this)">X</button></div>
+                </div>
+                </label>
+              {% endfor %}
+              <div class='addImage upload-box position-relative d-inline-block me-2 mb-2 align-content-center'>
+                + imagens
+              </div>
             </div>
 
             <hr>
 
             <!-- ATRIBUTOS desta variante -->
+            {{ form.nested_attributes.management_form }}
             <h6 class="mb-0">Atributos</h6>
             <div class="attribute-list mb-2">
-              
+              {% for attribute_form in form.nested_attributes.forms %}
+                <div class="row g-2 mb-2 attribute-row">
+                  <div class="col-md-5 ">
+                    <div class="attr-select-wrapper">
+                      {{ attribute_form.attribute|as_crispy_field }}
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="attr-value-wrapper">
+                      {{ attribute_form.value|as_crispy_field }}
+                    </div>
+                  </div>
+                  <div class="col-md-2 d-flex align-items-center mb-sm-0 mb-2">
+                    <button type="button" class="btn btn-danger btn-sm remove-attribute mt-md-3">remover</button>
+                  </div>
+                </div>
+              {% endfor %}
             </div>
-
-            {# hidden onde o JS vai gravar o JSON de atributos desta variante #}
-            <input type="hidden" class="variant-attributes-json"
-                   name="variants-{{ forloop.counter0 }}-attributes" value="">
 
             <div class="d-flex gap-2 mt-2">
               <button type="button" class="btn btn-sm btn-secondary add-attribute">+ Atributo</button>
@@ -111,70 +124,8 @@
         {% endfor %}
       </div>
 
-      <!-- template para clonar uma nova variante (empty_form do formset) -->
-      <template id="emptyVariantTemplate">
-        <div class="card variant-card mb-3 p-3" data-index="__prefix__">
-          <div class="d-flex justify-content-between align-items-start">
-            <h5 class="mb-0">Variante __num__</h5>
-            <div>
-              <button type="button" class="btn btn-sm btn-danger remove-variant">Remover</button>
-            </div>
-          </div>
-
-          <div class="variant-fields mt-2">
-            {% for hidden in variant_formset.empty_form.hidden_fields %}
-              {{ hidden.as_widget }}
-            {% endfor %}
-
-            {% for field in variant_formset.empty_form.visible_fields %}
-              <div class="mb-2">
-                {{ field|as_crispy_field }}
-              </div>
-            {% endfor %}
-          </div>
-
-          <hr>
-          <h6>Atributos</h6>
-          <div class="attribute-list mb-2"></div>
-
-          <input type="hidden" class="variant-attributes-json"
-                 name="variants-__prefix__-attributes" value="">
-
-          <div class="d-flex gap-2 mt-2">
-            <button type="button" class="btn btn-sm btn-secondary add-attribute">+ Atributo</button>
-          </div>
-        </div>
-      </template>
-
-      <div class="mt-3">
-        <button type="button" id="addVariantButton" class="btn btn-secondary">
-          <i class="bi bi-plus-circle me-1"></i> Adicionar nova variante
-        </button>
-      </div>
-
-      <input type="hidden" name="deleted_variants" id="deletedVariantsInput" value="">
     </div>
-
-    <template id="attributeTemplate">
-  <div class="row g-2 mb-2 attribute-row">
-    <div class="col-md-5 ">
-      <div class="attr-select-wrapper">
-        {{ attribute_variant.attribute|as_crispy_field }}
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="attr-value-wrapper">
-        {{ attribute_variant.value|as_crispy_field }}
-      </div>
-    </div>
-    <div class="col-md-1 d-flex align-items-end">
-      <button type="button" class="btn btn-danger btn-sm remove-attribute">remover</button>
-    </div>
-  </div>
-</template>
-
-    <input type="hidden" name="variants_json" id="variantsJsonInput">
-
+      {% include "products/partials/template.html" %}
     <!-- SUBMIT -->
     <div class="submit-section mt-4">
       <button type="submit" class="btn btn-submit btn-primary">
@@ -184,94 +135,8 @@
   </form>
 </div>
 
-<style>
-  input[type="file"] { position: absolute; opacity: 0; width: 0; height: 0; }
-  .variant-card.deleted { display: none; opacity: 0.4; }
-  .attribute-row { margin-bottom: 8px; }
-  .preview-thumb {
-  min-width: 120px;
-  min-height: 120px;
 
-  width: 120px;
-  height: 120px;
-
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-</style>
-
-<script>
-document.addEventListener("change", function (event) {
-  const input = event.target;
-  if (input.tagName !== "INPUT" || input.type !== "file") return;
-
-  const uploadBox = input.closest(".upload-box");
-  const preview = uploadBox.querySelector(".image-preview");
-  const text = uploadBox.querySelector(".upload-text");
-
-  const dt = new DataTransfer();
-  preview.innerHTML = "";
-
-  const files = Array.from(input.files);
-
-  if (!files.length) {
-    text.textContent = "Clique para fazer upload das imagens";
-    return;
-  }
-
-  files.forEach(file => {
-    if (!file.type.startsWith("image/")) return;
-
-    dt.items.add(file);
-
-    const reader = new FileReader();
-    reader.onload = e => {
-      const wrapper = document.createElement("div");
-      wrapper.className = "preview-wrapper";
-
-      const thumb = document.createElement("img");
-      thumb.src = e.target.result;
-      thumb.className = "preview-thumb mt-2";
-
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.className = "remove-image btn btn-sm btn-danger ms-1 me-1";
-      removeBtn.textContent = "X";
-
-      removeBtn.onclick = ev => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        const newDt = new DataTransfer();
-
-        [...input.files].forEach(f => {
-          if (f.name !== file.name) {
-            newDt.items.add(f);
-          }
-        });
-
-        input.files = newDt.files;
-        wrapper.remove();
-
-        text.textContent = newDt.files.length
-          ? `${newDt.files.length} imagem(ns) selecionada(s)`
-          : "Clique para fazer upload das imagens";
-      };
-
-      wrapper.appendChild(thumb);
-      wrapper.appendChild(removeBtn);
-      preview.appendChild(wrapper);
-    };
-
-    reader.readAsDataURL(file);
-  });
-
-  input.files = dt.files;
-  text.textContent = `${dt.files.length} imagem(ns) selecionada(s)`;
-});
-
-</script>
+      
 {% endblock main %}
 
 
@@ -279,5 +144,95 @@ document.addEventListener("change", function (event) {
 
 {% block scripts %}
 <script src="{% static 'products/js/register.js' %}"></script>
+<script defer>
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const invalidFields = this.querySelectorAll(':invalid');
+    
+    if (invalidFields.length > 0) {
+        e.preventDefault(); // Impede o envio
+        
+        // 1. Avisa o usuário
+        alert("Por favor, preencha todos os campos obrigatórios antes de cadastrar.");
+        
+        // 2. Rola a tela até o primeiro campo com erro
+        invalidFields[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // 3. Foca no campo para abrir o teclado ou cursor
+        invalidFields[0].focus();
+    }
+});
+  // Preview da imagem do produto
+  const imageInput = document.getElementById('{{ product_form.image.id_for_label }}');
+  const imageUploadContent = document.getElementById('imageUploadContent');
+
+  imageInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              imageUploadContent.innerHTML = `<img src="${e.target.result}" alt="Preview da Imagem do Produto" style="width: 300px; height: 200px; object-fit: cover; border-radius: 8px;">`;
+          }
+          reader.readAsDataURL(file);
+      } else {
+          imageUploadContent.innerHTML = `
+              <p id="imageUploadText">Clique para fazer upload da imagem</p>
+              <p class="upload-subtext">Formatos suportados: JPG, PNG, WEBP (máx. 5MB)</p>
+          `;
+      }
+  });
+function removeImage(button) {
+    const imageLabel = button.closest('.label-image');
+    if (!imageLabel) return;
+
+    const card = imageLabel.closest('.variant-card');
+    const container = imageLabel.closest('.image-list');
+    const idInput = imageLabel.querySelector('input[name$="-id"]');
+    const deleteInput = imageLabel.querySelector('input[type="checkbox"][name$="-DELETE"]');
+
+    // 1. Lógica de remoção
+    if (idInput && idInput.value) {
+        if (deleteInput) deleteInput.checked = true;
+        imageLabel.style.display = 'none';
+        imageLabel.classList.add('is-deleted');
+    } else {
+        imageLabel.remove();
+    }
+
+    // 2. Reindexação (Ajustada para não perder o vínculo do clique)
+    if (card && container) {
+        const activeLabels = container.querySelectorAll('.label-image:not(.is-deleted)');
+        
+        activeLabels.forEach((label, iIndex) => {
+            const regex = /images-\d+-/;
+            const newPrefix = `images-${iIndex}-`;
+
+            // ATENÇÃO AQUI: Criamos uma lista que inclui o próprio label + todos os inputs dentro dele
+            const elementsToUpdate = [label, ...label.querySelectorAll('input, select, textarea, label')];
+
+            elementsToUpdate.forEach(el => {
+                // Atualiza Name
+                if (el.name) {
+                    el.name = el.name.replace(regex, newPrefix);
+                }
+                // Atualiza ID
+                if (el.id) {
+                    el.id = el.id.replace(regex, newPrefix);
+                }
+                // Atualiza o FOR (Essencial para o clique funcionar)
+                if (el.getAttribute('for')) {
+                    const oldFor = el.getAttribute('for');
+                    el.setAttribute('for', oldFor.replace(regex, newPrefix));
+                }
+            });
+        });
+
+        // 3. Atualiza o ManagementForm
+        const totalImagesInput = card.querySelector(`input[name$="-images-TOTAL_FORMS"]`);
+        if (totalImagesInput) {
+            totalImagesInput.value = activeLabels.length;
+        }
+    }
+}
+</script>
 {% endblock scripts %}
 
