@@ -35,9 +35,11 @@ def detail_product(request, product_id):
     variants = product.variants.filter(is_active=True)
     variant_id = request.GET.get('variant')
 
+    variant = None
     if variant_id:
         variant = product.variants.filter(product_variant_id=variant_id).first()
-    else:
+    
+    if not variant:
         variant = variants.first()
 
     # Produto disponível se o pai estiver ativo e houver variante ativa
