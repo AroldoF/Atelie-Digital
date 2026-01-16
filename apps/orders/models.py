@@ -3,19 +3,74 @@ from django.conf import settings
 from apps.stores.models import Store
 from apps.products.models import ProductVariant
 
+class CartManager(models.Manager):
+    def new_or_get(self, request):
+        # 1. Garante que existe uma sessão criada no navegador
+        # Se for um usuário novo, a session_key pode ser None, então criamos forçadamente.
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.create()
+            session_key = request.session.session_key
+
+        cart_obj = None
+        new_obj = False
+
+        # 2. Lógica se o usuário estiver LOGADO
+        if request.user.is_authenticated:
+            # Tenta buscar um carrinho já existente deste usuário
+            # Usamos filter().first() para evitar erro caso não exista (retorna None)
+            cart_obj = self.get_queryset().filter(user=request.user).first()
+            
+            # Se o usuário não tem carrinho salvo, mas tem um carrinho da sessão atual (anônimo)
+            if not cart_obj:
+                cart_from_session = self.get_queryset().filter(session_key=session_key).first()
+                if cart_from_session:
+                    # "Adotamos" o carrinho anônimo para o usuário logado
+                    cart_obj = cart_from_session
+                    cart_obj.user = request.user
+                    cart_obj.session_key = None 
+                    cart_obj.save()
+        
+        # 3. Lógica se o usuário for ANÔNIMO (ou se logado não tinha nada e nada na sessão)
+        if not cart_obj:
+            # Tenta pegar o carrinho pela chave da sessão
+            cart_obj = self.get_queryset().filter(session_key=session_key).first()
+            
+            # Se o usuário logou agora e não tinha carrinho nenhum, vincula a ele.
+            # Se for anônimo, continua anônimo.
+            if cart_obj and request.user.is_authenticated and cart_obj.user is None:
+                cart_obj.user = request.user
+                cart_obj.save()
+
+        # 4. Se ainda não achou nada (nem no user, nem na session), CRIA UM NOVO
+        if not cart_obj:
+            new_obj = True
+            if request.user.is_authenticated:
+                cart_obj = self.new(user=request.user)
+            else:
+                cart_obj = self.new(session_key=session_key)
+
+        return cart_obj, new_obj
+
+    def new(self, user=None, session_key=None):
+        # Cria efetivamente o carrinho com os dados passados
+        return self.model.objects.create(user=user, session_key=session_key)
+
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     session_key = models.CharField(max_length=40, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    objects = CartManager()
+
     def __str__(self):
-        return f'Carrinho {self.cart_id} - {self.created_at}'
+        return f'Cart {self.cart_id} - {self.user} {self.session_key}'
     
     class Meta:
         db_table = 'carts'
-        verbose_name = 'Carrinho'
-        verbose_name_plural = 'Carrinhos'
+        verbose_name = 'Cart'
+        verbose_name_plural = 'Carts'
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
@@ -25,6 +80,9 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f'{self.quantity}x {self.product_variant} no Carrinho {self.cart.pk}'
+    
+    def price(self):
+        return self.product_variant.price
     
     def subtotal(self):
         return self.product_variant.price * self.quantity
