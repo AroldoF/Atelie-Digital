@@ -78,6 +78,7 @@
             </div>
 
             {% if is_available %}
+            <!--formulário - COMPRAR -->
             <form action="" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="variant_id" value="{{ variant.product_variant_id }}">
@@ -102,7 +103,8 @@
         
         <div class="areaAdicionar">
           {% if is_available %}
-            <form action="" method="POST">
+          <!--formulário - ADICIONAR AO CARRINHO -->
+            <form action="{% url 'orders:add' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="variant_id" value="{{ variant.product_variant_id }}">
                 <input type="hidden" name="quantity" value="1">
@@ -351,14 +353,19 @@
       
         </div>
 
-       
-         
+        {% else %}
 
-      
+          <div class="area-on-demand">
+            <p class="on-demand-label">
+              Produto sob encomenda
+            </p>
+          </div>
 
+        {% endif %} 
 
         {% if is_available %}
-          <form action="" method="POST" id="form-add-cart">
+        <!--formulário - COMPRAR-ADC DESKTOP -->
+          <form action="{% url 'orders:add' %}" method="POST" id="form-add-cart">
             {% csrf_token %}
             <input type="hidden" name="variant_id" value="{{ variant.product_variant_id }}">
             

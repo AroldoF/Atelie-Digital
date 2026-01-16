@@ -6,7 +6,7 @@
 {% block style %}
   <link rel="stylesheet" href="{% static 'orders/css/shared/shopping_cart.css' %}" >
 {% endblock %}
-
+ 
 {% block main %}
   <div class="container my-5">
     <div class="row g-4">
@@ -14,14 +14,26 @@
       <div id="my-cart-primary" class="col-lg-8">
         <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 id="my-cart" class="h4 mb-0">Meu Carrinho</h2>
+        <!--Implementar lógica para contagem do total de itens no carrinho ou passar como parametro na view -->
         <span id="qtnd-itens" class="text-muted">3 itens</span>
       </div>
+
+      {% if items %}
+        <!--incluir dados-->
+      {% else %}
+        <p>Não há produtos no carrinho</p>
+      {% endif %}
+
+        
+
 
         {% include 'orders/partials/_cart_product_card.html' with product_name='Caixinha de Joias' store_name='Ateliê Cerâmica Arte' image_path='media/caixaDeJoias.jpeg' price='89.90' quantity=1 %}
 
         {% include 'orders/partials/_cart_product_card.html' with product_name='Tiara Roxa' store_name='Tecidos & Arte' image_path='media/tiara_roxa.png' price='145.00' quantity=2 %}
 
         {% include 'orders/partials/_cart_product_card.html' with product_name='Kit Vermelho' store_name='Madeira Nobre' image_path='media/kit_vermelho.png' price='220.00' quantity=1 %}
+
+      <!--receber dados do valor do carrinho-->
       </div> <div class="col-lg-4">
         {% include 'orders/partials/_order_summary_card.html' with subtotal=599.9 frete=25 desconto=50 total=574.9 url_finalizar='orders:shipping' url_continuar='#' btn_name="Continuar" btn_two_name="Adicionar produtos" cart_shopping=True cart=True %}
       </div>
