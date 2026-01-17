@@ -36,9 +36,11 @@
                 <img src="{{ product.image.url }}" class="carouselItem active">
               {% endif %}
 
-              {% for img in variant.variantimage_set.all %}
-                <img src="{{ img.image.url }}" class="carouselItem {% if not product.image and forloop.first %}active{% endif %}">
-              {% endfor %}
+            {% for img in variant.images.all %}
+              <img
+                src="{{ img.image.url }}"
+                class="carouselItem {% if forloop.first %}active{% endif %}">
+            {% endfor %}
             <button class="carousel-btn prev">
                 <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
             </button>
@@ -135,7 +137,7 @@
             <p class="title-variante-mb">Variantes</p>
             <div class="variant-selector d-flex flex-wrap gap-2 mt-2">
               {% for v in variants %}
-                {% with v.variantimage_set.first as img %}
+                {% with v.images.first as img %}
                   <a
                     href="{% url 'products:detail' product.product_id %}?variant={{ v.product_variant_id }}"
                     class="variant-card 
@@ -220,7 +222,7 @@
           src="{{ product.image.url }}"
           class="main-image">
           {% else %}
-            {% with variant.variantimage_set.first as img %}
+            {% with variant.images.first as img %}
               <img
                 id="mainImageDesktop"
                 src="{% if img %}{{ img.image.url }}{% else %}{% static 'products/media/no-image.png' %}{% endif %}"
@@ -233,7 +235,7 @@
           <img src="{{ product.image.url }}" data-src="{{ product.image.url }}" class="thumbnail active">
         {% endif %}
 
-        {% for img in variant.variantimage_set.all %}
+        {% for img in variant.images.all %}
           <img
             src="{{ img.image.url }}"
             data-src="{{ img.image.url }}"
@@ -265,7 +267,7 @@
           <p class="title-variante">Variações</p>
           <div class="variant-selector d-flex flex-wrap gap-2">
             {% for v in variants %}
-              {% with v.variantimage_set.first as img %}
+              {% with v.images.first as img %}
                 <a
                   href="{% url 'products:detail' product.product_id %}?variant={{ v.product_variant_id }}"
                   class="variant-card border rounded p-1

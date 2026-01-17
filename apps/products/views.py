@@ -1,20 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.views import View
-from .forms import Product_Form, Product_Variant_Form, Attributes_Form
-from .models import Product, Favorite
-from django.http import HttpResponse
-from .models import Product, ProductVariant
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 from django.views import View
-from .forms import Product_Form, Product_Variant_Form, Attributes_Form,ProductReviewForm
-from .models import Product, ProductVariant, ProductReview
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg,Count
-from apps.utils.purchases import user_bought_product
 from django.db.models import Q
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
@@ -22,10 +13,9 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from decimal import Decimal
 from django.db import transaction
 from django.contrib import messages
-from .forms import ProductForm, VarianteInlineFormSet
-from .models import Product, Favorite, ProductVariant, VariantAttribute, Attribute, VariantImage
-from django.http import HttpResponse, JsonResponse
-import json
+from .forms import ProductForm, VarianteInlineFormSet, ProductReviewForm
+from .models import Product, Favorite, ProductReview
+from django.http import HttpResponse
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
