@@ -1,21 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render,redirect
 from django.views import View
-from django.shortcuts import get_object_or_404
-from django.db.models import Avg,Count
-from django.db.models import Q
+from django.db.models import Avg,Count, Q
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from decimal import Decimal
 from django.db import transaction
 from django.contrib import messages
-from .forms import ProductForm, VarianteInlineFormSet, ProductReviewForm
+from .forms import ProductForm, VarianteInlineFormSet
 from .models import Product, Favorite, ProductReview
 from django.http import HttpResponse
+from django.urls import reverse
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
@@ -235,10 +232,13 @@ class ProductCreateView(PermissionRequiredMixin, View):
         messages.success(request, "Produto cadastrado com sucesso!")
         return redirect("index")
 
-
 @require_POST
-@login_required
 def toggle_favorite(request, product_id):
+    if not request.user.is_authenticated:
+        response = HttpResponse(status=401)
+        response["HX-Redirect"] = reverse("accounts:login")
+        return response
+
     product = get_object_or_404(Product, pk=product_id)
 
     favorite, created = Favorite.objects.get_or_create(
