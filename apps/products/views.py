@@ -30,7 +30,7 @@ CATEGORY_KEYWORDS = {
 def detail_product(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
-    
+
     # Lógica de variantes e disponibilidade
     variants = product.variants.filter(is_active=True)
     variant_id = request.GET.get('variant')
@@ -77,7 +77,6 @@ def detail_product(request, product_id):
 
   
     # LIMITE PROGRESSIVO DE COMENTÁRIOS
-   
     DEFAULT_LIMIT = 3
     reviews_limit = int(request.GET.get("reviews_limit", DEFAULT_LIMIT))
 
@@ -110,9 +109,11 @@ def detail_product(request, product_id):
         # controle do botão
         "has_more_reviews": has_more_reviews,
         "next_reviews_limit": next_reviews_limit,
+        # qtd maxima
+        'max_quantity':max_quantity,
 
-
-        'max_quantity':max_quantity
+        #para a exibição do chat
+        'show_personalization': variant.is_customizable if variant else False,
     }
     
     return render(request, 'products/detail.html', context)

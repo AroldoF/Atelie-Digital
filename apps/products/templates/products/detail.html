@@ -185,16 +185,17 @@
     
   </div>
   
-
-  <div class="contato-artesao">
-    <p>Você pode entrar em contato com o artesão e solicitar produtos personalizados especialmente para você.</p>
-    <a href="{% url 'chats:chat' %}">
-      <button id="chatButton">
-        <p>Chat para personalização</p>
-        <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
-      </button>
-     </a>
-  </div>
+  {% if show_personalization %}
+    <div class="contato-artesao">
+      <p>Você pode entrar em contato com o artesão e solicitar produtos personalizados especialmente para você.</p>
+      <a href="{% url 'chats:chat' %}">
+        <button id="chatButton">
+          <p>Chat para personalização</p>
+          <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
+        </button>
+      </a>
+    </div>
+  {% endif %}
 
   <div>
       {% include 'products/partials/drop.html' with product=product variant=variant %}
@@ -257,6 +258,7 @@
         </div>
         
         <div class="area-variante">
+        {% if variants.exists %}
           <p class="title-variante">Variações</p>
           <div class="variant-selector d-flex flex-wrap gap-2">
             {% for v in variants %}
@@ -284,6 +286,8 @@
               {% endwith %}
             {% endfor %}
           </div>
+
+        {% endif %}
         </div>
       
       </article>
@@ -393,7 +397,7 @@
           </div>
 
           
-
+          {% if show_personalization %}
           <div class="personalization">
             <p>Deseja personalizar o seu produto?</p>
             <a href="{% url 'chats:chat' %}">
@@ -403,6 +407,7 @@
               </button>
              </a>
           </div>
+          {% endif %}
         </div>
     </div>
     
