@@ -40,10 +40,16 @@
               <h4>{{ item.product_variant.product.name }}</h4>
               <p>Descrição: {{ item.product_variant.description }}</p>
               <p>Vendido por: {{ item.product_variant.product.store.name }}</p> 
-          
-              <div class="cart-item-price">
-                <strong>R$ {{ item.price|floatformat:2 }}</strong>
-              </div>
+              
+              {% if item.product_variant.is_active %}
+                <div class="cart-item-price">
+                  <strong>R$ {{ item.price|floatformat:2 }}</strong>
+                </div>
+              {% else %}
+                <div class="cart-item-price">
+                  <strong class="line">R$ {{ item.price|floatformat:2 }}</strong>
+                </div>
+              {% endif %}
             </div>
 
             <div class="cart-item-actions">
@@ -52,12 +58,23 @@
                 <button type="submit" class="remove">Remover</button>
               </form>
 
-              <div class="quantity-selector">
-                <button class="btn-qty" data-action="decrease">-</button>
-                <!--adicionar validação da quantidade-->
-                <span class="quantity-value">{{ item.quantity }}</span>
-                <button class="btn-qty" data-action="increase">+</button>
-              </div>
+              {% if item.product_variant.is_active %}
+                <div class="quantity-selector">
+                  <form action="{% url 'orders:update_item' item.pk 'decrease' %}" method="POST" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn-qty">-</button>
+                  </form>
+
+                  <span class="quantity-value">{{ item.quantity }}</span>
+
+                  <form action="{% url 'orders:update_item' item.pk 'increase' %}" method="POST" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn-qty">+</button>
+                  </form>
+                </div>
+              {% else %}
+                <span class="text-danger">Produto Indisponível</span>
+              {% endif %}
             </div>
           </div>
         {% endfor %}

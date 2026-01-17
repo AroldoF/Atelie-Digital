@@ -56,6 +56,44 @@ def viewCart(request):
     
     return render(request, 'orders/shopping_cart.html', context)
 
+def updateCartItem(request, item_id, action):
+    if request.method == 'POST':        
+        item = get_object_or_404(CartItem, pk=item_id)
+
+        cart_obj, _ = Cart.objects.new_or_get(request)
+
+        if item.cart == cart_obj:
+            if not item.product_variant.is_active:
+                messages.error(request, 'Este produto não está mais disponível para venda.')
+                return redirect(request.META.get('HTTP_REFERER', '/'))
+            
+            if action == 'increase':
+                quantity_desired = item.quantity + 1
+                if item.product_variant.type == 'STOCK' and quantity_desired > item.product_variant.stock:
+                    messages.warning(request, 'O estoque máximo já foi adicionado ao seu carrinho.')
+                else:
+                    item.quantity += 1
+                    item.save()
+
+            elif action == 'decrease':
+                new_quantity = item.quantity - 1
+
+                if new_quantity <= 0:
+                    item.delete()
+                    messages.warning(request, 'Item removido do carrinho')
+                else:
+                    item.quantity -= 1
+                    item.save()
+            else:
+                messages.error(request, 'Você não pode realizar esta ação.')
+
+        else:
+            messages.error(request, 'Você não tem permissão para alterar este item.')
+
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
+    return redirect('/')
+
 def removeCartItem(request, item_id):
     if request.method == 'POST':        
         item = get_object_or_404(CartItem, pk=item_id)
@@ -64,7 +102,7 @@ def removeCartItem(request, item_id):
 
         if item.cart == cart_obj:
             item.delete()
-            messages.success(request, 'Item removido do carrinho')
+            messages.warning(request, 'Item removido do carrinho')
         else:
             messages.error(request, 'Você não tem permissão para remover este item.')
 
