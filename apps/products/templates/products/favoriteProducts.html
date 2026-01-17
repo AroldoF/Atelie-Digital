@@ -14,14 +14,19 @@
     <div class="header-row">
       <div class="area-text">
         <h1 class="section-title">Meus produtos favoritos</h1>
-        <p class="qtd-save">8 produtos salvos na sua lista</p>
+        <p class="qtd-save">{{ total }} produtos salvos na sua lista</p>
       </div>
 
       <div class="area-order-clear">
         <div class="sort-wrapper">
           <form method="get" id="order-form">
+            {% for key, value in request.GET.items %}
+            {% if key != 'sort' %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}">
+                {% endif %}
+            {% endfor %}
             <select name="sort" class="sort-select" onchange="document.getElementById('order-form').submit();">
-              <option value="" selected disabled>Ordenar por...</option>
+              <option value="" selected>Ordenar por...</option>
               <option value="recentes" {% if request.GET.sort == 'recentes' %}selected{% endif %}>Mais Recentes</option>
               <option value="antigos" {% if request.GET.sort == 'antigos' %}selected{% endif %}>Mais Antigos</option>
               <option value="preco_menor" {% if request.GET.sort == 'preco_menor' %}selected{% endif %}>Menor Preço</option>
@@ -34,21 +39,66 @@
     </div>
 
  
-    <div class="area-searchbar">
+    <div class="area-searchbar justify-content-start">
 
-      {% include "partials/searchbar.html" with container_class="search-bar-container" placeholder='Busque pelos favoritos' %}
+      {% include "partials/searchbar.html" with container_class="search-bar-container" placeholder='Busque pelos favoritos' url_search='accounts:favorites' q=request.GET.q %}
     </div>
 
 
   </div>
 
 
-  <div class="products-list">
+  <div class="products-list d-flex justify-content-start flex-wrap">
     {% for product in products %}
     {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name off=True text='20' price=product.min_price favor=True is_favorite=product.is_favorite %}
     {% empty %}
     <p>Você ainda não tem produtos favoritos.</p>
     {% endfor %}
   </div>
+      <!-- paginação -->
+   {% if products.paginator.num_pages > 1 %}
+    <div class="d-flex justify-content-center mt-5">
+      <nav aria-label="Paginação de produtos">
+        <ul class="pagination">
+
+          <!-- Anterior -->
+          <li class="page-item {% if not products.has_previous %}disabled{% endif %}">
+            {% if products.has_previous %}
+              <a class="page-link"
+                href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ products.previous_page_number }}">
+                Anterior
+              </a>
+            {% else %}
+              <span class="page-link">Anterior</span>
+            {% endif %}
+          </li>
+
+          <!-- Números -->
+          {% for num in products.paginator.page_range %}
+            <li class="page-item {% if products.number == num %}active{% endif %}">
+              <a class="page-link"
+                href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ num }}">
+                {{ num }}
+              </a>
+            </li>
+          {% endfor %}
+
+          <!-- Próximo -->
+          <li class="page-item {% if not products.has_next %}disabled{% endif %}">
+            {% if products.has_next %}
+              <a class="page-link"
+                href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ products.next_page_number }}">
+                Próximo
+              </a>
+            {% else %}
+              <span class="page-link">Próximo</span>
+            {% endif %}
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+    {% endif %}
+
 </section>
 {% endblock %}

@@ -19,8 +19,7 @@
             <h1>Ateliê Digital</h1> 
         </a>
 
-        {% include "partials/searchbar.html" with container_class="search-bar-container" placeholder='Busque por lojas e produtos' %}
-        
+        {% include "partials/searchbar.html" with container_class="search-bar-container" placeholder='Busque por lojas e produtos' url_search='products:search' q=query %}        
         <div class="header__menu-user">
 
             {% comment %} <a href="{% url 'accounts:favorites' %}">
@@ -56,8 +55,8 @@
 
                     <ul class="dropdown-menu mt-2">
                         <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Perfil</a></li>
-                        {% if user.is_artisan %}
-                        <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                        {% if user.is_artisan and user.stores.exists %}
+                        <li><a class="dropdown-item" href="{% url 'stores:dashboard' user.stores.first.pk %}">Dashboard</a></li>
                         {% endif %}
                         <li><a class="dropdown-item" href="#">Pedidos</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:favorites' %}">Favoritos</a></li>

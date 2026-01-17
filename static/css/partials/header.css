@@ -30,6 +30,22 @@ a {
     color: inherit;
 }
 
+/* Todos os itens exceto text-danger */
+.dropdown-menu .dropdown-item:hover:not(.text-danger),
+.dropdown-menu .dropdown-item:focus:not(.text-danger) {
+   --bs-dropdown-link-hover-bg: color-mix(in srgb, #000 10%, var(--color-primary) 90%);
+   --bs-dropdown-link-active-bg: color-mix(in srgb, #000 20%, var(--color-primary) 80%);
+   color: #fff !important;
+}
+
+/* Apenas itens text-danger */
+.dropdown-menu .dropdown-item.text-danger:hover,
+.dropdown-menu .dropdown-item.text-danger:focus {
+   --bs-dropdown-link-hover-bg: rgba(var(--bs-danger-rgb), var(--bs-text-opacity));  
+   --bs-dropdown-link-active-bg: color-mix(in srgb, #000 20%, rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) 80%);
+   color: #fff !important;            
+}
+
 
 /* ====== CONJUNTO DE ÍCONES (DIREITA) ====== */
 .header__menu-user {
