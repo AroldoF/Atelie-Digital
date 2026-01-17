@@ -19,6 +19,7 @@ from django.db.models import Q
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from decimal import Decimal
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
@@ -94,6 +95,13 @@ def detail_product(request, product_id):
         max_quantity = variant.stock
 
 
+    #simular desconto
+    REFERENCE_PRICE = Decimal('55.00')
+
+    discount_percent = 0
+    if variant and variant.price < REFERENCE_PRICE:
+        discount_percent = round((REFERENCE_PRICE - variant.price) / REFERENCE_PRICE * 100)
+
     context = {
         'product': product,
         'variant': variant,
@@ -114,6 +122,8 @@ def detail_product(request, product_id):
 
         #para a exibição do chat
         'show_personalization': variant.is_customizable if variant else False,
+        #simulação de desconto
+        'discount_percent': discount_percent,
     }
     
     return render(request, 'products/detail.html', context)

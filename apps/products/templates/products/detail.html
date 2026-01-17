@@ -58,12 +58,15 @@
        <div class="area-preco-compra">
           <div class="areaPriceButton">
             <div class="areaPrice">
+             
               <div class="areaPriceOff">
+                 {% if discount_percent > 0 %}
                 <p>R$ <span class="textPriceRick">55,00</span> </p>
                 <div id="off">
                     <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
-                    <p  id="textOff">26% Off</p>
+                    <p  id="textOff">{{ discount_percent }}% Off</p>
                 </div>
+                {% endif %}
               </div>
               {% if variant %}
               <p class="textPrice" id="variantPriceMobile">R$ {{ variant.price|floatformat:2 }}</p>
@@ -300,10 +303,12 @@
             <div class="original-price">R$ <span  class="textPriceRick">55,00</span></div>
 
             <div class="discount-badge">
+              {% if discount_percent > 0 %}
               <div id="off">
                 <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
-                <p  id="textOff">26% Off</p>
+                <p  id="textOff">{{ discount_percent }} Off</p>
               </div>
+              {% endif %}
             </div>
           </div>
           {% if variant %}
