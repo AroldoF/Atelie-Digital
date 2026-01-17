@@ -3,7 +3,12 @@
 <link rel="stylesheet" href="{% static 'css/partials/searchbar.css' %}">
 
 <div class="search-container {{container_class}}">
-    <form action="{% url 'products:search' %}" method="get">
+    <form action="{% url url_search  %}" method="get">
+        {% for key, value in request.GET.items %}
+            {% if key != 'q' %}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% endif %}
+        {% endfor %}
         <input class="form-control" type="text" name="q" id="search-input" placeholder="{{ placeholder|default:'Buscar produtos...'  }}"  value="{{ q|default:'' }}">
         <button type="submit" class="search-button">
                 <svg class="icon-search" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

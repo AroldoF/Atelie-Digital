@@ -14,41 +14,91 @@
     <div class="header-row">
       <div class="area-text">
         <h1 class="section-title">Meus produtos favoritos</h1>
-        <p class="qtd-save">8 produtos salvos na sua lista</p>
+        <p class="qtd-save">{{ total }} produtos salvos na sua lista</p>
       </div>
 
       <div class="area-order-clear">
         <div class="sort-wrapper">
-          <select class="sort-select">
-            <option value="recentes">Mais Recentes</option>
-            <option value="antigos">Mais Antigos</option>
-            <option value="preco_menor">Menor Preço</option>
-            <option value="preco_maior">Maior Preço</option>
-          </select>
+          <form method="get" id="order-form">
+            {% for key, value in request.GET.items %}
+            {% if key != 'sort' %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}">
+                {% endif %}
+            {% endfor %}
+            <select name="sort" class="sort-select" onchange="document.getElementById('order-form').submit();">
+              <option value="" selected>Ordenar por...</option>
+              <option value="recentes" {% if request.GET.sort == 'recentes' %}selected{% endif %}>Mais Recentes</option>
+              <option value="antigos" {% if request.GET.sort == 'antigos' %}selected{% endif %}>Mais Antigos</option>
+              <option value="preco_menor" {% if request.GET.sort == 'preco_menor' %}selected{% endif %}>Menor Preço</option>
+              <option value="preco_maior" {% if request.GET.sort == 'preco_maior' %}selected{% endif %}>Maior Preço</option>
+            </select>
+          </form>
         </div>
         
       </div>
     </div>
 
  
-    <div class="area-searchbar">
+    <div class="area-searchbar justify-content-start">
 
-      {% include "partials/searchbar.html" with container_class="search-bar-container" placeholder='Busque pelos favoritos' %}
+      {% include "partials/searchbar.html" with container_class="search-bar-container" placeholder='Busque pelos favoritos' url_search='accounts:favorites' q=request.GET.q %}
     </div>
 
 
   </div>
 
 
-  <div class="products-list">
-    {% include 'products/partials/card.html' with url='media/carrosel3.png' description='Laço Pérola com Pontas' off=True text='20' price='R$ 22,00' favor=True%}
-    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 44,00' envioRapido=True favor=True %}
-    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' off=True text=30 price='R$ 21,00' envioRapido=True favor=True %}
-    {% include 'products/partials/card.html' with url='media/caixaDeJoias.jpeg' description='Caixa de Joias' off=True text='20' price='R$ 22,00' favor=True %}
-    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 44,00' envioRapido=True favor=True %}
-    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' off=True text=10 price='R$ 21,00' FreteGratis=True  favor=True%}
-    {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' FreteGratis=True favor=True%}
-    {% include 'products/partials/card.html' with url='media/caixaDeJoias.jpeg' description='Caixa de Joias' off=True text=30 price='R$ 22,00' envioRapido=True favor=True%}
+  <div class="products-list d-flex justify-content-start flex-wrap">
+    {% for product in products %}
+    {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name off=True text='20' price=product.min_price favor=True is_favorite=product.is_favorite %}
+    {% empty %}
+    <p>Você ainda não tem produtos favoritos.</p>
+    {% endfor %}
   </div>
+      <!-- paginação -->
+   {% if products.paginator.num_pages > 1 %}
+    <div class="d-flex justify-content-center mt-5">
+      <nav aria-label="Paginação de produtos">
+        <ul class="pagination">
+
+          <!-- Anterior -->
+          <li class="page-item {% if not products.has_previous %}disabled{% endif %}">
+            {% if products.has_previous %}
+              <a class="page-link"
+                href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ products.previous_page_number }}">
+                Anterior
+              </a>
+            {% else %}
+              <span class="page-link">Anterior</span>
+            {% endif %}
+          </li>
+
+          <!-- Números -->
+          {% for num in products.paginator.page_range %}
+            <li class="page-item {% if products.number == num %}active{% endif %}">
+              <a class="page-link"
+                href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ num }}">
+                {{ num }}
+              </a>
+            </li>
+          {% endfor %}
+
+          <!-- Próximo -->
+          <li class="page-item {% if not products.has_next %}disabled{% endif %}">
+            {% if products.has_next %}
+              <a class="page-link"
+                href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ products.next_page_number }}">
+                Próximo
+              </a>
+            {% else %}
+              <span class="page-link">Próximo</span>
+            {% endif %}
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+    {% endif %}
+
 </section>
 {% endblock %}

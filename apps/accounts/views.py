@@ -9,11 +9,9 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from apps.accounts.services import update_user_profile
-
-
-
-# Create your views here.
-
+from apps.products.models import Product
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
@@ -103,8 +101,41 @@ def addressEdit(request):
     form = FormAdressUser(request.POST or None)
     return render(request, 'accounts/settings_address.html', {'form': form})
 
+@login_required
 def favoriteProduct(request):
-    return render(request, 'products/favoriteProducts.html')
+    user = request.user
+    products = Product.objects.cards_with_favorites(user).filter(is_favorite=True)
+
+    order = request.GET.get('sort')
+    search = request.GET.get('q')
+
+    if search:
+        products = products.filter(Q(name__icontains=search) | Q(description__icontains=search))
+
+    if order == 'recentes':
+        products = products.order_by('-pk') 
+    elif order == 'antigos':
+        products = products.order_by('pk')
+    elif order == 'preco_menor':
+        products = products.order_by('min_price')
+    elif order == 'preco_maior':
+        products = products.order_by('-min_price')
+    
+    paginator = Paginator(products, 4)
+    page_number = request.GET.get("page")
+    products_page = paginator.get_page(page_number)
+
+    query_params = request.GET.copy()
+    query_params.pop('page', None)
+
+    return render(request, 'products/favoriteProducts.html',
+        {
+            'products': products_page,
+            'total': products.count(),
+            'query_string': query_params.urlencode(),
+            'search': search
+        }
+    )
 
 def usersOrders(request):
     return render(request, "orders/list.html")
