@@ -56,14 +56,14 @@ body {
     height: 100%;
 }
 
-.cart-item-actions .remove-link {
+.remove {
     font-size: 0.9rem;
     color: var(--color-red);
     text-decoration: none;
     font-weight: 500;
     text-align: right;
-    
-
+    border: none;
+    background-color: transparent; 
 }
 
 

@@ -47,8 +47,10 @@
             </div>
 
             <div class="cart-item-actions">
-              <!--adicionar view de remoção-->
-              <a href="#" class="remove-link">Remover</a>
+              <form action="{% url 'orders:remove_item' item.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="remove">Remover</button>
+              </form>
 
               <div class="quantity-selector">
                 <button class="btn-qty" data-action="decrease">-</button>
