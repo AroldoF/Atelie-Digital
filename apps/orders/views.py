@@ -10,27 +10,41 @@ from django.contrib import messages
 @require_POST 
 def addToCart(request):
     if request.method == 'POST':
-    # Captura os dados enviados pelo formulário do outro app
         variant_id = request.POST.get('variant_id')
         quantity = int(request.POST.get('quantity'))
-
-        # Busca a variante no banco (validação básica)
-        variant = get_object_or_404(ProductVariant, pk=variant_id)
-
-        # Criar/Pegar o carrinho
         
-        cart_obj, created = Cart.objects.new_or_get(request)
+        variant = get_object_or_404(ProductVariant, pk=variant_id)
+        cart_obj, _ = Cart.objects.new_or_get(request)
 
-        # Criar/Pegar os itens do carrinho
-        item, created = CartItem.objects.get_or_create(cart=cart_obj, product_variant=variant, defaults={'quantity': quantity})
-        if not created:
-            item.quantity += quantity
-            item.save()
+        cart_item = CartItem.objects.filter(cart=cart_obj, product_variant=variant).first()
+        quantity_in_cart = cart_item.quantity if cart_item else 0
 
-        # 3. Redireciona o usuário 
-        messages.success(request, "Produto adicionado ao carrinho")
+        if variant.type == 'STOCK':
+            total_desired = quantity_in_cart + quantity
+            
+            if total_desired > variant.stock:
+                remaining = variant.stock - quantity_in_cart
+                
+                if remaining > 0:
+                    messages.error(request, f'Estoque insuficiente. Você já tem {quantity_in_cart} no carrinho e só restam mais {remaining} unidades.')
+                else:
+                    messages.error(request, 'Você já adicionou todo o estoque disponível deste produto ao seu carrinho.')
+                
+                return redirect(request.META.get('HTTP_REFERER', '/'))
+
+        if cart_item:
+            cart_item.quantity += quantity
+            cart_item.save()
+        else:
+            CartItem.objects.create(
+                cart=cart_obj, 
+                product_variant=variant, 
+                quantity=quantity
+            )
+
+        messages.success(request, f'Produto adicionado ao carrinho!')
         return redirect(request.META.get('HTTP_REFERER', '/'))
-    
+        
     return redirect('/')
 
 def viewCart(request):
