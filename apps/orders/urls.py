@@ -14,6 +14,7 @@ urlpatterns = [
     path('<int:order_id>/', views.orders_detail, name='detail'),
 
     # Carrinho
-    path('<int:item_id>/remove/', views.removeCartItem, name='remove_item')
+    path('<int:item_id>/remove/', views.removeCartItem, name='remove_item'),
+    path('<int:item_id>/update/<str:action>/', views.updateCartItem, name='update_item')
 
 ]

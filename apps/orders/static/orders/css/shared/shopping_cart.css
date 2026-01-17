@@ -56,6 +56,11 @@ body {
     height: 100%;
 }
 
+.line{
+    text-decoration: line-through;
+    opacity: 0.85; 
+}
+
 .remove {
     font-size: 0.9rem;
     color: var(--color-red);
