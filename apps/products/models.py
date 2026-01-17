@@ -59,7 +59,7 @@ class ProductVariant(models.Model):
 
 class VariantImage(models.Model):
     variant_image_id = models.AutoField(primary_key=True)
-    product_variant = models.ForeignKey(ProductVariant, models.CASCADE)
+    product_variant = models.ForeignKey(ProductVariant, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=variant_image_upload_path)
 
     def __str__(self):

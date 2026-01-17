@@ -1,138 +1,235 @@
-document.addEventListener('DOMContentLoaded', () => 
-{
-  const imageInput = document.getElementById("id_image");
-  if (imageInput) {
-    imageInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          document.querySelector('.upload-content').innerHTML =
-            `<img src="${event.target.result}" alt="Prévia" style="max-height:150px; border-radius:8px;">`;
-        };
-        reader.readAsDataURL(file);
-      }
+/* ==========================================================================
+   PRODUTO – JS FINAL (Variantes + Atributos + Imagens + Reindexação Total)
+   ========================================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    const variantsContainer = document.getElementById('variantsContainer');
+    const totalVariantsInput = document.querySelector('input[name="variants-TOTAL_FORMS"]');
+    const variantTemplate = document.getElementById('emptyVariantTemplate').innerHTML;
+    const attributeTemplate = document.getElementById('attributeTemplate').innerHTML;
+    const imageTemplate = document.getElementById('imageTemplate').innerHTML;
+
+    /* --- 1. FUNÇÕES DE REINDEXAÇÃO --- */
+
+    // Reindexa itens internos (Atributos ou Imagens) de uma variante específica
+    function reindexNestedItems(card, containerSelector, prefixPart) {
+        const container = card.querySelector(containerSelector);
+        if (!container) return;
+
+        // Seleciona as linhas de atributos ou os boxes de imagem (exceto o botão de adicionar)
+        const selector = prefixPart === 'attributes' ? '.attribute-row' : '.upload-box:not(.addImage)';
+        const items = container.querySelectorAll(selector);
+        const vIndex = card.dataset.index;
+
+        items.forEach((item, index) => {
+            // Regex para encontrar o índice do filho (ex: attributes-2-)
+            const regexChild = new RegExp(`${prefixPart}-\\d+-`);
+            const newChildPrefix = `${prefixPart}-${index}-`;
+
+            item.querySelectorAll('input, select, textarea, label').forEach(el => {
+                if (el.name) el.name = el.name.replace(regexChild, newChildPrefix);
+                if (el.id) el.id = el.id.replace(regexChild, newChildPrefix);
+                if (el.getAttribute('for')) {
+                    el.setAttribute('for', el.getAttribute('for').replace(regexChild, newChildPrefix));
+                }
+            });
+        });
+
+        // Atualiza o TOTAL_FORMS do formset aninhado (Atributos ou Imagens)
+        const nestedTotalInput = card.querySelector(`input[name$="-${prefixPart}-TOTAL_FORMS"]`);
+        if (nestedTotalInput) {
+            nestedTotalInput.value = items.length;
+        }
+    }
+
+    // Reindexa todas as variantes (O Pai)
+    function reindexVariants() {
+        const cards = variantsContainer.querySelectorAll('.variant-card');
+        
+        cards.forEach((card, index) => {
+            // 1. Atualiza título e o dataset index
+            const title = card.querySelector('h5');
+            if (title) title.textContent = `Variante ${index + 1}`;
+            card.dataset.index = index;
+
+            // 2. Regex para o prefixo do pai (variants-N-)
+            const regexParent = /variants-\d+-/;
+            const newParentPrefix = `variants-${index}-`;
+
+            card.querySelectorAll('input, select, textarea, label').forEach(el => {
+                if (el.name) el.name = el.name.replace(regexParent, newParentPrefix);
+                if (el.id) el.id = el.id.replace(regexParent, newParentPrefix);
+                if (el.getAttribute('for')) {
+                    el.setAttribute('for', el.getAttribute('for').replace(regexParent, newParentPrefix));
+                }
+            });
+
+            // 3. Após atualizar o pai, reindexamos os filhos para garantir consistência total
+            reindexNestedItems(card, '.attribute-list', 'attributes');
+            reindexNestedItems(card, '.image-list', 'images');
+        });
+
+        // Atualiza o TOTAL_FORMS principal das variantes
+        totalVariantsInput.value = cards.length;
+    }
+
+    /* --- 2. PREVIEW DE IMAGENS --- */
+    function handleImagePreview(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            const previewBox = input.closest('.upload-box');
+            const svgIcon = previewBox.querySelector('svg');
+            
+            reader.onload = (e) => {
+                let img = previewBox.querySelector('.img-preview-render');
+                if (!img) {
+                    img = document.createElement('img');
+                    img.className = 'img-preview-render';
+                    img.style = "width:135px; height:135px; object-fit:cover; border-radius:8px;";
+                    previewBox.appendChild(img);
+                }
+                img.src = e.target.result;
+                if (svgIcon) svgIcon.style.display = 'none';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    /* --- 3. VISIBILIDADE DINÂMICA --- */
+    function updateVisibility(card) {
+        if (!card) return;
+        const typeChecked = card.querySelector('input[name$="-type"]:checked')?.value;
+        const daysWrap = card.querySelector('[name$="-production_days"]')?.closest('.mb-2');
+        const stockWrap = card.querySelector('[name$="-stock"]')?.closest('.mb-2');
+        const customWrap = card.querySelector('[name$="-is_customizable"]')?.closest('.mb-2');
+
+        const toggle = (el, show) => { if(el) el.style.display = show ? '' : 'none'; };
+
+        toggle(daysWrap, typeChecked === 'DEMAND');
+        toggle(customWrap, typeChecked === 'DEMAND');
+        toggle(stockWrap, typeChecked === 'STOCK');
+    }
+
+    /* --- 4. GESTÃO DE EVENTOS (Delegation) --- */
+    
+    // Adicionar Variante
+    document.getElementById('addVariantButton').addEventListener('click', () => {
+        const index = parseInt(totalVariantsInput.value);
+        const newHtml = variantTemplate
+            .replace(/__prefix__/g, index)
+            .replace(/__num__/g, index + 1);
+
+        variantsContainer.insertAdjacentHTML('beforeend', newHtml);
+        totalVariantsInput.value = index + 1;
+        updateVisibility(variantsContainer.lastElementChild);
     });
-  }
+
+    variantsContainer.addEventListener('click', (e) => {
+        const target = e.target;
+        const card = target.closest('.variant-card');
+        if (!card) return;
+
+        // ADICIONAR ATRIBUTO
+        if (target.classList.contains('add-attribute')) {
+            const container = card.querySelector('.attribute-list');
+            const totalAttrs = card.querySelector('input[name$="-attributes-TOTAL_FORMS"]');
+            const aIndex = parseInt(totalAttrs.value);
+            
+            let html = attributeTemplate
+                .replace(/variants-__prefix__/g, `variants-${card.dataset.index}`)
+                .replace(/attributes-__prefix__/g, `attributes-${aIndex}`)
+                .replace(/__prefix__/g, aIndex);
+
+            container.insertAdjacentHTML('beforeend', html);
+            totalAttrs.value = aIndex + 1;
+        }
+
+        // ADICIONAR IMAGEM
+        if (target.closest('.addImage')) {
+            const container = card.querySelector('.image-list');
+            const totalImgs = card.querySelector('input[name$="-images-TOTAL_FORMS"]');
+            const iIndex = parseInt(totalImgs.value);
+            const addBtn = target.closest('.addImage');
+
+            let html = imageTemplate
+                .replace(/variants-__prefix__/g, `variants-${card.dataset.index}`)
+                .replace(/images-__prefix__/g, `images-${iIndex}`)
+                .replace(/__prefix__/g, iIndex);
+
+            addBtn.insertAdjacentHTML('beforebegin', html);
+            totalImgs.value = iIndex + 1;
+        }
+
+        // REMOVER ATRIBUTO
+        if (target.classList.contains('remove-attribute')) {
+            const row = target.closest('.attribute-row');
+            const idInput = row.querySelector('input[name$="-id"]');
+            if (idInput && idInput.value) {
+                row.style.display = 'none';
+                row.querySelector('input[name$="-DELETE"]').checked = true;
+            } else {
+                row.remove();
+                reindexNestedItems(card, '.attribute-list', 'attributes');
+            }
+        }
+
+        // REMOVER IMAGEM DA VARIANTE
+        // Supondo que o botão de remover imagem tenha a classe 'remove-image-btn'
+        if (target.classList.contains('remove-image-btn') || target.closest('.remove-image-btn')) {
+            const box = target.closest('.upload-box');
+            const idInput = box.querySelector('input[name$="-id"]');
+            if (idInput && idInput.value) {
+                box.style.display = 'none';
+                box.querySelector('input[name$="-DELETE"]').checked = true;
+            } else {
+                box.remove();
+                reindexNestedItems(card, '.image-list', 'images');
+            }
+        }
+
+        // REMOVER VARIANTE
+        if (target.classList.contains('remove-variant')) {
+            const idInput = card.querySelector('input[name$="-id"]');
+            if (idInput && idInput.value) {
+                if (confirm("Deseja marcar esta variante para exclusão?")) {
+                    card.style.display = 'none';
+                    card.querySelector('input[name$="-DELETE"]').checked = true;
+                }
+            } else {
+                card.remove();
+                reindexVariants();
+            }
+        }
+    });
+
+    /* --- 5. EVENTOS DE MUDANÇA --- */
+    variantsContainer.addEventListener('change', (e) => {
+        if (e.target.type === 'file') handleImagePreview(e.target);
+        if (e.target.name.endsWith('-type')) updateVisibility(e.target.closest('.variant-card'));
+    });
+
+    // Inicializa campos existentes no carregamento
+    document.querySelectorAll('.variant-card').forEach(updateVisibility);
 });
 
-  // --- ⚙️ Controle de visibilidade de campos (days / stock / customizable) ---
-  const days = document.querySelector('#div_id_production_days');
-  const stock = document.querySelector('#div_id_stock');
-  const customizable = document.querySelector('#div_id_is_customizable');
-  const radios = document.querySelectorAll('input[name="type"]');
+/* --- PREVIEW DA IMAGEM PRINCIPAL DO PRODUTO --- */
+function handleMainProductImagePreview(input) {
+    if (!input.files || !input.files[0]) return;
+    const uploadBox = document.getElementById('imageUploadBox');
+    const uploadContent = document.getElementById('imageUploadContent');
+    if (!uploadBox) return;
 
-  [days, stock, customizable].forEach(el => el?.classList.add('transition-box'));
-
-  function toggleBox(el, show) {
-  if (!el) return;
-
-  if (show) {
-    el.classList.add("open");
-    el.style.height = "auto";
-    const height = el.scrollHeight + "px";
-    el.style.height = "0px";
-
-    requestAnimationFrame(() => {
-      el.style.height = height;
-    });
-
-    el.addEventListener("transitionend", function handler() {
-      el.style.height = "auto"; // libera o conteúdo
-      el.removeEventListener("transitionend", handler);
-    });
-
-  } else {
-    const height = el.scrollHeight + "px";
-    el.style.height = height;
-
-    requestAnimationFrame(() => {
-      el.style.height = "0px";
-      el.classList.remove("open");
-    });
-  }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        let img = uploadBox.querySelector('.main-img-preview');
+        if (!img) {
+            img = document.createElement('img');
+            img.className = 'main-img-preview';
+            img.style.cssText = "width:135px; height:135px; object-fit:cover; border-radius:8px; display:block;";
+            uploadBox.appendChild(img);
+        }
+        img.src = e.target.result;
+        if (uploadContent) uploadContent.style.display = 'none';
+    };
+    reader.readAsDataURL(input.files[0]);
 }
-
-
-  function updateVisibility() {
-    const checked = document.querySelector('input[name="type"]:checked');
-    if (checked && checked.value === 'DEMAND') {
-      toggleBox(days, true);
-      toggleBox(stock, false);
-      toggleBox(customizable, true);
-    } else {
-      toggleBox(days, false);
-      toggleBox(stock, true);
-      toggleBox(customizable, false);
-    }
-  }
-
-  radios.forEach(radio => radio.addEventListener('change', updateVisibility));
-  updateVisibility();
-
-  // --- 🧩 Atributos dinâmicos ---
-  const attributeInput = document.querySelector('#id_attribute');
-  const valueInput = document.querySelector('#id_value');
-  const addButton = document.querySelector('#addButton');
-  const attributeList = document.querySelector('#attributeList');
-  const attributesData = document.querySelector('#attributesData');
-  const formAttribute = document.querySelector('.attribute-form');
-
-  let attributes = [];
-
-  if (addButton) {
-    addButton.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      const attribute_id = attributeInput?.value.trim();
-      const attribute_name = attributeInput?.options[attributeInput.selectedIndex]?.text;
-      const value = valueInput?.value.trim();
-      let errorMsg = formAttribute.querySelector('.text-danger');
-
-if (!attribute_id || !attribute_name || !value) {
-
-  if (!errorMsg) {
-    errorMsg = document.createElement('span');
-    errorMsg.classList.add('text-danger');
-    formAttribute.insertBefore(errorMsg, addButton);
-  }
-
-  errorMsg.textContent = 'Por favor, selecione um atributo e/ou seu valor válidos.';
-  return;
-}
-
-// Se chegou aqui, remover erro se existir
-if (errorMsg) errorMsg.remove();
-
-      // Cria o objeto e salva no array
-      const newItem = { id: attribute_id, name: attribute_name, value };
-      attributes.push(newItem);
-
-      // Atualiza o campo hidden com o JSON
-      attributesData.value = JSON.stringify(attributes);
-
-      // Cria o bloco visual
-      const newDiv = document.createElement('div');
-      newDiv.classList.add('attribute-item');
-      newDiv.innerHTML = `
-      <div class="attribute-info">
-        <p><strong>${attribute_name}</strong>: ${value}</p>
-        <button type="button" class="btn btn-danger btn-sm remove-btn">Remover</button>
-      </div>
-      `;
-
-      // Função de remover
-      newDiv.querySelector('.remove-btn').addEventListener('click', () => {
-        attributes = attributes.filter(item => !(item.attribute_id === attribute_id && item.value === value));
-        attributesData.value = JSON.stringify(attributes);
-        newDiv.remove();
-      });
-
-      // Adiciona visualmente
-      attributeList.appendChild(newDiv);
-
-      // Limpa os inputs
-      attributeInput.value = '';
-      valueInput.value = '';
-    });
-  }

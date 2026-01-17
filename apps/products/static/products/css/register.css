@@ -1,123 +1,341 @@
+/* ==========================================================================
+   1. VARIÁVEIS E CONFIGURAÇÕES GERAIS
+   ========================================================================== */
+:root {
+  --color-primary-light: #fff9f5;
+  --background: #FAF8F5;
+  --white: #ffffff;
+  --border-color: #eaeaea;
+
+  --border-radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --transition: all 0.3s ease;
+}
+
 body {
-      background-color: #FAF8F5 !important;
-    }
-/* .main-container {
-  display: grid;
-  grid-template-columns: minmax(200px , auto) minmax(200px, 1fr);
-} */
-.product-section {
-  width: 80%;
-  margin: 20px auto;
+  background-color: var(--background) !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
 }
-.button-cadastro {
-  width: 100%;
-  padding: 15px;
-  margin: 20px auto;
+
+/* ==========================================================================
+   2. LAYOUT E CONTAINERS
+   ========================================================================== */
+.product-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }
+
+.product-section, 
 .product-info-section {
-        width: 80%; 
-        padding: 20px;  
-        border-radius: 8px;
-        margin: auto;
-        margin-bottom: 20px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 5, 0.1);
-    }
-.upload-container {
-        margin: 20px 0;
-  width: 100%;
+  width: 85%;
+  max-width: 1000px;
+  margin: 20px auto;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 1.8rem;
+  border: 1px solid var(--border-color);
+}
+
+.product-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 1.8rem;
+  margin-bottom: 1.8rem;
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
+}
+
+.product-card:hover {
+  box-shadow: 0 8px 20px rgba(212, 122, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   3. ELEMENTOS DE TEXTO E TÍTULOS
+   ========================================================================== */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--color-primary-light);
+}
+
+.section-title svg {
+  width: 28px;
+  height: 28px;
+  background: rgba(212, 122, 0, 0.1);
+  border-radius: 8px;
+  padding: 4px;
 }
 
 .product-section h1 {
-    color: var(--color-hover)  !important;
+  color: var(--color-hover) !important;
+}
+
+.info-hint {
+  background: rgba(212, 122, 0, 0.08);
+  border-left: 3px solid var(--color-primary);
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.2rem 0;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.text-danger {
+  color: var(--danger);
+  opacity: 0.9;
+  margin: -12px 0px 10px 0px;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   4. FORMULÁRIOS E INPUTS
+   ========================================================================== */
+.form-section {
+  margin-bottom: 2rem;
+}
+
+.inputs-row {
+  display: grid;
+  grid-template-columns: minmax(200px, auto) minmax(200px, 1fr);
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.attribute-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   5. COMPONENTE DE UPLOAD
+   ========================================================================== */
+.upload-container {
+  margin: 20px 0;
+  width: 100%;
 }
 
 .upload-box {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px solid #d47a00;
-  background-color: #fff9f5;
-  border-radius: 10px;
-  padding: 40px;
+  border: 2px dashed var(--color-primary);
+  background-color: var(--color-primary-light);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition);
+  position: relative;
+  min-height: 200px;
 }
 
 .upload-box:hover {
   background-color: #fff3ea;
-  border-color: #b65f00;
-}
-
-.upload-content {
-  text-align: center;
-  color: #a14d00;
-}
-
-.upload-content svg {
-  fill: #a14d00;
-  margin-bottom: 8px;
-}
-
-.upload-content p {
-  font-size: 16px;
-  margin: 0;
+  border-color: var(--color-primary-dark);
 }
 
 .upload-box input[type="file"] {
   display: none;
 }
-.attribute-form{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.attribute-form button{
-  align-self: flex-start;
-}
-.inputs-row {
-  display: grid;
-  grid-template-columns: minmax(200px, auto) minmax(200px, 1fr);
-  gap: 8px;
+
+.upload-content {
+  text-align: center;
+  color: var(--color-primary-dark);
 }
 
+.upload-content svg {
+  width: 48px;
+  height: 48px;
+  fill: var(--color-primary);
+  margin-bottom: 12px;
+  transition: var(--transition);
+}
+
+.upload-preview {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  z-index: 2;
+}
+
+.preview-img {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   6. ATRIBUTOS E LISTAGENS
+   ========================================================================== */
+.attribute-list {
+  margin-top: 1.5rem;
+}
+
+.attribute-item, 
+.attribute-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 0.8rem;
+  transition: var(--transition);
+}
+
+.attribute-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.attribute-item:hover {
+  border-color: var(--color-primary);
+  background: rgba(212, 122, 0, 0.05);
+}
+
+/* ==========================================================================
+   7. BOTÕES
+   ========================================================================== */
+.btn-submit, 
+.button-cadastro {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 1rem 2.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: var(--transition);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-submit:hover, 
+.button-cadastro:hover {
+  background-color: var(--color-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(212, 122, 0, 0.4);
+}
+
+.remove-btn, 
+.remove-preview {
+  color: red;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.remove-btn:hover {
+  transform: scale(1.1);
+  filter: brightness(0.9);
+}
+
+/* ==========================================================================
+   8. ANIMAÇÕES E ESTADOS (TRANSITION BOX)
+   ========================================================================== */
 .transition-box {
   display: none;
   overflow: hidden;
   height: 0;
   opacity: 0;
   visibility: hidden;
-  transition: height .35s ease, opacity .35s ease;
+  transition: all 0.35s ease;
 }
+
 .transition-box.open {
   display: block;
+  height: auto;
   opacity: 1;
   visibility: visible;
 }
 
-.attribute-info{
-  border: 1px solid #E8E8E8;
-  border-radius: 8px;
-  padding: 12px;
-  margin: 8px 0;
-  display: grid;
-  grid-template-columns: 1fr auto;
-}
-.attribute-info p{
-  margin: 0;
-  align-self: center;
-}
-.text-danger{
-  color: #dc3545;
-  opacity: 0.9;
-  margin: -12px 0px 0px 0px;
+/* ==========================================================================
+   9. RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 768px) {
+  .product-section, 
+  .product-info-section {
+    width: 92%;
+    padding: 1.5rem;
+  }
+
+  .inputs-row {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-submit, 
+  .button-cadastro {
+    width: 100%;
+  }
+
+  .section-title {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
-@media (max-width: 650px) {
-  .inputs-row {
-    grid-template-columns: 1fr; /* uma coluna só */
+@media (max-width: 480px) {
+  .upload-box {
+    padding: 1.5rem;
+    min-height: 160px;
   }
-  section{
-    width: 95%;
+  
+  .upload-content p {
+    font-size: 0.95rem;
   }
+}
+.card-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.btn-close {
+    font-size: 0.7rem;
+}
+#variantsCardsContainer .card {
+    transition: transform 0.2s;
+}
+#variantsCardsContainer .card:hover {
+    transform: translateY(-3px);
+}
+
+input[type="file"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.variant-card.deleted { display: none; opacity: 0.4; }
+.attribute-row { margin-bottom: 8px; }
+.preview-thumb {
+min-width: 120px;
+min-height: 120px;
+
+width: 120px;
+height: 120px;
+
+object-fit: cover;
+border-radius: 8px;
+border: 1px solid #ddd;
 }

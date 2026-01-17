@@ -1,32 +1,27 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.views import View
-from .forms import Product_Form, Product_Variant_Form, Attributes_Form
-from .models import Product, Favorite
-from django.http import HttpResponse
-from .models import Product, ProductVariant
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 from django.views import View
-from .forms import Product_Form, Product_Variant_Form, Attributes_Form,ProductReviewForm
-from .models import Product, ProductVariant, ProductReview
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg,Count
-from apps.utils.purchases import user_bought_product
 from django.db.models import Q
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from decimal import Decimal
+from django.db import transaction
+from django.contrib import messages
+from .forms import ProductForm, VarianteInlineFormSet, ProductReviewForm
+from .models import Product, Favorite, ProductReview
+from django.http import HttpResponse
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
     "madeira": ["madeira","caixa", "caixinha", "madeira"],
     "ceramica": ["cerâmica","vaso", "caneca", "prato"],
 }
-
 
 def detail_product(request, product_id):
 
@@ -187,16 +182,58 @@ def search_product(request):
     return render(request, "products/search.html",{ "query": query,"products_page": products_page, "active_filter": active_filter,})
 
 
-class Product_Register_View(PermissionRequiredMixin, View):
+class ProductCreateView(PermissionRequiredMixin, View):
     permission_required = 'products.add_product'
-
+    template_name = "products/register.html"
+    
     def get(self, request):
         context = {
-            'form_products': Product_Form(),
-            'form_variant': Product_Variant_Form(),
-            'form_attribute': Attributes_Form()
+            "product_form": ProductForm(prefix="product"),
+            "variant_formset": VarianteInlineFormSet(
+                instance=None,
+                prefix="variants"
+            ),
         }
-        return render(request, 'products/register.html', context)
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        product_form = ProductForm(
+            request.POST,
+            request.FILES,
+            prefix="product"
+        )
+
+        variant_formset = VarianteInlineFormSet(
+            request.POST,
+            request.FILES,
+            prefix="variants"
+        )
+
+        # 1️⃣ Validação básica
+        if not product_form.is_valid() or not variant_formset.is_valid():
+            return render(request, self.template_name, {
+                'product_form': product_form,
+                'variant_formset': variant_formset
+            })
+
+        store = request.user.stores.first()
+
+
+        with transaction.atomic():
+            # 2️⃣ Produto
+            product = product_form.save(commit=False)
+            product.store = store
+            product.save()
+
+            # 3️⃣ Vincula produto ao formset
+            variant_formset.instance = product
+
+            # 4️⃣ Salva TODAS as variantes (VALIDADAS)
+            variant_formset.save()
+
+
+        messages.success(request, "Produto cadastrado com sucesso!")
+        return redirect("index")
 
 
 @require_POST
@@ -215,11 +252,9 @@ def toggle_favorite(request, product_id):
     # Redireciona de volta para a mesma página
     response["HX-Redirect"] = request.META.get("HTTP_REFERER", "/")
     return response
-    return redirect(request.META.get('HTTP_REFERER', '/'))
-
 
         
-@login_required(login_url="accounts:login")
+@login_required
 def submit_review(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     variant_id = request.GET.get("variant")
