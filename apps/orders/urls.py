@@ -11,7 +11,9 @@ urlpatterns = [
     path("checkout/", views.checkout, name="checkout"),
     path("approved/", views.approved, name="approved"),
  
-    # rotas dinâmicas por ultimo
-    path('<int:order_id>/', views.orders_detail, name='detail')
+    path('<int:order_id>/', views.orders_detail, name='detail'),
+
+    # Carrinho
+    path('<int:item_id>/remove/', views.removeCartItem, name='remove_item')
 
 ]

@@ -56,6 +56,22 @@ def viewCart(request):
     
     return render(request, 'orders/shopping_cart.html', context)
 
+def removeCartItem(request, item_id):
+    if request.method == 'POST':        
+        item = get_object_or_404(CartItem, pk=item_id)
+
+        cart_obj, _ = Cart.objects.new_or_get(request)
+
+        if item.cart == cart_obj:
+            item.delete()
+            messages.success(request, 'Item removido do carrinho')
+        else:
+            messages.error(request, 'Você não tem permissão para remover este item.')
+
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+    
+    return redirect('/')
+
 def orders_detail(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     context = {'order': order}
