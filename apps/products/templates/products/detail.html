@@ -32,11 +32,13 @@
     <div class="carouselProduto">      
       <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
       <div class="carouselInner" id="mobileCarouselInner">
-            {% for img in variant.variantimage_set.all %}
-              <img
-                src="{{ img.image.url }}"
-                class="carouselItem {% if forloop.first %}active{% endif %}">
-            {% endfor %}
+             {% if product.image %}
+                <img src="{{ product.image.url }}" class="carouselItem active">
+              {% endif %}
+
+              {% for img in variant.variantimage_set.all %}
+                <img src="{{ img.image.url }}" class="carouselItem {% if not product.image and forloop.first %}active{% endif %}">
+              {% endfor %}
             <button class="carousel-btn prev">
                 <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
             </button>
@@ -208,20 +210,31 @@
           <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
         </div>
 
-        {% with variant.variantimage_set.first as img %}
-          <img
-            id="mainImageDesktop"
-            src="{% if img %}{{ img.image.url }}{% else %}{% static 'products/media/no-image.png' %}{% endif %}"
-            class="main-image">
-        {% endwith %}
+        {% if product.image %}
+        <img
+          id="mainImageDesktop"
+          src="{{ product.image.url }}"
+          class="main-image">
+          {% else %}
+            {% with variant.variantimage_set.first as img %}
+              <img
+                id="mainImageDesktop"
+                src="{% if img %}{{ img.image.url }}{% else %}{% static 'products/media/no-image.png' %}{% endif %}"
+                class="main-image">
+            {% endwith %}
+          {% endif %}
 
-        <div class="thumbnail-list">
-          {% for img in variant.variantimage_set.all %}
-            <img
-              src="{{ img.image.url }}"
-              data-src="{{ img.image.url }}"
-              class="thumbnail {% if forloop.first %}active{% endif %}">
-          {% endfor %}
+      <div class="thumbnail-list">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" data-src="{{ product.image.url }}" class="thumbnail active">
+        {% endif %}
+
+        {% for img in variant.variantimage_set.all %}
+          <img
+            src="{{ img.image.url }}"
+            data-src="{{ img.image.url }}"
+            class="thumbnail {% if not product.image and forloop.first %}active{% endif %}">
+        {% endfor %}
         </div>
       </aside>
 
