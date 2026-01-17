@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from apps.stores.models import Store
 from apps.products.models import ProductVariant
-from django.db.models import Sum
+from django.db.models import Sum, F, DecimalField
 
 class CartManager(models.Manager):
     def new_or_get(self, request):
@@ -74,6 +74,15 @@ class Cart(models.Model):
 
         return result['total'] or 0
     
+    @property
+    def total(self):
+        resultado = self.items.aggregate(
+            valor_total=Sum(
+                F('quantity') * F('product_variant__price'),
+                output_field=DecimalField()
+            )
+        )
+        return resultado['valor_total'] or 0
     
     class Meta:
         db_table = 'carts'
