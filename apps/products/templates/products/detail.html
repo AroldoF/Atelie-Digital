@@ -190,7 +190,7 @@
   
   {% if show_personalization %}
     <div class="contato-artesao">
-      <p>Você pode entrar em contato com o artesão e solicitar produtos personalizados especialmente para você.</p>
+      <p>Você pode entrar em contato com o artesão para solicitar produtos personalizados {% if variant.type == 'DEMAND' %} ou encomenda-los{% endif %}.</p>
       <a href="{% url 'chats:chat' %}">
         <button id="chatButton">
           <p>Chat para personalização</p>
@@ -404,7 +404,7 @@
           
           {% if show_personalization %}
           <div class="personalization">
-            <p>Deseja personalizar o seu produto?</p>
+            <p>Deseja personalizar {% if  variant.type == 'DEMAND'%} ou encomendar {%endif%} o seu produto?</p>
             <a href="{% url 'chats:chat' %}">
               <button type="button" class="btn-chat">
                 <span>Chat para personalização</span>
