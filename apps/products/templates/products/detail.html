@@ -300,10 +300,10 @@
       
           <div class="price-row">
             
-            <div class="original-price">R$ <span  class="textPriceRick">55,00</span></div>
-
             <div class="discount-badge">
               {% if discount_percent > 0 %}
+              <p class="original-price">R$ <span  class="textPriceRick">55,00</span></p>
+              
               <div id="off">
                 <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
                 <p  id="textOff">{{ discount_percent }} Off</p>

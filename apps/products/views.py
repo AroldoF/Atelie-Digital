@@ -102,6 +102,11 @@ def detail_product(request, product_id):
     if variant and variant.price < REFERENCE_PRICE:
         discount_percent = round((REFERENCE_PRICE - variant.price) / REFERENCE_PRICE * 100)
 
+    # Verifica se deve mostrar a área de personalização
+    show_personalization = False
+    if variant:
+        show_personalization = variant.is_customizable or variant.type == 'DEMAND'
+
     context = {
         'product': product,
         'variant': variant,
@@ -121,7 +126,7 @@ def detail_product(request, product_id):
         'max_quantity':max_quantity,
 
         #para a exibição do chat
-        'show_personalization': variant.is_customizable if variant else False,
+        'show_personalization': show_personalization,
         #simulação de desconto
         'discount_percent': discount_percent,
     }

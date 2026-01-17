@@ -627,6 +627,8 @@ button:disabled {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    margin-left: 1rem;
+
     
     
    
