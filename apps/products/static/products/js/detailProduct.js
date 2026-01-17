@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* --- 1. EXIBIÇÃO DA MÉDIA DE ESTRELAS --- */
+  /* EXIBIÇÃO DA MÉDIA DE ESTRELAS  */
   function renderStaticRatings() {
     const avgElement = document.getElementById("avg-data");
     if (!avgElement) return;
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderStaticRatings();
 
 
-  /* --- 2. BARRAS DE CLASSIFICAÇÃO (PROGRESS BARS) --- */
+  /*BARRAS DE CLASSIFICAÇÃO (PROGRESS BARS)*/
   function renderRatingBars() {
     const rows = document.querySelectorAll(".rating-row");
     if (!rows.length) return;
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderRatingBars();
 
 
-  /* --- 3. ESTRELAS INTERATIVAS DO MODAL --- */
+  /*ESTRELAS INTERATIVAS DO MODAL  */
   function initInteractiveStars() {
     const allStars = document.querySelectorAll(".imgStar");
     const ratingInput = document.getElementById("rating-input");
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initInteractiveStars();
 
 
-  /* --- 4. MOBILE CAROUSEL --- */
+  /* MOBILE CAROUSEL  */
   function initMobileCarousel(container) {
     const items = container.querySelectorAll(".carouselItem");
     const prevBtn = container.querySelector(".carousel-btn.prev");
@@ -220,9 +220,18 @@ window.changeQuantity = function (delta) {
   let currentValue = parseInt(input.value) || min;
   const nextValue = currentValue + delta;
 
-  // Validação simples: só atualiza se estiver dentro dos limites
+  // Atualiza o valor se estiver dentro dos limites
   if (nextValue >= min && nextValue <= max) {
     input.value = nextValue;
-  } 
+  }
+
+  // Selecionando os botões de incremento/decremento
+  const btns = input.closest(".quantity-selector").querySelectorAll(".qty-btn");
+  const btnMinus = btns[0]; 
+  const btnPlus = btns[1];  
+
+  // Bloqueia/desbloqueia os botões
+  if (btnPlus) btnPlus.disabled = input.value >= max;
+  if (btnMinus) btnMinus.disabled = input.value <= min;
   
 };
