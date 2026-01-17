@@ -298,9 +298,9 @@
       <aside class="desktop-sidebar">
         <div class="price-card">
       
-          <div class="price-row">
+         
             
-            <div class="discount-badge">
+            <div class="price-row">
               {% if discount_percent > 0 %}
               <p class="original-price">R$ <span  class="textPriceRick">55,00</span></p>
               
@@ -310,7 +310,8 @@
               </div>
               {% endif %}
             </div>
-          </div>
+
+        
           {% if variant %}
             <div class="current-price" id="variantPriceDesktop">R$ {{ variant.price|floatformat:2 }}</div>
           {% else %}
