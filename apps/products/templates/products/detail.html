@@ -30,7 +30,7 @@
     
 
     <div class="carouselProduto">      
-      <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
+      <!-- <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
       <div class="carouselInner" id="mobileCarouselInner">
              {% if product.image %}
                 <img src="{{ product.image.url }}" class="carouselItem active">
@@ -211,7 +211,7 @@
       <aside class="desktop-gallery">
         <div class="icons-gallery">
           <img class="icon-favorite" src="{% static 'products/media/icons/favorite.svg' %}" alt="">
-          <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
+          <!-- <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
         </div>
 
         {% if product.image %}
