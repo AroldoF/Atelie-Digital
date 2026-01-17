@@ -30,13 +30,15 @@
     
 
     <div class="carouselProduto">      
-      <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
+      <!-- <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
       <div class="carouselInner" id="mobileCarouselInner">
-            {% for img in variant.variantimage_set.all %}
-              <img
-                src="{{ img.image.url }}"
-                class="carouselItem {% if forloop.first %}active{% endif %}">
-            {% endfor %}
+             {% if product.image %}
+                <img src="{{ product.image.url }}" class="carouselItem active">
+              {% endif %}
+
+              {% for img in variant.variantimage_set.all %}
+                <img src="{{ img.image.url }}" class="carouselItem {% if not product.image and forloop.first %}active{% endif %}">
+              {% endfor %}
             <button class="carousel-btn prev">
                 <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
             </button>
@@ -56,12 +58,15 @@
        <div class="area-preco-compra">
           <div class="areaPriceButton">
             <div class="areaPrice">
+             
               <div class="areaPriceOff">
+                 {% if discount_percent > 0 %}
                 <p>R$ <span class="textPriceRick">55,00</span> </p>
                 <div id="off">
                     <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
-                    <p  id="textOff">26% Off</p>
+                    <p  id="textOff">{{ discount_percent }}% Off</p>
                 </div>
+                {% endif %}
               </div>
               {% if variant %}
               <p class="textPrice" id="variantPriceMobile">R$ {{ variant.price|floatformat:2 }}</p>
@@ -183,16 +188,17 @@
     
   </div>
   
-
-  <div class="contato-artesao">
-    <p>Você pode entrar em contato com o artesão e solicitar produtos personalizados especialmente para você.</p>
-    <a href="{% url 'chats:chat' %}">
-      <button id="chatButton">
-        <p>Chat para personalização</p>
-        <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
-      </button>
-     </a>
-  </div>
+  {% if show_personalization %}
+    <div class="contato-artesao">
+      <p>Você pode entrar em contato com o artesão para solicitar produtos personalizados {% if variant.type == 'DEMAND' %} ou encomenda-los{% endif %}.</p>
+      <a href="{% url 'chats:chat' %}">
+        <button id="chatButton">
+          <p>Chat para personalização</p>
+          <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
+        </button>
+      </a>
+    </div>
+  {% endif %}
 
   <div>
       {% include 'products/partials/drop.html' with product=product variant=variant %}
@@ -205,23 +211,34 @@
       <aside class="desktop-gallery">
         <div class="icons-gallery">
           <img class="icon-favorite" src="{% static 'products/media/icons/favorite.svg' %}" alt="">
-          <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt="">
+          <!-- <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
         </div>
 
-        {% with variant.variantimage_set.first as img %}
-          <img
-            id="mainImageDesktop"
-            src="{% if img %}{{ img.image.url }}{% else %}{% static 'products/media/no-image.png' %}{% endif %}"
-            class="main-image">
-        {% endwith %}
+        {% if product.image %}
+        <img
+          id="mainImageDesktop"
+          src="{{ product.image.url }}"
+          class="main-image">
+          {% else %}
+            {% with variant.variantimage_set.first as img %}
+              <img
+                id="mainImageDesktop"
+                src="{% if img %}{{ img.image.url }}{% else %}{% static 'products/media/no-image.png' %}{% endif %}"
+                class="main-image">
+            {% endwith %}
+          {% endif %}
 
-        <div class="thumbnail-list">
-          {% for img in variant.variantimage_set.all %}
-            <img
-              src="{{ img.image.url }}"
-              data-src="{{ img.image.url }}"
-              class="thumbnail {% if forloop.first %}active{% endif %}">
-          {% endfor %}
+      <div class="thumbnail-list">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" data-src="{{ product.image.url }}" class="thumbnail active">
+        {% endif %}
+
+        {% for img in variant.variantimage_set.all %}
+          <img
+            src="{{ img.image.url }}"
+            data-src="{{ img.image.url }}"
+            class="thumbnail {% if not product.image and forloop.first %}active{% endif %}">
+        {% endfor %}
         </div>
       </aside>
 
@@ -244,6 +261,7 @@
         </div>
         
         <div class="area-variante">
+        {% if variants.exists %}
           <p class="title-variante">Variações</p>
           <div class="variant-selector d-flex flex-wrap gap-2">
             {% for v in variants %}
@@ -271,6 +289,8 @@
               {% endwith %}
             {% endfor %}
           </div>
+
+        {% endif %}
         </div>
       
       </article>
@@ -278,24 +298,33 @@
       <aside class="desktop-sidebar">
         <div class="price-card">
       
-          <div class="price-row">
+         
             
-            <div class="original-price">R$ <span  class="textPriceRick">55,00</span></div>
-
-            <div class="discount-badge">
+            <div class="price-row">
+              {% if discount_percent > 0 %}
+              <p class="original-price">R$ <span  class="textPriceRick">55,00</span></p>
+              
               <div id="off">
                 <img id="imgRaio" src="{% static 'products/media/icons/raio.svg'%}" alt="">
-                <p  id="textOff">26% Off</p>
+                <p  id="textOff">{{ discount_percent }} Off</p>
               </div>
+              {% endif %}
             </div>
-          </div>
+
+        
           {% if variant %}
             <div class="current-price" id="variantPriceDesktop">R$ {{ variant.price|floatformat:2 }}</div>
           {% else %}
             <div class="current-price">R$ 0,00</div>
           {% endif %}
 
-          {% if variant and variant.type == 'STOCK' %}
+          {% if variant and variant.type == 'DEMAND' %}
+            <div class="area-on-demand">
+              <p class="on-demand-label">
+                Produto sob encomenda
+              </p>
+            </div>
+          {% endif %}
           <div class="area-quantity">
             <p>Quantidade</p>
           
@@ -320,15 +349,10 @@
       
         </div>
 
-        {% else %}
+       
+         
 
-          <div class="area-on-demand">
-            <p class="on-demand-label">
-              Produto sob encomenda
-            </p>
-          </div>
-
-        {% endif %}
+      
 
 
         {% if is_available %}
@@ -380,9 +404,9 @@
           </div>
 
           
-
+          {% if show_personalization %}
           <div class="personalization">
-            <p>Deseja personalizar o seu produto?</p>
+            <p>Deseja personalizar {% if  variant.type == 'DEMAND'%} ou encomendar {%endif%} o seu produto?</p>
             <a href="{% url 'chats:chat' %}">
               <button type="button" class="btn-chat">
                 <span>Chat para personalização</span>
@@ -390,6 +414,7 @@
               </button>
              </a>
           </div>
+          {% endif %}
         </div>
     </div>
     

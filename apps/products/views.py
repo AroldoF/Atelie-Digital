@@ -19,6 +19,7 @@ from django.db.models import Q
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from decimal import Decimal
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
@@ -30,7 +31,7 @@ CATEGORY_KEYWORDS = {
 def detail_product(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
-    
+
     # Lógica de variantes e disponibilidade
     variants = product.variants.filter(is_active=True)
     variant_id = request.GET.get('variant')
@@ -77,7 +78,6 @@ def detail_product(request, product_id):
 
   
     # LIMITE PROGRESSIVO DE COMENTÁRIOS
-   
     DEFAULT_LIMIT = 3
     reviews_limit = int(request.GET.get("reviews_limit", DEFAULT_LIMIT))
 
@@ -95,6 +95,18 @@ def detail_product(request, product_id):
         max_quantity = variant.stock
 
 
+    #simular desconto
+    REFERENCE_PRICE = Decimal('55.00')
+
+    discount_percent = 0
+    if variant and variant.price < REFERENCE_PRICE:
+        discount_percent = round((REFERENCE_PRICE - variant.price) / REFERENCE_PRICE * 100)
+
+    # Verifica se deve mostrar a área de personalização
+    show_personalization = False
+    if variant:
+        show_personalization = variant.is_customizable or variant.type == 'DEMAND'
+
     context = {
         'product': product,
         'variant': variant,
@@ -110,9 +122,13 @@ def detail_product(request, product_id):
         # controle do botão
         "has_more_reviews": has_more_reviews,
         "next_reviews_limit": next_reviews_limit,
+        # qtd maxima
+        'max_quantity':max_quantity,
 
-
-        'max_quantity':max_quantity
+        #para a exibição do chat
+        'show_personalization': show_personalization,
+        #simulação de desconto
+        'discount_percent': discount_percent,
     }
     
     return render(request, 'products/detail.html', context)
