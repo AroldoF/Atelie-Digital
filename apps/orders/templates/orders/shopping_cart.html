@@ -13,30 +13,62 @@
       
       <div id="my-cart-primary" class="col-lg-8">
         <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 id="my-cart" class="h4 mb-0">Meu Carrinho</h2>
-        <!--Implementar lógica para contagem do total de itens no carrinho ou passar como parametro na view -->
-        <span id="qtnd-itens" class="text-muted">3 itens</span>
+        <h2 id="my-cart">Meu Carrinho</h2>
+
+        {% if cart.total_items == 1 %}
+          <span id="qtnd-itens" class="text-muted">{{ cart.total_items }} item</span>
+        {% endif %}
+
+        {% if cart.total_items > 1 %}
+          <span id="qtnd-itens" class="text-muted">{{ cart.total_items }} itens</span>
+        {% endif %}
+        
       </div>
 
       {% if items %}
-        <!--incluir dados-->
+        {% for item in items %}
+          <div class="cart-item-card">
+            {% with item.product_variant.variantimage_set.first as v_img %}
+                {% if v_img %}
+                    <img src="{{ v_img.image.url }}" alt="{{ item.product_variant.product.name }}" class="cart-item-image" />
+                {% else %}
+                    <img src="/static/img/no-image.png" class="cart-item-image" />
+                {% endif %}
+            {% endwith %}
+
+            <div class="cart-item-info">
+              <h4>{{ item.product_variant.product.name }}</h4>
+              <p>Descrição: {{ item.product_variant.description }}</p>
+              <p>Vendido por: {{ item.product_variant.product.store.name }}</p> 
+          
+              <div class="cart-item-price">
+                <strong>R$ {{ item.price|floatformat:2 }}</strong>
+              </div>
+            </div>
+
+            <div class="cart-item-actions">
+              <!--adicionar view de remoção-->
+              <a href="#" class="remove-link">Remover</a>
+
+              <div class="quantity-selector">
+                <button class="btn-qty" data-action="decrease">-</button>
+                <!--adicionar validação da quantidade-->
+                <span class="quantity-value">{{ item.quantity }}</span>
+                <button class="btn-qty" data-action="increase">+</button>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
       {% else %}
-        <p>Não há produtos no carrinho</p>
+        <h4>Não há produtos no carrinho</h4>
       {% endif %}
-
-        
-
-
-        {% include 'orders/partials/_cart_product_card.html' with product_name='Caixinha de Joias' store_name='Ateliê Cerâmica Arte' image_path='media/caixaDeJoias.jpeg' price='89.90' quantity=1 %}
-
-        {% include 'orders/partials/_cart_product_card.html' with product_name='Tiara Roxa' store_name='Tecidos & Arte' image_path='media/tiara_roxa.png' price='145.00' quantity=2 %}
-
-        {% include 'orders/partials/_cart_product_card.html' with product_name='Kit Vermelho' store_name='Madeira Nobre' image_path='media/kit_vermelho.png' price='220.00' quantity=1 %}
 
       <!--receber dados do valor do carrinho-->
       </div> <div class="col-lg-4">
         {% include 'orders/partials/_order_summary_card.html' with subtotal=599.9 frete=25 desconto=50 total=574.9 url_finalizar='orders:shipping' url_continuar='#' btn_name="Continuar" btn_two_name="Adicionar produtos" cart_shopping=True cart=True %}
       </div>
+
     </div>
   </div>
 {% endblock %}

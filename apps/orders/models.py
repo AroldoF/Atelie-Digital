@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from apps.stores.models import Store
 from apps.products.models import ProductVariant
+from django.db.models import Sum
 
 class CartManager(models.Manager):
     def new_or_get(self, request):
@@ -67,6 +68,13 @@ class Cart(models.Model):
     def __str__(self):
         return f'Cart {self.cart_id} - {self.user} {self.session_key}'
     
+    @property
+    def total_items(self):
+        result = self.items.aggregate(total=Sum('quantity'))
+
+        return result['total'] or 0
+    
+    
     class Meta:
         db_table = 'carts'
         verbose_name = 'Cart'
@@ -81,9 +89,11 @@ class CartItem(models.Model):
     def __str__(self):
         return f'{self.quantity}x {self.product_variant} no Carrinho {self.cart.pk}'
     
+    @property
     def price(self):
         return self.product_variant.price
     
+    @property
     def subtotal(self):
         return self.product_variant.price * self.quantity
 
