@@ -268,7 +268,16 @@
     
     <!-- Coluna Direita: Resumo do Pedido -->
     <div class="order-summary-container">
-      {% include 'orders/partials/_order_summary_card.html' with subtotal=599.9 frete=25 desconto=50 total=574.9 url_finalizar='orders:checkout' url_continuar='#' btn_name="Continuar" btn_two_name="Adicionar produtos" cart_shopping=True cart=True %}
+      <div class="summary-card">
+        {% include 'orders/partials/_order_summary_card.html' %}
+
+        <a href="{% url 'orders:shipping' %}" class="btn btn-green">
+            Continuar
+        </a>
+        <a href="{% url 'index' %}" class="btn btn-primary w-100 py-3">
+            Adicionar produtos
+        </a>
+      </div>
     </div>
   </div>
 </div>

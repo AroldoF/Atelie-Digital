@@ -1,38 +1,24 @@
 {% load static %} 
 
-<div class="summary-card">
-    <h3>Resumo do Pedido</h3>
-    
-    <div class="summary-line">
-        <span>Subtotal</span>
-        <span>R$ {{ subtotal | floatformat:2 }}</span>
-    </div>
-    
+<h3>Resumo do Pedido</h3>
+
+<div class="summary-line">
+    <span>Subtotal</span>
+    <span>R$ {{ cart.total|floatformat:2 }}</span>
+</div>
+
+{% if items %}
     <div class="summary-line">
         <span>Frete</span>
-        <span>R$ {{ frete | floatformat:2 }}</span>
+        <span>Grátis</span>
     </div>
-    
-    <div class="summary-line">
-        <span>Desconto</span>
-        <span>- R$ {{ desconto | floatformat:2 }}</span>
-    </div>
-    
-    <hr class="summary-divider">
-    
-    <div class="summary-line total">
-        <strong>Total</strong>
-        <strong class="total-price">R$ {{ total | floatformat:2 }}</strong>
-    </div>
-    
-    {% if cart_shopping %}
-        <a href="{% url url_finalizar %}" class="btn btn-green">
-            {{ btn_name }}
-        </a>
-        {% if cart %}
-            <a href="{% url 'index' %}" class="btn btn-primary w-100 py-3">
-                {{ btn_two_name }}
-            </a>
-        {% endif %}
-    {% endif %}
+{% endif %}
+
+<hr class="summary-divider">
+
+<div class="summary-line total">
+    <strong>Total</strong>
+    <strong class="total-price">R$ {{ cart.total|floatformat:2 }}</strong>
 </div>
+    
+    
