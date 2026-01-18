@@ -9,6 +9,15 @@ class OrderProductInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderProductInline]
 
+
+class CartItemInline(admin.TabularInline):
+    model = models.CartItem
+    extra = 1
+
+@admin.register(models.Cart)
+class CartAdmin(admin.ModelAdmin):
+    inlines = [CartItemInline]
+
 # @admin.register(models.OrderProduct)
 # class BuyAdmin(admin.ModelAdmin):
 #     pass

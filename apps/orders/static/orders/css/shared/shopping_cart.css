@@ -56,14 +56,19 @@ body {
     height: 100%;
 }
 
-.cart-item-actions .remove-link {
+.line{
+    text-decoration: line-through;
+    opacity: 0.85; 
+}
+
+.remove {
     font-size: 0.9rem;
     color: var(--color-red);
     text-decoration: none;
     font-weight: 500;
     text-align: right;
-    
-
+    border: none;
+    background-color: transparent; 
 }
 
 
@@ -171,10 +176,6 @@ body {
     background-color: #fff4e6; 
     color: var(--color-primary); 
     cursor: pointer;
-}
-
-#my-cart{
-     margin-left: 4px;
 }
 
 #qtnd-itens{
