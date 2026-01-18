@@ -13,6 +13,12 @@ class ProductQuerySet(models.QuerySet):
             min_price=Min('variants__price')
         )
 
+    def with_min_stock(self):
+        return self.annotate(
+            min_stock=Min('variants__stock')
+        )
+
+
     def with_total_sales(self):
         return self.annotate(
             total_sales=Coalesce(
@@ -53,6 +59,7 @@ class ProductQuerySet(models.QuerySet):
         return (
             self.with_min_price()
             .with_sorted_variants()
+            .with_min_stock()
         )
     
     def cards_with_favorites(self, user):
@@ -80,3 +87,4 @@ class ProductManager(models.Manager.from_queryset(ProductQuerySet)):
 
     def cards_with_favorites(self, user):
         return self.get_queryset().cards_with_favorites(user)
+    
