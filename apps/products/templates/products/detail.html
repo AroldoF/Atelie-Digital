@@ -353,16 +353,6 @@
       
         </div>
 
-        {% else %}
-
-          <div class="area-on-demand">
-            <p class="on-demand-label">
-              Produto sob encomenda
-            </p>
-          </div>
-
-        {% endif %} 
-
         {% if is_available %}
         <!--formulário - COMPRAR-ADC DESKTOP -->
           <form action="{% url 'orders:add' %}" method="POST" id="form-add-cart">
