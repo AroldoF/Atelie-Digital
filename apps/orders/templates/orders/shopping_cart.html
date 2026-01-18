@@ -28,7 +28,7 @@
       {% if items %}
         {% for item in items %}
           <div class="cart-item-card">
-            {% with item.product_variant.variantimage_set.first as v_img %}
+            {% with item.product_variant.images.first as v_img %}
                 {% if v_img %}
                     <img src="{{ v_img.image.url }}" alt="{{ item.product_variant.product.name }}" class="cart-item-image" />
                 {% else %}
