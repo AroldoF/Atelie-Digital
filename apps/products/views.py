@@ -13,12 +13,38 @@ from .forms import ProductForm, VarianteInlineFormSet
 from .models import Product, Favorite, ProductReview
 from django.http import HttpResponse
 from django.urls import reverse
+from django.views.generic import DeleteView
+from stores.models import Store
+
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
     "madeira": ["madeira","caixa", "caixinha", "madeira"],
     "ceramica": ["cerâmica","vaso", "caneca", "prato"],
 }
+
+@login_required
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Product
+    template_name = "products/product_confirm_delete.html"
+    context_object_name = "product"
+
+    def get_queryset(self):
+        """usuário só pode deletar produtosda própria loja"""
+        store = get_object_or_404(
+            Store,
+            store_id=self.kwargs["store_id"],
+            owner=self.request.user
+        )
+
+        return Product.objects.filter(store=store)
+
+    def get_success_url(self):
+        return reverse(
+            "stores:stores_products",
+            kwargs={"store_id": self.kwargs["store_id"]}
+        )
+
 
 def detail_product(request, product_id):
 
