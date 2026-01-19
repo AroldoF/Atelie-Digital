@@ -24,16 +24,9 @@
             <div style="text-align: right;">Ações</div>
         </div>
         
-        {% include 'stores/partials/_product_table_row.html' with name="Vaso de Cerâmica Artesanal" category="Decoração" price=89.9 stock=12 status="Ativo" image="media/caixaDeJoias.jpeg" %}
-        
-        {% include 'stores/partials/_product_table_row.html' with name="Kit Almofadas Linho" category="Sala de Estar" price=120.0 stock=5 status="Ativo" image="media/caixaDeJoias.jpeg" %}
-        
-        {% include 'stores/partials/_product_table_row.html' with name="Luminária Rústica" category="Iluminação" price=250.0 stock=0 status="Inativo" image="media/caixaDeJoias.jpeg" %}
-        
-        {% include 'stores/partials/_product_table_row.html' with name="Cesta de Palha Grande" category="Organização" price=45.5 stock=28 status="Ativo" image="media/caixaDeJoias.jpeg" %}
-
-        {% include 'stores/partials/_product_table_row.html' with name="Prato Decorativo Pintado" category="Cozinha" price=60.0 stock=2 status="Ativo" image="media/caixaDeJoias.jpeg" %}
-
+        {% for product in products %}
+          {% include 'stores/partials/_product_table_row.html' with name=product.name price=product.min_price stock=product.min_stock status=product.is_active image=product.image %}
+        {% endfor %}
         
         <div class='m-3'>
           <a class='btn btn-primary' href='/products/register/'>
