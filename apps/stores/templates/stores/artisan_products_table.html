@@ -25,7 +25,7 @@
         </div>
         
         {% for product in products %}
-          {% include 'stores/partials/_product_table_row.html' with name=product.name price=product.min_price stock=product.min_stock status=product.is_active image=product.image %}
+          {% include 'stores/partials/_product_table_row.html' with name=product.name price=product.min_price stock=product.min_stock status=product.is_active image=product.image product_id=product.product_id store_id=store.store_id %}
         {% endfor %}
         
         <div class='m-3'>
