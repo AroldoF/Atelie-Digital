@@ -8,9 +8,13 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import user_passes_test
 
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
+
+def is_artisian(user):
+    return user.is_authenticated and user.groups.filter(name='Artisians').exists()
 
 @method_decorator(never_cache, name='dispatch')
 class StoreCreateView(LoginRequiredMixin, CreateView):
@@ -67,19 +71,23 @@ class StoreCreateView(LoginRequiredMixin, CreateView):
     
     def get_success_url(self):
         return reverse('stores:dashboard', kwargs={'store_id': self.object.store_id})
+ 
 
-@login_required
 @never_cache
+@user_passes_test(is_artisian)
 def dashboard(request, store_id): 
     store = get_object_or_404(Store, pk=store_id)
     return render(request, 'stores/dashboard.html', {'store': store, 'store_id': store_id})
 
+@user_passes_test(is_artisian)
 def storeProfile(request):
     return render(request, 'stores/storeProfile.html')
 
+@user_passes_test(is_artisian)
 def artisan_products(request):
     return render(request, 'stores/artisan_products_table.html', {'active_page': 'products'})
 
+@user_passes_test(is_artisian)
 def artisan_orders(request):
     return render(request, 'stores/artisan_orders_table.html', {'active_page': 'orders'})
 
