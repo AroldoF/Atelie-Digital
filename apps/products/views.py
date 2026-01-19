@@ -5,7 +5,7 @@ from django.views import View
 from django.db.models import Avg,Count, Q
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from decimal import Decimal
 from django.db import transaction
 from django.contrib import messages
@@ -14,7 +14,7 @@ from .models import Product, Favorite, ProductReview
 from django.http import HttpResponse
 from django.urls import reverse
 from django.views.generic import DeleteView
-from stores.models import Store
+from apps.stores.models import Store
 
 
 CATEGORY_KEYWORDS = {
@@ -23,8 +23,8 @@ CATEGORY_KEYWORDS = {
     "ceramica": ["cerâmica","vaso", "caneca", "prato"],
 }
 
-@login_required
-class ProductDeleteView(PermissionRequiredMixin, DeleteView):
+
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     template_name = "products/product_confirm_delete.html"
     context_object_name = "product"
@@ -34,7 +34,7 @@ class ProductDeleteView(PermissionRequiredMixin, DeleteView):
         store = get_object_or_404(
             Store,
             store_id=self.kwargs["store_id"],
-            owner=self.request.user
+            user=self.request.user
         )
 
         return Product.objects.filter(store=store)
