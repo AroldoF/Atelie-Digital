@@ -87,15 +87,21 @@ def storeProfile(request):
 @login_required
 @never_cache
 def artisan_products(request, store_id):
-    store = get_object_or_404(Store, pk=store_id)
+    store = get_object_or_404(Store, pk=store_id, user=request.user)
+
+    products = (
+        store.products
+        .with_min_price()
+        .with_min_stock()
+    )
 
     return render(
         request,
         'stores/artisan_products_table.html',
         {
             'store': store,
-            'store_id': store_id,
-            'active_page': 'products'
+            'products': products,
+            'active_page': 'products',
         }
     )
 
