@@ -110,18 +110,46 @@ def removeCartItem(request, item_id):
     
     return redirect('/')
 
+@login_required
+def shipping(request):
+    # puxar os dados do carrinho
+    cart_obj, _ = Cart.objects.new_or_get(request)
+
+    if not cart_obj.items.exists():
+        messages.warning(request, "O carrinho está vazio!")
+        return redirect('orders:cart')        
+    else:
+        # listar os endereços existentes
+        addresses = Address.objects.filter(user=request.user)
+
+        # validar status e quantidade de produto em estoque
+        for item in cart_obj.items.all():
+            product = item.product_variant
+            if not product.is_active:
+                messages.warning(request, f'O produto {product.description} não está disponivel para venda. Remova-o do carrinho e prossiga com a compra')
+                return redirect('orders:cart')
+                
+            if product.type == 'STOCK':
+                if product.stock < item.quantity:
+                    messages.warning(request, f'O produto {product.description} esgotou o estoque. Remova-o do carrinho e prossiga com a compra.')
+                    return redirect('orders:cart')
+
+    context = {'addresses': addresses, 'cart_obj': cart_obj}
+
+    return render(request, 'orders/shipping.html', context)
+ 
+def checkout(request):
+    # pegar o endereço que o usuário passou
+    # excluir carrinho após a compra 
+    return render(request, 'orders/checkout.html')
+
+def approved(request):
+    return render(request, 'orders/approved.html')
+
+
 def orders_detail(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     context = {'order': order}
     return JsonResponse({'message': 'ainda não implemetado'})
 
-def shipping(request):
-    addresses = Address.objects.filter(user=request.user)
-    context = {'addresses': addresses}
-    return render(request, 'orders/shipping.html', context)
 
-def checkout(request):
-    return render(request, 'orders/checkout.html')
-
-def approved(request):
-    return render(request, 'orders/approved.html')
