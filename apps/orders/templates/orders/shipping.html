@@ -9,108 +9,119 @@
 
 {% block main %}
 <div class="container my-5">
-  <div class="row g-4">
-    <!-- Coluna Esquerda: Opções de Entrega -->
-    <div class="col-lg-8">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Opções de Entrega</h2>
-      </div>
-  
-      <!-- Seção de Endereços -->
-      <div class="delivery-section">
-        <h2 class="section-title">Selecione o Endereço</h2>
-        
-        <!-- Endereço 1 -->
-        <div class="address-card">
-          <div class="address-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D26B21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-          </div>
-          <div class="address-content">
-            <div class="address-header">
-              <span class="address-type">Casa</span>
-              {% comment %} <a href="#" class="address-edit">Editar</a> {% endcomment %}
-            </div>
-            <div class="address-details">
-              <p>Rua das Flores, 123</p>
-              <p>Bairro Centro</p>
-              <p>Pau dos Ferros, RN - 59900-000</p>
-            </div>
-          </div>
-          <div class="d-flex align-items-center">
-            <input type="radio" name="address" checked>
-          </div>
+  <form action="{% url 'orders:checkout' %}" method="POST">
+    {% csrf_token %}
+    <div class="row g-4">
+      <!-- Coluna Esquerda: Opções de Entrega -->
+      <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2>Opções de Entrega</h2>
+        </div>
+    
+        <!-- Seção de Endereços -->
+        <div class="delivery-section">
+          <h2 class="section-title">Selecione o Endereço</h2>
+          
+          {% if addresses %}
+            {% for address in addresses %}
+              <div class="address-card">
+                <div class="address-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D26B21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </div>
+                <div class="address-content">
+                  <div class="address-header">
+                    <span class="address-type">{{ address.complement }}</span>
+                    {% comment %} <a href="#" class="address-edit">Editar</a> {% endcomment %}
+                  </div>
+                  <div class="address-details">
+                    <p>{{ address.street }}, {{ address.number }}</p>
+                    <p>Bairro {{ address.neighborhood }}</p>
+                    <p>{{ address.city }}, {{ address.state }} - {{ address.cep }} </p>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center">
+                  <input type="radio" name="shipping_address" value="{{ address.address_id }}" id="address_{{ address.pk }}" {% if forloop.first %}checked{% endif %}>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            {% comment %} estilizar {% endcomment %}
+            <p>Você ainda não possui endereço cadastrado</p>
+          {% endif %}
+            <a href="{% url 'accounts:addresses_register' %}" class="btn btn-secondary">
+              Adicionar Novo Endereço
+            </a>
         </div>
         
-        <a href="{% url 'accounts:addresses_register' %}" class="btn btn-secondary">
-          Adicionar Novo Endereço
-        </a>
+        <!-- Seção de Frete -->
+        <div class="delivery-section mt-4">
+          <h2 class="section-title">Selecione o Frete</h2>
+          
+          <!-- Opção 1 -->
+          <div class="shipping-option">
+            <div class="d-flex align-items-center">
+              <input type="radio" name="shipping" value="standard">
+            </div>
+            <div class="shipping-content">
+              <div class="shipping-header">
+                <span class="shipping-name">Entrega Padrão</span>
+                <span class="shipping-price">Grátis</span>
+              </div>
+              <p class="shipping-description">Receba em 5-7 dias úteis</p>
+            </div>
+          </div>
+          
+          <!-- Opção 2 -->
+          <div class="shipping-option">
+            <div class="d-flex align-items-center">
+              <input type="radio" name="shipping" value="pickup">
+            </div>
+            <div class="shipping-content">
+              <div class="shipping-header">
+                <span class="shipping-name">Retirada na Loja</span>
+              </div>
+              <p class="shipping-description">Busque seu pedido em nossa loja física</p>
+            </div>
+          </div>
+        </div>
       </div>
       
-      <!-- Seção de Frete -->
-      <div class="delivery-section mt-4">
-        <h2 class="section-title">Selecione o Frete</h2>
-        
-        <!-- Opção 1 -->
-        <div class="shipping-option">
-          <div class="d-flex align-items-center">
-            <input type="radio" name="shipping" checked>
-          </div>
-          <div class="shipping-content">
-            <div class="shipping-header">
-              <span class="shipping-name">Entrega Expressa</span>
-              <span class="shipping-price">R$ 15,99</span>
-            </div>
-            <p class="shipping-description">Receba em até 3 dias úteis</p>
-          </div>
-        </div>
-        
-        <!-- Opção 2 -->
-        <div class="shipping-option">
-          <div class="d-flex align-items-center">
-            <input type="radio" name="shipping">
-          </div>
-          <div class="shipping-content">
-            <div class="shipping-header">
-              <span class="shipping-name">Entrega Padrão</span>
-              <span class="shipping-price">Grátis</span>
-            </div>
-            <p class="shipping-description">Receba em 5-7 dias úteis</p>
-          </div>
-        </div>
-        
-        <!-- Opção 3 -->
-        <div class="shipping-option">
-          <div class="d-flex align-items-center">
-            <input type="radio" name="shipping">
-          </div>
-          <div class="shipping-content">
-            <div class="shipping-header">
-              <span class="shipping-name">Retirada na Loja</span>
-              <span class="shipping-price">Grátis</span>
-            </div>
-            <p class="shipping-description">Busque seu pedido em nossa loja física</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Coluna Direita: Resumo do Pedido -->
-    <div class="col-lg-4">
-      <div class="summary-card">
-        {% include 'orders/partials/_order_summary_card.html' %}
+      <!-- Coluna Direita: Resumo do Pedido -->
+      <div class="col-lg-4">
+        <div class="summary-card">
+          <h3>Resumo do Pedido</h3>
 
-        <a href="{% url 'orders:shipping' %}" class="btn btn-green">
-            Continuar
-        </a>
-        <a href="{% url 'index' %}" class="btn btn-primary w-100 py-3">
-            Adicionar produtos
-        </a>
+          <div class="summary-line">
+              <span>Subtotal</span>
+              <span>R$ {{ cart_obj.total|floatformat:2 }}</span>
+          </div>
+
+          {% if cart_obj %}
+              <div class="summary-line">
+                  <span>Frete</span>
+                  <span>R$ 0,00</span>
+              </div>
+          {% endif %}
+
+          <hr class="summary-divider">
+
+          <div class="summary-line total">
+              <strong>Total</strong>
+              <strong class="total-price">R$ {{ cart_obj.total|floatformat:2 }}</strong>
+          </div>
+
+
+          <button type="submit" class="btn btn-green">Continuar</button>
+          <a href="{% url 'index' %}" class="btn btn-primary w-100 py-3">
+              Adicionar produtos
+          </a>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 {% endblock main %}
 
