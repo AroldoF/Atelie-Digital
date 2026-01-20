@@ -37,8 +37,25 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
             store_id=self.kwargs["store_id"],
             user=self.request.user
         )
-
         return Product.objects.filter(store=store)
+
+    def post(self, request, *args, **kwargs):
+        product = self.get_object()
+        product_name = product.name
+
+        product.delete()
+
+        messages.success(
+            request,
+            f'O produto "{product_name}" foi excluído com sucesso.'
+        )
+
+        return redirect(
+            "stores:stores_products",
+            store_id=self.kwargs["store_id"]
+        )
+
+    
 
     def get_success_url(self):
         return reverse(
