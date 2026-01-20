@@ -260,7 +260,7 @@ class FormAdressUser(forms.Form):
         label="Estado",
          widget=forms.Select(attrs={'class': 'form-select'})
     )
-    
+     
 class AddressesForm(forms.ModelForm):
     class Meta: 
         model = Address

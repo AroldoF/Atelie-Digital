@@ -1,0 +1,170 @@
+/* Estilo para os blocos organizados */
+  .delivery-section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+  }
+  
+  .section-title {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+  
+  .address-card {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+    align-items: center;
+  }
+  
+  .address-icon {
+    width: 40px;
+    height: 40px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .address-content {
+    flex: 1;
+  }
+  
+  .address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .address-type {
+    background-color: #EED2A5;
+    padding: 4px 12px;
+    color: #D26B21;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  
+  .address-edit {
+    color: #D26B21;
+    cursor: pointer;
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+  
+  .address-edit:hover {
+    text-decoration: underline;
+  }
+  
+  .address-details p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    color: #495057;
+  }
+  
+  .shipping-option {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+    align-items: center;
+  }
+  
+  .shipping-content {
+    flex: 1;
+  }
+  
+  .shipping-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .shipping-name {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .shipping-price {
+    font-weight: 700;
+    color: #d47a00;
+    font-size: 1.1rem;
+  }
+  
+  .shipping-description {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .btn-add-address {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(212, 122, 0, 0.1);
+    color: #D26B21;
+    border: 1px solid #D26B21;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: 100%;
+    max-width: 300px;
+    margin: 15px auto 0;
+  }
+  
+  .btn-add-address:hover {
+    background: #D26B21;
+    color: white;
+  }
+  
+  /* Estilo para o grid responsivo */
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  @media (min-width: 992px) {
+    .grid-container {
+      grid-template-columns: 2fr 1fr;
+    }
+    
+    .delivery-section {
+      margin-bottom: 0;
+    }
+  }
+  
+  .order-summary-container {
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+  }
+  
+  @media (max-width: 991px) {
+    .order-summary-container {
+      position: static;
+      margin-top: 20px;
+    }
+  }
