@@ -10,23 +10,20 @@
 {% endblock style %}
 
 {% block main %}
-<div class="container py-4">
-    <div class="row">
-        <div class="col-md-8 margin">
-            <!-- Método de Pagamento -->
+<div class="container my-5">
+    <div class="row g-4">
+        <div class="col-md-8">
+             <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 id="my-cart">Método de Pagamento</h2>
+             </div>
             <div class="card">
-                <div class="card-header text-center">
-                    <h3 class="mb-0">Método de Pagamento</h3>
-                </div>
                 <div class="card-body">
-                    <!-- Opções de pagamento - include em payment -->
                      {% include 'orders/partials/_forms_select.html' with selected=True data_method="credit" select=True form_pay="Cartão de Crédito" description_pay="Visa, Mastercard, Elo e mais" %}
 
                      {% include 'orders/partials/_forms_select.html' with data_method="pix" selected=False form_pay="Pix" description_pay="Aprovação instantânea" %}
 
                      {% include 'orders/partials/_forms_select.html' with data_method="boleto" selected=False form_pay="Boleto Bancário" description_pay="Vencimento em 3 dias úteis" %}
                     
-                    <!-- Formulário do Cartão de Crédito -->
                     <div class="mt-4 credit_card_form">
                         <div class="mb-3">
                             <label for="cardNumber" class="form-label">Número do Cartão</label>
@@ -63,9 +60,17 @@
                 </div>
             </div>
         </div>
-        <!--Resumo do Pedido -->
-        <div class="col-md-4">
-            {% include 'orders/partials/_order_summary_card.html' with subtotal=599.9 frete=25 desconto=50 total=574.9 url_finalizar='orders:approved' url_continuar='#' btn_name="Finalizar Compra" cart_shopping=True cart=False %}        
+        <div class="col-lg-4">
+            <div class="summary-card">
+                {% include 'orders/partials/_order_summary_card.html' %}
+
+            <!--Trazer o resumo do pagamento de Order-->
+                {% comment %} {% if items %} {% endcomment %}
+                    <a href="{% url 'orders:shipping' %}" class="btn btn-green">
+                        Finalizar Compra
+                    </a>
+                {% comment %} {% endif %} {% endcomment %}
+            </div>        
         </div>
     </div>
 </div>

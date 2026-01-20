@@ -89,7 +89,7 @@ def becomeArtisian(request):
 
 def addressesList(request):
     return render(request, 'accounts/addresses.html')
-
+ 
 class AddressesRegister(View):
     def get(self, request):
         context = {
