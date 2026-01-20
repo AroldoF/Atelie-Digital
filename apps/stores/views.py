@@ -84,8 +84,27 @@ def storeProfile(request):
     return render(request, 'stores/storeProfile.html')
 
 @user_passes_test(is_artisian)
-def artisan_products(request):
-    return render(request, 'stores/artisan_products_table.html', {'active_page': 'products'})
+@login_required
+@never_cache
+def artisan_products(request, store_id):
+    store = get_object_or_404(Store, pk=store_id, user=request.user)
+
+    products = (
+        store.products
+        .with_min_price()
+        .with_min_stock()
+    )
+
+    return render(
+        request,
+        'stores/artisan_products_table.html',
+        {
+            'store': store,
+            'products': products,
+            'active_page': 'products',
+        }
+    )
+
 
 @user_passes_test(is_artisian)
 def artisan_orders(request):

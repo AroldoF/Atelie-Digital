@@ -5,7 +5,7 @@ from django.views import View
 from django.db.models import Avg,Count, Q
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from decimal import Decimal
 from django.db import transaction
 from django.contrib import messages
@@ -13,12 +13,56 @@ from .forms import ProductForm, VarianteInlineFormSet
 from .models import Product, Favorite, ProductReview
 from django.http import HttpResponse
 from django.urls import reverse
+from django.views.generic import DeleteView
+from apps.stores.models import Store
+
 
 CATEGORY_KEYWORDS = {
     "tecidos": ["faixa","faixinhas", "laço","laços", "tiara", "tecido"],
     "madeira": ["madeira","caixa", "caixinha", "madeira"],
     "ceramica": ["cerâmica","vaso", "caneca", "prato"],
 }
+
+
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Product
+    template_name = "products/confirm_delete.html"
+    context_object_name = "product"
+    permission_required = 'products.delete_product'
+
+    def get_queryset(self):
+        """usuário só pode deletar produtosda própria loja"""
+        store = get_object_or_404(
+            Store,
+            store_id=self.kwargs["store_id"],
+            user=self.request.user
+        )
+        return Product.objects.filter(store=store)
+
+    def post(self, request, *args, **kwargs):
+        product = self.get_object()
+        product_name = product.name
+
+        product.delete()
+
+        messages.success(
+            request,
+            f'O produto "{product_name}" foi excluído com sucesso.'
+        )
+
+        return redirect(
+            "stores:stores_products",
+            store_id=self.kwargs["store_id"]
+        )
+
+    
+
+    def get_success_url(self):
+        return reverse(
+            "stores:stores_products",
+            kwargs={"store_id": self.kwargs["store_id"]}
+        )
+
 
 def detail_product(request, product_id):
 

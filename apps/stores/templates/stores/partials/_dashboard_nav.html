@@ -1,30 +1,23 @@
 {% load static %}
 
 <nav class="dashboard-nav">
-    <a href="{% url 'stores:dashboard' store_id=store.store_id %}" class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+    <a href="{% url 'stores:dashboard' store_id=store.store_id %}"
+       class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">
         Dashboard
     </a>
 
-    {% comment %} <a href="{% url 'storeProfile' %}" class="nav-item {% if active_page == 'storeProfile' %}active{% endif %}">
+    <a href="{% url 'stores:detail' store_id=store.store_id %}"
+       class="nav-item {% if active_page == 'storeProfile' %}active{% endif %}">
         Sua Loja
     </a>
 
-    <a href="{% url 'artisan_products' %}" class="nav-item {% if active_page == 'products' %}active{% endif %}">
+    <a href="{% url 'stores:stores_products' store_id=store.store_id %}"
+       class="nav-item {% if active_page == 'products' %}active{% endif %}">
         Produtos
     </a>
 
-    <a href="{% url 'artisan_orders' %}" class="nav-item {% if active_page == 'orders' %}active{% endif %}">
+    <a href="{% url 'stores:stores_orders' store_id=store.store_id %}"
+       class="nav-item {% if active_page == 'orders' %}active{% endif %}">
         Pedidos
-    </a>   {% endcomment %}
-    <a href="#" class="nav-item {% if active_page == 'storeProfile' %}active{% endif %}">
-        Sua Loja
     </a>
-
-    <a href="#" class="nav-item {% if active_page == 'products' %}active{% endif %}">
-        Produtos
-    </a>
-
-    <a href="#" class="nav-item {% if active_page == 'orders' %}active{% endif %}">
-        Pedidos
-    </a> 
 </nav>

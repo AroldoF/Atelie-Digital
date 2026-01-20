@@ -1,0 +1,48 @@
+.box-exclusion{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.delete-wrapper {
+  min-height: calc(100vh - 120px);
+}
+
+.delete-card {
+  background-color: var(--color-card);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  max-width: 520px;
+  width: 100%;
+}
+
+.delete-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: color-mix(in srgb, var(--color-red) 12%, white);
+  border-left: 4px solid var(--color-red);
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.delete-icon {
+  font-size: 1.25rem;
+}
+
+.delete-text {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.delete-warning {
+  font-size: var(--font-size-xs);
+  color: color-mix(in srgb, var(--color-gray) 80%, black);
+}
+
+.btn-cancelar{
+  background-color: var(--color-gray);
+  color: var(--color-background);
+}
+/* .btn-cancelar:hover{
+  background-color: var(--color-hover);
+} */
