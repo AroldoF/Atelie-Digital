@@ -1,0 +1,42 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block title %}Excluir produto{% endblock %}
+{% block style %}
+  <link rel="stylesheet" href="{% static 'products/css/confirm_delete.css' %}" />
+{% endblock %}
+
+{% block main %}
+<div class="delete-wrapper d-flex align-items-center justify-content-center">
+
+  <div class="delete-card surface shadow-sm">
+
+    <h3 class="mb-2 ">Excluir produto</h3>
+
+    <div class="delete-alert mt-3">
+      <span class="delete-icon">⚠️</span>
+      <p class="delete-text">
+       Tem certeza que deseja excluir o produto
+        <strong>  "{{ product.name }}"</strong>.
+      </p>
+    </div>
+
+    <p class="delete-warning mt-3">
+      Essa ação não poderá ser desfeita.
+    </p>
+
+    <form method="post" class="mt-4 d-flex gap-3 justify-content-end">
+      {% csrf_token %}
+
+      <button type="submit" class="btn btn-danger">Excluir</button>
+
+      <a href="{% url 'stores:stores_products' store_id=product.store.store_id %}"
+        class="btn btn-cancelar">
+        Cancelar
+      </a>
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}

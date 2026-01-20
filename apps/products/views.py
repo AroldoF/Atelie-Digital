@@ -26,8 +26,9 @@ CATEGORY_KEYWORDS = {
 
 class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
-    template_name = "products/product_confirm_delete.html"
+    template_name = "products/confirm_delete.html"
     context_object_name = "product"
+    permission_required = 'products.delete_product'
 
     def get_queryset(self):
         """usuário só pode deletar produtosda própria loja"""
