@@ -102,8 +102,18 @@ def artisan_products(request, store_id):
     return render(request, 'stores/products_list.html', {'store': store, 'products': products})
 
 @user_passes_test(is_artisian)
-@login_required
-@never_cache
 def artisan_orders(request, store_id):
     store = get_object_or_404(Store, pk=store_id, user=request.user)
-    return render(request, 'stores/orders_list.html', {'store': store})
+    orders= (
+        store.orders
+        .select_related('user')
+        .order_by('-created_at')
+    )
+    return render(request, 'stores/artisan_orders_table.html', {
+        'active_page': 'orders', 
+        'store': store,
+        'orders': orders,
+        })
+
+    
+

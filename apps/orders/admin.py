@@ -18,7 +18,6 @@ class CartItemInline(admin.TabularInline):
 class CartAdmin(admin.ModelAdmin):
     inlines = [CartItemInline]
 
-# @admin.register(models.OrderProduct)
 @admin.register(models.OrderProduct)
 class OrderProductAdmin(admin.ModelAdmin):
     pass
