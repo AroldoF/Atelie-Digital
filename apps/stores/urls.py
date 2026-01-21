@@ -12,5 +12,5 @@ urlpatterns = [
     path('<int:store_id>/orders/', views.artisan_orders, name='stores_orders'),
 
     # Rota genérica por último 
-    path('<int:store_id>/', views.storeProfile, name='detail'),
+    path('<int:store_id>/', views.store_detail, name='detail'),
 ]

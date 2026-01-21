@@ -165,5 +165,4 @@ def favoriteProduct(request):
 
     query_params = request.GET.copy()
     query_params.pop('page', None)
-git checkout -b 
     return render(request, 'products/favorites.html', {'products': products_page, 'query_params': query_params})

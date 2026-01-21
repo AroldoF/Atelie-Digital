@@ -1,7 +1,7 @@
 {% extends "shared/base.html" %}
 {% load static %}
 
-{% block title %}Perfil da loja{% endblock %}
+{% block title %}{{ store.name }} | Ateliê Digital{% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'stores/css/storeProfile.css' %}">
@@ -10,52 +10,71 @@
 {% block main %}
 <section id="loja" class="storeProfile">
 
-  <div class="storeBanner">
+  <!-- 1. Banner da Loja -->
+  <div class="storeBanner" 
+       style="{% if store.banner %}background-image: url('{{ store.banner.url }}'); background-size: cover; background-position: center;{% else %}background-color: #f0f0f0;{% endif %}">
 
+      <!-- 2. Logo da Loja -->
       <img 
-        src="{% static 'stores/media/logoLoja.jpg' %}" 
-        alt="Logo da loja"
+        src="{% if store.image %}{{ store.image.url }}{% else %}{% static 'stores/media/logoLoja.jpg' %}{% endif %}" 
+        alt="Logo da loja {{ store.name }}"
         class="store-logo"
       >
    
   </div>
+
+  <!-- 3. Informações Principais -->
   <div class="storeInfo">
-    <h1>Val Laços</h1>
-    <p class="store-tagline">Princesa Estilosa</p>
+    <h1>{{ store.name }}</h1>
+    {% if store.category %}
+        <p class="store-tagline">{{ store.category.name }}</p>
+    {% endif %}
   </div>
-
-
-
 
   <div class="storeCategories">
-    <button class="category-btn">Acessórios</button>
-    <button class="category-btn">Moda infantil</button>
+    <!-- Exemplo: Poderia listar categorias dos produtos aqui futuramente -->
+    <button class="category-btn active">Todos os Produtos</button>
   </div>
 
-
+  <!-- 4. Descrição e Contato -->
   <div class="storeDescription">
-    <ul>
-      <li>🎀 Acessórios artesanais para meninas e mulheres</li>
-      <li>✨ Feitos com amor, pensados com carinho</li>
-      <li>👧 Especial atenção ao universo infantil</li>
-      <li>🎁 Cada peça é um presente</li>
-    </ul>
+    {% if store.description %}
+        <!-- linebreaks converte quebras de linha do texto em <br> ou <p> HTML -->
+        {{ store.description|linebreaks }}
+    {% endif %}
+    
+    <div class="mt-3">
+        {% if store.phone_number %}
+            <p><strong>Contato:</strong> {{ store.phone_number }}</p>
+        {% endif %}
+        {% if store.email %}
+            <p><strong>Email:</strong> {{ store.email }}</p>
+        {% endif %}
+    </div>
   </div>
 
-  
   <div class="storeTabs">
     <button class="tab-btn active">Produtos</button>
-    <button class="tab-btn">Fotos</button>
-    <button class="tab-btn">Vídeos</button>
+    <!-- Placeholder para abas futuras -->
+    <button class="tab-btn" disabled style="opacity: 0.5;">Avaliações (Em breve)</button>
   </div>
 
-
+  <!-- 5. Grid de Produtos (Lista Dinâmica) -->
   <div class="productsGrid">
-    {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' FreteGratis=True favor=True %}
-    {% include 'products/partials/card.html' with url='media/tiara_roxa.png' description='Tiara Roxa' off=True text=30 price='R$ 21,00' envioRapido=True favor=True %}
-    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 44,00' envioRapido=True favor=True %}
-    {% include 'products/partials/card.html' with url='media/faixinhas_rosas.png' description='Faixinhas Rosas' price='R$ 44,00' envioRapido=True favor=True %}
-     {% include 'products/partials/card.html' with url='media/kit_vermelho.png' description='Kit Vermelho' price='R$ 50,00' FreteGratis=True favor=True %}
+    {% if products %}
+        {% for product in products %}
+            <!-- 
+                Conecta com o partial card.html passando os dados do produto.
+                Usa o filtro |default para garantir que não quebre se faltar preço.
+            -->
+            {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name price=product.min_price|default:"Ver Opções" favor=True %}
+        {% endfor %}
+    {% else %}
+        <!-- Feedback visual se a loja não tiver produtos ativos -->
+        <div class="col-12 text-center py-5">
+            <p class="text-muted">Esta loja ainda não possui produtos disponíveis para venda.</p>
+        </div>
+    {% endif %}
   </div>
 
 </section>
