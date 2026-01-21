@@ -30,10 +30,51 @@
         {% empty %}
             <p>Nenhum pedido encontrado.</p>
         {% endfor %}
+        
+        {% if orders_page.paginator.num_pages > 1 %}
+            <div class="d-flex justify-content-center mt-5">
+                <nav aria-label="Paginação de pedidos">
+                    <ul class="pagination">
+
+                    <!-- Anterior -->
+                    <li class="page-item {% if not orders_page.has_previous %}disabled{% endif %}">
+                        {% if orders_page.has_previous %}
+                        <a class="page-link" href="?page={{ orders_page.previous_page_number }}">
+                            Anterior
+                        </a>
+                        {% else %}
+                        <span class="page-link">Anterior</span>
+                        {% endif %}
+                    </li>
+
+                    <!-- Números -->
+                    {% for num in orders_page.paginator.page_range %}
+                        <li class="page-item {% if orders_page.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}">
+                            {{ num }}
+                        </a>
+                        </li>
+                    {% endfor %}
+
+                    <!-- Próximo -->
+                    <li class="page-item {% if not orders_page.has_next %}disabled{% endif %}">
+                        {% if orders_page.has_next %}
+                        <a class="page-link" href="?page={{ orders_page.next_page_number }}">
+                            Próximo
+                        </a>
+                        {% else %}
+                        <span class="page-link">Próximo</span>
+                        {% endif %}
+                    </li>
+
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
 
 
 
-    </div>
+        </div>
 
 </div>
 {% endblock %}
