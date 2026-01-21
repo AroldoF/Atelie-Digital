@@ -7,13 +7,12 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth import login as login_django
 from django.contrib.auth.views import LoginView
-# Importação essencial para a autenticação obrigatória
 from django.contrib.auth.decorators import login_required
-# Importação para proteger Class Based Views (como AddressesRegister)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.cache import never_cache
 from django.db.models import Q
 from django.core.paginator import Paginator
+from apps.accounts.services import update_user_profile
 
 # Importações dos Models para as queries
 from apps.products.models import Product
@@ -55,6 +54,7 @@ def register(request):
 
 # --- IMPLEMENTAÇÃO DA TASK MEU PERFIL ---
 
+@never_cache
 @login_required
 def profile(request):
     template_name = 'accounts/profile.html'
@@ -98,7 +98,33 @@ def profile(request):
 
 @login_required
 def profileEdit(request):
-    return render(request, 'accounts/settings_user.html')
+    user = request.user
+
+    if request.method == "POST":
+        form = FormEditUser(request.POST,request.FILES,user=user)
+
+        if form.is_valid():
+            update_user_profile(user=user,data=form.cleaned_data)
+            messages.success(request, "Dados validados com sucesso!")
+            return redirect('accounts:profile_edit')
+        else:
+            messages.error(request, "Corrija os erros abaixo.")
+
+    else:
+        form = FormEditUser(initial={
+            'name': user.name,
+            'email': user.email,
+            'date_of_birth': (
+            user.date_of_birth.strftime('%Y-%m-%d')
+            if user.date_of_birth else None
+            ),
+            'cell_phone': user.phone_number,
+            'cpf': user.cpf,
+        },
+            user=user
+        )
+    
+    return render(request, 'accounts/settings_user.html', {'form': form})
 
 @login_required
 def becomeArtisian(request):
@@ -166,3 +192,4 @@ def favoriteProduct(request):
     query_params = request.GET.copy()
     query_params.pop('page', None)
     return render(request, 'products/favorites.html', {'products': products_page, 'query_params': query_params})
+
