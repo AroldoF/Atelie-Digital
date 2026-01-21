@@ -5,21 +5,23 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-    # autenticação
+    # Autenticação
     path("login/", views.UserLoginView.as_view(), name="login"),
     path('logout/', LogoutView.as_view(), name='logout'),
     path("register/", views.register, name="register"),
 
-    # perfil e configurações
+    # Perfil (Esta é a rota da task atual)
     path("me/", views.profile, name="profile"),
+    
+    # Configurações
     path("me/edit/", views.profileEdit, name="profile_edit"),
     path("me/artisan/", views.becomeArtisian, name="settings_artisian"),
 
-    # ainda vou implementar
+    # Placeholders futuros
     path('me/orders/', views.usersOrders, name='orders'),
     path('me/favorites/', views.favoriteProduct, name='favorites'),
     
-    # endereços
+    # Endereços
     path('me/addresses/', views.addressesList, name='addresses'),
     path('me/addresses/register', views.AddressesRegister.as_view(), name='addresses_register'),
     path("me/addresses/<int:address_id>/edit/", views.addressEdit, name="settings_address"),

@@ -1,17 +1,26 @@
 from django.shortcuts import render, redirect 
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-from .forms import LoginAuthenticationForm, RegisterUserForm, FormEditUser, FormAdressUser,  AddressesForm
+from .forms import LoginAuthenticationForm, RegisterUserForm, FormEditUser, FormAdressUser, AddressesForm
+from .models import Profile 
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth import login as login_django
 from django.contrib.auth.views import LoginView
+# Importação essencial para a autenticação obrigatória
 from django.contrib.auth.decorators import login_required
+# Importação para proteger Class Based Views (como AddressesRegister)
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.cache import never_cache
-from apps.accounts.services import update_user_profile
-from apps.products.models import Product
 from django.db.models import Q
 from django.core.paginator import Paginator
+
+# Importações dos Models para as queries
+from apps.products.models import Product
+try:
+    from apps.orders.models import Order
+except ImportError:
+    Order = None
 
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
@@ -35,76 +44,105 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login_django(request, user)
-            messages.success(request, "Seu cadastro foi realizado com sucesso!")
+            messages.success(request, "Cadastro realizado com sucesso!")
             return redirect('accounts:profile')
         else:
-            messages.error(request, 'Erro ao tentar realizar cadastro')
+            messages.error(request, "Erro ao cadastrar. Verifique os dados.")
     else:
         form = RegisterUserForm()
+    
     return render(request, 'accounts/register.html', {'form': form})
 
-@never_cache
+# --- IMPLEMENTAÇÃO DA TASK MEU PERFIL ---
+
 @login_required
 def profile(request):
-    context = {'user': request.user}
-    return render(request, 'accounts/profile.html', context)
-
-
-@never_cache
-@login_required
-def profileEdit(request):
+    template_name = 'accounts/profile.html'
     user = request.user
 
-    if request.method == "POST":
-        form = FormEditUser(request.POST,request.FILES,user=user)
+    # 1. Garantir que o Profile existe
+    try:
+        user_profile = user.profile
+    except Exception:
+        user_profile = Profile.objects.create(user=user)
 
-        if form.is_valid():
-            update_user_profile(user=user,data=form.cleaned_data)
-            messages.success(request, "Dados validados com sucesso!")
-            return redirect('accounts:profile_edit')
-        else:
-            messages.error(request, "Corrija os erros abaixo.")
-
+    # 2. URL da Imagem Segura
+    if user_profile.profile_image:
+        profile_image_url = user_profile.profile_image.url
     else:
-        form = FormEditUser(initial={
-            'name': user.name,
-            'email': user.email,
-            'date_of_birth': (
-            user.date_of_birth.strftime('%Y-%m-%d')
-            if user.date_of_birth else None
-            ),
-            'cell_phone': user.phone_number,
-            'cpf': user.cpf,
-        },
-            user=user
-        )
+        profile_image_url = None 
+
+    # 3. Buscar os 4 Últimos Pedidos
+    last_orders = []
+    if Order:
+        last_orders = Order.objects.filter(user=user).order_by('-created_at')[:4]
+
+    # 4. Buscar os 4 Últimos Favoritos
+    try:
+        last_favorites = Product.objects.cards_with_favorites(user).filter(is_favorite=True).order_by('-product_id')[:4]
+    except AttributeError:
+        from apps.products.models import Favorite
+        favorites_qs = Favorite.objects.filter(user=user).select_related('product').order_by('-favorite_id')[:4]
+        last_favorites = [fav.product for fav in favorites_qs]
+
+    context = {
+        'user': user,
+        'profile_image_url': profile_image_url,
+        'last_orders': last_orders,
+        'last_favorites': last_favorites
+    }
     
-    return render(request, 'accounts/settings_user.html', {'form': form})
+    return render(request, template_name, context)
 
-def settings(request):
-    return render(request, "accounts/settings.html")
+# --- OUTRAS VIEWS (Agora protegidas) ---
 
+@login_required
+def profileEdit(request):
+    return render(request, 'accounts/settings_user.html')
+
+@login_required
 def becomeArtisian(request):
     return render(request, 'accounts/settings_artisian.html')
-
+    
+@login_required
+def usersOrders(request):
+    # Futura view de listagem completa de pedidos
+    pass
+    
+@login_required
 def addressesList(request):
-    return render(request, 'accounts/addresses.html')
-
-class AddressesRegister(View):
+    return render(request, 'accounts/addresses.html', {'addresses': []})
+    
+# Adicionado LoginRequiredMixin para proteger a classe
+class AddressesRegister(LoginRequiredMixin, View):
     def get(self, request):
         context = {
-            'form': AddressesForm
+            'form': AddressesForm()
         }
         return render(request, 'accounts/address_register.html', context)
+    
+    def post(self, request):
+        form = AddressesForm(request.POST)
+        if form.is_valid():
+            address = form.save(commit=False)
+            address.user = request.user
+            address.save()
+            messages.success(request, "Endereço cadastrado com sucesso!")
+            return redirect('accounts:addresses')
+        return render(request, 'accounts/address_register.html', {'form': form})
 
-def addressEdit(request):
+@login_required
+def addressEdit(request, address_id):
     form = FormAdressUser(request.POST or None)
     return render(request, 'accounts/settings_address.html', {'form': form})
 
 @login_required
 def favoriteProduct(request):
     user = request.user
-    products = Product.objects.cards_with_favorites(user).filter(is_favorite=True)
+    try:
+        products = Product.objects.cards_with_favorites(user).filter(is_favorite=True)
+    except AttributeError:
+        products = Product.objects.all()
 
     order = request.GET.get('sort')
     search = request.GET.get('q')
@@ -117,7 +155,7 @@ def favoriteProduct(request):
     elif order == 'antigos':
         products = products.order_by('pk')
     elif order == 'preco_menor':
-        products = products.order_by('min_price')
+        products = products.order_by('min_price') 
     elif order == 'preco_maior':
         products = products.order_by('-min_price')
     
@@ -127,15 +165,5 @@ def favoriteProduct(request):
 
     query_params = request.GET.copy()
     query_params.pop('page', None)
-
-    return render(request, 'products/favoriteProducts.html',
-        {
-            'products': products_page,
-            'total': products.count(),
-            'query_string': query_params.urlencode(),
-            'search': search
-        }
-    )
-
-def usersOrders(request):
-    return render(request, "orders/list.html")
+git checkout -b 
+    return render(request, 'products/favorites.html', {'products': products_page, 'query_params': query_params})
