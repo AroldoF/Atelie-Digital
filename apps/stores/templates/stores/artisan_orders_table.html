@@ -25,11 +25,12 @@
             <div style="text-align: right;">Ações</div>
         </div>
 
-        {% for order in orders %}
+        {% for order in orders_page %}
             {% include 'stores/partials/_order_table_row.html' %}
         {% empty %}
             <p>Nenhum pedido encontrado.</p>
         {% endfor %}
+
 
 
     </div>
