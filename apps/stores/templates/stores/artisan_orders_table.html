@@ -19,7 +19,7 @@
         <div class="order-table-header order-grid-template">
             <div>Pedido</div> <!-- Agora inclui data visualmente abaixo -->
             <div>Cliente</div>
-            <div>Pagamento</div>
+            <div>Status</div>
             <div>Envio</div>
             <div>Total</div>
             <div style="text-align: right;">Ações</div>
@@ -30,7 +30,7 @@
         {% empty %}
             <p>Nenhum pedido encontrado.</p>
         {% endfor %}
-        
+
         {% if orders_page.paginator.num_pages > 1 %}
             <div class="d-flex justify-content-center mt-5">
                 <nav aria-label="Paginação de pedidos">
