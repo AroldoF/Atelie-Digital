@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import user_passes_test
+from django.core.paginator import Paginator
 
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
@@ -104,15 +105,21 @@ def artisan_products(request, store_id):
 @user_passes_test(is_artisian)
 def artisan_orders(request, store_id):
     store = get_object_or_404(Store, pk=store_id, user=request.user)
+
     orders= (
         store.orders
         .select_related('user')
         .order_by('-created_at')
     )
+
+    paginator = Paginator(orders, 5)  
+    page_number = request.GET.get("page")
+    orders_page = paginator.get_page(page_number)
+
     return render(request, 'stores/artisan_orders_table.html', {
-        'active_page': 'orders', 
-        'store': store,
-        'orders': orders,
+            'store': store,
+            'orders_page': orders_page,
+            'active_page': 'orders',
         })
 
     
