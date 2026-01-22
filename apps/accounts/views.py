@@ -165,10 +165,7 @@ def addressEdit(request, address_id):
 @login_required
 def favoriteProduct(request):
     user = request.user
-    try:
-        products = Product.objects.cards_with_favorites(user).filter(is_favorite=True)
-    except AttributeError:
-        products = Product.objects.all()
+    products = Product.objects.cards_with_favorites(user).filter(is_favorite=True)
 
     order = request.GET.get('sort')
     search = request.GET.get('q')
@@ -181,7 +178,7 @@ def favoriteProduct(request):
     elif order == 'antigos':
         products = products.order_by('pk')
     elif order == 'preco_menor':
-        products = products.order_by('min_price') 
+        products = products.order_by('min_price')
     elif order == 'preco_maior':
         products = products.order_by('-min_price')
     
@@ -191,5 +188,15 @@ def favoriteProduct(request):
 
     query_params = request.GET.copy()
     query_params.pop('page', None)
-    return render(request, 'products/favorites.html', {'products': products_page, 'query_params': query_params})
 
+    return render(request, 'products/favoriteProducts.html',
+        {
+            'products': products_page,
+            'total': products.count(),
+            'query_string': query_params.urlencode(),
+            'search': search
+        }
+    )
+
+def usersOrders(request):
+    return render(request, "orders/list.html")
