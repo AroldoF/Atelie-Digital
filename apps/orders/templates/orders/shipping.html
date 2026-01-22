@@ -48,8 +48,7 @@
               </div>
             {% endfor %}
           {% else %}
-            {% comment %} estilizar {% endcomment %}
-            <p>Você ainda não possui endereço cadastrado</p>
+            <p class="space">Você ainda não possui endereço cadastrado</p>
           {% endif %}
             <a href="{% url 'accounts:addresses_register' %}" class="btn btn-secondary">
               Adicionar Novo Endereço

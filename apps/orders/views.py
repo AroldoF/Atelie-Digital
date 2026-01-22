@@ -146,6 +146,16 @@ def payment(request):
     if request.method == 'POST':
         address_id = request.POST.get('shipping_address')
 
+        shipping_method = request.POST.get('shipping_method')
+
+        if not address_id:
+            messages.warning(request, "Informe um endereço para prosseguir.")
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        
+        if not shipping_method:
+            messages.warning(request, "Selecione o frete para prosseguir.")
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+
         cart_obj, _ = Cart.objects.new_or_get(request)
 
     context = {'address_id':address_id, 'cart': cart_obj}
