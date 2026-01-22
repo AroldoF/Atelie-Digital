@@ -9,7 +9,7 @@
 
 {% block main %}
 <div class="container my-5">
-  <form action="{% url 'orders:checkout' %}" method="POST">
+  <form action="{% url 'orders:payment' %}" method="POST">
     {% csrf_token %}
     <div class="row g-4">
       <!-- Coluna Esquerda: Opções de Entrega -->

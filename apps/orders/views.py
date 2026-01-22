@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from apps.accounts.models import Address
-from .models import Order, ProductVariant, Cart, CartItem
+from .models import Order, ProductVariant, Cart, CartItem, OrderProduct
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.db import transaction
+from django.db.models import F
+from django.core.exceptions import ValidationError
 
 
 @require_POST 
@@ -137,11 +140,108 @@ def shipping(request):
     context = {'addresses': addresses, 'cart_obj': cart_obj}
 
     return render(request, 'orders/shipping.html', context)
- 
+
+@login_required
+def payment(request):
+    if request.method == 'POST':
+        address_id = request.POST.get('shipping_address')
+
+        cart_obj, _ = Cart.objects.new_or_get(request)
+
+    context = {'address_id':address_id, 'cart': cart_obj}
+
+    return render(request, 'orders/payment.html', context)
+
+@login_required
 def checkout(request):
-    # pegar o endereço que o usuário passou
-    # excluir carrinho após a compra 
-    return render(request, 'orders/checkout.html')
+    if request.method == 'POST':
+        address_id = request.POST.get('shipping_address')
+        
+        try:
+            address = Address.objects.get(pk=address_id, user=request.user)
+        except Address.DoesNotExist:
+            messages.error(request, "Endereço selecionado é inválido.")
+            return redirect('orders:shipping')
+
+        cart_obj, _ = Cart.objects.new_or_get(request)
+        cart_items = cart_obj.items.select_related('product_variant', 'product_variant__product__store').all()
+
+        if not cart_items.exists():
+            messages.warning(request, "Seu carrinho está vazio.")
+            return redirect('orders:cart')
+
+        # Cria um dicionário: { <Store A>: [Item1, Item2], <Store B>: [Item3] }
+        items_by_store = {}
+        for item in cart_items:
+            store = item.product_variant.product.store
+            if store not in items_by_store:
+                items_by_store[store] = []
+            items_by_store[store].append(item)
+
+        try:
+            with transaction.atomic():
+                
+                # Iteramos sobre as lojas para criar um pedido para cada uma
+                for store, items_list in items_by_store.items():
+                    
+                    # Calcula o total específico desta loja
+                    store_total = sum(item.subtotal for item in items_list)
+
+                    # Criação do Pedido 
+                    order = Order.objects.create(
+                        store=store,
+                        user=request.user,
+                        status='PENDING',
+                        total_amount=store_total,
+                        shipping_street=address.street,
+                        shipping_number=address.number,
+                        shipping_neigh=address.neighborhood, 
+                        shipping_city=address.city,
+                        shipping_state=address.state,
+                        shipping_cep=address.cep,
+                        shipping_complement=address.complement
+                    )
+
+                    # Processamento dos Itens
+                    for item in items_list:
+                        product = item.product_variant
+
+                        # Validação 1: Produto Ativo
+                        if not product.is_active:
+                            raise ValidationError(f"O produto {product.description} não está mais disponível.")
+
+                        # Validação 2: Estoque
+                        if product.type == 'STOCK' and product.stock < item.quantity:
+                            raise ValidationError(f"Estoque insuficiente para {product.description}.")
+
+                        # Baixa de Estoque Segura (Concurrency)
+                        if product.type == 'STOCK':
+                            product.stock = F('stock') - item.quantity
+                            product.save()
+
+                        # Criação do Item do Pedido
+                        OrderProduct.objects.create(
+                            order=order,
+                            product_variant=product,
+                            quantity=item.quantity,
+                            price_at_purchase=product.price 
+                        )
+
+                # Deletar os itens do carrinho
+                cart_obj.items.all().delete() 
+
+            messages.success(request, "Pedido realizado com sucesso!")
+            return redirect('orders:approved') 
+
+        except ValidationError as e:
+            messages.warning(request, e.message)
+            return redirect('orders:cart')
+            
+        except Exception as e:
+            messages.error(request, "Ocorreu um erro ao processar seu pedido. Nada foi cobrado.")
+            return redirect('orders:cart')
+
+    return redirect('orders:cart')
 
 def approved(request):
     return render(request, 'orders/approved.html')
