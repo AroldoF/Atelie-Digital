@@ -125,6 +125,13 @@ class Order(models.Model):
     status = models.CharField(choices=ORDER_STATUS_CHOICES, default='PENDING')
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     created_at = models.DateTimeField(auto_now_add=True)
+    shipping_street = models.CharField(max_length=255)
+    shipping_number = models.CharField(max_length=20)
+    shipping_neigh = models.CharField(max_length=100)
+    shipping_city = models.CharField(max_length=100)
+    shipping_state = models.CharField(max_length=2)
+    shipping_cep = models.CharField(max_length=8)
+    shipping_complement = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f'{self.status} - {self.created_at}'
