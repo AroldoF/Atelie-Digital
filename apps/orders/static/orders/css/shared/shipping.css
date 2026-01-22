@@ -1,4 +1,9 @@
 /* Estilo para os blocos organizados */
+
+  .space{
+    margin-bottom: 15px;
+  }
+
   .delivery-section {
     background: white;
     border-radius: 8px;

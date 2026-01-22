@@ -1,11 +1,13 @@
 {% load static %}
-
-<div class="field-option {% if selected %} selected {% endif %}" data-method="{{ data_method }}">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h6 class="mb-0">{{ form_pay }}</h6>
-            <small class="text-muted">{{ description_pay }}</small>
+        
+<div class="shipping-option cursor-pointer" data-method="{{ data_method }}" style="cursor: pointer;">
+    <div class="d-flex align-items-center {% if selected %} selected {% endif %}">
+        <input type="radio" name="payment_method" value="{{ data_method }}" {% if selected %}checked{% endif %}>
+    </div>
+    <div class="shipping-content">
+        <div class="shipping-header">
+            <span class="shipping-name">{{ form_pay }}</span>
         </div>
-        <div class="field-option-circle"></div>
+        <p class="shipping-description">{{ description_pay }}</p>
     </div>
 </div>

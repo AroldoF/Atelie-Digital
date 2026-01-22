@@ -9,7 +9,7 @@
 
 {% block main %}
 <div class="container my-5">
-  <form action="{% url 'orders:checkout' %}" method="POST">
+  <form action="{% url 'orders:payment' %}" method="POST">
     {% csrf_token %}
     <div class="row g-4">
       <!-- Coluna Esquerda: Opções de Entrega -->
@@ -48,8 +48,7 @@
               </div>
             {% endfor %}
           {% else %}
-            {% comment %} estilizar {% endcomment %}
-            <p>Você ainda não possui endereço cadastrado</p>
+            <p class="space">Você ainda não possui endereço cadastrado</p>
           {% endif %}
             <a href="{% url 'accounts:addresses_register' %}" class="btn btn-secondary">
               Adicionar Novo Endereço

@@ -5,9 +5,10 @@ app_name = 'orders'
 
 urlpatterns = [
     # path("list/", views.list, name="list"),
-    path('add/', views.addToCart, name='add'),
+    path("add/", views.addToCart, name="add"),
     path("cart/", views.viewCart, name="cart"),
-    path('shipping/', views.shipping, name='shipping'),
+    path("shipping/", views.shipping, name="shipping"),
+    path("payment/", views.payment, name="payment"),
     path("checkout/", views.checkout, name="checkout"),
     path("approved/", views.approved, name="approved"),
  
