@@ -137,10 +137,9 @@ def usersOrders(request):
     
 @login_required
 def addressesList(request):
-    return render(request, 'accounts/addresses.html', {'addresses': []})
-    
-# Adicionado LoginRequiredMixin para proteger a classe
-class AddressesRegister(LoginRequiredMixin, View):
+    return render(request, 'accounts/addresses.html')
+ 
+class AddressesRegister(View):
     def get(self, request):
         context = {
             'form': AddressesForm()
