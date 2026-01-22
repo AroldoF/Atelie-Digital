@@ -35,15 +35,10 @@
                 {% if last_orders %}
                     {% for order in last_orders %}
                     <div class="card_order_wrapper">
-                        <!-- 
-                             Passamos os dados reais do pedido para o partial.
-                             Nota: O filtro 'stringformat:"06d"' formata o ID com zeros à esquerda (ex: 000123)
-                        -->
                         {% include 'orders/partials/_order.html' with order_id=order.pk|stringformat:"06d" order_date=order.created_at status=order.status %}
                     </div>
                     {% endfor %}
                 {% else %}
-                    <!-- Feedback visual caso a lista esteja vazia -->
                     <div class="alert alert-light text-center mt-3" role="alert">
                         Nenhum pedido recente encontrado.
                     </div>
@@ -65,12 +60,7 @@
             <div class="products-grid">
                 {% if last_favorites %}
                     {% for prod in last_favorites %}
-                        <!-- 
-                            Itera sobre os produtos favoritos.
-                            Se o produto vier do manager 'cards_with_favorites', ele já deve ter 'min_price'.
-                            Caso contrário, usamos um fallback 'Ver Detalhes'.
-                        -->
-                        {% include 'products/partials/card.html' with pk=prod.pk url=prod.image.url description=prod.name price=prod.min_price|default:"Ver Detalhes" favor=True is_favorite=True %}
+                        {% include 'products/partials/card.html' with product=prod pk=prod.pk url=prod.image.url description=prod.name price=prod.min_price|default:"Ver Detalhes" favor=True is_favorite=True %}
                     {% endfor %}
                 {% else %}
                     <p class="text-muted text-center py-3">Sua lista de desejos está vazia.</p>
