@@ -146,7 +146,7 @@ def payment(request):
     if request.method == 'POST':
         address_id = request.POST.get('shipping_address')
 
-        shipping_method = request.POST.get('shipping_method')
+        shipping_method = request.POST.get('shipping')
 
         if not address_id:
             messages.warning(request, "Informe um endereço para prosseguir.")
