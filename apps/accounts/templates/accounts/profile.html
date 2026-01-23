@@ -35,7 +35,7 @@
                 {% if last_orders %}
                     {% for order in last_orders %}
                     <div class="card_order_wrapper">
-                        {% include 'orders/partials/_order.html' with order_id=order.pk|stringformat:"06d" order_date=order.created_at status=order.status %}
+                        {% include 'orders/partials/_order.html' with order_id=order.order_code order_date=order.created_at status=order.status %}
                     </div>
                     {% endfor %}
                 {% else %}

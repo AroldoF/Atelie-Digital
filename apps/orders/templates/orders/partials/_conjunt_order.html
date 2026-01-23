@@ -2,6 +2,6 @@
 
 {% for order in orders %}
     <div>
-        {% include 'orders/partials/_order.html' with order_id=order.pk|stringformat:"06d" order_date=order.created_at status=order.status %}
+        {% include 'orders/partials/_order.html' with order_id=order.order_code order_date=order.created_at status=order.status %}
     </div>
 {% endfor %}
