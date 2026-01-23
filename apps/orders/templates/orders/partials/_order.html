@@ -7,21 +7,25 @@
 <div class="container card_order">
     <div class="row align-items-center flex-nowrap">
         <div class="col justify-content-center overflow-hidden">
-            <p id="text_id">#{{ order_id }}</p>
+            <p id="text_id">{{ order_code }}</p>
             <p id="text_date">{{ order_date }}</p>
         </div>
         <div class="col-auto text-end">
-            {% if status == 'progress' %}
+            {% if status == 'PENDING' %}
+                <span class="tag" id="tag_progress">Pendente</span>
+            {% endif %}
+
+            {% if status == 'IN_PROGRESS' %}
                 <span class="tag" id="tag_progress">Em andamento</span>
             {% endif %}
 
-            {% if status == 'delivered' %}
+            {% if status == 'COMPLETED' %}
                 <div id="delivered">
                     <span class="tag" id="tag_delivered">Entregue</span>
                 </div>
             {% endif %}
 
-            {% if status == 'cancelled' %}
+            {% if status == 'CANCELLED' %}
                 <div id="cancelled">
                     <span class="tag" id="tag_cancelled">Cancelado</span>
                 </div>

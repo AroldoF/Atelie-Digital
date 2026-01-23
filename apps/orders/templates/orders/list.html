@@ -5,39 +5,77 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'orders/css/shared/list.css' %}">
-{% endblock  %}
+<style>
+    .category-btn {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: inherit;
+    }
+    .category-btn:hover {
+        color: var(--color-primary, #D47A00);
+    }
+    .category-btn.active {
+        font-weight: bold;
+        border: 2px solid var(--color-primary, #D47A00);
+        color: var(--color-primary, #D47A00);
+    }
+</style>
+{% endblock %}
 
 {% block main %}
 <div class="container py-4"> 
     <div class="row justify-content-center">
         <div class="col"> 
             
+            <!-- FILTROS -->
             <div class="categories-wrapper mb-4">
+                <a href="?status=" class="category-btn category-search {% if active_filter == 'all' %}active{% endif %}">
+                    <img id="search" src="{% static 'products/media/icons/search.svg' %}" alt="Todos" style="width: 20px; height: 20px;">
+                </a>
                 
-                <button class="category-btn category-search active">
-                    <img id="search" src="{% static 'products/media/icons/search.svg' %}" alt="Filtro" style="width: 20px; height: 20px;">
-                </button>
+                <a href="?status=PENDING" class="category-btn {% if active_filter == 'PENDING' %}active{% endif %}">
+                    Pendente
+                </a>
+
+                <!-- Em Andamento (IN_PROGRESS) -->
+                <a href="?status=IN_PROGRESS" class="category-btn {% if active_filter == 'IN_PROGRESS' %}active{% endif %}">
+                    Em andamento
+                </a>
                 
-                <button class="category-btn">Em andamento</button>
-                <button class="category-btn">Entregue</button>
-                <button class="category-btn">Cancelado</button>
+                <!-- Entregue (COMPLETED) -->
+                <a href="?status=COMPLETED" class="category-btn {% if active_filter == 'COMPLETED' %}active{% endif %}">
+                    Entregue
+                </a>
+                
+                <!-- Cancelado (CANCELLED) -->
+                <a href="?status=CANCELLED" class="category-btn {% if active_filter == 'CANCELLED' %}active{% endif %}">
+                    Cancelado
+                </a>
             </div>
 
+            <!-- TÍTULO -->
             <div class="row title-clear">
-                <h3 class="section-title">16 Pedidos</h3>
+                <h3 class="section-title">{{ orders_count }} Pedidos</h3>
             </div>
 
-            <div class="row orders-grid">
-                {% include 'orders/partials/_conjunt_order.html' %} 
+            <!-- GRID DE PEDIDOS -->
+            <div class="orders-grid">
+                {% if orders %}
+                    {% include 'orders/partials/_conjunt_order.html' with orders=orders %}
+                {% else %}
+
+                    <div style="grid-column: 1 / -1;" class="text-center mt-5">
+                        <p class="text-muted">Nenhum pedido encontrado nesta categoria.</p>
+                        {% if active_filter != 'all' %}
+                            <a href="?status=" class=" category-btn btn-link" id="btn-all">Ver todos os pedidos</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>  
 
-            <div class="row orders-grid">
-                {% include 'orders/partials/_conjunt_order.html' %} 
-            </div>
-
-            <div class="row orders-grid">
-                {% include 'orders/partials/_conjunt_order.html' %} 
-            </div>
         </div>
     </div>
 </div>
