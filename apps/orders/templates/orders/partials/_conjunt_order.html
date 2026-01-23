@@ -1,7 +1,7 @@
 {% load static %}
 
 {% for order in orders %}
-    <div class="col">
+    <div>
         {% include 'orders/partials/_order.html' with order_id=order.pk|stringformat:"06d" order_date=order.created_at status=order.status %}
     </div>
 {% endfor %}

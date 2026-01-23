@@ -214,12 +214,11 @@ def usersOrders(request):
     active_filter = 'all'
 
     if status_filter:
-        valid_statuses = ['progress', 'delivered', 'cancelled']
+        valid_statuses = ['PENDING', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED']
         if status_filter in valid_statuses:
             orders = orders.filter(status=status_filter)
             active_filter = status_filter
 
-    # Contagem de pedidos
     orders_count = orders.count() if hasattr(orders, 'count') else len(orders)
 
     context = {
