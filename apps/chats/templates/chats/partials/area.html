@@ -1,0 +1,46 @@
+<section class="chat-area col-12 col-md-8 col-lg-8 p-0 d-flex flex-column"
+  hx-ext='ws'
+  ws-connect="/ws/chats/{{ chat.pk }}/"
+>
+  <div class="chat-header p-2 d-flex align-items-center">
+    <button class="btn back-button me-2">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    <div class="chat-header-title">
+      <img src="{{ chat.store.image.url }}" class="avatar-circle me-4" />
+      <div>
+        <h6>{{ chat.store.name }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div id="chat-log" class="chat-messages" >
+    {% if messages %}
+        {% for msg in messages %}
+            {% include "chats/partials/message.html" with msg=msg %}
+        {% endfor %}
+    {% endif %}
+    </div>
+
+  <div class="chat-footer">
+    <form ws-send hx-on="htmx:wsAfterSend: this.reset()" class="message-input-container">
+        <input
+            name="chat_message"
+            type="text"
+            class="message-input"
+            placeholder="Digite uma mensagem"
+            required
+            autocomplete="off"
+        />
+        <button type="submit" class="send-button">
+            <i class="bi bi-send-fill"></i>
+        </button>
+    </form>
+</div>
+</section>
+
+<script>
+    var objDiv = document.getElementById("chat-log");
+    objDiv.scrollTop = objDiv.scrollHeight;
+    
+</script>

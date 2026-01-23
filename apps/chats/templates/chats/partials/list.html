@@ -1,0 +1,53 @@
+<!-- Lista de Conversas -->
+<section class="chat-list col-6 col-md-4 col-lg-4 p-0 d-flex flex-column">
+  <div class="list-header p-3 d-flex align-items-center">
+    <div class="search-container">
+      <i class="bi bi-search search-icon"></i>
+      <input
+        class="form-control search-input"
+        type="text"
+        placeholder="Pesquise pela conversa"
+      />
+    </div>
+  </div>
+
+  <div class="filter-chips d-flex">
+    <span class="filter-chip active">Tudo</span>
+    {% if user.is_artisan %}
+    <span class="filter-chip">Loja</span>
+    <span class="filter-chip">Usuário</span>
+    {% endif %} 
+    <span class="filter-chip">Favoritas</span> 
+  </div>
+
+  <div class="conversations-list flex-grow-1 overflow-auto">
+    {% for item in chat_list %}
+    <div class="conversation-item d-flex align-items-center me-2"
+        hx-get="{% url 'chats:area' item.chat.pk %}"
+        hx-trigger="click"
+        hx-target=".chat-area"
+        hx-swap="outerHTML"
+    >
+
+        {# Se o outro usuário for artesão, mostrar a loja #}
+        {% if item.other_user.stores.exists %}
+            {% with store=item.chat.other_user.stores.first %}
+                <img src="{{ store.image.url }}" class="avatar-circle" />
+                <h6 class="conversation-name">{{ store.name }}</h6>
+            {% endwith %}
+        {% else %}
+            <img src="{{ item.other_user.profile.image.url }}" class="avatar-circle" />
+            <h6 class="conversation-name">
+                {{ item.chat.other_user.get_full_name|default:item.other_user.username }}
+            </h6>
+        {% endif %}
+
+
+        <p class="conversation-preview text-truncate">
+            {{ item.chat.messages.first.content|default:"Inicie uma conversa" }}
+        </p>
+    </div>
+{% endfor %}
+
+  </div>
+</section>

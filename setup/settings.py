@@ -25,6 +25,8 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    "apps.chats",
     # padrões do django
     "django.contrib.admin",
     "django.contrib.auth",
@@ -35,7 +37,7 @@ INSTALLED_APPS = [
     # apps locais
     "apps.core",
     "apps.accounts",
-    "apps.chats",
+    
     "apps.orders",
     "apps.products",
     "apps.reviews",
@@ -48,8 +50,16 @@ INSTALLED_APPS = [
     "cloudinary_storage",
 
     'django.contrib.postgres',
+    'channels',
 ]
 
+ASGI_APPLICATION = 'setup.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bootstrap5",)
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -140,11 +150,11 @@ STATICFILES_DIRS = [
     BASE_DIR / "apps" / "products" / "static",  
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = "/vol/web/static"
 
 # Media files
 
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = "/vol/web/media"
 
 MEDIA_URL = '/media/'
 

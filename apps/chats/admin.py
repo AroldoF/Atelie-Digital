@@ -8,7 +8,7 @@ class MessageInline(admin.TabularInline):
 @admin.register(models.Chat)
 class ChatAmdin(admin.ModelAdmin):
     inlines = [MessageInline]
-    list_display = ['user', 'store', 'created_at']
+    list_display = ['client', 'artisan', 'created_at']
 
 # @admin.register(models.Message)
 # class MessageAdmin(admin.ModelAdmin):

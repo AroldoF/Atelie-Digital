@@ -1,0 +1,14 @@
+{% if is_websocket %}
+    <div id="chat-log" hx-swap-oob="beforeend">
+{% endif %}
+
+    <div class="message {% if msg.sender == user %}message-sent{% else %}message-received{% endif %}">
+        <div class="message-bubble">
+           {{ msg.content }}
+            <div class="message-time">{{ msg.created_at|date:"H:i" }}</div>
+        </div>
+    </div>
+
+{% if is_websocket %}
+    </div>
+{% endif %}
