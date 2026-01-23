@@ -36,15 +36,22 @@
                     <img id="search" src="{% static 'products/media/icons/search.svg' %}" alt="Todos" style="width: 20px; height: 20px;">
                 </a>
                 
-                <a href="?status=progress" class="category-btn {% if active_filter == 'progress' %}active{% endif %}">
+                <a href="?status=PENDING" class="category-btn {% if active_filter == 'PENDING' %}active{% endif %}">
+                    Pendente
+                </a>
+
+                <!-- Em Andamento (IN_PROGRESS) -->
+                <a href="?status=IN_PROGRESS" class="category-btn {% if active_filter == 'IN_PROGRESS' %}active{% endif %}">
                     Em andamento
                 </a>
                 
-                <a href="?status=delivered" class="category-btn {% if active_filter == 'delivered' %}active{% endif %}">
+                <!-- Entregue (COMPLETED) -->
+                <a href="?status=COMPLETED" class="category-btn {% if active_filter == 'COMPLETED' %}active{% endif %}">
                     Entregue
                 </a>
                 
-                <a href="?status=cancelled" class="category-btn {% if active_filter == 'cancelled' %}active{% endif %}">
+                <!-- Cancelado (CANCELLED) -->
+                <a href="?status=CANCELLED" class="category-btn {% if active_filter == 'CANCELLED' %}active{% endif %}">
                     Cancelado
                 </a>
             </div>
@@ -55,19 +62,15 @@
             </div>
 
             <!-- GRID DE PEDIDOS -->
-            <div class="row orders-grid">
+            <div class="orders-grid">
                 {% if orders %}
-                    <!-- 
-                       Agora passamos a lista inteira 'orders' para o partial.
-                       O partial _conjunt_order.html fará o loop e criará as colunas.
-                    -->
                     {% include 'orders/partials/_conjunt_order.html' with orders=orders %}
                 {% else %}
-                    <!-- Estado Vazio -->
-                    <div class="col-12 text-center mt-5">
+
+                    <div style="grid-column: 1 / -1;" class="text-center mt-5">
                         <p class="text-muted">Nenhum pedido encontrado nesta categoria.</p>
                         {% if active_filter != 'all' %}
-                            <a href="?status=" class="btn btn-link">Ver todos os pedidos</a>
+                            <a href="?status=" class=" category-btn btn-link" id="btn-all">Ver todos os pedidos</a>
                         {% endif %}
                     </div>
                 {% endif %}
