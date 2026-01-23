@@ -91,16 +91,21 @@ def store_detail(request, store_id):
 def artisan_products(request, store_id):
     store = get_object_or_404(Store, pk=store_id, user=request.user)
 
-    try:
-        products = (
-            store.products
-            .with_min_price()
-            .with_min_stock()
-        )
-    except AttributeError:
-        products = store.products.all()
+    products = (
+        store.products
+        .with_min_price()
+        .with_min_stock()
+    )
 
-    return render(request, 'stores/products_list.html', {'store': store, 'products': products})
+    return render(
+        request,
+        'stores/artisan_products_table.html',
+        {
+            'store': store,
+            'products': products,
+            'active_page': 'products',
+        }
+    )
 
 @user_passes_test(is_artisian)
 def artisan_orders(request, store_id):
