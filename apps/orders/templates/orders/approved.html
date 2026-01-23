@@ -94,15 +94,13 @@
                 </div>
             {% endfor %}
 
-            <!--ver como somar o valor final do pedido-->
             <div class="order-total">
                 <span class="total-label">Total</span>
-                <span class="total-value" id="totalValue">R$ </span>
+                <span class="total-value" id="totalValue">R$ {{ transaction_total }}</span>
             </div>
         </div>
 
         <div class="actions">
-            <!--levar para o pedido -->
             <a href="{% url 'accounts:orders' %}" class="btn btn-green">
                 Ver Detalhes do Pedido
             </a>
@@ -112,7 +110,3 @@
 </div>
 
 {% endblock %}
-
-{% block script %}
-{% comment %} <script src="{% static 'orders/js/approved.js' %}"></script> {% endcomment %}
-{% endblock script %}

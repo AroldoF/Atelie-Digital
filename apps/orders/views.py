@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, Sum
 from django.core.exceptions import ValidationError
 import uuid
 
@@ -243,7 +243,8 @@ def checkout(request):
                 # Deletar os itens do carrinho
                 cart_obj.items.all().delete() 
 
-            messages.success(request, "Pedido realizado com sucesso!")
+                request.session['last_approved_transaction'] = current_transaction_id
+
             return redirect('orders:approved', transaction_id=current_transaction_id) 
 
         except ValidationError as e:
@@ -258,13 +259,22 @@ def checkout(request):
 
 @login_required()
 def approved(request, transaction_id):
+    allowed_id = request.session.get('last_approved_transaction')
+
+    if not allowed_id or allowed_id != transaction_id:
+        return redirect('accounts:orders')
+    
     orders = Order.objects.filter(user=request.user, transaction_id=transaction_id).select_related('store').prefetch_related('items')
 
     if not orders.exists():
         messages.error(request, "Pedido não localizado.")
         return redirect('/')
     
-    context = { 'orders': orders, 'main_order_code': transaction_id }
+    total_data = orders.aggregate(Sum('total_amount'))
+
+    transaction_total = total_data['total_amount__sum'] or 0
+
+    context = { 'orders': orders, 'main_order_code': transaction_id, 'transaction_total': transaction_total }
 
     return render(request, 'orders/approved.html', context)
 
