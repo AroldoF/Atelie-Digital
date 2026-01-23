@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import user_passes_test
+from django.core.paginator import Paginator
 
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
@@ -90,20 +91,41 @@ def store_detail(request, store_id):
 def artisan_products(request, store_id):
     store = get_object_or_404(Store, pk=store_id, user=request.user)
 
-    try:
-        products = (
-            store.products
-            .with_min_price()
-            .with_min_stock()
-        )
-    except AttributeError:
-        products = store.products.all()
+    products = (
+        store.products
+        .with_min_price()
+        .with_min_stock()
+    )
 
-    return render(request, 'stores/products_list.html', {'store': store, 'products': products})
+    return render(
+        request,
+        'stores/artisan_products_table.html',
+        {
+            'store': store,
+            'products': products,
+            'active_page': 'products',
+        }
+    )
 
 @user_passes_test(is_artisian)
-@login_required
-@never_cache
 def artisan_orders(request, store_id):
     store = get_object_or_404(Store, pk=store_id, user=request.user)
-    return render(request, 'stores/orders_list.html', {'store': store})
+
+    orders= (
+        store.orders
+        .select_related('user')
+        .order_by('-created_at')
+    )
+
+    paginator = Paginator(orders, 5)  
+    page_number = request.GET.get("page")
+    orders_page = paginator.get_page(page_number)
+
+    return render(request, 'stores/artisan_orders_table.html', {
+            'store': store,
+            'orders_page': orders_page,
+            'active_page': 'orders',
+        })
+
+    
+

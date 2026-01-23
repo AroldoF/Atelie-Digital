@@ -19,20 +19,62 @@
         <div class="order-table-header order-grid-template">
             <div>Pedido</div> <!-- Agora inclui data visualmente abaixo -->
             <div>Cliente</div>
-            <div>Pagamento</div>
+            <div>Status</div>
             <div>Envio</div>
             <div>Total</div>
             <div style="text-align: right;">Ações</div>
         </div>
 
-        <!-- Linhas de Pedidos -->
-        {% include 'stores/partials/_order_table_row.html' with order_id="1024" date="19 Nov, 2024" customer_name="Ana Souza" customer_email="ana@email.com" payment_status="Pago" fulfillment_status="Enviado" total=150.00 %}
-        
-        {% include 'stores/partials/_order_table_row.html' with order_id="1025" date="19 Nov, 2024" customer_name="Carlos Lima" customer_email="carlos@email.com" payment_status="Pendente" fulfillment_status="Processando" total=89.90 %}
-        
-        {% include 'stores/partials/_order_table_row.html' with order_id="1026" date="18 Nov, 2024" customer_name="Maria Oliveira" customer_email="maria@email.com" payment_status="Cancelado" fulfillment_status="Não Enviado" total=210.50 %}
+        {% for order in orders_page %}
+            {% include 'stores/partials/_order_table_row.html' %}
+        {% empty %}
+            <p>Nenhum pedido encontrado.</p>
+        {% endfor %}
 
-    </div>
+        {% if orders_page.paginator.num_pages > 1 %}
+            <div class="d-flex justify-content-center mt-5">
+                <nav aria-label="Paginação de pedidos">
+                    <ul class="pagination">
+
+                    <!-- Anterior -->
+                    <li class="page-item {% if not orders_page.has_previous %}disabled{% endif %}">
+                        {% if orders_page.has_previous %}
+                        <a class="page-link" href="?page={{ orders_page.previous_page_number }}">
+                            Anterior
+                        </a>
+                        {% else %}
+                        <span class="page-link">Anterior</span>
+                        {% endif %}
+                    </li>
+
+                    <!-- Números -->
+                    {% for num in orders_page.paginator.page_range %}
+                        <li class="page-item {% if orders_page.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}">
+                            {{ num }}
+                        </a>
+                        </li>
+                    {% endfor %}
+
+                    <!-- Próximo -->
+                    <li class="page-item {% if not orders_page.has_next %}disabled{% endif %}">
+                        {% if orders_page.has_next %}
+                        <a class="page-link" href="?page={{ orders_page.next_page_number }}">
+                            Próximo
+                        </a>
+                        {% else %}
+                        <span class="page-link">Próximo</span>
+                        {% endif %}
+                    </li>
+
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+
+
+
+        </div>
 
 </div>
 {% endblock %}
