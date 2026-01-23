@@ -198,5 +198,35 @@ def favoriteProduct(request):
         }
     )
 
+@login_required
 def usersOrders(request):
-    return render(request, "orders/list.html")
+    user = request.user
+    # CAMINHO CORRIGIDO: aponta para o arquivo dentro do app 'orders'
+    template_name = 'orders/list.html' 
+    
+    # Busca segura dos pedidos
+    if Order:
+        orders = Order.objects.filter(user=user).order_by('-created_at')
+    else:
+        orders = []
+
+    # Lógica de Filtros
+    status_filter = request.GET.get('status')
+    active_filter = 'all'
+
+    if status_filter:
+        valid_statuses = ['progress', 'delivered', 'cancelled']
+        if status_filter in valid_statuses:
+            orders = orders.filter(status=status_filter)
+            active_filter = status_filter
+
+    # Contagem de pedidos
+    orders_count = orders.count() if hasattr(orders, 'count') else len(orders)
+
+    context = {
+        'orders': orders,
+        'active_filter': active_filter,
+        'orders_count': orders_count
+    }
+    
+    return render(request, template_name, context)
