@@ -10,7 +10,7 @@ urlpatterns = [
     path("shipping/", views.shipping, name="shipping"),
     path("payment/", views.payment, name="payment"),
     path("checkout/", views.checkout, name="checkout"),
-    path("approved/", views.approved, name="approved"),
+    path("approved/<str:transaction_id>", views.approved, name="approved"),
  
     path('<int:order_id>/', views.orders_detail, name='detail'),
 

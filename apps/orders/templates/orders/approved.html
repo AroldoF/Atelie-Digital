@@ -9,7 +9,7 @@
 
 {% block main %}
 
-<div class="confirmation-wrapper">
+{% comment %} <div class="confirmation-wrapper">
     <div class="confirmation-card">
         
         <div class="icon-container">
@@ -24,6 +24,95 @@
         </div>
 
     </div>
+</div> {% endcomment %}
+
+<div class="confirmation-wrapper">
+    <div class="confirmation-card">
+        <div class="icon-container">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring pulse-ring-delayed"></div>
+            <div class="check-circle">
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <h2 class="title">Pagamento Aprovado!</h2>
+        <p class="subtitle">Seu pedido foi confirmado e já está sendo processado</p>
+    
+
+        <div class="order-badge">
+            Número da Transação: <span class="tag_order">{{ main_order_code }}</span>
+        </div>
+
+        <!-- Resumo do Pedido -->
+        <div class="order-summary">
+            <div class="summary-header">
+                <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                </svg>
+                <span>Resumo do Pedido</span>
+            </div>
+
+            {% for order in orders %}
+                <div class="order-badge">
+                    Número do Pedido: <span class="tag_order">{{ order.order_code }}</span>
+                </div>
+                <div class="store-info">
+                    <div class="store-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <div class="store-details">
+                        <span class="store-label">Loja</span>
+                        <span class="store-name">{{ order.store.name }}</span>
+                    </div>
+                </div>
+
+                <div class="products-section">
+                    <span class="products-label">PRODUTOS</span>
+                    <ul class="products-list" id="productsList">
+                        {% for item in order.items.all %}
+                        <li>
+                            <div class="product-info">
+                                <span class="product-quantity">{{ item.quantity }}x</span>
+                                <span class="product-name">{{ item.product_variant.product.name }} </span>
+                            </div>
+                            <span class="product-price">R$ {{ item.price_at_purchase }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+                <div class="order-total">
+                    <span class="subtotal-label">Subtotal</span>
+                    <span class="subtotal-value" id="totalValue">R$ {{ order.total_amount }}</span>
+                </div>
+            {% endfor %}
+
+            <!--ver como somar o valor final do pedido-->
+            <div class="order-total">
+                <span class="total-label">Total</span>
+                <span class="total-value" id="totalValue">R$ </span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <!--levar para o pedido -->
+            <a href="{% url 'accounts:orders' %}" class="btn btn-green">
+                Ver Detalhes do Pedido
+            </a>
+        </div>
+
+    </div>
 </div>
 
 {% endblock %}
+
+{% block script %}
+{% comment %} <script src="{% static 'orders/js/approved.js' %}"></script> {% endcomment %}
+{% endblock script %}

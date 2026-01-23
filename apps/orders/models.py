@@ -119,10 +119,11 @@ class Order(models.Model):
         ('IN_PROGRESS', 'Em andamento'),
         ('COMPLETED', 'Concluído'),
         ('CANCELLED', 'Cancelado'),
-    ]
+    ] 
 
     order_id = models.AutoField(primary_key=True)
     order_code = models.CharField(max_length=100, blank=True)
+    transaction_id = models.CharField(max_length=50, null=True, blank=True, db_index=True)
     store = models.ForeignKey(Store, related_name='orders', on_delete=models.PROTECT)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='orders', on_delete=models.PROTECT)
     status = models.CharField(choices=ORDER_STATUS_CHOICES, default='PENDING')
