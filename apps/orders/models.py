@@ -3,6 +3,8 @@ from django.conf import settings
 from apps.stores.models import Store
 from apps.products.models import ProductVariant
 from django.db.models import Sum, F, DecimalField, Q
+from .utils import unique_order_code_generator
+from django.db.models.signals import pre_save
 
 class CartManager(models.Manager):
     def new_or_get(self, request):
@@ -117,9 +119,11 @@ class Order(models.Model):
         ('IN_PROGRESS', 'Em andamento'),
         ('COMPLETED', 'Concluído'),
         ('CANCELLED', 'Cancelado'),
-    ]
+    ] 
 
     order_id = models.AutoField(primary_key=True)
+    order_code = models.CharField(max_length=100, blank=True)
+    transaction_id = models.CharField(max_length=50, null=True, blank=True, db_index=True)
     store = models.ForeignKey(Store, related_name='orders', on_delete=models.PROTECT)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='orders', on_delete=models.PROTECT)
     status = models.CharField(choices=ORDER_STATUS_CHOICES, default='PENDING')
@@ -138,6 +142,12 @@ class Order(models.Model):
     
     class Meta:
         db_table = 'orders'
+
+def pre_save_create_order_code(sender, instance, *args, **kwargs):
+    if not instance.order_code:
+        instance.order_code = unique_order_code_generator(instance)
+
+pre_save.connect(pre_save_create_order_code, sender = Order)
 
 class OrderProduct(models.Model):
     order_product_id = models.AutoField(primary_key=True)
@@ -161,4 +171,5 @@ class OrderProduct(models.Model):
 
     class Meta:
         db_table = 'order_products'
+
 

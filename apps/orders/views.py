@@ -6,8 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, Sum
 from django.core.exceptions import ValidationError
+import uuid
 
 
 @require_POST 
@@ -191,6 +192,7 @@ def checkout(request):
         try:
             with transaction.atomic():
                 
+                current_transaction_id = str(uuid.uuid4())
                 # Iteramos sobre as lojas para criar um pedido para cada uma
                 for store, items_list in items_by_store.items():
                     
@@ -209,7 +211,8 @@ def checkout(request):
                         shipping_city=address.city,
                         shipping_state=address.state,
                         shipping_cep=address.cep,
-                        shipping_complement=address.complement
+                        shipping_complement=address.complement,
+                        transaction_id=current_transaction_id
                     )
 
                     # Processamento dos Itens
@@ -240,8 +243,9 @@ def checkout(request):
                 # Deletar os itens do carrinho
                 cart_obj.items.all().delete() 
 
-            messages.success(request, "Pedido realizado com sucesso!")
-            return redirect('orders:approved') 
+                request.session['last_approved_transaction'] = current_transaction_id
+
+            return redirect('orders:approved', transaction_id=current_transaction_id) 
 
         except ValidationError as e:
             messages.warning(request, e.message)
@@ -253,8 +257,26 @@ def checkout(request):
 
     return redirect('orders:cart')
 
-def approved(request):
-    return render(request, 'orders/approved.html')
+@login_required()
+def approved(request, transaction_id):
+    allowed_id = request.session.get('last_approved_transaction')
+
+    if not allowed_id or allowed_id != transaction_id:
+        return redirect('accounts:orders')
+    
+    orders = Order.objects.filter(user=request.user, transaction_id=transaction_id).select_related('store').prefetch_related('items')
+
+    if not orders.exists():
+        messages.error(request, "Pedido não localizado.")
+        return redirect('/')
+    
+    total_data = orders.aggregate(Sum('total_amount'))
+
+    transaction_total = total_data['total_amount__sum'] or 0
+
+    context = { 'orders': orders, 'main_order_code': transaction_id, 'transaction_total': transaction_total }
+
+    return render(request, 'orders/approved.html', context)
 
 
 def orders_detail(request, order_id):
