@@ -1,0 +1,63 @@
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'stores/css/partial/order-items.css' %}" />
+     <link rel="stylesheet" href="{% static 'stores/css/orders.css' %}" />
+{% endblock %}
+<div class="order-details-card">
+    <div class="order-section-block border-bottom">
+        <h3 class="section-title">Status</h3>    
+        <div class="section-content">
+            {% if order.status == 'COMPLETED' or order.status == 'CANCELLED' %}
+                <span class="status-badge status-{{ order.status|lower }}">
+                    {{ order.get_status_display }}
+                </span>
+            {% else %}
+                <form method="POST" class="status-form">
+                    {% csrf_token %}
+                    <div class="status-input-group">
+                        <select name="status" class="form-select-custom">
+                            {% for value, label in order.ORDER_STATUS_CHOICES %}
+                                <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn-save">Atualizar</button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="order-section-block">
+        <h3 class="section-title">Itens do pedido</h3>
+        <div class="section-content">
+            <table class="order-items-table">
+                <thead>
+                    <tr>
+                        <th class="text-start">Produto</th>
+                        <th>Qtd</th>
+                        <th>Preço</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td class="text-start"><strong>{{ item.product_variant.product.name }}</strong></td>
+                        <td>{{ item.quantity }}</td>
+                        <td>R$ {{ item.price_at_purchase|floatformat:2 }}</td>
+                        <td class="text-end">R$ {{ item.subtotal|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="order-total-footer">
+            <span class="total-label">Total do pedido:</span>
+            <span class="total-value">R$ {{ order.get_total_calculado|floatformat:2 }}</span>
+        </div>
+    </div>
+</div>

@@ -137,6 +137,7 @@
 }
 
 /* Badges */
+
 .status-badge {
     display: inline-block;
     padding: 6px 12px;
@@ -145,13 +146,34 @@
     font-weight: 700;
     text-transform: uppercase;
     white-space: nowrap;
+    max-width: fit-content;
 }
 
-.status-success { background-color: color-mix(in srgb, var(--color-green) 10%, white); color: var(--color-green); }
-.status-warning { background-color: #fef9c3; color: #854d0e; }
-.status-danger { background-color: #fee2e2; color: var(--color-red); }
-.status-primary { background-color: #e0f2fe; color: #075985; }
-.status-secondary { background-color: #f3f4f6; color: #1f2937; }
+
+
+/* Pendente  */
+.status-pending { 
+    background-color: #fef9c3; 
+    color: #854d0e; 
+}
+
+/* Em Andamento  */
+.status-in_progress { 
+    background-color: #e0f2fe; 
+    color: #075985; 
+}
+
+/* Concluído  */
+.status-completed { 
+    background-color: color-mix(in srgb, var(--color-green) 10%, white); 
+    color: var(--color-green); 
+}
+
+/* Cancelado */
+.status-cancelled { 
+    background-color: #fee2e2; 
+    color: var(--color-red); 
+}
 
 /* Ações */
 .col-actions { display: flex; justify-content: flex-end; }

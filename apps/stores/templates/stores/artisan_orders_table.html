@@ -26,7 +26,7 @@
         </div>
 
         {% for order in orders_page %}
-            {% include 'stores/partials/_order_table_row.html' %}
+            {% include 'stores/partials/_order_table_row.html' with store=store order=order %}
         {% empty %}
             <p>Nenhum pedido encontrado.</p>
         {% endfor %}

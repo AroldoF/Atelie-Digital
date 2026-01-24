@@ -1,0 +1,22 @@
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'stores/css/partial/order-customer.css' %}" />
+{% endblock %}
+<div class="order-customer-grid">
+    <div class="area-cliente">
+        <h3><i class="bi bi-person"></i> Cliente</h3>
+        <p><strong>Nome:</strong> {{ order.user.get_full_name|default:order.user.username }}</p>
+        <p><strong>Email:</strong> {{ order.user.email }}</p>
+    </div>
+
+    <div class="area-entrega">
+        <h3><i class="bi bi-truck"></i> Endereço de Entrega</h3>
+        <p><strong>Rua:</strong> {{ order.shipping_street }}, {{ order.shipping_number }}</p>
+        {% if order.shipping_complement %}
+            <p><strong>Complemento:</strong> {{ order.shipping_complement }}</p>
+        {% endif %}
+        <p><strong>Bairro:</strong> {{ order.shipping_neigh }}</p>
+        <p><strong>Cidade/Estado:</strong> {{ order.shipping_city }} - {{ order.shipping_state }}</p>
+        <p><strong>CEP:</strong> {{ order.shipping_cep }}</p>
+    </div>
+</div>
