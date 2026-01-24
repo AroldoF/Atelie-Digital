@@ -3,7 +3,7 @@
 <div class="order-table-row">
 
     <div class="col-id-date">
-        <span class="id-text">#{{ order.order_id }}</span>
+        <span class="id-text">#{{ order.pk }}</span>
         <span class="date-text">{{ order.created_at|date:"d M, Y" }}</span>
     </div>
 
@@ -15,28 +15,35 @@
     </div>
 
     <div class="col-payment">
-        <span class="status-badge status-warning">
+        <span class="status-badge status-{{ order.status|lower }}">
             {{ order.get_status_display }}
         </span>
     </div>
 
     <div class="col-fulfillment">
-        <span class="status-badge status-secondary">
-            Processando
+        <span class="status-badge status-{{ order.status|lower }}">
+            {% if order.status == 'PENDING' %}
+                Aguardando
+            {% elif order.status == 'IN_PROGRESS' %}
+                Preparando
+            {% elif order.status == 'COMPLETED' %}
+                Enviado
+            {% else %}
+                {{ order.get_status_display }}
+            {% endif %}
         </span>
     </div>
 
     <div class="col-total">
-        R$ {{ order.total_amount|floatformat:2 }}
+        R$ {{ order.get_total_calculado|floatformat:2 }}
     </div>
 
-  <div class="col-actions">
-    <a href="{% url 'stores:artisan_order_detail' store.pk order.pk %}"
-       class="action-btn"
-       title="Ver Detalhes">
-        <img src="{% static 'media/icons/search.svg' %}" alt="Ver Detalhes">
-    </a>
-</div>
-
+    <div class="col-actions">
+        <a href="{% url 'stores:artisan_order_detail' store.pk order.pk %}"
+           class="action-btn"
+           title="Ver Detalhes">
+            <img src="{% static 'media/icons/search.svg' %}" alt="Ver Detalhes" class="icon-img">
+        </a>
+    </div>
 
 </div>

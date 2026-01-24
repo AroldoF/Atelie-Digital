@@ -15,7 +15,14 @@
 
     
     <div class="order-detail-container">
-        <div class="card">
+        <div class="header-actions">
+            <a href="{% url 'stores:stores_orders' store_id=store.store_id  %}" class="btn-back">
+                <i class="bi bi-arrow-left"></i>
+                Voltar para a lista de pedidos
+            </a>
+        </div>
+        
+        <div class="order-details-card">
 
             {% include 'stores/partials/_order_header.html' %}
             {% include 'stores/partials/_order_customer.html' %}
