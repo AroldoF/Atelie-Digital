@@ -11,6 +11,8 @@ from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
 
+from apps.orders.models import Order
+
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
 
@@ -127,5 +129,45 @@ def artisan_orders(request, store_id):
             'active_page': 'orders',
         })
 
-    
+@login_required
+@user_passes_test(is_artisian)
+@transaction.atomic
+def artisan_order_detail(request, store_id, order_id):
+    # Garante que a loja pertence ao artesão logado
+    store = get_object_or_404(Store, pk=store_id, user=request.user)
+    # Busca o pedido garantindo que pertence à loja
+    order = get_object_or_404(
+        Order.objects.select_related('user').prefetch_related('items__product_variant__product'),
+        pk=order_id,
+        store=store
+    )
 
+  
+    if request.method == 'POST':
+        # Impedir alteração em pedidos cancelados ou concluídos
+        if order.status in ['COMPLETED', 'CANCELLED']:
+            messages.error(request, f"Não é possível alterar um pedido com status: {order.get_status_display()}.")
+            return redirect('stores:artisan_order_detail', store_id=store.pk, order_id=order.pk)
+
+        new_status = request.POST.get('status')
+        valid_statuses = [choice[0] for choice in Order.ORDER_STATUS_CHOICES]
+
+        if new_status in valid_statuses:
+            order.status = new_status
+            order.save()
+            messages.success(request, f"Status do pedido #{order.pk} atualizado com sucesso!")
+        else:
+            messages.error(request, "Status inválido selecionado.")
+        
+        return redirect('stores:artisan_order_detail', store_id=store.pk, order_id=order.pk)
+
+  
+    return render(
+        request,
+        'stores/artisan_order_detail.html',
+        {
+            'store': store,
+            'order': order,
+            'active_page': 'orders',
+        }
+    )
