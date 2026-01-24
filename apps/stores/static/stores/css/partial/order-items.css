@@ -1,0 +1,24 @@
+.order-status-section{
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px;
+}
+form{
+  display: flex; 
+  gap: 10px; 
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.form-select{
+  padding-inline-end: 1.8rem; 
+  padding-block: 8px;
+}
+
+.btn-save{
+  background-color: var(--color-green-dark);
+  color: white;
+  border: none; 
+  padding: 8px 15px; 
+  border-radius: 4px; 
+  cursor: pointer;
+}
