@@ -142,6 +142,14 @@ class Order(models.Model):
     
     class Meta:
         db_table = 'orders'
+        
+    def can_change_status(self):
+        return self.status not in ['COMPLETED', 'CANCELLED']
+    
+    @property
+    def get_total_calculado(self):
+        # Soma o subtotal de todos os itens relacionados a este pedido
+        return sum(item.subtotal() for item in self.items.all())
 
 def pre_save_create_order_code(sender, instance, *args, **kwargs):
     if not instance.order_code:
