@@ -1,0 +1,29 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block title %}Pedido #{{ order.pk }}{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'stores/css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'stores/css/order-detail.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="area-pedido">
+
+    {% include 'stores/partials/_dashboard_nav.html' with active_page='orders' %}
+
+    
+    <div class="order-detail-container">
+        <div class="card">
+
+            {% include 'stores/partials/_order_header.html' %}
+            {% include 'stores/partials/_order_customer.html' %}
+        </div>
+        
+
+
+    </div>
+
+</div>
+{% endblock %}

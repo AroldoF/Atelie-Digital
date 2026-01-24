@@ -10,9 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
-
 from apps.orders.models import Order
-
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
 

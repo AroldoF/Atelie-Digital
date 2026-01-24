@@ -1,0 +1,23 @@
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'stores/css/partial/order-header.css' %}" />
+{% endblock %}
+
+
+
+<div class="order-detail-header">
+
+        <div>
+            <h2>Pedido #{{ order.pk }}</h2>
+            <p class="text-muted">
+                Criado em {{ order.created_at|date:"d/m/Y H:i" }}
+            </p>
+        </div>
+      
+        
+</div>
+
+   
+
+
+

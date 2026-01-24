@@ -1,0 +1,9 @@
+ <div class="area-cliente">
+    <h3>Cliente</h3>
+
+    <p><strong>Nome:</strong>
+        {{ order.user.get_full_name|default:order.user.username }}
+    </p>
+
+    <p><strong>Email:</strong> {{ order.user.email }}</p>
+</div>

@@ -1,0 +1,45 @@
+.area-pedido{
+    padding: 20px 40px; 
+    margin-bottom: 100px;
+}
+.order-detail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+
+}
+
+.order-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-items-table th,
+.order-items-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.order-total {
+    text-align: right;
+    margin-top: 16px;
+    font-size: 1,125;
+}
+
+h3{
+    color: var(--color-primary-dark);
+    font-weight: bold;
+}

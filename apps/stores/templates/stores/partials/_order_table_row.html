@@ -30,10 +30,13 @@
         R$ {{ order.total_amount|floatformat:2 }}
     </div>
 
-    <div class="col-actions">
-        <a href="#" class="action-btn" title="Ver Detalhes">
-            <img src="{% static 'media/icons/search.svg' %}" alt="Ver Detalhes">
-        </a>
-    </div>
+  <div class="col-actions">
+    <a href="{% url 'stores:artisan_order_detail' store.pk order.pk %}"
+       class="action-btn"
+       title="Ver Detalhes">
+        <img src="{% static 'media/icons/search.svg' %}" alt="Ver Detalhes">
+    </a>
+</div>
+
 
 </div>
