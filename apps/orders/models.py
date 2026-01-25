@@ -8,8 +8,8 @@ from django.db.models.signals import pre_save
 
 class CartManager(models.Manager):
     def new_or_get(self, request):
-        # 1. Garante que existe uma sessão criada no navegador
-        # Se for um usuário novo, a session_key pode ser None, então criamos forçadamente.
+        cart_id = request.session.get("cart_id", None)
+        
         session_key = request.session.session_key
         if not session_key:
             request.session.create()
@@ -17,46 +17,55 @@ class CartManager(models.Manager):
 
         cart_obj = None
         new_obj = False
+        user = request.user
 
-        # 2. Lógica se o usuário estiver LOGADO
-        if request.user.is_authenticated:
-            # Tenta buscar um carrinho já existente deste usuário
-            # Usamos filter().first() para evitar erro caso não exista (retorna None)
-            cart_obj = self.get_queryset().filter(user=request.user).first()
+        if cart_id:
+            cart_obj = self.get_queryset().filter(cart_id=cart_id).first()
+
+            if cart_obj and cart_obj.user and cart_obj.user != user:
+                cart_obj = None
+
+        if user.is_authenticated:
+            cart_user = self.get_queryset().filter(user=user).first()
+
+            if cart_obj and cart_user and cart_obj != cart_user:
+                for item_session in cart_obj.items.all():
+                    item_user = cart_user.items.filter(product_variant=item_session.product_variant).first()
+                    
+                    if item_user:
+                        item_user.quantity += item_session.quantity
+                        item_user.save()
+                    else:
+                        item_session.cart = cart_user
+                        item_session.save()
+                
+                cart_obj.delete()
+                cart_obj = cart_user
+
+            elif cart_user:
+                cart_obj = cart_user
             
-            # Se o usuário não tem carrinho salvo, mas tem um carrinho da sessão atual (anônimo)
-            if not cart_obj:
-                cart_from_session = self.get_queryset().filter(session_key=session_key).first()
-                if cart_from_session:
-                    # "Adotamos" o carrinho anônimo para o usuário logado
-                    cart_obj = cart_from_session
-                    cart_obj.user = request.user
-                    cart_obj.session_key = None 
-                    cart_obj.save()
-        
-        # 3. Lógica se o usuário for ANÔNIMO (ou se logado não tinha nada e nada na sessão)
-        if not cart_obj:
-            # Tenta pegar o carrinho pela chave da sessão
-            cart_obj = self.get_queryset().filter(session_key=session_key).first()
-            
-            # Se o usuário logou agora e não tinha carrinho nenhum, vincula a ele.
-            # Se for anônimo, continua anônimo.
-            if cart_obj and request.user.is_authenticated and cart_obj.user is None:
-                cart_obj.user = request.user
+            elif cart_obj:
+                cart_obj.user = user
                 cart_obj.save()
 
-        # 4. Se ainda não achou nada (nem no user, nem na session), CRIA UM NOVO
+        else:
+            if not cart_obj:
+                cart_obj = self.get_queryset().filter(session_key=session_key).first()
+
         if not cart_obj:
             new_obj = True
-            if request.user.is_authenticated:
-                cart_obj = self.new(user=request.user)
+            if user.is_authenticated:
+                cart_obj = self.new(user=user)
             else:
                 cart_obj = self.new(session_key=session_key)
+
+        if request.session.get("cart_id") != cart_obj.cart_id:
+            request.session["cart_id"] = cart_obj.cart_id
 
         return cart_obj, new_obj
 
     def new(self, user=None, session_key=None):
-        # Cria efetivamente o carrinho com os dados passados
         return self.model.objects.create(user=user, session_key=session_key)
 
 class Cart(models.Model):

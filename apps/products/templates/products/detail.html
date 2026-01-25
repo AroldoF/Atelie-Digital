@@ -79,7 +79,7 @@
 
             {% if is_available %}
             <!--formulário - COMPRAR -->
-            <form action="" method="POST">
+            <form action="{% url 'orders:add' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="variant_id" value="{{ variant.product_variant_id }}">
                 <input type="hidden" name="quantity" value="1">
