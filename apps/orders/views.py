@@ -116,17 +116,14 @@ def removeCartItem(request, item_id):
 
 @login_required
 def shipping(request):
-    # puxar os dados do carrinho
     cart_obj, _ = Cart.objects.new_or_get(request)
 
     if not cart_obj.items.exists():
         messages.warning(request, "O carrinho está vazio!")
         return redirect('orders:cart')        
     else:
-        # listar os endereços existentes
         addresses = Address.objects.filter(user=request.user)
 
-        # validar status e quantidade de produto em estoque
         for item in cart_obj.items.all():
             product = item.product_variant
             if not product.is_active:
@@ -193,13 +190,10 @@ def checkout(request):
             with transaction.atomic():
                 
                 current_transaction_id = str(uuid.uuid4())
-                # Iteramos sobre as lojas para criar um pedido para cada uma
+
                 for store, items_list in items_by_store.items():
-                    
-                    # Calcula o total específico desta loja
                     store_total = sum(item.subtotal for item in items_list)
 
-                    # Criação do Pedido 
                     order = Order.objects.create(
                         store=store,
                         user=request.user,
@@ -215,24 +209,19 @@ def checkout(request):
                         transaction_id=current_transaction_id
                     )
 
-                    # Processamento dos Itens
                     for item in items_list:
                         product = item.product_variant
 
-                        # Validação 1: Produto Ativo
                         if not product.is_active:
                             raise ValidationError(f"O produto {product.description} não está mais disponível.")
 
-                        # Validação 2: Estoque
                         if product.type == 'STOCK' and product.stock < item.quantity:
                             raise ValidationError(f"Estoque insuficiente para {product.description}.")
 
-                        # Baixa de Estoque Segura (Concurrency)
                         if product.type == 'STOCK':
                             product.stock = F('stock') - item.quantity
                             product.save()
 
-                        # Criação do Item do Pedido
                         OrderProduct.objects.create(
                             order=order,
                             product_variant=product,
@@ -240,7 +229,6 @@ def checkout(request):
                             price_at_purchase=product.price 
                         )
 
-                # Deletar os itens do carrinho
                 cart_obj.items.all().delete() 
 
                 request.session['last_approved_transaction'] = current_transaction_id

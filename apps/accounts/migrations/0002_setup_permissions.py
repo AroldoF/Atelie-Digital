@@ -11,18 +11,24 @@ def create_groups_and_permissions(apps, schema_editor):
 
     user_group, _ = Group.objects.get_or_create(name='Users')
     artisian_group, _ = Group.objects.get_or_create(name='Artisians')
-
+ 
     codenames_user = [
         # Accounts: 
         'add_address','view_address', 'change_address', 'delete_address',
-        # Profile:
         'view_profile', 'change_profile',
         # Products: apenas ver
-        'view_product', 
+        'view_product', 'view_productvariant', 'view_variantimage', 'view_attribute', 
+        'view_variantattribute', 
+        # Carts: criar, ver e mudar
+        'add_cart', 'view_cart', 'change_cart',
+        'add_cartitem', 'view_cartitem', 'change_cartitem', 'delete_cartitem',
         # Orders: criar e ver seus pedidos
         'add_order', 'view_order', 
+        'add_orderproduct', 'view_orderproduct',
         # Reviews: avaliar e ver avaliações
-        'add_review', 'view_review',
+        'add_productreview', 'view_productreview',
+        # Favorite:
+        'add_favorite', 'view_favorite', 'delete_favorite'
         # Chats: conversar
         'add_chat', 'view_chat', 'add_message', 'view_message',
         # Stores: visualizar lojas
@@ -37,7 +43,7 @@ def create_groups_and_permissions(apps, schema_editor):
     perms_manage_products = Permission.objects.filter(content_type__app_label='products')
     perms_manage_stores = Permission.objects.filter(content_type__app_label='stores')
     
-    # Permissões extras de vendas (mudar status de pedido, por exemplo)
+    # Permissões extras de vendas (mudar status de pedido)
     perms_sales = Permission.objects.filter(
         content_type__app_label='orders', 
         codename__startswith='change_'
@@ -54,7 +60,7 @@ def remove_groups(apps, schema_editor):
 class Migration(migrations.Migration):
     dependencies = [
         ('accounts', '0001_initial'), 
-        ('products', '0003_productreview'),
+        ('products', '0001_initial'),
         ('orders', '0001_initial'),
         ('stores', '0001_initial'),
         ('chats', '0001_initial'),
