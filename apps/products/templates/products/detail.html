@@ -32,14 +32,19 @@
     <div class="carouselProduto">      
       <!-- <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
       <div class="carouselInner" id="mobileCarouselInner">
-             {% if product.image %}
-                <img src="{{ product.image.url }}" class="carouselItem active">
-              {% endif %}
+            {% if product.image and variant == variants.first %}
+              <img src="{{ product.image.url }}" class="carouselItem active">
+            {% endif %}
 
             {% for img in variant.images.all %}
-              <img
-                src="{{ img.image.url }}"
-                class="carouselItem {% if forloop.first %}active{% endif %}">
+                <img 
+                    src="{{ img.image.url }}" 
+                    class="carouselItem 
+                    {% if variant != variants.first and forloop.first %}
+                        active
+                    {% elif not product.image and forloop.first %}
+                        active
+                    {% endif %}">
             {% endfor %}
             <button class="carousel-btn prev">
                 <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
@@ -218,30 +223,32 @@
           <!-- <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
         </div>
 
-        {% if product.image %}
-        <img
-          id="mainImageDesktop"
-          src="{{ product.image.url }}"
-          class="main-image">
-          {% else %}
-            {% with variant.images.first as img %}
-              <img
-                id="mainImageDesktop"
-                src="{% if img %}{{ img.image.url }}{% else %}{% static 'products/media/no-image.png' %}{% endif %}"
-                class="main-image">
-            {% endwith %}
-          {% endif %}
+        {% if product.image and variant == variants.first %}
+        {# Se for a primeira variante, mostra a imagem do pai #}
+        <img id="mainImageDesktop" src="{{ product.image.url }}" class="main-image">
+    {% elif variant.images.first %}
+        {# Se não for a primeira ou não tiver imagem do pai, mostra a da variante #}
+        <img id="mainImageDesktop" src="{{ variant.images.first.image.url }}" class="main-image">
+    {% else %}
+        <img id="mainImageDesktop" src="{% static 'products/media/no-image.png' %}" class="main-image">
+    {% endif %}
 
-      <div class="thumbnail-list">
-        {% if product.image %}
-          <img src="{{ product.image.url }}" data-src="{{ product.image.url }}" class="thumbnail active">
+    <div class="thumbnail-list">
+        {% if product.image and variant == variants.first %}
+            <img 
+                src="{{ product.image.url }}" 
+                data-src="{{ product.image.url }}" 
+                class="thumbnail active" 
+                alt="Imagem principal">
         {% endif %}
 
         {% for img in variant.images.all %}
-          <img
-            src="{{ img.image.url }}"
-            data-src="{{ img.image.url }}"
-            class="thumbnail {% if not product.image and forloop.first %}active{% endif %}">
+            <img
+                src="{{ img.image.url }}"
+                data-src="{{ img.image.url }}"
+                {# Fica ativa se não houver imagem do pai ou se não for a primeira variante #}
+                class="thumbnail {% if variant != variants.first and forloop.first %}active{% elif not product.image and forloop.first %}active{% endif %}"
+                alt="Variante {{ variant.sku }}">
         {% endfor %}
         </div>
       </aside>
