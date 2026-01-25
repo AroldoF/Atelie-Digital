@@ -468,39 +468,42 @@
           <div class="col-md-8">
               <h4 class="text-main-review fw-bold mb-4 border-bottom pb-2">Principais avaliações</h4>
               <div class="reviews-list">
-                  {% for review in reviews %}
-                      <div class="review-item mb-4 pb-4 border-bottom">
+                {% for review in reviews %}
+                    <div class="review-item mb-4 pb-4 border-bottom">
                         <div class="d-flex justify-content-between ">
-                          <div class="d-flex align-items-center gap-2 mb-2">
+                            <div class="d-flex align-items-center gap-2 mb-2">
                                 <div class="review-avatar">
-                                  {% if review.user.profile.profile_image %}
-                                    <img src="{{ review.user.profile.profile_image.url }}" alt="Foto de {{ review.user.username }}" class="avatar-img">
-                                  {% else %}
-                                    <div class="avatar-placeholder"><i class="bi bi-person-fill"></i></div>
-                                  {% endif %}
+                                    {% if review.user.profile.profile_image %}
+                                        <img src="{{ review.user.profile.profile_image.url }}" alt="Foto de {{ review.user.username }}" class="avatar-img">
+                                    {% else %}
+                                        <div class="avatar-placeholder"><i class="bi bi-person-fill"></i></div>
+                                    {% endif %}
                                 </div>
+                                
                                 <div class="d-flex align-items-center gap-2">
-                                  <span class="fw-bold">{{ review.user.username }}</span>
-                                  {% if has_bought %}
-                                    <span class="review-verified">comprador verificado</span>
-                                  {% endif %}
+                                    <span class="fw-bold">{{ review.user.username }}</span>
+                                    {% if review.user_has_purchased %}
+                                        <span class="review-verified">
+                                        comprador verificado
+                                        </span>
+                                    {% endif %}
                                 </div>
-                          </div>
-                          <div class="text-warning mb-2">{{ review.rating }} ★</div>
+                            </div>
+                            <div class="text-warning mb-2">{{ review.rating }} ★</div>
                         </div>
-                          <p class="text-dark">{{ review.comment }}</p>
-                          <small class="text-muted">{{ review.created_at|date:"d/m/Y" }}</small>
-                      </div>
-                  {% empty %}
-                      <p class="text-muted italic text-center py-4">Ainda não há avaliações para este produto.</p>
-                  {% endfor %}
-
-                  {% if has_more_reviews %}
-                    <div class="text-center mt-4">
-                      <a href="?reviews_limit={{ next_reviews_limit }}#reviews-section" class="btn btn-read-more fw-bold">Ver mais comentários</a>
+                        <p class="text-dark">{{ review.comment }}</p>
+                        <small class="text-muted">{{ review.created_at|date:"d/m/Y" }}</small>
                     </div>
-                  {% endif %}
-              </div>
+                {% empty %}
+                    <p class="text-muted italic text-center py-4">Ainda não há avaliações para este produto.</p>
+                {% endfor %}
+
+                {% if has_more_reviews %}
+                    <div class="text-center mt-4">
+                        <a href="?reviews_limit={{ next_reviews_limit }}#reviews-section" class="btn btn-read-more fw-bold">Ver mais comentários</a>
+                    </div>
+                {% endif %}
+             </div>
           </div>
     </div>
 </section>

@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views import View
-from django.db.models import Avg,Count, Q
+from django.db.models import Avg, Count, Q, Exists, OuterRef
 from django.contrib.postgres.search import (SearchVector,SearchQuery,SearchRank,TrigramSimilarity)
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -15,6 +15,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.views.generic import DeleteView
 from apps.stores.models import Store
+from apps.orders.models import OrderProduct
 
 
 CATEGORY_KEYWORDS = {
@@ -63,12 +64,10 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
             kwargs={"store_id": self.kwargs["store_id"]}
         )
 
-
 def detail_product(request, product_id):
-
     product = get_object_or_404(Product, pk=product_id)
 
-    # Lógica de variantes e disponibilidade
+    # Lógica de variantes e disponibilidade 
     variants = product.variants.filter(is_active=True)
     variant_id = request.GET.get('variant')
 
@@ -78,18 +77,25 @@ def detail_product(request, product_id):
     
     if not variant:
         variant = variants.first()
+     # Produto disponível se o pai estiver ativo e houver variante ativa
+    is_available = product.is_active and variant is not None and  variant.is_active
 
-    # Produto disponível se o pai estiver ativo e houver variante ativa
-    is_available = product.is_active and variant is not None and variant.is_active
+    # Lógica de Avaliações e "Comprador Verificado"
+    
+    # Subconsulta: Verifica se o autor da review possui um OrderProduct deste produto
+    # Isso reflete o sucesso do pagamento mostrado na sua imagem de checkout
+    user_purchases = OrderProduct.objects.filter(
+        order__user=OuterRef('user'),
+        product_variant__product=product
+    )
 
+    # informação de compra
+    all_reviews_qs = product.reviews.annotate(
+        user_has_purchased=Exists(user_purchases)
+    ).order_by("-created_at")
 
-    # Verifica se o usuário comprou o produto
-    # has_bought = user_bought_product(request.user, product) 
-    has_bought = True # para teste
-
-
-    # Cálculos de Avaliações 
-    reviews_data = product.reviews.aggregate(
+    # Cálculos de médias (usando a query anotada)
+    reviews_data = all_reviews_qs.aggregate(
         media=Avg('rating'), 
         total=Count('review_id')
     )
@@ -97,73 +103,56 @@ def detail_product(request, product_id):
     rating_average = reviews_data['media'] or 0.0
     reviews_count = reviews_data['total'] or 0
     
-    #  Listagem e Composição da Nota 
-    reviews = product.reviews.all().order_by('-created_at')
+    # Composição das estrelas (gráfico de barras)
     stars_composition = []
-    
-    for i in range(5, 0, -1):  # Loop de 5 até 1 estrela
-        count_for_star = reviews.filter(rating=i).count()
-        # Calcula a porcentagem para a barra de progresso
+    for i in range(5, 0, -1):
+        count_for_star = all_reviews_qs.filter(rating=i).count()
         percentage = (count_for_star / reviews_count * 100) if reviews_count > 0 else 0
-        
         stars_composition.append({
             'star_number': i,
             'count': count_for_star,
             'percentage': round(percentage, 1)
         })
 
-  
     # LIMITE PROGRESSIVO DE COMENTÁRIOS
     DEFAULT_LIMIT = 3
     reviews_limit = int(request.GET.get("reviews_limit", DEFAULT_LIMIT))
-
-    all_reviews_qs = product.reviews.all().order_by("-created_at")
     reviews = all_reviews_qs[:reviews_limit]
 
     has_more_reviews = reviews_limit < all_reviews_qs.count()
     next_reviews_limit = reviews_limit + DEFAULT_LIMIT
-
 
     # LIMITE DE QUANTIDADE PELO ESTOQUE
     max_quantity = None
 
     if variant and variant.type == 'STOCK':
         max_quantity = variant.stock
-
-
     #simular desconto
     REFERENCE_PRICE = Decimal('55.00')
-
     discount_percent = 0
     if variant and variant.price < REFERENCE_PRICE:
         discount_percent = round((REFERENCE_PRICE - variant.price) / REFERENCE_PRICE * 100)
-
-    # Verifica se deve mostrar a área de personalização
+     # Verifica se deve mostrar a área de personalização
     show_personalization = False
     if variant:
         show_personalization = variant.is_customizable or variant.type == 'DEMAND'
 
+ 
     context = {
         'product': product,
         'variant': variant,
         'variants': variants,
         'is_available': is_available,
         'unavailable_message': "Este produto está indisponível no momento." if not is_available else "",
-        'reviews': reviews,
+        'reviews': reviews, # Cada review aqui tem o atributo .user_has_purchased
         'rating_average': round(rating_average, 1),
         'reviews_count': reviews_count,
         'stars_composition': stars_composition,
-        'has_bought': has_bought,
         
-        # controle do botão
         "has_more_reviews": has_more_reviews,
         "next_reviews_limit": next_reviews_limit,
-        # qtd maxima
-        'max_quantity':max_quantity,
-
-        #para a exibição do chat
+        'max_quantity': max_quantity,
         'show_personalization': show_personalization,
-        #simulação de desconto
         'discount_percent': discount_percent,
     }
     
