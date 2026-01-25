@@ -28,6 +28,9 @@
     <div class="image-list mb-2 d-flex flex-wrap gap-3">
         {% for image_form in variant_formset.empty_form.nested_images.forms %}
         <label class='label-image' for="{{ image_form.image.id_for_label }}">
+        {% for hidden in image_form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
         <div class="upload-box position-relative d-inline-block me-2 mb-2 align-items-center justify-content-center">
         <div class="image-preview align-items-center justify-content-center text-center row">
             {{ image_form.image }}
@@ -54,6 +57,9 @@
     <div class="attribute-list mb-2">
         {% for attribute_form in variant_formset.empty_form.nested_attributes.forms %}
         <div class="row g-2 mb-2 attribute-row">
+            {% for hidden in attribute_form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
             <div class="col-md-5 ">
             <div class="attr-select-wrapper">
                 {{ attribute_form.attribute|as_crispy_field }}

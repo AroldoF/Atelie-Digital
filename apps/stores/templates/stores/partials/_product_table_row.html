@@ -21,7 +21,7 @@
   </div>
   
   <div class="col-actions">
-    <a href="#" class="action-btn btn-edit" title="Editar"><img src="{% static 'media/icons/pencil.svg' %}" alt="Editar" class="icon-img" /></a>
+    <a href="{% url 'products:edit' product_id=product_id %}" class="action-btn btn-edit" title="Editar"><img src="{% static 'media/icons/pencil.svg' %}" alt="Editar" class="icon-img" /></a>
 
    <a
     href="{% url 'products:product_delete' store_id=store_id pk=product_id %}"
