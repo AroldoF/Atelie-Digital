@@ -13,6 +13,7 @@ from django.views.decorators.cache import never_cache
 from django.db.models import Q
 from django.core.paginator import Paginator
 from apps.accounts.services import update_user_profile
+from django.utils.http import url_has_allowed_host_and_scheme
 
 # Importações dos Models para as queries
 from apps.products.models import Product
@@ -34,25 +35,28 @@ class UserLoginView(LoginView):
         messages.error(self.request, "E-mail ou senha inválidos")
         return super().form_invalid(form)
 
-    def get_success_url(self):
-        return reverse_lazy('accounts:profile')
-
 def register(request):
+    redirect_to = request.POST.get('next') or request.GET.get('next')
+
     if request.method == 'POST':
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             login_django(request, user)
-            messages.success(request, "Cadastro realizado com sucesso!")
-            return redirect('accounts:profile')
-        else:
-            messages.error(request, "Erro ao cadastrar. Verifique os dados.")
+            
+            if next and url_has_allowed_host_and_scheme(url=redirect_to, allowed_hosts=request.get_host()):
+                return redirect(redirect_to)
+            
+            return redirect('accounts:profile') 
     else:
         form = RegisterUserForm()
-    
-    return render(request, 'accounts/register.html', {'form': form})
 
-# --- IMPLEMENTAÇÃO DA TASK MEU PERFIL ---
+    context = {
+        'form': form,
+        'next': redirect_to
+    }
+    return render(request, 'accounts/register.html', context)
+
 
 @never_cache
 @login_required
@@ -60,24 +64,20 @@ def profile(request):
     template_name = 'accounts/profile.html'
     user = request.user
 
-    # 1. Garantir que o Profile existe
     try:
         user_profile = user.profile
     except Exception:
         user_profile = Profile.objects.create(user=user)
 
-    # 2. URL da Imagem Segura
     if user_profile.profile_image:
         profile_image_url = user_profile.profile_image.url
     else:
         profile_image_url = None 
 
-    # 3. Buscar os 4 Últimos Pedidos
     last_orders = []
     if Order:
         last_orders = Order.objects.filter(user=user).order_by('-created_at')[:4]
 
-    # 4. Buscar os 4 Últimos Favoritos
     try:
         last_favorites = Product.objects.cards_with_favorites(user).filter(is_favorite=True).order_by('-product_id')[:4]
     except AttributeError:
@@ -94,7 +94,6 @@ def profile(request):
     
     return render(request, template_name, context)
 
-# --- OUTRAS VIEWS (Agora protegidas) ---
 
 @login_required
 def profileEdit(request):
@@ -129,11 +128,6 @@ def profileEdit(request):
 @login_required
 def becomeArtisian(request):
     return render(request, 'accounts/settings_artisian.html')
-    
-@login_required
-def usersOrders(request):
-    # Futura view de listagem completa de pedidos
-    pass
     
 @login_required
 def addressesList(request):
@@ -200,16 +194,13 @@ def favoriteProduct(request):
 @login_required
 def usersOrders(request):
     user = request.user
-    # CAMINHO CORRIGIDO: aponta para o arquivo dentro do app 'orders'
     template_name = 'orders/list.html' 
     
-    # Busca segura dos pedidos
     if Order:
         orders = Order.objects.filter(user=user).order_by('-created_at')
     else:
         orders = []
 
-    # Lógica de Filtros
     status_filter = request.GET.get('status')
     active_filter = 'all'
 
