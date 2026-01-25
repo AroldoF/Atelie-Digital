@@ -52,6 +52,10 @@
                 </p>
             {% endif %}
         {% endfor %}
+
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
     
        <button type="submit" class="btn btn_acess btn-primary">{{ btn_text }}</button>
     </form>
@@ -69,7 +73,7 @@
 
     {% if text_link and link_url %}
         <p class="form_footer">
-            {{ text_link }} <a {% if link_url == 'signup' %}href="{% url 'accounts:register' %}"{% else %}href="{% url 'accounts:login' %}"{% endif %} class="link_recuperar">{{ link_text }}</a>
+            {{ text_link }} <a {% if link_url == 'signup' %}href="{% url 'accounts:register' %}{% if next %}?next={{ next }}{% endif %}"{% else %}href="{% url 'accounts:login' %}{% if next %}?next={{ next }}{% endif %}"{% endif %} class="link_recuperar">{{ link_text }}</a>
         </p>
     {% endif %}
 </div>
