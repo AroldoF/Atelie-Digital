@@ -103,7 +103,23 @@ class VariantAttribute(models.Model):
     class Meta:
         db_table = 'variant_attributes'
         unique_together = (('attribute', 'product_variant'),)
+        
+    def save(self, *args, **kwargs):
+        # 1️⃣ verifica se já existe algum com mesmo atributo e variante
+        qs = VariantAttribute.objects.filter(
+            product_variant=self.product_variant,
+            attribute=self.attribute
+        )
 
+        # 2️⃣ se existir, deleta o antigo
+        if self.pk:
+            qs = qs.exclude(pk=self.pk)  # não deletar ele mesmo se já existir no banco
+
+        if qs.exists():
+            qs.delete()
+
+        # 3️⃣ salva o atual
+        super().save(*args, **kwargs)
 
 class ProductReview(models.Model):
     review_id = models.AutoField(primary_key=True)

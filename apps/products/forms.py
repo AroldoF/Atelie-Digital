@@ -57,6 +57,20 @@ class ProductVariantForm(forms.ModelForm):
             'is_customizable': forms.CheckboxInput(),
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        variant_type = cleaned_data.get('type')
+        
+        if variant_type == 'STOCK':
+            if not cleaned_data.get('stock'):
+                self.add_error('stock', 'Este campo é obrigatório para produtos de estoque')
+        elif variant_type == 'DEMAND':
+            if not cleaned_data.get('production_days'):
+                self.add_error('production_days', 'Este campo é obrigatório para produtos por demanda')
+            # is_customizable não é obrigatório, mas pode ser validado conforme regra de negócio
+        
+        return cleaned_data
+
 class AttributesForm(forms.ModelForm):
     class Meta:
         model = VariantAttribute
@@ -112,6 +126,7 @@ class Formset(BaseInlineFormSet):
     def add_fields(self, form, index):
         super().add_fields(form, index)
 
+        # Correção crítica: passa a instância correta para os formsets aninhados
         form.nested_images = VariantImageInlineFormSet(
             instance=form.instance,
             data=form.data if form.is_bound else None,
@@ -127,6 +142,16 @@ class Formset(BaseInlineFormSet):
 
         if self.can_delete and 'DELETE' in form.fields:
             form.fields['DELETE'].widget = forms.HiddenInput()
+
+        if hasattr(form, "nested_images") and form.nested_images.can_delete:
+            for img_form in form.nested_images.forms:
+                if 'DELETE' in img_form.fields:
+                    img_form.fields['DELETE'].widget = forms.HiddenInput()
+
+        if hasattr(form, "nested_attributes") and form.nested_attributes.can_delete:
+            for attr_form in form.nested_attributes.forms:
+                if 'DELETE' in attr_form.fields:
+                    attr_form.fields['DELETE'].widget = forms.HiddenInput()
 
     def clean(self):
         super().clean()
@@ -170,20 +195,30 @@ class Formset(BaseInlineFormSet):
                                 attributes_seen.append(attr_obj)
 
     def save(self, commit=True):
-        """
-        Also save the nested formsets.
-        """
-        result = super().save(commit=commit)
-
         for form in self.forms:
+            delete = form.cleaned_data.get('DELETE', False)
+            variant_attr_id = form.cleaned_data.get('variant_attributes_id')  # seu hidden field
+
+            if delete and variant_attr_id:
+                from .models import VariantAttribute
+                try:
+                    attr = VariantAttribute.objects.get(pk=variant_attr_id)
+                    attr.delete()
+                except VariantAttribute.DoesNotExist:
+                    pass  # já deletado ou não existe
+        result = super().save(commit=commit)
+        
+        for form in self.forms:
+            if self._should_delete_form(form):
+                continue
             if hasattr(form, "nested_attributes"):
-                if not self._should_delete_form(form):
-                    form.nested_attributes.save(commit=commit)
+                form.nested_attributes.save(commit=commit)
+                
             if hasattr(form, "nested_images"):
-                if not self._should_delete_form(form):
-                    form.nested_images.save(commit=commit)
+                form.nested_images.save(commit=commit)
 
         return result
+
 
     def _is_adding_nested_inlines_to_empty_form(self, form):
         if is_form_persisted(form) or not is_empty_form(form):

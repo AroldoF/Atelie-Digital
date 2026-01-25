@@ -12,8 +12,9 @@ urlpatterns = [
     path('favorite/<int:product_id>/', views.toggle_favorite, name='toggle_favorite'),
 
     # rotas dinâmicas por ultimo
-    path('<int:product_id>/', views.detail_product, name='detail'),
+    path('<int:product_id>/edit/', views.ProductUpdateView.as_view(), name='edit'),
     path("products/<int:product_id>/review/",views.submit_review,name="submit_review"),
     path("stores/<int:store_id>/products/<int:pk>/delete/",ProductDeleteView.as_view(),name="product_delete"),
+    path('<int:product_id>/', views.detail_product, name='detail'),
     
 ]

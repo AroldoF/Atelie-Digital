@@ -274,7 +274,78 @@ class ProductCreateView(PermissionRequiredMixin, View):
 
 
         messages.success(request, "Produto cadastrado com sucesso!")
-        return redirect("index")
+        return redirect("stores:stores_products", store_id=product.store.pk)
+
+class ProductUpdateView(PermissionRequiredMixin, View):
+    permission_required = 'products.change_product'
+    template_name = "products/edit.html"
+
+    def get_object(self, product_id):
+        return get_object_or_404(Product, pk=product_id)
+
+    def get(self, request, product_id):
+        product = self.get_object(product_id)
+
+        return render(request, self.template_name, context={
+            'product_form': ProductForm(instance=product, prefix='product'),
+            "variant_formset": VarianteInlineFormSet(instance=product,prefix="variants"),
+        })
+    
+    def post(self, request, product_id):
+        product = self.get_object(product_id)
+
+        product_form = ProductForm(
+            request.POST,
+            request.FILES,
+            instance=product,
+            prefix='product'
+        )
+
+        variant_formset = VarianteInlineFormSet(
+            request.POST,
+            request.FILES,
+            instance=product,
+            prefix='variants'
+        )
+
+        if not product_form.is_valid() or not variant_formset.is_valid():
+            for form in variant_formset.forms:
+                delete_value = form.cleaned_data.get('DELETE') if form.is_bound and form.is_valid() else form.data.get(form.add_prefix('DELETE'))
+                if delete_value in [True, 'on', '1']:
+                    # Adiciona flag para template
+                    form.hidden_in_template = True
+                    # Garante que o DELETE hidden vai como 'on'
+                    if 'DELETE' in form.fields:
+                        form.fields['DELETE'].initial = 'on'
+
+
+            return render(request, self.template_name, {
+                'product_form': product_form,
+                'variant_formset': variant_formset
+            })
+
+        with transaction.atomic():
+            product_form.save()
+
+            variant_formset.save()
+
+            for form in variant_formset.forms:
+                if hasattr(form, "nested_attributes"):
+                    for attr_form in form.nested_attributes.forms:
+                        delete = attr_form.cleaned_data.get('DELETE', False)
+                        attr_id = attr_form.cleaned_data.get('variant_attributes_id')  # hidden field
+                        if delete and attr_id:
+                            from .models import VariantAttribute
+                            try:
+                                VariantAttribute.objects.get(pk=attr_id.pk).delete()
+                            except VariantAttribute.DoesNotExist:
+                                pass
+
+
+
+        messages.success(request, "Produto editado com sucesso!")
+        return redirect("stores:stores_products", store_id=product.store.pk)
+
 
 @require_POST
 def toggle_favorite(request, product_id):
