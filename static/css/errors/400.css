@@ -1,0 +1,4 @@
+.btn-invalid {
+    background-color: var(--color-gray) !important;
+    color: var(--color-background) !important;
+}

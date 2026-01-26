@@ -1,0 +1,15 @@
+h1 { color: var(--color-primary); }
+p.fs-2 { color: var(--color-text); }
+p.mt-4 { color: var(--color-gray); }
+
+.custom-btn {
+    border: 2px solid var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    background-color: transparent !important;
+}
+
+.custom-btn:hover {
+    background-color: var(--color-primary) !important;
+    color: var(--color-background) !important;
+    transition: background-color 0.3s ease-in-out;
+}

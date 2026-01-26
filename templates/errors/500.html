@@ -1,0 +1,17 @@
+{% extends "shared/base_clean.html" %}
+{% load static %}
+{% block style %}<link rel="stylesheet" href="{% static 'css/errors/500.css' %}">{% endblock style %}
+{% block title %}Erro no servidor{% endblock %}
+
+{% block main %}
+<div class="d-flex align-items-center justify-content-center min-vh-100 px-2" style="background-color: var(--color-card);">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold" style="color: var(--color-accent);">500</h1>
+        <p class="fs-2 fw-medium mt-4" style="color: var(--color-text);">Nossas ferramentas falharam</p>
+        <p class="mt-4 mb-5" style="color: var(--color-gray);">Algo deu errado no Ateliê, mas já estamos consertando.</p>
+        <a href="{% url 'index' %}" class="btn fw-semibold rounded-pill px-4 py-2 btn-server">
+            Tentar novamente
+        </a>
+    </div>
+</div>
+{% endblock main %}
