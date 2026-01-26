@@ -153,7 +153,7 @@ def artisan_order_detail(request, store_id, order_id):
         if new_status in valid_statuses:
             order.status = new_status
             order.save()
-            messages.success(request, f"Status do pedido #{order.pk} atualizado com sucesso!")
+            messages.success(request, f"Status do pedido #{order.order_code} atualizado com sucesso!")
         else:
             messages.error(request, "Status inválido selecionado.")
         
