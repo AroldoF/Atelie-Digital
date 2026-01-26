@@ -31,7 +31,7 @@ class StoreCreationForm(forms.ModelForm):
 
     class Meta:
         model = Store
-        fields = ['name', 'description', 'email', 'phone_number', 'cnpj', 'image', 'banner']
+        fields = ['name', 'description', 'email', 'phone_number', 'cnpj', 'image', 'banner', 'category_name']
         labels = {
             'name': 'Nome', 
             'description': 'Descrição', 
@@ -84,6 +84,11 @@ class StoreCreationForm(forms.ModelForm):
             raise forms.ValidationError("Telefone inválido")
 
         return phone
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.category:
+            self.fields['category_name'].initial = self.instance.category.name
 
 
     

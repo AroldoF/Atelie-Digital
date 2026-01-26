@@ -905,6 +905,7 @@ button:disabled {
   /* Remove spin buttons em Firefox */
   input[type="number"] {
       -moz-appearance: textfield;
+      appearance: textfield;
   }
 
   .area-review {

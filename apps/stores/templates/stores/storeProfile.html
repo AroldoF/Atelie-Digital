@@ -25,15 +25,13 @@
 
   <!-- 3. Informações Principais -->
   <div class="storeInfo">
-    <h1>{{ store.name }}</h1>
-    {% if store.category %}
-        <p class="store-tagline">{{ store.category.name }}</p>
-    {% endif %}
+    <h1>{{ store.name }}</h1>    
   </div>
 
   <div class="storeCategories">
-    <!-- Exemplo: Poderia listar categorias dos produtos aqui futuramente -->
-    <button class="category-btn active">Todos os Produtos</button>
+    {% if store.category %}
+      <p class="category-btn active">{{ store.category.name }}</p>
+    {% endif %}
     {% if user.stores.first.pk == store.pk %}
     <a href="{% url 'stores:edit' store.pk %}" class='d-flex btn btn-green'>Editar Loja</a>
     {% endif %}
@@ -43,7 +41,8 @@
   <div class="storeDescription">
     {% if store.description %}
         <!-- linebreaks converte quebras de linha do texto em <br> ou <p> HTML -->
-        {{ store.description|linebreaks }}
+         <p><strong>Descrição</strong>{{ store.description|linebreaks }}</p>
+        
     {% endif %}
     
     <div class="mt-3">
@@ -62,18 +61,13 @@
     <button class="tab-btn" disabled style="opacity: 0.5;">Avaliações (Em breve)</button>
   </div>
 
-  <!-- 5. Grid de Produtos (Lista Dinâmica) -->
+
   <div class="productsGrid">
     {% if products %}
         {% for product in products %}
-            <!-- 
-                Conecta com o partial card.html passando os dados do produto.
-                Usa o filtro |default para garantir que não quebre se faltar preço.
-            -->
-            {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name price=product.min_price|default:"Ver Opções" favor=True %}
+            {% include 'products/partials/card.html' with pk=product.pk url=product.image.url description=product.name price=product.min_price|default:"Ver Opções" favor=True is_favorite=product.is_favorite %}
         {% endfor %}
     {% else %}
-        <!-- Feedback visual se a loja não tiver produtos ativos -->
         <div class="col-12 text-center py-5">
             <p class="text-muted">Esta loja ainda não possui produtos disponíveis para venda.</p>
         </div>
