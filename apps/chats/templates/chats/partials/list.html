@@ -1,25 +1,63 @@
+{% load static %}
+
 <!-- Lista de Conversas -->
 <section class="chat-list col-6 col-md-4 col-lg-4 p-0 d-flex flex-column">
   <div class="list-header p-3 d-flex align-items-center">
     <div class="search-container">
-      <i class="bi bi-search search-icon"></i>
-      <input
+      <form method="get" hx-get="{% url 'chats:list' %}" hx-swap="outerHTML" hx-target=".chat-list">
+        {% for key, value in request.GET.items %}
+            {% if key != 'q' %}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% endif %}
+        {% endfor %}
+        <button class='d-flex align-items-center justify-content-center' type="submit" style='background-color: transparent; border: none;'><i class="bi bi-search search-icon pt-1"></i></button>
+        <input
+        name="q"
         class="form-control search-input"
         type="text"
         placeholder="Pesquise pela conversa"
-      />
+        value="{{ q|default:'' }}"
+        />
+      </form>
     </div>
   </div>
 
-  <div class="filter-chips d-flex">
-    <span class="filter-chip active">Tudo</span>
-    {% if user.is_artisan %}
-    <span class="filter-chip">Loja</span>
-    <span class="filter-chip">Usuário</span>
-    {% endif %} 
-  </div>
+  <div class="filter-chips d-flex gap-2">
+  <button
+    class="filter-chip border-0 {% if not filter %}active{% endif %}"
+    hx-get="{% url 'chats:list' %}?filter="
+    hx-target=".chat-list"
+    hx-swap="outerHTML"
+  >
+    Tudo
+  </button>
+
+  {% if user.is_artisan %}
+    <button
+      class="filter-chip border-0 {% if filter == 'artisan' %}active{% endif %}"
+      hx-get="{% url 'chats:list' %}?filter=artisan"
+      hx-target=".chat-list"
+      hx-swap="outerHTML"
+    >
+      Loja
+    </button>
+
+    <button
+      class="filter-chip border-0 {% if filter == 'client' %}active{% endif %}"
+      hx-get="{% url 'chats:list' %}?filter=client"
+      hx-target=".chat-list"
+      hx-swap="outerHTML"
+    >
+      Usuário
+    </button>
+  {% endif %}
+</div>
+
 
   <div class="conversations-list flex-grow-1 overflow-auto">
+    {% if not chat_list %}
+    <h2 class="h2Index mt-5 text-center" style="color: var(--color-primary);">Nenhuma conversa encontrada</h2>
+    {% endif %}
     {% for item in chat_list %}
     <div class="conversation-item d-flex align-items-center me-2"
         hx-get="{% url 'chats:area' item.chat.pk %}"
@@ -29,22 +67,24 @@
     >
 
         {# Se o outro usuário for artesão, mostrar a loja #}
-        {% if item.chat.other_user.stores.exists %}
-            {% with store=item.chat.other_user.stores.first %}
-                <img src="{{ store.image.url }}" class="avatar-circle" />
+        {% if item.other_user == item.chat.artisan %}
+            {% with store=item.other_user.stores.first %}
+                <img src="{{ store.image.url }}" class="avatar-circle me-3" />
                 <h6 class="conversation-name">{{ store.name }}</h6>
             {% endwith %}
         {% else %}
-            <img src="{{ item.other_user.profile.profile_image.url }}" class="avatar-circle" />
+          {% if item.other_user.profile.profile_image %}
+            <img src="{{ item.other_user.profile.profile_image.url }}" class="avatar-circle me-3" />
+          {% else %}
+            <img src="{% static 'chats/media/sem-perfil.jpg' %}" class="avatar-circle me-3" />
+          {% endif %}
             <h6 class="conversation-name">
-                {{ item.chat.other_user.get_full_name|default:item.other_user.username }}
+                {{ item.other_user.name }}
             </h6>
         {% endif %}
 
 
-        <p class="conversation-preview text-truncate">
-            {{ item.chat.messages.first.content|default:"Inicie uma conversa" }}
-        </p>
+        {% include "chats/partials/chat_list_update.html" with last_message=item.chat.messages.first.content|default:"Inicie uma conversa" chat_id=item.chat.pk %}
     </div>
 {% endfor %}
 

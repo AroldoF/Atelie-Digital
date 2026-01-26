@@ -39,6 +39,51 @@ def chat(request):
         {"chat_list": chat_list}
     )
 
+@login_required
+def chat_list(request):
+    user = request.user
+    search = request.GET.get('q', '').strip()
+    role_filter = request.GET.get('filter')
+
+    chats = Chat.objects.filter(
+        Q(client=user) | Q(artisan=user)
+    )
+
+    if search:
+        chats = chats.filter(
+            Q(client__name__icontains=search) |
+            Q(artisan__stores__name__icontains=search)
+        ).distinct()
+
+    if role_filter == 'client':
+        chats = chats.filter(client=user)
+    elif role_filter == 'artisan':
+        chats = chats.filter(artisan=user)
+
+    chats = chats.select_related(
+        "client", "artisan"
+    ).prefetch_related(
+        "client__profile",
+        "artisan__stores",
+    )
+
+    chat_list = [
+        {
+            "chat": chat,
+            "other_user": chat.artisan if chat.client == user else chat.client
+        }
+        for chat in chats
+    ]
+
+    return render(
+        request,
+        "chats/partials/list.html",
+        {
+            "chat_list": chat_list,
+            "q": search,
+            "filter": role_filter,
+        }
+    )
 
 @login_required
 def chat_area(request, chat_id):

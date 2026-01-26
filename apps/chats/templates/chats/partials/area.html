@@ -1,3 +1,5 @@
+{% load static %}
+
 <section class="chat-area col-12 col-md-8 col-lg-8 p-0 d-flex flex-column"
   hx-ext='ws'
   ws-connect="/ws/chats/{{ chat.pk }}/"
@@ -7,18 +9,21 @@
       <i class="bi bi-arrow-left"></i>
     </button>
     <div class="chat-header-title">
-      {% if user.pk == other_user.pk %}
-      {% with store=other_user.stores.first %}
-      <img src="{{ store.image.url }}" class="avatar-circle me-4" />
-      <div>
-        <p>asdads</p>
-        <h6>{{ store.name }}</h6>
-      {% endwith %}
+      {% if chat.artisan == other_user %}
+        {% with store=other_user.stores.first %}
+          <img src="{{ store.image.url }}" class="avatar-circle me-4" />
+          <div>
+            <h6>{{ store.name }}</h6>
+        {% endwith %}
       {% else %}
-      <img src="{{ other_user.profile.profile_image.url }}" class="avatar-circle me-4" />
-      <div>
-          <h6>{{ other_user.name }}</h6>
+        {% if other_user.profile.profile_image %}
+          <img src="{{ other_user.profile.profile_image.url }}" class="avatar-circle me-4" />
+        {% else %}
+          <img src="{% static 'chats/media/sem-perfil.jpg' %}" class="avatar-circle me-4" />
         {% endif %}
+        <div>
+            <h6>{{ other_user.name }}</h6>
+      {% endif %}
       </div>
     </div>
   </div>
@@ -32,7 +37,9 @@
     </div>
 
   <div class="chat-footer">
-    <form ws-send hx-on="htmx:wsAfterSend: this.reset()" class="message-input-container">
+    <form ws-send 
+          hx-on::ws-after-send="this.reset()" 
+          class="message-input-container">
         <input
             name="chat_message"
             type="text"
@@ -47,9 +54,56 @@
     </form>
 </div>
 </section>
+<style>
+  /* Efeito de clique no botão de enviar */
+.send-button {
+    transition: transform 0.1s ease;
+}
+
+.send-button:active {
+    transform: scale(0.85); /* Encolhe levemente ao clicar */
+}
+
+/* Opcional: Animação de "pulo" no ícone ao enviar */
+.send-button:focus i {
+    animation: paperPlaneFly 0.5s ease-in-out;
+}
+
+@keyframes paperPlaneFly {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(10px, -10px); opacity: 0; }
+    51% { transform: translate(-10px, 10px); opacity: 0; }
+    100% { transform: translate(0,0); opacity: 1; }
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.message-animate {
+    animation: fadeInUp 0.3s ease-out forwards;
+}
+</style>
 
 <script>
-    var objDiv = document.getElementById("chat-log");
-    objDiv.scrollTop = objDiv.scrollHeight;
-    
+  var chatLog2 = document.getElementById('chat-log');
+  chatLog2.scrollTop = chatLog2.scrollHeight;
+</script>
+
+<script>
+  document.body.addEventListener('htmx:wsAfterMessage', function(evt) {
+      const chatLog = document.getElementById('chat-log');
+        setTimeout(() => {
+            chatLog.scrollTo({
+                top: chatLog.scrollHeight,
+                behavior: 'smooth'
+            });
+        }, 10);
+    });
 </script>

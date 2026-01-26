@@ -109,8 +109,6 @@ main {
     color: var(--text-color);
     margin-bottom: 4px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .conversation-preview {
@@ -197,7 +195,10 @@ main {
     border-radius: 15px;
     font-size: 0.9rem;
     line-height: 1.4;
-    align-self: end;
+
+    /* quebra só quando precisa */
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 .message-received .message-bubble {

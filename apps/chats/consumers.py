@@ -17,6 +17,12 @@ class ChatConsumer(WebsocketConsumer):
         )
         self.accept()
 
+    def disconnect(self, close_code):
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name,
+            self.channel_name
+        )
+
     def receive(self, text_data):
         data = json.loads(text_data)
         message_text = data.get('chat_message')
@@ -24,23 +30,36 @@ class ChatConsumer(WebsocketConsumer):
 
         if message_text:
             chat = Chat.objects.get(pk=self.chat_id)
-
             message = Message.objects.create(
                 chat=chat,
                 sender=user,
                 content=message_text
             )
 
-            context = {'msg': message, 'user': user ,"is_websocket": True}
-            html = render_to_string('chats/partials/message.html', context)
-
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
-                    'html': html
+                    'message_id': message.pk, 
                 }
             )
 
     def chat_message(self, event):
-        self.send(text_data=event['html'])
+        message = Message.objects.get(pk=event['message_id'])
+        user_viewing = self.scope['user']
+
+        context = {
+            'msg': message, 
+            'user': user_viewing,
+            'is_websocket': True
+        }
+        
+        html_message = render_to_string('chats/partials/message.html', context)
+
+        context_list = {
+            'chat_id': self.chat_id,
+            'last_message': message.content,
+        }
+        html_list_update = render_to_string('chats/partials/chat_list_update.html', context_list)
+        
+        self.send(text_data=html_message + html_list_update)

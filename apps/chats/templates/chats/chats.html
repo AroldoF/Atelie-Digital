@@ -11,18 +11,15 @@
 {% block main %}
     <!-- Conteiner Principal -->
     <div class="chat-container d-flex h-100 w-100">
-        <section class="chat-area h-100 w-100 d-flex flex-column">
-            <h2 class='align-self-center text-center'>Selecione um Chat</h2>
-        </section>
         {% include "chats/partials/list.html" %}
-        
-
-        {% comment %} {% include "chats/partials/area.html" %} {% endcomment %}
+        <section class="chat-area h-100 w-100 d-flex flex-column text-center align-items-center justify-content-center">
+            <h2 class="h2Index mt-5" style="color: var(--color-primary);">Selecione um chat</h2>
+        </section>
     </div>
 
     {% endblock main %}
 
 {% block scripts %}
-<script src="{% static 'chats/js/chats.js' %}"></script>
+{% comment %} <script src="{% static 'chats/js/chats.js' %}"></script> {% endcomment %}
 <script src="https://unpkg.com/htmx.org@1.9.10/dist/ext/ws.js"></script>
 {% endblock scripts %}
