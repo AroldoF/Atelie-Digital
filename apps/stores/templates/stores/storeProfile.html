@@ -34,6 +34,9 @@
   <div class="storeCategories">
     <!-- Exemplo: Poderia listar categorias dos produtos aqui futuramente -->
     <button class="category-btn active">Todos os Produtos</button>
+    {% if user.stores.first.pk == store.pk %}
+    <a href="{% url 'stores:edit' store.pk %}" class='d-flex btn btn-green'>Editar Loja</a>
+    {% endif %}
   </div>
 
   <!-- 4. Descrição e Contato -->

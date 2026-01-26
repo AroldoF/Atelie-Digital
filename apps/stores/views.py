@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView
+from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
@@ -13,6 +14,7 @@ from django.core.paginator import Paginator
 from apps.orders.models import Order
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 def is_artisian(user):
     return user.is_authenticated and user.groups.filter(name='Artisians').exists()
@@ -57,7 +59,26 @@ class StoreCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('stores:dashboard', kwargs={'store_id': self.object.store_id})
  
+class StoreUpdateView(LoginRequiredMixin, View, UserPassesTestMixin):
+    def get(self, request, store_id):
+        store = get_object_or_404(Store, pk=store_id)
 
+        return render(request, 'stores/register.html', context={'form': StoreCreationForm(instance=store)})
+
+    def post(self, request, store_id):
+        store = get_object_or_404(Store, pk=store_id)
+        store_form = StoreCreationForm(request.POST, request.FILES, instance=store)
+
+        if not store_form.is_valid():
+            return render(request, 'stores/register.html', context={'form': store_form})
+        
+        store_form.save()
+
+        return redirect('index')
+    
+    def test_func(self):
+        return self.request.user.groups.filter(name='Artisians').exists()
+    
 @never_cache
 @user_passes_test(is_artisian)
 def dashboard(request, store_id): 

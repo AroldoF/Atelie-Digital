@@ -70,6 +70,9 @@ class ProductQuerySet(models.QuerySet):
         )
 
 class ProductManager(models.Manager.from_queryset(ProductQuerySet)):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+    
     def with_min_price(self):
         return self.get_queryset().with_min_price()
 

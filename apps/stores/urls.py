@@ -7,6 +7,7 @@ urlpatterns = [
     path('register/', views.StoreCreateView.as_view(), name='register'),
 
     # rotas dinâmicas
+    path('<int:store_id>/edit/', views.StoreUpdateView.as_view(), name='edit'),
     path('<int:store_id>/dashboard/', views.dashboard, name='dashboard'),
     path('<int:store_id>/products/', views.artisan_products, name='stores_products'),
     path('<int:store_id>/orders/', views.artisan_orders, name='stores_orders'),

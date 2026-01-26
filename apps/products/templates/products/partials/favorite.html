@@ -1,7 +1,17 @@
 {% load static %}
 
-{% if is_favorite %}
-<img id="imgHard" src="{% static 'media/icons/favoriteHover.svg' %}" alt="">
-{% else %}
-<img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
-{% endif %}
+<button
+    {% if style_button %}
+        style="{{ style_button }}"
+    {% else %}
+        id="hard"
+    {% endif %}
+    hx-post="{% url 'products:toggle_favorite' product.pk %}"
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+>
+    {% if is_favorite %}
+    <img id="imgHard" src="{% static 'media/icons/favoriteHover.svg' %}" alt="">
+    {% else %}
+    <img id="imgHard" src="{% static 'media/icons/favorite.svg' %}" alt="">
+    {% endif %}
+</button>

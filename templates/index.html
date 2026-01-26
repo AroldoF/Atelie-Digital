@@ -13,21 +13,29 @@
      {% include "partials/advertisingCarousel.html" %}
       {% include "chats/partials/chat-icon.html" %}
 
-
+      {% if not cheapest_products and not best_selling_products and not top_rated_products %}
+      <section class="sec text-center">
+        <h2 class="h2Index mt-5">Nenhum produto disponível no momento.</h2>
+      </section>
+      {% endif %}
+      {% if cheapest_products %}
       <section id="achadinhos" class="sec">
         <h2 class="h2Index">Achadinhos</h2>
         {% include 'partials/cardsCarousel.html' with products=cheapest_products %}
       </section>
-
+      {% endif %}
+      {% if best_selling_products %}
       <section id="produtoMaisComprados" class="sec">
         <h2  class="h2Index" >Produtos mais comprados</h2>
         {% include 'partials/cardsCarousel.html' with products=best_selling_products %}
       </section>
-
+      {% endif %}
+      {% if top_rated_products %}
       <section id="EmAlta" class="sec">
         <h2  class="h2Index">Em alta</h2>
         {% include 'partials/cardsCarousel.html' with products=top_rated_products %}
       </section>
+      {% endif %}
   </main>
    
  
