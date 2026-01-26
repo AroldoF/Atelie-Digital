@@ -32,14 +32,19 @@
     <div class="carouselProduto">      
       <!-- <img id="searchProduct" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
       <div class="carouselInner" id="mobileCarouselInner">
-             {% if product.image %}
-                <img src="{{ product.image.url }}" class="carouselItem active">
-              {% endif %}
+            {% if product.image and variant == variants.first %}
+              <img src="{{ product.image.url }}" class="carouselItem active">
+            {% endif %}
 
             {% for img in variant.images.all %}
-              <img
-                src="{{ img.image.url }}"
-                class="carouselItem {% if forloop.first %}active{% endif %}">
+                <img 
+                    src="{{ img.image.url }}" 
+                    class="carouselItem 
+                    {% if variant != variants.first and forloop.first %}
+                        active
+                    {% elif not product.image and forloop.first %}
+                        active
+                    {% endif %}">
             {% endfor %}
             <button class="carousel-btn prev">
                 <img src="{% static 'products/media/icons/prev.svg' %}" class="arrow arrow-prev">
@@ -169,7 +174,7 @@
  
   <div class="info-loja">
       <div id="areaLogoLoja">
-        <a href="">
+        <a href="{% url 'stores:detail' store_id=product.store.store_id %}">
           <img id="imgLogoLoja" src="{{ product.store.image.url }}" alt="Logo da {{ product.store.name }}">
         </a>
         <div id="areaNomeLoja">
@@ -218,30 +223,32 @@
           <!-- <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
         </div>
 
-        {% if product.image %}
-        <img
-          id="mainImageDesktop"
-          src="{{ product.image.url }}"
-          class="main-image">
-          {% else %}
-            {% with variant.images.first as img %}
-              <img
-                id="mainImageDesktop"
-                src="{% if img %}{{ img.image.url }}{% else %}{% static 'products/media/no-image.png' %}{% endif %}"
-                class="main-image">
-            {% endwith %}
-          {% endif %}
+        {% if product.image and variant == variants.first %}
+        {# Se for a primeira variante, mostra a imagem do pai #}
+        <img id="mainImageDesktop" src="{{ product.image.url }}" class="main-image">
+    {% elif variant.images.first %}
+        {# Se não for a primeira ou não tiver imagem do pai, mostra a da variante #}
+        <img id="mainImageDesktop" src="{{ variant.images.first.image.url }}" class="main-image">
+    {% else %}
+        <img id="mainImageDesktop" src="{% static 'products/media/no-image.png' %}" class="main-image">
+    {% endif %}
 
-      <div class="thumbnail-list">
-        {% if product.image %}
-          <img src="{{ product.image.url }}" data-src="{{ product.image.url }}" class="thumbnail active">
+    <div class="thumbnail-list">
+        {% if product.image and variant == variants.first %}
+            <img 
+                src="{{ product.image.url }}" 
+                data-src="{{ product.image.url }}" 
+                class="thumbnail active" 
+                alt="Imagem principal">
         {% endif %}
 
         {% for img in variant.images.all %}
-          <img
-            src="{{ img.image.url }}"
-            data-src="{{ img.image.url }}"
-            class="thumbnail {% if not product.image and forloop.first %}active{% endif %}">
+            <img
+                src="{{ img.image.url }}"
+                data-src="{{ img.image.url }}"
+                {# Fica ativa se não houver imagem do pai ou se não for a primeira variante #}
+                class="thumbnail {% if variant != variants.first and forloop.first %}active{% elif not product.image and forloop.first %}active{% endif %}"
+                alt="Variante {{ variant.sku }}">
         {% endfor %}
         </div>
       </aside>
@@ -393,7 +400,7 @@
 
         <div class="seller-card">
           <div class="store-header">
-            <a href="" class="store-logo-link">
+           <a href="{% url 'stores:detail' store_id=product.store.store_id %}" class="store-logo-link">
               <img src="{{ product.store.image.url }}" alt="Logo da {{ product.store.name }}" class="store-logo">
             </a>
             <div class="store-name">
@@ -461,39 +468,42 @@
           <div class="col-md-8">
               <h4 class="text-main-review fw-bold mb-4 border-bottom pb-2">Principais avaliações</h4>
               <div class="reviews-list">
-                  {% for review in reviews %}
-                      <div class="review-item mb-4 pb-4 border-bottom">
+                {% for review in reviews %}
+                    <div class="review-item mb-4 pb-4 border-bottom">
                         <div class="d-flex justify-content-between ">
-                          <div class="d-flex align-items-center gap-2 mb-2">
+                            <div class="d-flex align-items-center gap-2 mb-2">
                                 <div class="review-avatar">
-                                  {% if review.user.profile.profile_image %}
-                                    <img src="{{ review.user.profile.profile_image.url }}" alt="Foto de {{ review.user.username }}" class="avatar-img">
-                                  {% else %}
-                                    <div class="avatar-placeholder"><i class="bi bi-person-fill"></i></div>
-                                  {% endif %}
+                                    {% if review.user.profile.profile_image %}
+                                        <img src="{{ review.user.profile.profile_image.url }}" alt="Foto de {{ review.user.username }}" class="avatar-img">
+                                    {% else %}
+                                        <div class="avatar-placeholder"><i class="bi bi-person-fill"></i></div>
+                                    {% endif %}
                                 </div>
+                                
                                 <div class="d-flex align-items-center gap-2">
-                                  <span class="fw-bold">{{ review.user.username }}</span>
-                                  {% if has_bought %}
-                                    <span class="review-verified">comprador verificado</span>
-                                  {% endif %}
+                                    <span class="fw-bold">{{ review.user.username }}</span>
+                                    {% if review.user_has_purchased %}
+                                        <span class="review-verified">
+                                        comprador verificado
+                                        </span>
+                                    {% endif %}
                                 </div>
-                          </div>
-                          <div class="text-warning mb-2">{{ review.rating }} ★</div>
+                            </div>
+                            <div class="text-warning mb-2">{{ review.rating }} ★</div>
                         </div>
-                          <p class="text-dark">{{ review.comment }}</p>
-                          <small class="text-muted">{{ review.created_at|date:"d/m/Y" }}</small>
-                      </div>
-                  {% empty %}
-                      <p class="text-muted italic text-center py-4">Ainda não há avaliações para este produto.</p>
-                  {% endfor %}
-
-                  {% if has_more_reviews %}
-                    <div class="text-center mt-4">
-                      <a href="?reviews_limit={{ next_reviews_limit }}#reviews-section" class="btn btn-read-more fw-bold">Ver mais comentários</a>
+                        <p class="text-dark">{{ review.comment }}</p>
+                        <small class="text-muted">{{ review.created_at|date:"d/m/Y" }}</small>
                     </div>
-                  {% endif %}
-              </div>
+                {% empty %}
+                    <p class="text-muted italic text-center py-4">Ainda não há avaliações para este produto.</p>
+                {% endfor %}
+
+                {% if has_more_reviews %}
+                    <div class="text-center mt-4">
+                        <a href="?reviews_limit={{ next_reviews_limit }}#reviews-section" class="btn btn-read-more fw-bold">Ver mais comentários</a>
+                    </div>
+                {% endif %}
+             </div>
           </div>
     </div>
 </section>
