@@ -11,7 +11,7 @@ main {
     padding: 0 !important;
 }
 .chat-container {
-    height: calc(100vh - 90px) !important;
+    height: calc(100vh - 144px) !important;
     background-color: var(--left-panel-bg);
 }
 

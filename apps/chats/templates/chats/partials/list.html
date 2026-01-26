@@ -17,7 +17,6 @@
     <span class="filter-chip">Loja</span>
     <span class="filter-chip">Usuário</span>
     {% endif %} 
-    <span class="filter-chip">Favoritas</span> 
   </div>
 
   <div class="conversations-list flex-grow-1 overflow-auto">
@@ -30,13 +29,13 @@
     >
 
         {# Se o outro usuário for artesão, mostrar a loja #}
-        {% if item.other_user.stores.exists %}
+        {% if item.chat.other_user.stores.exists %}
             {% with store=item.chat.other_user.stores.first %}
                 <img src="{{ store.image.url }}" class="avatar-circle" />
                 <h6 class="conversation-name">{{ store.name }}</h6>
             {% endwith %}
         {% else %}
-            <img src="{{ item.other_user.profile.image.url }}" class="avatar-circle" />
+            <img src="{{ item.other_user.profile.profile_image.url }}" class="avatar-circle" />
             <h6 class="conversation-name">
                 {{ item.chat.other_user.get_full_name|default:item.other_user.username }}
             </h6>

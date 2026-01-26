@@ -24,7 +24,7 @@ class ChatConsumer(WebsocketConsumer):
 
         if message_text:
             chat = Chat.objects.get(pk=self.chat_id)
-            
+
             message = Message.objects.create(
                 chat=chat,
                 sender=user,

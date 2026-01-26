@@ -7,9 +7,18 @@
       <i class="bi bi-arrow-left"></i>
     </button>
     <div class="chat-header-title">
-      <img src="{{ chat.store.image.url }}" class="avatar-circle me-4" />
+      {% if user.pk == other_user.pk %}
+      {% with store=other_user.stores.first %}
+      <img src="{{ store.image.url }}" class="avatar-circle me-4" />
       <div>
-        <h6>{{ chat.store.name }}</h6>
+        <p>asdads</p>
+        <h6>{{ store.name }}</h6>
+      {% endwith %}
+      {% else %}
+      <img src="{{ other_user.profile.profile_image.url }}" class="avatar-circle me-4" />
+      <div>
+          <h6>{{ other_user.name }}</h6>
+        {% endif %}
       </div>
     </div>
   </div>

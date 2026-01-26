@@ -42,10 +42,19 @@ def chat(request):
 
 @login_required
 def chat_area(request, chat_id):
-    chat = get_object_or_404(Chat, pk=chat_id)
+    chat = get_object_or_404(Chat.objects.prefetch_related(
+        "client__profile",
+        "artisan__stores",
+    ), pk=chat_id)
+    
     messages = Message.objects.filter(chat=chat).order_by('created_at')
 
-    return render(request, 'chats/partials/area.html', {'chat': chat, 'messages': messages})
+    if chat.client == request.user:
+        other_user = chat.artisan
+    else:
+        other_user = chat.client
+
+    return render(request, 'chats/partials/area.html', {'chat': chat, "other_user": other_user, 'messages': messages})
     
 @login_required
 def send_message(request):
