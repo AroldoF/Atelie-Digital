@@ -85,6 +85,10 @@ a {
     background-color: var(--color-primary);
 }
 
+#navbar-container {
+    padding: 15px 40px;
+}
+
 /* ====== RESPONSIVIDADE ====== */
 @media (max-width: 670px) {
 
