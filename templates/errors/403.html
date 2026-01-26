@@ -1,0 +1,17 @@
+{% extends "shared/base_clean.html" %}
+{% load static %}
+{% block style %}<link rel="stylesheet" href="{% static 'css/errors/403.css' %}">{% endblock style %}
+{% block title %}Acesso negado{% endblock %}
+
+{% block main %}
+<div class="d-flex align-items-center justify-content-center min-vh-100 px-2" style="background-color: var(--color-surface);">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold" style="color: var(--color-primary);">403</h1>
+        <p class="fs-2 fw-medium mt-4" style="color: var(--color-text);">Acesso Restrito</p>
+        <p class="mt-4 mb-5" style="color: var(--color-gray);">Você não tem permissão para entrar neste ateliê!</p>
+        <a href="{% url 'core:index' %}" class="btn btn-light fw-semibold rounded-pill px-4 py-2 custom-btn">
+            Voltar para a página inicial
+        </a>
+    </div>
+</div>
+{% endblock main %}

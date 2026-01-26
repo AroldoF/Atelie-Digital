@@ -1,0 +1,10 @@
+.btn-server {
+    background-color: var(--color-accent) !important;
+    color: var(--color-background) !important;
+    border: none;
+}
+
+.btn-server:hover {
+    opacity: 0.9;
+    transition: 0.3s;
+}

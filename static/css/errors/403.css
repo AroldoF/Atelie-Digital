@@ -1,0 +1,10 @@
+.custom-btn {
+    border: 2px solid var(--color-primary) !important;
+    color: var(--color-primary) !important;
+}
+
+.custom-btn:hover {
+    background-color: var(--color-primary) !important;
+    color: var(--color-background) !important;
+    transition: 0.3s;
+}
