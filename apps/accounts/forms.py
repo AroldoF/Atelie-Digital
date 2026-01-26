@@ -171,10 +171,10 @@ class FormEditUser(forms.Form):
     cpf = forms.CharField( 
         label="CPF",
         widget=forms.TextInput(attrs={
-            'placeholder': '00122099098',
-            'disabled': 'disabled'
+            'placeholder': '000.000.000-00',
+            'readonly': 'readonly', 
+            'class': 'form-control-plaintext' 
         }),
-        help_text= "Insira somente a numeração",
         required=False
     )
     name = forms.CharField(
@@ -196,10 +196,15 @@ class FormEditUser(forms.Form):
         widget=forms.DateInput(attrs={'type': 'date'})
     )
     cell_phone = forms.CharField(
-        max_length=20,
+        max_length=15, # Ajustado para caber a máscara (11) 99999-9999
         label="Telefone",
         widget=forms.TextInput(attrs={
-            'placeholder': '(DDD) 99999-9999'
+            'placeholder': '(DDD) 99999-9999',
+            'oninput': (
+                "this.value = this.value.replace(/\\D/g, '')"
+                ".replace(/^(\\d{2})(\\d)/g, '($1) $2')"
+                ".replace(/(\\d)(\\d{4})$/, '$1-$2')"
+            )
         })
     )
 
@@ -215,11 +220,9 @@ class FormEditUser(forms.Form):
         return email
 
     def clean_cell_phone(self):
-        phone = re.sub(r'\D', '', self.cleaned_data.get('cell_phone'))
-
+        phone = re.sub(r'\D', '', self.cleaned_data.get('cell_phone')) # Remove ( ) e -
         if len(phone) not in (10, 11):
             raise ValidationError("Telefone inválido.")
-
         return phone
 
     def clean_date_of_birth(self):
@@ -229,6 +232,8 @@ class FormEditUser(forms.Form):
             raise ValidationError("Data de nascimento inválida.")
 
         return dob
+    
+   
 
 class FormAdressUser(forms.Form):
     cep = forms.CharField(
