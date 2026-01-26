@@ -44,8 +44,9 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
         product = self.get_object()
         product_name = product.name
 
-        product.delete()
-
+        product.is_active = False
+        product.save(update_fields=["is_active"])
+        
         messages.success(
             request,
             f'O produto "{product_name}" foi excluído com sucesso.'
@@ -65,9 +66,9 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
         )
 
 def detail_product(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
 
-    # Lógica de variantes e disponibilidade 
+    product = get_object_or_404(Product.objects.with_is_favorite(request.user), pk=product_id)    
+    # Lógica de variantes e disponibilidade
     variants = product.variants.filter(is_active=True)
     variant_id = request.GET.get('variant')
 
@@ -166,7 +167,7 @@ def search_product(request):
     if category:
         category = category.lower()
 
-    products = Product.objects.filter(is_active=True)
+    products = Product.objects.filter(is_active=True).with_is_favorite(request.user)
     active_filter = category if category else "todos"
 
     # Busca textual
@@ -270,7 +271,8 @@ class ProductUpdateView(PermissionRequiredMixin, View):
     template_name = "products/edit.html"
 
     def get_object(self, product_id):
-        return get_object_or_404(Product, pk=product_id)
+        store = get_object_or_404(Store, user=self.request.user)
+        return get_object_or_404(Product, pk=product_id, store=store)
 
     def get(self, request, product_id):
         product = self.get_object(product_id)

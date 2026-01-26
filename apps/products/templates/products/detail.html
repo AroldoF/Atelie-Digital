@@ -219,8 +219,9 @@
    <div class="desktop-div-colunas">
       <aside class="desktop-gallery">
         <div class="icons-gallery">
-          <img class="icon-favorite" src="{% static 'products/media/icons/favorite.svg' %}" alt="">
-          <!-- <img class="icon-search" src="{% static 'products/media/icons/searchIcon.svg' %}" alt=""> -->
+          
+          {% include "products/partials/favorite.html" with is_favorite=product.is_favorite style_button='background-color: transparent; border: none;' %}
+          </button>
         </div>
 
         {% if product.image and variant == variants.first %}

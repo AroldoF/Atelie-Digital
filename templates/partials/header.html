@@ -6,14 +6,14 @@
 <header id="header">
     <section class='header__container'>
 
-        <div class="header__mobile-toggle">
+        {% comment %} <div class="header__mobile-toggle">
             <button class="header__mobile-toggle-button">
                 <svg class="icon-menu-mobile" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4.16699 7.5H25.8337M4.16699 15H25.8337M4.16699 22.5H25.8337" stroke="#C47A53" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
             {% include "partials/sidebar.html" %}
-        </div>
+        </div> {% endcomment %}
 
         <a id='header__logo-link' href="{% url 'index' %}">
             <h1>Ateliê Digital</h1> 
@@ -22,17 +22,17 @@
         {% include "partials/searchbar.html" with container_class="search-bar-container" placeholder='Busque por lojas e produtos' url_search='products:search' q=query %}        
         <div class="header__menu-user">
 
-            {% comment %} <a href="{% url 'accounts:favorites' %}">
-                <svg width="35" height="35" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.6072 2.09332C17.1592 1.64764 16.6273 1.29409 16.0419 1.05287C15.4565 0.811654 14.8291 0.6875 14.1954 0.6875C13.5617 0.6875 12.9343 0.811654 12.3489 1.05287C11.7635 1.29409 11.2316 1.64764 10.7836 2.09332L10.2073 2.66647C10.0121 2.86053 9.69574 2.86053 9.50059 2.66647L8.92425 2.09332C8.01939 1.19349 6.79214 0.687966 5.51247 0.687966C4.23281 0.687966 3.00556 1.19349 2.1007 2.09332C1.19584 2.99316 0.6875 4.2136 0.6875 5.48615C0.6875 6.75871 1.19584 7.97915 2.1007 8.87899L7.73388 14.4809C8.90475 15.6453 10.8031 15.6453 11.974 14.4809L17.6072 8.87899C18.0553 8.43351 18.4109 7.90458 18.6534 7.32243C18.896 6.74028 19.0208 6.1163 19.0208 5.48615C19.0208 4.85601 18.896 4.23203 18.6534 3.64988C18.4109 3.06772 18.0553 2.5388 17.6072 2.09332Z" stroke="#C47A53" stroke-width="1.375" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a> {% endcomment %}
-
             <a href="{% url 'orders:cart' %}">
                 <svg width="35" height="35" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.75586 1.75574H5.8068C7.5162 1.75574 8.99026 2.95701 9.33526 4.63123L13.1928 23.3509C13.6528 25.5832 15.6182 27.1849 17.8974 27.1849H32.3711C34.5898 27.1849 36.5198 25.6654 37.0404 23.5087L39.1097 14.9373C39.6569 12.6707 37.9395 10.4893 35.6077 10.4893H10.4894M17.4763 36.69C17.4763 37.6547 16.6943 38.4367 15.7296 38.4367C14.7649 38.4367 13.9829 37.6547 13.9829 36.69C13.9829 35.7253 14.7649 34.9433 15.7296 34.9433C16.6943 34.9433 17.4763 35.7253 17.4763 36.69ZM36.6901 36.69C36.6901 37.6547 35.9081 38.4367 34.9434 38.4367C33.9787 38.4367 33.1967 37.6547 33.1967 36.69C33.1967 35.7253 33.9787 34.9433 34.9434 34.9433C35.9081 34.9433 36.6901 35.7253 36.6901 36.69Z" stroke="#C47A53" stroke-width="3.51151" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </a>
+
+            <a href="{% url 'accounts:favorites' %}">
+                <svg width="35" height="35" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.6072 2.09332C17.1592 1.64764 16.6273 1.29409 16.0419 1.05287C15.4565 0.811654 14.8291 0.6875 14.1954 0.6875C13.5617 0.6875 12.9343 0.811654 12.3489 1.05287C11.7635 1.29409 11.2316 1.64764 10.7836 2.09332L10.2073 2.66647C10.0121 2.86053 9.69574 2.86053 9.50059 2.66647L8.92425 2.09332C8.01939 1.19349 6.79214 0.687966 5.51247 0.687966C4.23281 0.687966 3.00556 1.19349 2.1007 2.09332C1.19584 2.99316 0.6875 4.2136 0.6875 5.48615C0.6875 6.75871 1.19584 7.97915 2.1007 8.87899L7.73388 14.4809C8.90475 15.6453 10.8031 15.6453 11.974 14.4809L17.6072 8.87899C18.0553 8.43351 18.4109 7.90458 18.6534 7.32243C18.896 6.74028 19.0208 6.1163 19.0208 5.48615C19.0208 4.85601 18.896 4.23203 18.6534 3.64988C18.4109 3.06772 18.0553 2.5388 17.6072 2.09332Z" stroke="#C47A53" stroke-width="1.375" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a> 
 
             {% if request.user.is_authenticated and request.user.stores.exists %}
             <a href="{% url 'stores:dashboard' store_id=request.user.stores.first.store_id %}">

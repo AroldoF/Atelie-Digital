@@ -123,4 +123,8 @@ class Migration(migrations.Migration):
                 'unique_together': {('attribute', 'product_variant')},
             },
         ),
+        migrations.RunSQL(
+            sql="CREATE EXTENSION IF NOT EXISTS pg_trgm;",
+            reverse_sql="DROP EXTENSION IF EXISTS pg_trgm;"
+        )
     ]

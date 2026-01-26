@@ -175,4 +175,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
 <script src="{% static 'stores/js/storeRegister.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+
+    fileInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            const inputGroup = input.closest('.col-md-6')?.querySelector('.input-group');
+            if (inputGroup) {
+                inputGroup.remove(); // ou .style.display = 'none'
+            }
+        });
+    });
+});
+</script>
 {% endblock scripts %}
