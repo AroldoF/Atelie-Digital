@@ -23,7 +23,12 @@ def is_artisian(user):
 class StoreCreateView(LoginRequiredMixin, CreateView):
     model = Store
     form_class = StoreCreationForm
-    template_name = 'stores/register.html' 
+    template_name = 'stores/register.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = StoreCategory.objects.all().order_by('name')
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         if hasattr(request.user, 'stores') and request.user.stores.exists():
@@ -35,6 +40,13 @@ class StoreCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         try:
             with transaction.atomic():
+                category_name = form.cleaned_data.get('category_name')
+                if category_name:
+                    category_obj, _ = StoreCategory.objects.get_or_create(
+                        name=category_name.strip()
+                    )
+                    form.instance.category = category_obj
+
                 form.instance.user = self.request.user
                 self.object = form.save()
                 
@@ -59,25 +71,40 @@ class StoreCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('stores:dashboard', kwargs={'store_id': self.object.store_id})
  
-class StoreUpdateView(LoginRequiredMixin, View, UserPassesTestMixin):
+
+class StoreUpdateView(LoginRequiredMixin, UserPassesTestMixin, View):
     def get(self, request, store_id):
         store = get_object_or_404(Store, pk=store_id)
 
-        return render(request, 'stores/register.html', context={'form': StoreCreationForm(instance=store)})
+        return render(request, 'stores/register.html', context={
+            'form': StoreCreationForm(instance=store),
+            'categories': StoreCategory.objects.all().order_by('name')
+        })
 
     def post(self, request, store_id):
         store = get_object_or_404(Store, pk=store_id)
         store_form = StoreCreationForm(request.POST, request.FILES, instance=store)
 
         if not store_form.is_valid():
-            return render(request, 'stores/register.html', context={'form': store_form})
+            messages.error(request, 'Erro ao atualizar a loja. Tente novamente.')
+            return render(request, 'stores/register.html', context={'form': store_form, 'categories': StoreCategory.objects.all().order_by('name')})
         
+        category_name = store_form.cleaned_data.get('category_name')
+        
+        if category_name:
+            category_obj, _ = StoreCategory.objects.get_or_create(
+                name=category_name.strip()
+            )
+            store.category = category_obj
+
         store_form.save()
 
-        return redirect('index')
+        messages.success(request, 'Loja atualizada com sucesso!')
+        return redirect('stores:detail', store_id=store.store_id)
     
     def test_func(self):
-        return self.request.user.groups.filter(name='Artisians').exists()
+        store = get_object_or_404(Store, pk=self.kwargs['store_id'])
+        return self.request.user.groups.filter(name='Artisians').exists() and store.user == self.request.user
     
 @never_cache
 @user_passes_test(is_artisian)
@@ -89,7 +116,7 @@ def dashboard(request, store_id):
         
     return render(request, 'stores/dashboard.html', {'store': store, 'store_id': store_id})
 
-@login_required
+
 def store_detail(request, store_id):
     """
     Exibe a vitrine da loja.

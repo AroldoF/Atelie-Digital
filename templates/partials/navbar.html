@@ -1,8 +1,9 @@
 {% load static %}
 
+
+{% block style %}
 <Link rel="stylesheet" href="{% static 'css/partials/navbar.css' %}">
-{% block extra_css %}
-{% endblock extra_css %}
+{% endblock style %}
 
 <div id='navbar-container'>
     {% comment %} <ul id='navbar-links'>

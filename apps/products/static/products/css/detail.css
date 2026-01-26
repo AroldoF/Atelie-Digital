@@ -657,6 +657,7 @@ button:disabled {
   .description-product:not(.expanded) {
     display: -webkit-box;
     -webkit-line-clamp: 4;
+    line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; 
@@ -904,6 +905,7 @@ button:disabled {
   /* Remove spin buttons em Firefox */
   input[type="number"] {
       -moz-appearance: textfield;
+      appearance: textfield;
   }
 
   .area-review {

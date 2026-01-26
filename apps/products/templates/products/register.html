@@ -1,4 +1,4 @@
-{% extends "shared/base_clean.html" %}
+{% extends "shared/base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% block title %}Cadastro do Produto{% endblock %}
@@ -111,7 +111,7 @@
                     </div>
                   </div>
                   <div class="col-md-2 d-flex align-items-center mb-sm-0 mb-2">
-                    <button type="button" class="btn btn-danger btn-sm remove-attribute mt-md-3">remover</button>
+                    <button type="button" class="btn btn-danger btn-sm remove-attribute mt-md-3">Remover</button>
                   </div>
                 </div>
               {% endfor %}
@@ -128,7 +128,7 @@
       {% include "products/partials/template.html" %}
     <!-- SUBMIT -->
     <div class="submit-section mt-4">
-      <button type="submit" class="btn btn-submit btn-primary">
+      <button type="submit" class="btn btn-submit btn-green">
         <i class="bi bi-check2-circle"></i> Cadastrar Produto
       </button>
     </div>

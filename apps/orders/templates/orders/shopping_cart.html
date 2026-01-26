@@ -38,7 +38,7 @@
 
               <div class="cart-item-info">
                 <h4>{{ item.product_variant.product.name }}</h4>
-                <p>Descrição: {{ item.product_variant.description }}</p>
+                <p class="description_product">Descrição: {{ item.product_variant.description }}</p>
                 <p>Vendido por: {{ item.product_variant.product.store.name }}</p> 
                 
                 {% if item.product_variant.is_active %}
