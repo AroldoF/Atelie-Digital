@@ -116,7 +116,7 @@ def dashboard(request, store_id):
         
     return render(request, 'stores/dashboard.html', {'store': store, 'store_id': store_id})
 
-@login_required
+
 def store_detail(request, store_id):
     """
     Exibe a vitrine da loja.
