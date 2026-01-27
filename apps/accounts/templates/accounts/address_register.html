@@ -84,6 +84,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+    margin-bottom: 15px;
   }
   
   .btn-submit:hover {
@@ -231,14 +232,26 @@
             <i class="bi bi-check2-circle me-2"></i> Salvar Endereço
           </button>
           
-          <div class="text-center mt-3">
-            <a href="{% url 'orders:shipping' %}" class="text-decoration-none text-muted d-inline-flex align-items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-              Voltar para meus endereços
-            </a>
-          </div>
+          <div class="text-center">
+              <!-- CONDICIONAL PARA O BOTÃO VOLTAR -->
+              {% if next_url %}
+                <!-- Cenário 1: Veio do Carrinho (Redireciona para URL dinâmica) -->
+                <a href="{{ next_url }}" class="text-decoration-none text-muted d-inline-flex align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>Voltar para o Carrinho
+                </a>
+              {% else %}
+                <!-- Cenário 2: Veio do Perfil (Redireciona para lista de endereços) -->
+                <a href="{% url 'accounts:addresses' %}" class="text-decoration-none text-muted d-inline-flex align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>Voltar para meus endereços
+                </a>
+              {% endif %}
+            </div>
         </div>
       </form>
     </div>

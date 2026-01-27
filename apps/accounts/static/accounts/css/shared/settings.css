@@ -64,3 +64,193 @@ h1{
     text-decoration: none;
     margin: 20px 0 30px 0;
 }
+
+th{
+    color: var(--color-primary);
+}
+
+/* * ARQUIVO: apps/accounts/static/accounts/css/addresses.css
+ * ESTILO: Grid Layout para Lista de Endereços
+ * OBS: Padronizado visualmente com apps/stores/static/stores/css/products.css
+ */
+
+/* Container da Tabela */
+.addresses-table-container {
+    background-color: #fff;
+    border-radius: 12px; /* Padronizado com Products (12px) */
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* GRID LAYOUT
+   Define a estrutura de 5 colunas para endereços.
+   1. Endereço (Rua, Número)
+   2. Complemento e Bairro
+   3. Cidade/UF
+   4. CEP
+   5. Ações
+*/
+.address-grid-template {
+    display: grid;
+    /* Ajuste de colunas específico para conteúdo de endereço */
+    grid-template-columns: 2.5fr 1.5fr 1fr 100px 120px;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 24px;
+}
+
+/* Header da Tabela */
+.table-header {
+    background-color: var(--color-surface); /* Padronizado com Products */
+    border-bottom: 1px solid #e5e7eb;
+    border-color: var(--color-surface);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Linhas de Dados */
+.address-table-row {
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr 1fr 100px 120px; /* Mesmo grid do header */
+    gap: 16px;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+    color: var(--color-text);
+    font-size: 0.95rem; /* Padronizado com Products */
+}
+
+.address-table-row:last-child {
+    border-bottom: none;
+}
+
+.address-table-row:hover {
+    background-color: #fafafa;
+}
+
+/* --- Estilização do Conteúdo (Tipografia Padronizada) --- */
+
+/* Texto Principal (Rua/Número) - Estilo similar a .col-name */
+.col-address-main {
+    font-weight: 600;
+    color: var(--color-text); /* Ou var(--color-primary-dark) se preferir mais destaque */
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* Texto Secundário (Bairro, Complemento) */
+.col-address-sub {
+    color: var(--color-gray);
+    font-size: 0.85rem;
+    display: block;
+    line-height: 1.4;
+}
+
+/* Texto Normal (Cidade, CEP) - Estilo similar a .col-stock */
+.col-text-normal {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+}
+
+/* Badge de Endereço Padrão (Estilo similar a .status-active) */
+.badge-default {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 50px;
+    background-color: color-mix(in srgb, var(--color-green) 10%, white);
+    color: var(--color-green);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Ações (Cópia exata de .col-actions e .action-btn do Products) */
+.col-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--color-gray);
+    text-decoration: none;
+}
+
+.action-btn img, .action-btn svg {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.action-btn:hover {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-delete:hover {
+    background-color: #fee2e2;
+    color: var(--color-red);
+    border-color: #fee2e2;
+}
+
+.btn-star {
+    color: #fbbf24; 
+}
+.btn-star:hover {
+    background-color: #fffbeb;
+    border-color: #fbbf24;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .address-grid-template, .address-table-row {
+        /* Ajuste para tablets */
+        grid-template-columns: 2fr 1.5fr 1fr 90px 100px;
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-header {
+        display: none;
+    }
+    
+    .address-table-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 20px;
+        border: 1px solid #f0f0f0;
+        margin-bottom: 12px;
+        border-radius: 8px;
+    }
+
+    .col-actions {
+        width: 100%;
+        justify-content: flex-start;
+        border-top: 1px solid #f0f0f0;
+        padding-top: 12px;
+    }
+}

@@ -8,7 +8,7 @@
     <h2>{{ title }}</h2>
     <p>{{ info_text }}</p>
     
-    <form method="POST" action="{% url action_url %}" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+    <form method="POST" action="{% if action_url %}{% url action_url %}{% endif %}" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
         {% csrf_token %}
     
         {% for field in form %}
@@ -53,8 +53,8 @@
             {% endif %}
         {% endfor %}
 
-        {% if next %}
-            <input type="hidden" name="next" value="{{ next }}">
+        {% if next or next_url %}
+            <input type="hidden" name="next" value="{{ next|default:next_url }}">
         {% endif %}
     
        <button type="submit" class="btn btn_acess btn-primary">{{ btn_text }}</button>

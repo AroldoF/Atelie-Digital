@@ -25,4 +25,8 @@ urlpatterns = [
     path('me/addresses/', views.addressesList, name='addresses'),
     path('me/addresses/register', views.AddressesRegister.as_view(), name='addresses_register'),
     path("me/addresses/<int:address_id>/edit/", views.addressEdit, name="settings_address"),
+
+    path("me/addresses/<int:address_id>/delete/", views.addressDelete, name="delete_address"),
+    # NOVA ROTA: Definir padrão
+    path("me/addresses/<int:address_id>/default/", views.addressSetDefault, name="set_default_address"),
 ]
