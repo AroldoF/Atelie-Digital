@@ -17,19 +17,50 @@
         
         <div class="table-header table-grid-template">
             <div>Nome do Produto</div>
-            <!-- <div>Categoria</div> -->
             <div>Preço</div>
             <div>Estoque</div>
             <div>Status</div>
             <div style="text-align: right;">Ações</div>
         </div>
         
-        {% for product in products %}
+        {% for product in products_page %}
           {% include 'stores/partials/_product_table_row.html' with name=product.name price=product.min_price stock=product.min_stock status=product.is_active image=product.image product_id=product.product_id store_id=store.store_id %}
+        {% empty %}
+            <p class="p-4">Nenhum produto cadastrado.</p>
         {% endfor %}
         
+        {% if products_page.paginator.num_pages > 1 %}
+            <div class="d-flex justify-content-center mt-5">
+                <nav aria-label="Paginação de produtos">
+                    <ul class="pagination">
+                        <li class="page-item {% if not products_page.has_previous %}disabled{% endif %}">
+                            {% if products_page.has_previous %}
+                                <a class="page-link" href="?page={{ products_page.previous_page_number }}">Anterior</a>
+                            {% else %}
+                                <span class="page-link">Anterior</span>
+                            {% endif %}
+                        </li>
+
+                        {% for num in products_page.paginator.page_range %}
+                            <li class="page-item {% if products_page.number == num %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <li class="page-item {% if not products_page.has_next %}disabled{% endif %}">
+                            {% if products_page.has_next %}
+                                <a class="page-link" href="?page={{ products_page.next_page_number }}">Próximo</a>
+                            {% else %}
+                                <span class="page-link">Próximo</span>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+
         <div class='m-3'>
-          <a class='btn btn-green' href='/products/register/'>
+          <a class='btn btn-green' href="/products/register/">
             Adicionar Produto
           </a>
         </div>
