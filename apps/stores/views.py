@@ -145,11 +145,16 @@ def artisan_products(request, store_id):
         .with_min_stock()
     )
 
+    paginator = Paginator(products, 5)  
+    page_number = request.GET.get("page")
+    products_page = paginator.get_page(page_number)
+    
     return render(
         request,
         'stores/artisan_products_table.html',
         {
             'store': store,
+            'products_page': products_page,
             'products': products,
             'active_page': 'products',
         }
