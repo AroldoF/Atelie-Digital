@@ -200,7 +200,7 @@
   {% if show_personalization %}
     <div class="contato-artesao">
       <p>Você pode entrar em contato com o artesão para solicitar produtos personalizados {% if variant.type == 'DEMAND' %} ou encomenda-los{% endif %}.</p>
-      <a href="{% url 'chats:chat' %}">
+      <a href="{% url 'chats:create' product.store.store_id %}">
         <button id="chatButton">
           <p>Chat para personalização</p>
           <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">
@@ -414,7 +414,7 @@
           {% if show_personalization %}
           <div class="personalization">
             <p>Deseja personalizar {% if  variant.type == 'DEMAND'%} ou encomendar {%endif%} o seu produto?</p>
-            <a href="{% url 'chats:chat' %}">
+            <a href="{% url 'chats:create' product.store.store_id %}">
               <button type="button" class="btn-chat">
                 <span>Chat para personalização</span>
                 <img src="{% static 'products/media/icons/chatIcon.svg' %}" alt="">

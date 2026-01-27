@@ -1,9 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from .models import Chat, Message
 from django.db.models import Q, Prefetch
 from apps.accounts.models import Profile
+from apps.stores.models import Store
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 @login_required
 def chat(request):
@@ -100,7 +103,23 @@ def chat_area(request, chat_id):
         other_user = chat.client
 
     return render(request, 'chats/partials/area.html', {'chat': chat, "other_user": other_user, 'messages': messages})
-    
+
+@login_required
+def chat_create(request, store_id): 
+    store = get_object_or_404(Store, pk=store_id)
+    if request.user == store.user:
+        messages.error(request, "Você não pode iniciar um chat consigo mesmo.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    chat, created = Chat.objects.get_or_create(
+        artisan=store.user,
+        client=request.user,
+    )
+
+    return redirect('chats:chat')
+
+
+
 @login_required
 def send_message(request):
     return render(request, 'template/partials/message.html')
