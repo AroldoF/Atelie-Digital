@@ -298,7 +298,7 @@ class AddressesForm(forms.ModelForm):
             'state': forms.TextInput(attrs={
                 'placeholder': 'Ex.: RN'
             }), 
-            'complement': forms.Textarea(attrs={
+            'complement': forms.TextInput(attrs={
                 'placeholder': 'Digite um referêncial para sua casa',
                 'rows': 3
             })

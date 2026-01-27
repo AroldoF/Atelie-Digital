@@ -50,7 +50,7 @@
           {% else %}
             <p class="space">Você ainda não possui endereço cadastrado</p>
           {% endif %}
-            <a href="{% url 'accounts:addresses_register' %}" class="btn btn-secondary">
+            <a href="{% url 'accounts:addresses_register' %}?next={% url 'orders:shipping' %}" class="btn btn-secondary">
               Adicionar Novo Endereço
             </a>
         </div>

@@ -1,0 +1,165 @@
+/* Arquivo: apps/accounts/static/accounts/css/addresses.css
+   Objetivo: Padronizar a lista de endereços com o visual do Dashboard do Artesão.
+*/
+
+/* Container Principal (Caixa Branca) */
+.addresses-table-container {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* GRID LAYOUT
+   Define a largura das colunas.
+   1. Endereço Completo (Largo)
+   2. Cidade/UF (Médio)
+   3. CEP (Fixo)
+   4. Ações (Fixo à direita)
+*/
+.address-grid-template {
+    display: grid;
+    grid-template-columns: 3fr 1.5fr 120px 140px;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 24px;
+}
+
+/* Cabeçalho da Tabela */
+.table-header {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 700;
+    color: var(--color-primary-dark, #333);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Linhas de Dados */
+.address-table-row {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+    color: var(--color-text, #555);
+    font-size: 0.95rem;
+}
+
+.address-table-row:last-child {
+    border-bottom: none;
+}
+
+.address-table-row:hover {
+    background-color: #fafafa;
+}
+
+/* --- Estilização do Conteúdo --- */
+
+.col-address strong {
+    display: block;
+    color: var(--color-primary, #000);
+    margin-bottom: 4px;
+}
+
+.col-address small {
+    display: block;
+    color: #777;
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
+.col-city, .col-zip {
+    font-weight: 500;
+}
+
+/* Badge de Endereço Padrão */
+.badge-default {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: #d1fae5;
+    color: #065f46;
+    font-size: 0.7em;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Botões de Ação */
+.col-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #666;
+    text-decoration: none;
+}
+
+.action-btn img, .action-btn svg {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.action-btn:hover {
+    background-color: var(--color-surface, #f0f0f0);
+    color: var(--color-primary, #000);
+    border-color: var(--color-primary, #ccc);
+}
+
+.btn-delete:hover {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border-color: #fee2e2;
+}
+
+.btn-star {
+    color: #fbbf24; 
+}
+.btn-star:hover {
+    background-color: #fffbeb;
+    border-color: #fbbf24;
+}
+
+/* Responsividade para Celulares */
+@media (max-width: 768px) {
+    .address-grid-template {
+        grid-template-columns: 1fr; /* 1 coluna empilhada */
+        gap: 8px;
+        padding: 16px;
+    }
+    
+    .table-header {
+        display: none; /* Esconde cabeçalho */
+    }
+    
+    .address-table-row {
+        padding: 20px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        background-color: white;
+    }
+
+    .col-actions {
+        justify-content: flex-start;
+        margin-top: 12px;
+        border-top: 1px solid #eee;
+        padding-top: 12px;
+    }
+}
