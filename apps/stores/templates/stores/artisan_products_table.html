@@ -29,7 +29,16 @@
             <p class="p-4">Nenhum produto cadastrado.</p>
         {% endfor %}
         
-        {% if products_page.paginator.num_pages > 1 %}
+        <div class='m-3'>
+          <a class='btn btn-green' href="/products/register/">
+            Adicionar Produto
+          </a>
+        </div>
+        
+        
+    </div>
+
+    {% if products_page.paginator.num_pages > 1 %}
             <div class="d-flex justify-content-center mt-5">
                 <nav aria-label="Paginação de produtos">
                     <ul class="pagination">
@@ -59,11 +68,5 @@
             </div>
         {% endif %}
 
-        <div class='m-3'>
-          <a class='btn btn-green' href="/products/register/">
-            Adicionar Produto
-          </a>
-        </div>
-    </div>
 </div>
 {% endblock %}
