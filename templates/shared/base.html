@@ -34,11 +34,35 @@
     </main>
     {% include "partials/footer.html" %}
     
-
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="{% static 'js/shared/messages.js' %}"></script>
-    
+    <script>
+function adjustFooter() {
+  const bodyHeight = document.body.scrollHeight;
+  const viewportHeight = window.innerHeight;
+  const footer = document.getElementsByClassName('footer_section')[0];
+
+  if (!footer) return;
+
+  if (bodyHeight < viewportHeight) {
+    footer.style.position = 'fixed';
+    footer.style.bottom = '0';
+    footer.style.left = '0';
+    footer.style.width = '100%';
+  } else {
+    footer.style.position = 'static';
+  }
+}
+
+// roda ao carregar
+window.addEventListener('load', adjustFooter);
+// roda ao redimensionar
+window.addEventListener('resize', adjustFooter);
+</script>
+
     {% block scripts %}
     {% endblock scripts %}
 </body>

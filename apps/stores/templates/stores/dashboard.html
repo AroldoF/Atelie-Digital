@@ -38,6 +38,8 @@
           </div>
           {% for product in products %}
           {% include 'stores/partials/_recent_product_item.html' with name=product.name price=product.min_price stock_quantity=product.min_stock image_path=product.image.url %}
+          {% empty %}
+          <p class="text-muted">Nenhum produto recente.</p>
           {% endfor %}
         </div>
       </div>
@@ -52,6 +54,8 @@
       <div class="orders-list">
         {% for order in orders %}
         {% include 'stores/partials/_recent_order_item.html' with order_id=order.order_code client_name=order.user.name product_quantity=order.items.count product_details='items no pedido' status=order.get_status_display status_text=order.status|lower %}
+        {% empty %}
+        <p class="text-muted">Nenhum pedido recente.</p>
         {% endfor %}
       </div>
     </div>

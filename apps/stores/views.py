@@ -148,7 +148,7 @@ def store_detail(request, store_id):
     """
     store = get_object_or_404(Store, pk=store_id, user__is_active=True)
     
-    products = store.products.filter(is_active=True)
+    products = Product.objects.cards_with_favorites(request.user).filter(store=store)
 
     context = {
         'store': store,

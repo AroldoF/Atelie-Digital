@@ -225,7 +225,7 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 10px;
-  transition: var(--transition);
+  /* transition: var(--transition); */
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -235,9 +235,7 @@ body {
 
 .btn-submit:hover, 
 .button-cadastro:hover {
-  background-color: var(--color-hover);
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(212, 122, 0, 0.4);
 }
 
 .remove-btn, 
