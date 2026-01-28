@@ -30,10 +30,10 @@
 
   <div class="storeCategories">
     {% if store.category %}
-      <p class="category-btn active">{{ store.category.name }}</p>
+      <p id="category" class="category-btn active">{{ store.category.name }}</p>
     {% endif %}
     {% if user.stores.first.pk == store.pk %}
-    <a href="{% url 'stores:edit' store.pk %}" class='d-flex btn btn-green'>Editar Loja</a>
+    <a href="{% url 'stores:edit' store.pk %}" id="edit-store" class='d-flex btn btn-green'>Editar Loja</a>
     {% endif %}
   </div>
 
@@ -45,7 +45,7 @@
         
     {% endif %}
     
-    <div class="mt-3">
+    <div id="div-detail-store" class="mt-3">
         {% if store.phone_number %}
             <p><strong>Contato:</strong> {{ store.phone_number }}</p>
         {% endif %}

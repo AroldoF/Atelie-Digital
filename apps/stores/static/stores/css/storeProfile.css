@@ -221,3 +221,21 @@ ul{
     width: 70%;
   }
 }
+
+#div-detail-store{
+  margin-bottom: 1.5rem;
+}
+
+#category:hover{
+  cursor: default;
+}
+
+#category{
+  padding: 0.5rem;
+}
+
+#edit-store{
+  text-align: center;
+  align-items: center;
+  padding: 0.5rem;
+}

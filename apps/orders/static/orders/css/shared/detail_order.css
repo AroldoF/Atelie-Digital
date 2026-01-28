@@ -1,0 +1,399 @@
+/* =================================================================
+   BASE DO DESIGN SYSTEM (Do arquivo detail_order.css fornecido)
+   ================================================================= */
+:root {
+  /* PALETA DE CORES (Mantida do anexo) */
+  --color-primary: #C47A53;
+  --color-primary-dark: #A6603A;
+  --color-secondary: #6A88A4;
+  --color-green: #7DA068;
+  --color-background: #F8F9FA;
+  --color-card: #FFFFFF;
+  --color-text-main: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-border: #E5E7EB;
+  --color-divider: #F3F4F6;
+  --color-info-bg: #EFF6FF;
+  --color-info-text: #1E40AF;
+
+  /* TIPOGRAFIA */
+  --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: "Roboto Mono", monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ESPAÇAMENTOS & BORDAS */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* RESET & GERAL */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  line-height: 1.5;
+}
+
+.confirmation-wrapper {
+  width: 100%;
+  max-width: 800px;
+  /* Aumentei um pouco para caber melhor em telas maiores */
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+.confirmation-card {
+  background-color: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+}
+
+/* HEADER DE SUCESSO / STATUS */
+.success-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.success-icon-container {
+  width: 64px;
+  height: 64px;
+  background-color: color-mix(in srgb, var(--color-green) 15%, transparent);
+  color: var(--color-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-md);
+}
+
+/* Variação para Cancelado */
+.success-icon-container.cancelled {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.success-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main);
+  margin-bottom: var(--spacing-xs);
+}
+
+.success-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* MULTI-LOJA ALERT BOX */
+.multi-store-alert {
+  background-color: var(--color-info-bg);
+  border: 1px solid color-mix(in srgb, var(--color-info-bg) 90%, black);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.multi-store-icon {
+  color: var(--color-info-text);
+}
+
+.multi-store-text h4 {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-info-text);
+  margin-bottom: 2px;
+}
+
+.multi-store-text p {
+  font-size: var(--font-size-xs);
+  color: color-mix(in srgb, var(--color-info-text) 80%, black);
+}
+
+/* PACOTES (Grupo de Lojas) */
+.package-group {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+}
+
+.package-header {
+  background-color: var(--color-surface);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.store-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.store-icon {
+  color: var(--color-primary);
+}
+
+/* STATUS BADGES - CORES PADRONIZADAS DO PROJETO */
+.status-badge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  padding: 4px 10px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+
+/* Pendente (Amarelo) */
+.status-pending {
+  background-color: #fef9c3;
+  color: #854d0e;
+  border: 1px solid #fde047;
+}
+
+/* Em Andamento (Azul) */
+.status-processing {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+}
+
+/* Entregue (Verde) */
+.status-delivered {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+/* Cancelado (Vermelho) */
+.status-cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+.package-items {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* ITEM ROW */
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.item-image {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: #eee;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-main);
+  display: block;
+}
+
+.item-meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.item-price {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary)
+}
+
+/* TOTAIS & INFO */
+/* .info-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-divider);
+    padding-bottom: var(--spacing-lg);
+    grid-column: grid-column-end;
+} */
+
+.info-grid {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--color-divider);
+  padding-bottom: var(--spacing-lg);
+}
+
+h5 {
+  color: var(--color-primary);
+}
+
+@media (min-width: 640px) {
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.info-group h5 {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+}
+
+.info-group p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-main);
+  line-height: 1.4;
+}
+
+.order-totals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xl);
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.total-row.final {
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px dashed var(--color-border);
+  color: var(--color-text-main);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-md);
+}
+
+/* BOTÕES
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+} */
+
+/* @media (min-width: 640px) {
+  .action-buttons {
+    flex-direction: row;
+  }
+} */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: 0.2s;
+  text-decoration: none;
+  gap: 0.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .btn-primary {
+    width: 100%;
+  }
+
+  .action-buttons {
+    width: 100%;
+  }
+}
+
+@media (min-width: 600px){
+  .confirmation-card{
+    width: 100%;
+  }
+}
+
+.btn-primary {
+  background-color: var(--color-green);
+  color: white;
+  border: none;
+  width: 40%;
+
+}
+
+.btn-primary:hover {
+  /* background-color: #7ca06800;
+  color: var(--color-green) */
+  background-color: #688556;
+}
+
+#price{
+  color: var(--color-primary-dark)
+}
