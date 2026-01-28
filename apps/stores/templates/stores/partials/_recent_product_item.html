@@ -1,7 +1,7 @@
 {% load static %}
-
+<a href="{% url 'products:detail' product.pk %}" style="text-decoration: none;">
 <div class="d-flex align-items-center py-3 border-bottom product-item">
-    <img src="{% static image_path %}" alt="{{ name }}" class="rounded-3" style="width: 50px; height: 50px; object-fit: cover;">
+    <img src="{{image_path}}" alt="{{ name }}" class="rounded-3" style="width: 50px; height: 50px; object-fit: cover;">
     
     <div class="ms-3 flex-grow-1">
         <h6 class="mb-0 fw-semibold text-dark" style="font-size: 0.95rem;">{{ name }}</h6>
@@ -10,14 +10,19 @@
             <span class="text-muted small fw-medium">R$ {{ price | floatformat:2 }}</span>
             
             <span class="mx-2 text-muted" style="font-size: 0.6rem;">●</span>
-            
+            {% if stock_quantity %}
             <span class="stock-quantity">
                 {{ stock_quantity }} em estoque
             </span>
+            {% else %}
+            <span class="stock-quantity">
+                Sob Demanda
+            </span>
+            {% endif %}
         </div>
     </div>
-
-    <span class="badge bg-light text-{{ status_color }} border border-{{ status_color }} rounded-pill">
-        {{ status }}
+    <span class="badge bg-light text-success border border-success rounded-pill">
+        Ativo
     </span>
 </div>
+</a>

@@ -351,12 +351,12 @@
     color: var(--color-hover)
 }
 
-.c-status-progress {
+.c-status-in_progress {
     background-color: var(--color-rose);
     color: var(--color-pink);
 }
 
-.c-status-delivered {
+.c-status-completed {
     background-color: color-mix(in srgb, var(--color-green) 10%, white);
     color: var(--color-green);
 }

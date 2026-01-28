@@ -15,6 +15,9 @@ from apps.orders.models import Order
 from .models import Store, StoreCategory
 from .forms import StoreCreationForm
 from django.contrib.auth.mixins import UserPassesTestMixin
+from apps.products.models import Product
+from apps.orders.models import Order
+from django.db.models import Sum
 
 def is_artisian(user):
     return user.is_authenticated and user.groups.filter(name='Artisians').exists()
@@ -113,8 +116,29 @@ def dashboard(request, store_id):
     # Garante que o usuário só acesse o dashboard da SUA própria loja
     if store.user != request.user:
         return redirect('index') 
-        
-    return render(request, 'stores/dashboard.html', {'store': store, 'store_id': store_id})
+    
+
+    products = Product.objects.cards().filter(store=store).order_by('-pk')
+    low_stock = products.filter(min_stock__lt=10, min_stock__isnull=False).count()
+
+    orders = Order.objects.filter(store=store).order_by('created_at').prefetch_related(
+        'items__product_variant'
+    )
+
+    orders_progress = orders.filter(status="IN_PROGRESS").count()
+
+    total_sales = orders.aggregate(total_sales=Sum('total_amount'))['total_sales'] or 0
+
+    return render(request, 'stores/dashboard.html', {
+        'active_page': 'dashboard',
+        'store': store, 
+        'store_id': store_id,
+        'products': products[:5],
+        'low_stock': low_stock,
+        'orders': orders[:5],
+        'orders_progress': orders_progress,
+        'total_sales': total_sales
+    })
 
 
 def store_detail(request, store_id):
