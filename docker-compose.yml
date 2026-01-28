@@ -3,13 +3,49 @@ services:
   db:
     image: bitnami/postgresql:latest
     ports:
-      - "${DB_PORT}:5432"
+      - "5632:5432"
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+    healthcheck:
+        test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+        interval: 2s
+        timeout: 5s
+        retries: 2
     volumes:
       - polls_pg_data:/bitnami/postgresql
-    
+
+  web:
+    build:
+      dockerfile: docker/web/Dockerfile
+    container_name: django_web
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - static_volume:/vol/web/static
+      - media_volume:/vol/web/media
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+  nginx:
+    build:
+      dockerfile: docker/nginx/Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/vol/web/static
+      - media_volume:/vol/web/media
+    depends_on:
+      - web
+
 volumes:
   polls_pg_data:
+  static_volume:
+  media_volume:

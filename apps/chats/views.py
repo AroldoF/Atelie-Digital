@@ -1,6 +1,125 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+from django.contrib.auth.decorators import login_required
+from .models import Chat, Message
+from django.db.models import Q, Prefetch
+from apps.accounts.models import Profile
+from apps.stores.models import Store
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 
-class ChatView(View):
-    def get(self, request):
-        return render(request, 'chats/chats.html')
+@login_required
+def chat(request):
+    user = request.user
+
+    chats = (
+        Chat.objects
+        .filter(Q(client=user) | Q(artisan=user))
+        .select_related("client", "artisan")
+        .prefetch_related(
+            "client__profile",
+            "artisan__stores",
+        )
+    )
+
+    chat_list = []
+
+    for chat in chats:
+        # define quem é o outro usuário
+        if chat.client == user:
+            other_user = chat.artisan
+        else:
+            other_user = chat.client
+
+        chat_list.append({
+            "chat": chat,
+            "other_user": other_user,
+        })
+
+    return render(
+        request,
+        "chats/chats.html",
+        {"chat_list": chat_list}
+    )
+
+@login_required
+def chat_list(request):
+    user = request.user
+    search = request.GET.get('q', '').strip()
+    role_filter = request.GET.get('filter')
+
+    chats = Chat.objects.filter(
+        Q(client=user) | Q(artisan=user)
+    )
+
+    if search:
+        chats = chats.filter(
+            Q(client__name__icontains=search) |
+            Q(artisan__stores__name__icontains=search)
+        ).distinct()
+
+    if role_filter == 'client':
+        chats = chats.filter(client=user)
+    elif role_filter == 'artisan':
+        chats = chats.filter(artisan=user)
+
+    chats = chats.select_related(
+        "client", "artisan"
+    ).prefetch_related(
+        "client__profile",
+        "artisan__stores",
+    )
+
+    chat_list = [
+        {
+            "chat": chat,
+            "other_user": chat.artisan if chat.client == user else chat.client
+        }
+        for chat in chats
+    ]
+
+    return render(
+        request,
+        "chats/partials/list.html",
+        {
+            "chat_list": chat_list,
+            "q": search,
+            "filter": role_filter,
+        }
+    )
+
+@login_required
+def chat_area(request, chat_id):
+    chat = get_object_or_404(Chat.objects.prefetch_related(
+        "client__profile",
+        "artisan__stores",
+    ), pk=chat_id)
+    
+    messages = Message.objects.filter(chat=chat).order_by('created_at')
+
+    if chat.client == request.user:
+        other_user = chat.artisan
+    else:
+        other_user = chat.client
+
+    return render(request, 'chats/partials/area.html', {'chat': chat, "other_user": other_user, 'messages': messages})
+
+@login_required
+def chat_create(request, store_id): 
+    store = get_object_or_404(Store, pk=store_id)
+    if request.user == store.user:
+        messages.error(request, "Você não pode iniciar um chat consigo mesmo.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    chat, created = Chat.objects.get_or_create(
+        artisan=store.user,
+        client=request.user,
+    )
+
+    return redirect('chats:chat')
+
+
+
+@login_required
+def send_message(request):
+    return render(request, 'template/partials/message.html')
