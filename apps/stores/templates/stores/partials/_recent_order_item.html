@@ -1,18 +1,20 @@
 {% load static %}
 
+<a href="{% url 'orders:detail' order.pk %}" style="text-decoration: none;">
 <div class="custom-order-row">
-    
     <div class="col-info">
         <span class="c-order-id">#{{ order_id }}</span>
         <span class="c-order-client">{{ client_name }}</span>
     </div>
-
+    
     <div class="col-product">
-        <span class="c-order-product">{{ product_details }}</span>
+        <span class="c-order-product">{{ product_quantity }}x {{ product_details }}</span>
     </div>
-
+    
     <div class="col-status">
-        <span class="c-status-badge c-status-{{ status }}">{{ status_text }}</span>
+        <span class="c-status-badge c-status-{{ status_text|default:'pending' }}">
+            {{ status|default:"Pendente" }}
+        </span>
     </div>
-
 </div>
+</a>
