@@ -12,10 +12,10 @@
     <h1 id="title">Meu Perfil</h1>
 
     <!--Card de usuário-->
-    {% if user.is_artisan %}
-        {% include 'accounts/partials/_card_profile.html' with url=profile_image_url|default:'accounts/media/semFotoPerfil.jpg' description='imagem do usuário' name=user.name email=user.email tag_user='Vendedor' profile=True %}
+    {% if profile_image_url %}
+        {% include 'accounts/partials/_card_profile.html' with url=profile_image_url description='imagem do usuário' name=user.name email=user.email tag_user='Vendedor' profile=True %}
     {% else %}
-        {% include 'accounts/partials/_card_profile.html' with url=profile_image_url|default:'accounts/media/semFotoPerfil.jpg' description='imagem do usuário' name=user.name email=user.email tag_user='Cliente' profile=True %}
+        {% include 'accounts/partials/_card_profile.html' with description='imagem do usuário' name=user.name email=user.email profile=True %}
     {% endif %}
 
     <div class="row justify-content-between gy-4">

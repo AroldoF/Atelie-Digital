@@ -7,7 +7,7 @@
 <div class="container card_profile margin">
   <div class="row align-items-center">
     <div class="col-auto">
-      <img src="{% static url %}" class="profile_img" alt="{{ description }}">
+      <img src="{% if url %}{{ url }}{% else %}{% static 'accounts/media/semFotoPerfil.jpg' %}{% endif %}" alt="{{ description }}" width="70px">
     </div>
     <div class="col-auto">
       <h4 id="name">{{ name }}</h4>
