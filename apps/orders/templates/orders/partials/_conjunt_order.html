@@ -1,7 +1,7 @@
 {% load static %}
 
 {% for order in orders %}
-    <div>
+    <a href="{% url 'orders:detail' order.pk %}">
         {% include 'orders/partials/_order.html' with order_id=order.order_code order_date=order.created_at status=order.status %}
-    </div>
+    </a>
 {% endfor %}

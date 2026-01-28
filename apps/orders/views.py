@@ -266,10 +266,20 @@ def approved(request, transaction_id):
 
     return render(request, 'orders/approved.html', context)
 
-
+@login_required
 def orders_detail(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     context = {'order': order}
     return JsonResponse({'message': 'ainda não implemetado'})
 
-
+@login_required
+def orders_detail(request, order_id):
+    # 1. Busca o pedido pelo ID e garante que pertence ao usuário logado
+    order = get_object_or_404(Order, pk=order_id, user=request.user)
+    
+    # 2. Contexto para o template
+    context = {
+        'order': order,
+    }
+    
+    return render(request, 'orders/detail_order.html', context)
